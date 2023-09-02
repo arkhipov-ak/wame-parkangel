@@ -1,0 +1,57 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px; /* это опционально, но позволяет контейнеру иметь максимальную ширину, например, 1200px, чтобы на больших экранах он не становился слишком широким */
+}
+.faq {
+  font-weight: 500;
+  font-size: 24px;
+}
+.wrapper_question  {
+  display: flex;
+  width: 100%;
+  padding: 0.9375rem 0rem;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.625rem;
+  border-radius: 0.9375rem;
+  border: none;
+  background: #fff;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+  margin: 10px 0 10px 0;
+}
+.questions {
+  flex: 1; /* Занимает всё доступное пространство */
+  text-align: left;
+  margin: 0;
+  padding: 0 10px;
+}
+
+.down_img {
+  width: 24px; /* примерное значение, подстройте под свои нужды */
+  height: 24px;
+  padding: 0 10px;
+}
+
+.answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out; 
+  padding: 0 10px 0 10px;
+}
+
+.open {
+  max-height: 100px; /* Вы можете установить большее значение, если ваши ответы длинные */
+}
+
+.text_with_icon {
+  display: flex;
+  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}

@@ -1,0 +1,26 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.text_main {
+  color: var(--black, #192342);
+  text-align: center;
+  font-size: 1.45675rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-bottom: 8px;  /* Добавленный отступ */
+}
+
+.text_descr {
+  color: var(--black, #192342);
+  font-size: 1.45675rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}

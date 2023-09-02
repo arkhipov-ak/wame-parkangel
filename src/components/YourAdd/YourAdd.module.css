@@ -1,0 +1,163 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15%;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px;
+}
+.styles_container {
+  display: flex;
+  justify-content: space-between;
+  white-space: nowrap;
+  width: 100%;
+  padding: 0 10px 0 10px;
+}
+.styles_left {
+  color: var(--black, #192342);
+  font-family: Montserrat;
+  font-size: 0.8125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 1.21875rem */
+  opacity: 0.7;
+}
+.styles_right {
+  color: var(--black, #192342);
+  font-family: Montserrat;
+  font-size: 0.8125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+}
+.styles_left,
+.styles_right {
+  flex: 0.48;
+}
+/* ... ваш текущий CSS ... */
+.review_text {
+  color: var(--black, #192342);
+  font-family: Montserrat;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.main_text {
+  text-align: center;
+  color: var(--black, #192342);
+  font-size: 0.9375rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding-top: 10px;
+}
+
+.wrapper_div {
+  height: 100%;
+  font-size: 90%;
+  flex-shrink: 0;
+  border-radius: 0.9375rem;
+  background: #fff;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+}
+.next {
+  display: inline-flex;
+  padding: 0.875rem 4.75rem 0.875rem 4.8125rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.9375rem;
+  background: #8a8aa4;
+  font-size: 110%;
+  white-space: nowrap;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+  border: none;
+  width: 55%;
+  margin-top: 7%;
+  color: white;
+  text-decoration: none;
+}
+.write {
+  display: inline-flex;
+  padding: 0.875rem 4.75rem 0.875rem 4.8125rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.9375rem;
+  background: #8a8aa4;
+  font-size: 110%;
+  white-space: nowrap;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+  border: none;
+  width: 55%;
+  margin-top: 3%;
+  color: white;
+  text-decoration: none;
+}
+.return {
+  margin-top: 3%;
+  display: inline-flex;
+  padding: 0.875rem 4.75rem 0.875rem 4.8125rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.9375rem;
+  background: #fff;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+  color: black;
+  text-decoration: none;
+  width: 55%;
+  font-size: 120%;
+}
+.input_style {
+  display: inline-flex;
+  height: 3.5rem;
+  width: 65%;
+  padding: 0.0625rem 5.125rem 6.875rem 1.4375rem;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 0.9375rem;
+  background: rgba(241, 243, 249, 0.5);
+  border: none;
+}
+.input_style::placeholder {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  color: #192342;
+  font-family: Montserrat;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.04375rem;
+  opacity: 0.5;
+}
+.submit {
+  display: flex;
+  padding: 0.875rem 3.5rem 0.875rem 3.4375rem;
+  width: 100%;
+  font-size: 18px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.9375rem;
+  background: #8a8aa4;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+  color: white;
+  border: none;
+  white-space: nowrap;
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+.descr {
+  color: var(--black, #192342); 
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;  
+}
+.rateContainer {
+  display: flex;
+  justify-content: center; /* Горизонтальное центрирование */
+  align-items: center;     /* Вертикальное центрирование, если нужно */
+  height: 100%;            /* Задайте нужную высоту, если хотите вертикально центрировать внутри этого контейнера */
+}

@@ -1,0 +1,119 @@
+.nk {
+  margin-left: 5%;
+}
+.main_text {
+  color: var(--black, #192342);
+  padding-top: 10px;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.wrapper_rentCard {
+  width: 90%;
+  flex-shrink: 0;
+  margin: 1% 0;
+  border-radius: 1.25rem;
+  height: 6rem;
+  font-weight: 600;
+  background: #fff;
+  flex-wrap: wrap;
+  display: flex;
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+.wrapper_rentCard .secondRow {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  color: var(--black, #192342);
+  font-family: Montserrat;
+  font-size: 0.925rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  opacity: 0.7;
+}
+.submit {
+  display: flex;
+  padding: 0.875rem 3.5rem 0.875rem 3.4375rem;
+  width: 62%;
+  text-decoration: none;
+  color: #fff;
+  font-size: 18px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.9375rem;
+  background: #8a8aa4;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+  color: white;
+  border: none;
+  white-space: nowrap;
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+.rent_location {
+  color: var(--black, #192342);
+  font-size: 0.9375rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.main_text {
+  color: var(--black, #192342);
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px; /* это опционально, но позволяет контейнеру иметь максимальную ширину, например, 1200px, чтобы на больших экранах он не становился слишком широким */
+}
+.wrapper_cards {
+  display: flex;
+  flex-direction: column;
+}
+.wrapper_rentCard .secondRow {
+  align-items: center; /* Добавьте это, чтобы выровнять элементы по центру */
+}
+
+.rent_date {
+  margin-right: auto; /* Этот стиль передвинет текст "450 руб/ч" в начало */
+}
+
+.icons {
+  display: flex;
+  gap: 10px; /* Это добавит промежуток между иконками */
+}
+.add_new {
+  display: inline-flex;
+  padding: 0.875rem 0;
+  border: none;
+  color: #fff;
+  width: 95%;
+  margin-top: 5%;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.9375rem;
+  background: #8a8aa4;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+}
+.show_map {
+  display: inline-flex;
+  padding: 0.875rem 0;
+  border: none;
+  color: black;
+  width: 95%;
+  margin-top: 2%;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.9375rem;
+  background: #fff;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+}

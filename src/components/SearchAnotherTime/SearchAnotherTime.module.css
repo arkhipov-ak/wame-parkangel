@@ -1,0 +1,235 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px; /* это опционально, но позволяет контейнеру иметь максимальную ширину, например, 1200px, чтобы на больших экранах он не становился слишком широким */
+}
+
+.modalOverlay {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: 35%;
+  border-radius: 15px;
+  background-color: white;
+  padding: 20px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.buttonConfirm {
+  margin-top: 20px;
+  display: inline-flex;
+  padding: 0.875rem 1.8125rem 0.875rem 1.75rem;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  border-radius: 0.9375rem;
+  background: #8a8aa4;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+  border: none;
+}
+.btnWrapper {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20%;
+  gap: 10px;
+}
+
+.timeSelector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 110px;
+  overflow: hidden;
+}
+
+.hour,
+.minute {
+  width: 40%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 120px;
+  margin: 0 5px;
+  display: flex;
+  font-size: 190%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.colon {
+  margin: 0 5px;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.time {
+  opacity: 0.5;
+  display: flex;
+  color: #847171;
+  align-items: center;
+  justify-content: center;
+}
+
+.time.selected {
+  opacity: 1;
+  color: black;
+}
+.hour::-webkit-scrollbar,
+.minute::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+.give_today {
+  font-weight: 450;
+  font-size: 24px;
+}
+.data_time_text {
+  color: var(--black, #192342);
+  font-family: Montserrat;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.search_text {
+  color: var(--black, #192342);
+  font-family: Montserrat;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.time_present {
+  display: flex;
+  width: 100%;
+  padding: 0.875rem 0.875rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.9375rem;
+  background: #fff;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+  font-size: 20px;
+}
+.wrapper_input {
+  display: flex;
+  width: 100%;
+  padding: 0.875rem 0rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.9375rem;
+  background: #fff;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+  font-size: 20px;
+}
+.incrementWrapper {
+  display: flex;
+  height: 2rem;
+  width: 100%;
+  padding: 0.875rem 0rem;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 0.9375rem;
+  background: #fff;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+  font-size: 20px;
+}
+
+.btn_style {
+  display: flex;
+  color: black;
+  text-decoration: none;
+  padding: 0.875rem 4.75rem;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 0.9375rem;
+  background: #fff;
+  color: #192342;
+  font-size: 15px;
+  margin-top: 5%;
+  white-space: nowrap;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+  border: none;
+  margin-bottom: 10px;
+}
+.btn_style.active {
+  border: 2px solid #8a8aa4;
+}
+
+.search_btn {
+  width: 100%;
+  padding: 0.875rem 2.75rem 0.875rem 2.6875rem;
+  border-radius: 0.9375rem;
+  background: #8a8aa4;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+  border: none;
+  color: #fff;
+  margin-top: 6%;
+  margin-bottom: 10%;
+  margin-left: 0%;
+}
+.datePickerWrapper {
+  display: flex;
+  width: 100%;
+  padding: 0.875rem 0rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.9375rem;
+  background: #fff;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+  font-size: 20px;
+}
+.dateInput {
+  display: block;
+  font-size: 20px;
+  font-family: "Montserrat";
+  font-weight: 400;
+  color: #444;
+  line-height: 1.3;
+  text-align: center;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  border-radius: 0.5em;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  border: none;
+  background-position: right 0.7em top 50%, 0 0;
+  background-size: 2.5em auto, 100%;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+.dateTimeContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Отступ между элементами */
+}
+
+.dateInput:focus {
+  outline: none;
+  border-color: #ac8efe;
+}

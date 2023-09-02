@@ -1,0 +1,14 @@
+/* ImageSkeleton.module.css */
+.skeleton {
+  background: #e0e0e0; /* серый фон */
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
