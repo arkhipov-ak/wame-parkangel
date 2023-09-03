@@ -34,7 +34,7 @@
   color: var(--black, #192342);
   display: flex;
   justify-content: center;
-  margin: 4px 0;
+  margin: 10px 0;
   font-size: 0.999rem;
   font-style: normal;
   font-weight: 450;
@@ -51,9 +51,13 @@
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
   color: white;
   border: none;
+  font-size: 0.999rem;
+  font-style: normal;
+  font-weight: 450;
+  font-family: Montserrat;
 }
 .text_wrapper {
-  margin-top: 3%;
+  margin: 3% 0;
 }
 .logotype {
   width: 10rem;
