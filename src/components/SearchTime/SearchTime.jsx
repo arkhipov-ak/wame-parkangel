@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import { useState,useEffect } from "react";
 import axios from "axios";
 import NavBar from "../NavBar/NavBar";
 import SelectSearchGive from "./selectSearchGive/selectSearchGive";
@@ -8,7 +8,7 @@ import FouinImg from "../../assets/fouin_img.svg";
 import styles from "./SearchTime.module.css";
 import { BiChevronRight } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import ImageSkeleton from "../ImageSkeleton/ImageSkeleton";
+
 const SearchTime = () => {
   const [isSearchFromChild, setIsSearchFromChild] = useState(true);
   const [isImageLoaded, setImageLoaded] = useState(false);
@@ -32,7 +32,7 @@ const SearchTime = () => {
   return (
     <div>
       <NavBar />
-      <div className={styles.container}>
+      <section className={styles.container}>
         <SelectSearchGive setIsSearchActiveProp={setIsSearchFromChild} />
         <div className={styles.wrapper_cards}>
           <Link
@@ -99,11 +99,11 @@ const SearchTime = () => {
             <p className={styles.text_today}>На другой срок</p>
             <BiChevronRight />
           </Link>
-          <p className={styles.title}>
+          <a href="#" className={styles.title}>
             {isSearchFromChild ? "Как снять парковку?" : "Как сдать парковку?"}
-          </p>
-          <div>
-            <p className={styles.history}>История аренды</p>
+          </a>
+          <div className={styles.wrapper_rent}>
+            <h2 className={styles.history}>История аренды</h2>
             <div className={styles.wrapper_rentCard}>
             {adData.length === 0 ? (
               <div className={styles.noAds}>
@@ -124,7 +124,7 @@ const SearchTime = () => {
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };

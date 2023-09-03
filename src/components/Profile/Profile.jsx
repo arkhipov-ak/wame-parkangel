@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./Profile.module.css";
 import ParkAngel from "/src/assets/ParkAngel.svg";
@@ -54,7 +54,7 @@ const Profile = () => {
 
         <div className={styles.text_wrapper}>
           <p className={styles.main_text}>
-            Пользовательское <br /> соглашение
+            Пользовательское соглашение
           </p>
           <p className={styles.descr_text}>
             Вы можете посещать данный сайт, не давая о себе никакой личной

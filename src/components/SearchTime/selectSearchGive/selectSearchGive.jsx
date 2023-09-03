@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styles from "./selectSearchGive.module.css";
 
 const SelectSearchGive = ({ setIsSearchActiveProp }) => {
@@ -6,19 +6,19 @@ const SelectSearchGive = ({ setIsSearchActiveProp }) => {
 
   useEffect(() => {
     setIsSearchActiveProp(isSearchActive); // передаем состояние в родительский компонент
-  }, [isSearchActive]);
+  }, [isSearchActive, setIsSearchActiveProp]);
 
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <button
-          className={isSearchActive ? styles.active_btn : styles.notactive_btn}
+          className={isSearchActive ? styles.active_btn : styles.not_active_btn}
           onClick={() => setIsSearchActive(true)}
         >
           Найти
         </button>
         <button
-          className={!isSearchActive ? styles.active_btn : styles.notactive_btn}
+          className={!isSearchActive ? styles.active_btn : styles.not_active_btn}
           onClick={() => setIsSearchActive(false)}
         >
           Сдать
