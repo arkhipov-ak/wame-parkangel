@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "./Profile.module.css";
+import styles from "./Agreement.module.css";
 import ParkAngel from "/src/assets/ParkAngel.svg";
 import { useNavigate } from "react-router-dom";
 import Button from "../common/Button/Button";

@@ -13,7 +13,7 @@ const Home = () => {
     const tg = window?.Telegram?.WebApp;
     tg.expand()
 
-    /* const renderAgreementInfo = async () => {
+    const renderAgreementInfo = async () => {
       const user = tg.initDataUnsafe.user;
       if (user) {
         const chatId = user.id;
@@ -24,14 +24,14 @@ const Home = () => {
           })
           .catch(error => {
             console.log(error);
-            navigate('/agreement');
+            /* navigate('/agreement'); */
           })
       }
-    } */
+    }
    
-    /* renderAgreementInfo(); */
+    renderAgreementInfo();
 
-    navigate('/agreement');
+    /* navigate('/agreement'); */
   }, [navigate]);
 
   const handleImageLoad = () => {
