@@ -3,35 +3,37 @@ import styles from "./Home.module.css";
 import Logotype from "/src/assets/logo.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { showErrorSnackbar } from "../../utils/showErrorSnackBar";
 
 const Home = () => {
   const [isImageLoaded, setImageLoaded] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log('in use effect');
     window.Telegram.WebApp.ready();
     const tg = window?.Telegram?.WebApp;
     tg.expand()
 
     const renderAgreementInfo = async () => {
-      const user = tg.initDataUnsafe.user;
-      if (user) {
-        const chatId = user.id;
-        await axios.get(`http://185.238.2.176:5064/api/users/chatId/${chatId}`)
+      /* const user = tg.initDataUnsafe.user; */
+      /* if (!user) { */
+        /* const chatId = user.id; */
+        await axios.get(`http://185.238.2.176:5064/api/users/chatId/${3}`)
           .then(response => {
             if (response.data.isAcceptAgreement) return;
-            navigate('/agreement');
+            navigate("/agreement");
           })
-          .catch(error => {
-            console.log(error);
-            /* navigate('/agreement'); */
-          })
-      }
+          .catch(() => showErrorSnackbar({ message: "Что-то пошло не так", tryAgain: false }))
+      /* } */
     }
    
-    renderAgreementInfo();
+    const timer = setTimeout(() => renderAgreementInfo(), 2500)
 
     /* navigate('/agreement'); */
+    return () => {
+      clearTimeout(timer);
+    };
   }, [navigate]);
 
   const handleImageLoad = () => {
