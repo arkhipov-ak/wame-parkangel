@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import NavBar from "../NavBar/NavBar";
 import Toggle from "react-styled-toggle";
 import styles from "./RatingModal.module.css";
 
 const RatingModal = () => {
-  const [hoursCount, setHoursCount] = useState(350); // начальное значение часов
+  const [price, setPrice] = useState(350); // начальное значение цены
   const [height, setHeight] = useState("");
   const [height1, setHeight1] = useState("");
   const [height2, setHeight2] = useState("");
   const increment = () => {
-    setHoursCount((prevHours) => prevHours + 10);
+    setPrice((prevHours) => prevHours + 10);
   };
 
   const decrement = () => {
-    if (hoursCount > 0) {
+    if (price > 0) {
       // проверка, чтобы предотвратить отрицательные значения
-      setHoursCount((prevHours) => prevHours - 10);
+      setPrice((prevHours) => prevHours - 10);
     }
   };
 
@@ -47,7 +47,7 @@ const RatingModal = () => {
       <div className={styles.wrapper}>
         <div className={styles.container}>
           <div className={styles.boxContainer}>
-            <p className={styles.main_text}>Тип парковки</p>
+            <span className={styles.main_text}>Тип парковки</span>
             <label>
               <input type="radio" name="parkingType" value="Подземная" />{" "}
               Подземная
@@ -65,16 +65,16 @@ const RatingModal = () => {
           </div>
 
           <div className={styles.toggleContainer}>
-            <p className={styles.main_text}>Доп. опции</p>
+            <span className={styles.main_text}>Доп. опции</span>
             <label>
               <div className={styles.toggleWrapper}>
-                <Toggle />
+                <Toggle/>
               </div>
               Охрана
             </label>
             <label>
               <div className={styles.toggleWrapper}>
-                <Toggle />
+                <Toggle/>
               </div>
               Обогрев
             </label>
@@ -108,7 +108,7 @@ const RatingModal = () => {
           </div>
           <label>
             <div className={styles.toggleWrapper}>
-              <Toggle />
+              <Toggle/>
             </div>
             Нестандартные размеры авто
           </label>
@@ -155,23 +155,11 @@ const RatingModal = () => {
           </div>
         </div>
         <div className={styles.cont}>
-          <p
-            style={{
-              fontWeight: "500",
-            }}
-          >
-            Макс. стоимость в час, руб
-          </p>
+          <h2 className={styles.title}>Макс. стоимость в час, руб</h2>
           <div className={styles.incrementWrapper}>
-            <p onClick={decrement} className={styles.incrementWithBorderMinus}>
-              {" "}
-              -{" "}
-            </p>
-            <p>{hoursCount} руб</p>
-            <p className={styles.incrementWithBorderPlus} onClick={increment}>
-              {" "}
-              +{" "}
-            </p>
+            <p onClick={decrement} className={styles.incrementWithBorderMinus}>-</p>
+            <p className={styles.price}>{price} руб</p>
+            <p className={styles.incrementWithBorderPlus} onClick={increment}>+</p>
           </div>
         </div>
         <button className={styles.submit}>Сохранить параметры</button>

@@ -2,12 +2,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 10%;
   max-width: 1200px; /* это опционально, но позволяет контейнеру иметь максимальную ширину, например, 1200px, чтобы на больших экранах он не становился слишком широким */
 }
-
+.wrapper_content {
+  width: 100%;
+}
 .modalOverlay {
   display: block;
   position: fixed;
@@ -18,7 +18,6 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1;
 }
-
 .modal {
   position: fixed;
   top: 50%;
@@ -35,9 +34,9 @@
   align-items: center;
 }
 .buttonConfirm {
-  margin-top: 20px;
+  width: 125px;
+  height: 50px;
   display: inline-flex;
-  padding: 0.875rem 1.8125rem 0.875rem 1.75rem;
   justify-content: center;
   align-items: center;
   color: #fff;
@@ -45,14 +44,15 @@
   background: #8a8aa4;
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
   border: none;
+  font-family: Montserrat;
+  font-size: 16px;
 }
 .btnWrapper {
   display: flex;
   justify-content: space-evenly;
-  margin-top: 20%;
+  margin-top: 10%;
   gap: 10px;
 }
-
 .timeSelector {
   display: flex;
   justify-content: center;
@@ -60,7 +60,6 @@
   height: 110px;
   margin-top: 10px;
 }
-
 .hour,
 .minute {
   width: 40%;
@@ -76,13 +75,11 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
-
 .colon {
   margin: 0 5px;
   font-size: 1.5em;
   font-weight: bold;
 }
-
 .time {
   height: 40px;
   opacity: 0.5;
@@ -91,7 +88,6 @@
   align-items: center;
   justify-content: center;
 }
-
 .time.selected {
   opacity: 1;
   color: black;
@@ -103,104 +99,84 @@
 .give_today {
   font-weight: 450;
   font-size: 24px;
+  margin: 10% 0 5% 0;
+}
+.label {
+  font-size: 18px;
 }
 .time_present {
   display: flex;
   width: 100%;
-  padding: 0.875rem 0rem;
+  height: 3.5rem;
   justify-content: center;
   align-items: center;
   border-radius: 0.9375rem;
   background: #fff;
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
   font-size: 20px;
+  margin: 2% 0 5% 0;
 }
 .incrementWrapper {
   display: flex;
-  height: 2rem;
-  width: 100%;
-  padding: 0.875rem 0rem;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  height: 3.5rem;
+  width: 100%;
   border-radius: 0.9375rem;
   background: #fff;
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+  margin-top: 2%;
+}
+.hours {
   font-size: 20px;
 }
-
 .incrementWithBorderMinus {
-  position: relative; /* необходимо для позиционирования псевдоэлемента */
-  cursor: pointer;
+  border-right: 1px solid #c0c0c0;
 }
-
-.incrementWithBorderMinus::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 0.5px; /* Ширина полоски */
-  height: 100%; /* Высота полоски - вы можете изменить, как хотите */
-  background-color: black; /* Цвет полоски */
-  cursor: pointer;
-  opacity: 0.2;
-}
-
 .incrementWithBorderPlus {
-  position: relative; /* необходимо для позиционирования псевдоэлемента */
-  cursor: pointer;
-}
-
-.incrementWithBorderPlus::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0.5px; /* Ширина полоски */
-  height: 100%; /* Высота полоски - вы можете изменить, как хотите */
-  background-color: black; /* Цвет полоски */
-  cursor: pointer;
-  opacity: 0.2;
+  border-left: 1px solid #c0c0c0;
 }
 .incrementWithBorderMinus, .incrementWithBorderPlus {
-  /* ... */
-  width: 40px; /* установите ширину, которую вы хотите */
-  height: 40px; /* установите высоту, которую вы хотите */
+  width: 15%; /* установите ширину, которую вы хотите */
+  height: 3.5rem; /* установите высоту, которую вы хотите */
+  font-size: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: transparent; /* сделайте фон прозрачным */
+  cursor: pointer;
 }
 .btn_style {
   display: flex;
-  color: black;
-  text-decoration: none;
-  padding: 0.875rem 4.75rem;
   justify-content: center;
   align-items: center;
+  height: 3.5rem;
+  text-decoration: none;
   flex-shrink: 0;
   border-radius: 0.9375rem;
   background: #fff;
   color: #192342;
-  font-size: 15px;
+  font-size: 20px;
   white-space: nowrap;
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
   border: none;
-  margin-bottom: 10px;
+  margin: 5% 0 15% 0;
 }
 .btn_style.active {
   border: 2px solid #8a8aa4;
 }
-
+.last_icon {
+  width: 25px;
+  height: 25px;
+}
 .search_btn {
   width: 100%;
   padding: 0.875rem 2.75rem 0.875rem 2.6875rem;
   border-radius: 0.9375rem;
-  font-size: 100%;
+  font-size: 20px;
   background: #8a8aa4;
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
   border: none;
   color: #fff;
-  margin-top: 6%;
-  margin-bottom: 10%;
-  margin-left: 0%;
+  font-family: Montserrat;
 }
