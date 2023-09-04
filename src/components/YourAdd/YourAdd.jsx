@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Modal } from "antd";
 import { Rate } from "antd";
-import NavBar from "../NavBar/NavBar";
+import NavBar from "../NavBar";
 import { YMaps, Map } from "@pbe/react-yandex-maps";
 import axios from "axios";
 import styles from "./YourAdd.module.css";

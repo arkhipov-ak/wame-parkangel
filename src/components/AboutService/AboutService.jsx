@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./AboutService.module.css";
-import NavBar from "../NavBar/NavBar";
+import NavBar from "../NavBar";
 
 const AboutService = () => {
   return (

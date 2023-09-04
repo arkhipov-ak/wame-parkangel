@@ -1,5 +1,5 @@
 import React from "react";
-import NavBar from "../NavBar/NavBar";
+import NavBar from "../NavBar";
 import styles from "./ResultSearch.module.css";
 import Location from "../../assets/location.svg";
 import { Link } from "react-router-dom";

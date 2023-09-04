@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./Agreement.module.css";
 import ParkAngel from "/src/assets/ParkAngel.svg";
 import { useNavigate } from "react-router-dom";
-import Button from "../common/Button/Button";
+import Button from "../common/Button";
 
 const Agreement = () => {
   const navigate = useNavigate();

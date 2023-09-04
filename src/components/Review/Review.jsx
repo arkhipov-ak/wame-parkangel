@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import NavBar from "../NavBar/NavBar";
+import NavBar from "../NavBar";
 import { YMaps, Map } from "@pbe/react-yandex-maps";
 import styles from "./Review.module.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";

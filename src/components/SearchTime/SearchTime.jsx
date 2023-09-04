@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import NavBar from "../NavBar/NavBar";
+import NavBar from "../NavBar";
 import SelectSearchGive from "./selectSearchGive/selectSearchGive";
 import TodayImg from "../../assets/today_img.svg";
 import TomorrowImg from "../../assets/tomorrow_image.svg";
@@ -8,7 +8,7 @@ import FouinImg from "../../assets/fouin_img.svg";
 import styles from "./SearchTime.module.css";
 import { BiChevronRight } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import Container from "../common/Container/Container";
+import Container from "../common/Container";
 import { showErrorSnackbar } from "../../utils/showErrorSnackBar";
 
 const SearchTime = () => {

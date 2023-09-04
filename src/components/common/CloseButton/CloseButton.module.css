@@ -1,0 +1,17 @@
+.close_button {
+    margin-left: auto;
+    background: #F6F7F9;
+    min-width: 36px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+.close_button:hover {
+    background: #272931;
+}
+svg {
+    fill: #272931;
+}
+svg:hover {
+    fill: #ffffff;
+}

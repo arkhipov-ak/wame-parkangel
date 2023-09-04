@@ -18,7 +18,6 @@ const NavBar = () => {
      }
   }
 
-
   return (
     <nav className={styles.wrapper}>
       <button onClick={handleGoBack} className={styles.return__btn}>

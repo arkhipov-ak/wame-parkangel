@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import NavBar from "../NavBar/NavBar";
+import NavBar from "../NavBar";
 import styles from "./ChooseTimeToday.module.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";

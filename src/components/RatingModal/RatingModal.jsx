@@ -1,5 +1,5 @@
 import { useState } from "react";
-import NavBar from "../NavBar/NavBar";
+import NavBar from "../NavBar";
 import Toggle from "react-styled-toggle";
 import styles from "./RatingModal.module.css";
 

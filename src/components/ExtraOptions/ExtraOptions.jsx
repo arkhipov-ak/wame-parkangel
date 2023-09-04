@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import NavBar from "../NavBar/NavBar";
+import NavBar from "../NavBar";
 import Toggle from "react-styled-toggle";
 import styles from "./ExtraOptions.module.css";
 import { Checkbox } from "antd";

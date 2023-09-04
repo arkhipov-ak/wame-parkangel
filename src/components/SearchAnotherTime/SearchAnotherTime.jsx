@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import NavBar from "../NavBar/NavBar";
+import NavBar from "../NavBar";
 import styles from "./SearchAnotherTime.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { BiChevronRight } from "react-icons/bi";

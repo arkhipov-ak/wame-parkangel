@@ -1,12 +1,5 @@
-import React from 'react'
-import SearchToday from '../components/SearchToday/SearchToday'
+import SearchToday from "../components/SearchToday/SearchToday";
 
-const SearchTodayPage = () => {
-  return (
-    <div>
-      <SearchToday day={"cегодня"}/>
-    </div>
-  )
-}
+const SearchTodayPage = () => <SearchToday day={"cегодня"}/>
 
-export default SearchTodayPage
+export default SearchTodayPage;

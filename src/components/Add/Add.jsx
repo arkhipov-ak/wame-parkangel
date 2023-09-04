@@ -1,5 +1,5 @@
 import React from "react";
-import NavBar from "../NavBar/NavBar";
+import NavBar from "../NavBar";
 import styles from "./Add.module.css";
 import edit from "../../assets/edit.svg";
 import eye from "../../assets/eye.svg";

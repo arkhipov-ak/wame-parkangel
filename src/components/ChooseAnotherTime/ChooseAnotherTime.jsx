@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
 import { useNavigate } from "react-router-dom";
-import NavBar from "../NavBar/NavBar";
+import NavBar from "../NavBar";
 import styles from "./ChooseAnotherTime.module.css";
 import navigation from "../../assets/navigation.svg";
 import axios from "axios";

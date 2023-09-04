@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./FAQ.module.css";
-import NavBar from "../NavBar/NavBar";
+import NavBar from "../NavBar";
 
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import axios from "axios";

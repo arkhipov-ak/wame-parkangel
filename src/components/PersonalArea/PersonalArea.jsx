@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import NavBar from "../NavBar/NavBar";
+import NavBar from "../NavBar";
 import styles from "./PersonalArea.module.css";
 import { Checkbox } from "antd";
 
