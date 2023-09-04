@@ -18,6 +18,10 @@
   font-weight: 500;
   font-size: 130%;
 }
+.last_icon {
+  width: 25px;
+  height: 25px;
+}
 .title {
   color: var(--black, #192342);
   font-family: Montserrat;
@@ -68,7 +72,6 @@
   line-height: normal;
   opacity: 0.7;
 }
-
 .wrapper_rentCard .secondRow p {
   margin: 0; /* Удалит стандартные отступы у <p> */
 }
@@ -78,7 +81,7 @@
 .wrapper_rentCard .secondRow p {
   line-height: 1.2;
 }
-.noAds {
+.no_history {
   margin: 0 auto;
   padding: 5% 0 5% 0;
 }

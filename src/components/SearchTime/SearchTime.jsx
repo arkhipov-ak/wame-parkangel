@@ -92,7 +92,7 @@ const SearchTime = () => {
             />
             <p className={styles.text_today}>На завтра</p>
           </Link>
-          <Link to="/SearchAnotherTime" className={styles.card_today}>
+          <Link to="/search-another-time" className={styles.card_today}>
             {!isImageLoaded && (
               <div
                 style={{
@@ -110,7 +110,7 @@ const SearchTime = () => {
               style={{ display: isImageLoaded ? "block" : "none" }}
             />
             <p className={styles.text_today}>На другой срок</p>
-            <BiChevronRight />
+            <BiChevronRight className={styles.last_icon}/>
           </Link>
           <a href="#" className={styles.title}>
             {isSearchFromChild ? "Как снять парковку?" : "Как сдать парковку?"}
@@ -130,7 +130,7 @@ const SearchTime = () => {
                   </div>
                 ))
               ) : (
-                <div className={styles.noAds}>История аренды пуста</div>
+                <div className={styles.no_history}>История аренды пуста</div>
               )}
             </div>
           </div>

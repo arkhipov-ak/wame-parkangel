@@ -65,7 +65,7 @@ const App = () => {
               <Route path="/ShowMapResult" element={<ShowMapResultPage/>}/>
               <Route path="/search-today" element={<SearchTodayPage/>}/>
               <Route
-                path="/SearchAnotherTime"
+                path="/search-another-time"
                 element={<SearchAnotherTimePage/>}
               />
               <Route path="/search-tomorrow" element={<SearchTomorrowPage/>}/>

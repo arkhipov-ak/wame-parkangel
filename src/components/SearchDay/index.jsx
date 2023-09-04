@@ -6,10 +6,10 @@ import { BiChevronRight } from "react-icons/bi";
 import Container from "../common/Container";
 import HoursCounterBlock from "../common/HoursCounterBlock";
 import Modal from "../common/Modal";
+import Button from "../common/Button";
 
 const SearchDay = ({ day }) => {
   const [hoursCount, setHoursCount] = useState(1); // начальное значение часов
-  const [activeButton, setActiveButton] = useState(null);
   const [openTimeModal, setOpenTimeModal] = useState(false);
   const [selectedHour, setSelectedHour] = useState("00");
   const [selectedMinute, setSelectedMinute] = useState("00");
@@ -39,10 +39,6 @@ const SearchDay = ({ day }) => {
 
   const closeModal = () => {
     setOpenTimeModal(false);
-  };
-
-  const handleButtonClick = (buttonId) => {
-    setActiveButton(buttonId);
   };
 
   const hoursArray = Array.from({ length: 24 }, (_, i) =>
@@ -93,6 +89,10 @@ const SearchDay = ({ day }) => {
         </div>
         <span className={styles.label}>На сколько часов</span>
         <HoursCounterBlock hoursCount={hoursCount} setHoursCount={setHoursCount}/>
+        <Link to={"/rating"} className={styles.btn_style}>
+          Доп. параметры <BiChevronRight className={styles.last_icon}/>
+        </Link>
+        <Button onClick={handleRedirect} text="Быстрая парковка"/>
         {openTimeModal && (
           <Modal setOpenModal={setOpenTimeModal} openModal={openTimeModal}>
             <>
@@ -150,21 +150,6 @@ const SearchDay = ({ day }) => {
             </>
           </Modal>
         )}
-        <Link
-          to={"/rating"}
-          className={`${styles.btn_style} ${
-            activeButton === "moscow" ? styles.active : ""
-          }`}
-          onClick={() => {
-            handleButtonClick("moscow");
-            /* handleRedirectToOption; */
-          }}
-        >
-          Доп. параметры <BiChevronRight className={styles.last_icon}/>
-        </Link>
-        <button type="button" onClick={handleRedirect} className={styles.search_btn}>
-          Быстрая парковка
-        </button>
       </Container>
     </>
   );

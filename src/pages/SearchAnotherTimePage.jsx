@@ -1,12 +1,5 @@
-import React from 'react'
-import SearchAnotherTime from '../components/SearchAnotherTime/SearchAnotherTime'
+import SearchAnotherTime from "../components/SearchAnotherTime";
 
-const SearchAnotherTimePage = () => {
-  return (
-    <div>
-      <SearchAnotherTime/>
-    </div>
-  )
-}
+const SearchAnotherTimePage = () => <SearchAnotherTime/>
 
-export default SearchAnotherTimePage
+export default SearchAnotherTimePage;
