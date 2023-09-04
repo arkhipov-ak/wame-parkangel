@@ -1,29 +1,22 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import NavBar from "../NavBar/NavBar";
 import styles from "./SearchToday.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { BiChevronRight } from "react-icons/bi";
-import { useDataContext } from "../../DataContext";
+import { declOfNum } from "../../utils/functions";
 
 const SearchToday = ({ day }) => {
   const [hoursCount, setHoursCount] = useState(1); // начальное значение часов
-  const [activeButton, setActiveButton] = React.useState(null);
-  const [activeMapButton, setActiveMapButton] = React.useState(null);
-  const [activeButtonLocation, setActiveButtonLocation] = React.useState(null);
+  const [activeButton, setActiveButton] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [selectedDate, setSelectedDate] = useState("");
   const [selectedHour, setSelectedHour] = useState("00");
   const [selectedMinute, setSelectedMinute] = useState("00");
-  const { setSelectedData } = useDataContext();
-
   const [tempHour, setTempHour] = useState("00");
   const [tempMinute, setTempMinute] = useState("00");
   const hourRef = useRef(null);
   const minuteRef = useRef(null);
-  const [activeMapButtonLocation, setActiveMapButtonLocation] =
-    React.useState(null);
-
   const navigate = useNavigate();
+
   const handleRedirect = () => {
     const selectedData = {
       selectedHour,
@@ -34,16 +27,10 @@ const SearchToday = ({ day }) => {
     navigate("/SelectAdressLocation");
   };
   
-  const handleRedirectToOption = () => {
+  /* const handleRedirectToOption = () => {
     navigate("/rating");
-  };
-  const handleButtonLocationClick = (buttonId) => {
-    setActiveButton(buttonId);
-  };
+  }; */
 
-  const handleMapButtonLocationClick = (buttonId) => {
-    setActiveMapButton(buttonId);
-  };
   const openModal = () => {
     setShowModal(true);
   };
@@ -54,10 +41,6 @@ const SearchToday = ({ day }) => {
 
   const handleButtonClick = (buttonId) => {
     setActiveButton(buttonId);
-  };
-
-  const handleMapButtonClick = (buttonId) => {
-    setActiveMapButton(buttonId);
   };
 
   const increment = () => {
@@ -77,10 +60,7 @@ const SearchToday = ({ day }) => {
   const hoursArray = Array.from({ length: 24 }, (_, i) =>
     i < 10 ? `0${i}` : `${i}`
   );
-  const minutesArray = Array.from({ length: 60 }, (_, i) =>
-    i < 10 ? `0${i}` : `${i}`
-  );
-  const dateRef = useRef(null);
+
   useEffect(() => {
     if (showModal) {
       const hourElement = hourRef.current.querySelector(`.${styles.selected}`);
@@ -94,6 +74,7 @@ const SearchToday = ({ day }) => {
         minuteElement.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   }, [showModal, tempHour, tempMinute]);
+
   const currentDate = new Date();
   const currentHour = currentDate.getHours();
   const currentMinute = currentDate.getMinutes();
@@ -118,34 +99,21 @@ const SearchToday = ({ day }) => {
     <div>
       <NavBar />
       <div className={styles.container}>
-        <div>
+        <div className={styles.wrapper_content}>
           <div>
-            <p className={styles.give_today}>Найти на {day}</p>
-            <p
-              style={{
-                fontSize: "18px",
-              }}
-            >
-              Время начала
-            </p>
+            <h2 className={styles.give_today}>Найти на {day}</h2>
+            <span className={styles.label}>Время начала</span>
             <div onClick={openModal} className={styles.time_present}>
               {selectedHour}:{selectedMinute}
             </div>
 
-            <p>На сколько часов</p>
+            <span className={styles.label}>На сколько часов</span>
             <div className={styles.incrementWrapper}>
-              <p
-                onClick={decrement}
-                className={styles.incrementWithBorderMinus}
-              >
-                {" "}
-                -{" "}
-              </p>
-              <p>{hoursCount} часов</p>
-              <p className={styles.incrementWithBorderPlus} onClick={increment}>
-                {" "}
-                +{" "}
-              </p>
+              <span onClick={decrement} className={styles.incrementWithBorderMinus}>-</span>
+              <span className={styles.hours}>
+                {hoursCount} {declOfNum({number: hoursCount, array: ["час", "часа", "часов"]})}
+              </span>
+              <span onClick={increment} className={styles.incrementWithBorderPlus}>+</span>
             </div>
 
             {showModal && (
@@ -214,22 +182,19 @@ const SearchToday = ({ day }) => {
             )}
           </div>
           <div>
-            <div>
-              <p></p>
-              <Link
-                to={"/rating"}
-                className={`${styles.btn_style} ${
-                  activeButton === "moscow" ? styles.active : ""
-                }`}
-                onClick={() => {
-                  handleButtonClick("moscow");
-                  handleRedirectToOption;
-                }}
-              >
-                Доп. параметры <BiChevronRight className={styles.last_icon} />
-              </Link>
-            </div>
-            <button onClick={handleRedirect} className={styles.search_btn}>
+            <Link
+              to={"/rating"}
+              className={`${styles.btn_style} ${
+                activeButton === "moscow" ? styles.active : ""
+              }`}
+              onClick={() => {
+                handleButtonClick("moscow");
+                /* handleRedirectToOption; */
+              }}
+            >
+              Доп. параметры <BiChevronRight className={styles.last_icon}/>
+            </Link>
+            <button type="button" onClick={handleRedirect} className={styles.search_btn}>
               Быстрая парковка
             </button>
           </div>
