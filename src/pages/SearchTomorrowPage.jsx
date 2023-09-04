@@ -1,12 +1,5 @@
-import React from 'react'
-import SearchTomorrow from '../components/SearchTomorrow/SearchTomorrow'
+import SearchTomorrow from "../components/SearchTomorrow";
 
-const SearchTomorrowPage = () => {
-  return (
-    <div>
-      <SearchTomorrow/>
-    </div>
-  )
-}
+const SearchTomorrowPage = () => <SearchTomorrow/>
 
-export default SearchTomorrowPage
+export default SearchTomorrowPage;

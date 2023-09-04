@@ -7,7 +7,7 @@ import Container from "../common/Container";
 import HoursCounterBlock from "../common/HoursCounterBlock";
 import Modal from "../common/Modal";
 
-const SearchToday = ({ day }) => {
+const SearchDay = ({ day }) => {
   const [hoursCount, setHoursCount] = useState(1); // начальное значение часов
   const [activeButton, setActiveButton] = useState(null);
   const [openTimeModal, setOpenTimeModal] = useState(false);
@@ -170,4 +170,4 @@ const SearchToday = ({ day }) => {
   );
 };
 
-export default SearchToday;
+export default SearchDay;

@@ -63,12 +63,12 @@ const App = () => {
                 element={<ChooseAnotherTimePage/>}
               />
               <Route path="/ShowMapResult" element={<ShowMapResultPage/>}/>
-              <Route path="/SearchToday" element={<SearchTodayPage/>}/>
+              <Route path="/search-today" element={<SearchTodayPage/>}/>
               <Route
                 path="/SearchAnotherTime"
                 element={<SearchAnotherTimePage/>}
               />
-              <Route path="/SearchTomorrow" element={<SearchTomorrowPage/>}/>
+              <Route path="/search-tomorrow" element={<SearchTomorrowPage/>}/>
               <Route path="/SelectInMap" element={<SelectInMapPage/>}/>
               <Route path="/Review" element={<ReviewPage/>}/>
               <Route path="/YourAdd" element={<YourAddPage/>}/>

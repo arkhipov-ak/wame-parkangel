@@ -49,7 +49,7 @@ const SearchTime = () => {
         <SelectSearchGive setIsSearchActiveProp={setIsSearchFromChild} />
         <div className={styles.wrapper_cards}>
           <Link
-            to={isSearchFromChild ? "/SearchToday" : "/ChooseTimeToday"}
+            to={isSearchFromChild ? "/search-today" : "/ChooseTimeToday"}
             className={styles.card_today}
           >
             {!isImageLoaded && (
@@ -71,7 +71,7 @@ const SearchTime = () => {
             <p className={styles.text_today}>На сегодня</p>
           </Link>
           <Link
-            to={isSearchFromChild ? "/SearchTomorrow" : "/ChooseTimeTomorrow"}
+            to={isSearchFromChild ? "/search-tomorrow" : "/ChooseTimeTomorrow"}
             className={styles.card_today}
           >
             {!isImageLoaded && (
