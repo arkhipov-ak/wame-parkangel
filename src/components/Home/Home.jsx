@@ -1,23 +1,37 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styles from "./Home.module.css";
 import Logotype from "/src/assets/logo.svg";
 import { useNavigate } from "react-router-dom";
-import Skeleton from 'react-loading-skeleton';
-let tg = window.Telegram.WebApp;
+import axios from "axios";
 
 const Home = () => {
   const [isImageLoaded, setImageLoaded] = useState(false);
   const navigate = useNavigate();
-  tg.expand()
+
   useEffect(() => {
+    window.Telegram.WebApp.ready();
+    const tg = window?.Telegram?.WebApp;
     tg.expand()
-    const timer = setTimeout(() => {
-      navigate('/profile');
-    }, 2500);
-    return () => {
-      clearTimeout(timer);
-    };
+
+    const renderAgreementInfo = async () => {
+      const user = tg.initDataUnsafe.user;
+      if (user) {
+        const chatId = user.id;
+        await axios.get(`http://185.238.2.176:5064/api/users/chatId/${chatId}`)
+          .then(response => {
+            if (response.data.isAcceptAgreement) return;
+            navigate('/agreement');
+          })
+          .catch(error => {
+            console.log(error);
+            navigate('/agreement');
+          })
+      }
+    }
+
+    renderAgreementInfo();
   }, [navigate]);
+
   const handleImageLoad = () => {
     setImageLoaded(true);
   };

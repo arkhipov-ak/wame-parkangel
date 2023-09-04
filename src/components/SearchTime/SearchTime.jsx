@@ -20,9 +20,10 @@ const SearchTime = () => {
 
   useEffect(() => {
     // Здесь производится GET запрос на получение данных о рекламных объявлениях
-    axios.get("/api/ad")
+    axios.get("http://185.238.2.176:5064/api/ad")
       .then(response => {
-        setAdData(response.data);
+        console.log(response);
+        setAdData(response.data.response);
       })
       .catch(error => {
         console.error("Error fetching ad data:", error);

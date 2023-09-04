@@ -61,7 +61,7 @@ const NavBar = () => {
               <Link className={styles.linkfor} to="/faq">Частые вопросы</Link>
               <Link className={styles.linkfor} to="/AboutService">О сервисе</Link>
               <Link className={styles.linkfor} to="/home">Связь с поддержкой</Link>
-              <Link className={styles.linkfor} to="/profile">
+              <Link className={styles.linkfor} to="/agreement">
                 Пользовательское <br /> соглашение
               </Link>
             </div>

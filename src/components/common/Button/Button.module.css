@@ -1,0 +1,16 @@
+.button {
+    display: inline-flex;
+    padding: 0.875rem 3.5rem 0.875rem 3.4375rem;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.9375rem;
+    background: #8a8aa4;
+    box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+    color: white;
+    border: none;
+    font-size: 0.999rem;
+    font-style: normal;
+    font-weight: 450;
+    font-family: Montserrat;
+  }

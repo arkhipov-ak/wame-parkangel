@@ -1,7 +1,6 @@
-import React from "react";
 import HomePage from "./pages/HomePage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import ProfilePage from "./pages/ProfilePage";
+import AgreementPage from "./pages/AgreementPage";
 import SelectAdressLocationPage from "./pages/SelectAdressLocationPage";
 import AboutServicePage from "./pages/AboutServicePage";
 import FAQPage from "./pages/FAQPage";
@@ -33,9 +32,9 @@ const App = () => {
         <ScrollToTop />
         <div>
           <Routes>
-            <Route path="/home" element={<SearchTimePage />} />
-            <Route path="/" exact element={<HomePage />} />
-            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/home" element={<SearchTimePage/>} />
+            <Route path="/" exact element={<HomePage/>} />
+            <Route path="/agreement" element={<AgreementPage/>} />
             <Route
               path="/SelectAdressLocation"
               element={<SelectAdressLocationPage />}

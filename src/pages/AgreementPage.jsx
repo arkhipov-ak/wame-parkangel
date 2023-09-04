@@ -1,7 +1,6 @@
-import React from 'react'
 import Profile from '../components/Profile/Profile'
 
-const ProfilePage = () => {
+const AgreementPage = () => {
   return (
     <>
       <Profile/>
@@ -9,4 +8,4 @@ const ProfilePage = () => {
   )
 }
 
-export default ProfilePage
+export default AgreementPage

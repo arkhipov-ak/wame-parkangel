@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
 import styles from "./Profile.module.css";
 import ParkAngel from "/src/assets/ParkAngel.svg";
 import { useNavigate } from "react-router-dom";
+import Button from "../common/Button/Button";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -11,26 +11,9 @@ const Profile = () => {
     setImageLoaded(true);
   };
 
-  const [shouldShowContinueButton, setShouldShowContinueButton] = useState(false);
-
   const handleRedirect = () => {
     navigate("/home");
   };
-
-  useEffect(() => {
-    // Здесь производится запрос к API
-    axios.get("/api/sogl")
-      .then(response => {
-        // Если ответ от API равен true, показываем новый текст кнопки
-        if (response.data === true) {
-          setShouldShowContinueButton(true);
-        }
-      })
-      .catch(error => {
-        console.error("Error fetching data from API:", error);
-      });
-  }, []);
-
 
   return (
     <div className={styles.container}>
@@ -75,15 +58,7 @@ const Profile = () => {
             удаление Вашей информации из нашей базы данных.
           </p>
         </div>
-        {shouldShowContinueButton ? (
-          <button onClick={handleRedirect} className={styles.submit}>
-            Продолжить
-          </button>
-        ) : (
-          <button onClick={handleRedirect} className={styles.submit}>
-            Я согласен
-          </button>
-        )}
+        <Button onClick={handleRedirect} text="Я согласен"/>
       </div>
     </div>
   );

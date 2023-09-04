@@ -155,7 +155,7 @@ const RatingModal = () => {
           </div>
         </div>
         <div className={styles.cont}>
-          <h2 className={styles.title}>Макс. стоимость в час, руб</h2>
+          <h2 className={styles.title}>Макс. стоимость в час</h2>
           <div className={styles.incrementWrapper}>
             <p onClick={decrement} className={styles.incrementWithBorderMinus}>-</p>
             <p className={styles.price}>{price} руб</p>
