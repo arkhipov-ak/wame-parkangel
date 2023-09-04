@@ -16,12 +16,11 @@ const Home = () => {
 
     const renderAgreementInfo = async () => {
       const user = tg.initDataUnsafe.user;
-      if (!user) {
+      if (user) {
         const chatId = user.id;
         await axios.get(`http://185.238.2.176:5064/api/users/chatId/${chatId}`)
           .then(response => {
-            if (!response.data.response.isAcceptAgreement) return navigate("/search-time");
-            console.log('after if');
+            if (response.data.response.isAcceptAgreement) return navigate("/search-time");
             navigate("/agreement");
           })
           .catch(() => showErrorSnackbar({ message: "Что-то пошло не так", tryAgain: false }))
@@ -29,6 +28,7 @@ const Home = () => {
     }
    
     const timer = setTimeout(() => renderAgreementInfo(), 2500)
+
     return () => {
       clearTimeout(timer);
     };
