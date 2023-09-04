@@ -1,0 +1,24 @@
+.btn_style {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3.5rem;
+  text-decoration: none;
+  flex-shrink: 0;
+  border-radius: 0.9375rem;
+  background: #fff;
+  color: #192342;
+  font-size: 20px;
+  white-space: nowrap;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+  border: none;
+  margin: 5% 0 15% 0;
+  width: 100%;
+}
+.btn_style.active {
+  border: 2px solid #8a8aa4;
+}
+.last_icon {
+  width: 25px;
+  height: 25px;
+}

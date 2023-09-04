@@ -1,4 +1,4 @@
-import SearchTime from "../components/SearchTime/SearchTime";
+import SearchTime from "../components/SearchTime";
 
 const SearchTimePage = () => <SearchTime/>
 

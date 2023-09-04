@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import NavBar from "../NavBar";
 import styles from "./SearchToday.module.css";
-import { Link, useNavigate } from "react-router-dom";
-import { BiChevronRight } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 import Container from "../common/Container";
 import HoursCounterBlock from "../common/HoursCounterBlock";
 import Modal from "../common/Modal";
 import Button from "../common/Button";
+import ParametersButton from "../common/ParametersButton";
 
 const SearchDay = ({ day }) => {
   const [hoursCount, setHoursCount] = useState(1); // начальное значение часов
@@ -80,7 +80,7 @@ const SearchDay = ({ day }) => {
 
   return (
     <>
-      <NavBar />
+      <NavBar/>
       <Container>
         <h2 className={styles.give_today}>Найти на {day}</h2>
         <span className={styles.label}>Время начала</span>
@@ -89,9 +89,7 @@ const SearchDay = ({ day }) => {
         </div>
         <span className={styles.label}>На сколько часов</span>
         <HoursCounterBlock hoursCount={hoursCount} setHoursCount={setHoursCount}/>
-        <Link to={"/rating"} className={styles.btn_style}>
-          Доп. параметры <BiChevronRight className={styles.last_icon}/>
-        </Link>
+        <ParametersButton link="/rating"/>
         <Button onClick={handleRedirect} text="Быстрая парковка"/>
         {openTimeModal && (
           <Modal setOpenModal={setOpenTimeModal} openModal={openTimeModal}>
