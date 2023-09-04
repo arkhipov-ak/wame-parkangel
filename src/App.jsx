@@ -56,7 +56,7 @@ const App = () => {
               />
               <Route path="/PersonalArea" element={<PersonalAreaPage/>}/>
               <Route path="/ResultSearch" element={<ResultSearchPage/>}/>
-              <Route path="/ExtraOptions" element={<ExtraOptionsPage/>}/>
+              <Route path="/extra-options" element={<ExtraOptionsPage/>}/>
               <Route path="/rating" element={<RatingModalPage/>}/>
               <Route
                 path="/ChooseAnotherTime"

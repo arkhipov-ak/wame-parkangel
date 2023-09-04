@@ -1,12 +1,5 @@
-import React from 'react'
-import ExtraOptions from '../components/ExtraOptions/ExtraOptions'
+import ExtraOptions from "../components/ExtraOptions/ExtraOptions";
 
-const ExtraOptionsPage = () => {
-  return (
-    <div>
-      <ExtraOptions/>
-    </div>
-  )
-}
+const ExtraOptionsPage = () => <ExtraOptions/>
 
-export default ExtraOptionsPage
+export default ExtraOptionsPage;

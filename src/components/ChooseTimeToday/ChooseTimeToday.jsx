@@ -44,7 +44,7 @@ const ChooseTimeToday = ({ day }) => {
   const navigate = useNavigate();
 
   const handleRedirect = () => {
-    navigate("/extraoptions");
+    navigate("/extra-options");
     };
   const handleRedirectToMap = () => {
     navigate("/ChooseAnotherTime");
