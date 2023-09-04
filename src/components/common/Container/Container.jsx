@@ -2,9 +2,9 @@ import styles from "./Container.module.css";
 
 const Container = ({ children }) => {
   return (
-    <div className={styles.container}>
+    <section className={styles.container}>
       {children}
-    </div>
+    </section>
   );
 };
 

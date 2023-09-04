@@ -1,11 +1,5 @@
-import Profile from '../components/Profile/Profile'
+import Agreement from '../components/Agreement/Agreement'
 
-const AgreementPage = () => {
-  return (
-    <>
-      <Profile/>
-    </>
-  )
-}
+const AgreementPage = () => <Agreement/>
 
 export default AgreementPage

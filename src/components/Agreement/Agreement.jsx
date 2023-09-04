@@ -4,7 +4,7 @@ import ParkAngel from "/src/assets/ParkAngel.svg";
 import { useNavigate } from "react-router-dom";
 import Button from "../common/Button/Button";
 
-const Profile = () => {
+const Agreement = () => {
   const navigate = useNavigate();
   const [isImageLoaded, setImageLoaded] = useState(false);
   const handleImageLoad = () => {
@@ -12,7 +12,7 @@ const Profile = () => {
   };
 
   const handleRedirect = () => {
-    navigate("/home");
+    navigate("/search-time");
   };
 
   return (
@@ -64,4 +64,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Agreement;

@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import NavBar from "../NavBar/NavBar";
 import SelectSearchGive from "./selectSearchGive/selectSearchGive";
@@ -8,6 +8,7 @@ import FouinImg from "../../assets/fouin_img.svg";
 import styles from "./SearchTime.module.css";
 import { BiChevronRight } from "react-icons/bi";
 import { Link } from "react-router-dom";
+import Container from "../common/Container/Container";
 
 const SearchTime = () => {
   const [isSearchFromChild, setIsSearchFromChild] = useState(true);
@@ -21,19 +22,16 @@ const SearchTime = () => {
   useEffect(() => {
     // Здесь производится GET запрос на получение данных о рекламных объявлениях
     axios.get("http://185.238.2.176:5064/api/ad")
-      .then(response => {
-        console.log(response);
-        setAdData(response.data.response);
-      })
+      .then(response => setAdData(response.data.response))
       .catch(error => {
         console.error("Error fetching ad data:", error);
       });
   }, []);
 
   return (
-    <div>
-      <NavBar />
-      <section className={styles.container}>
+    <>
+      <NavBar/>
+      <Container>
         <SelectSearchGive setIsSearchActiveProp={setIsSearchFromChild} />
         <div className={styles.wrapper_cards}>
           <Link
@@ -125,8 +123,8 @@ const SearchTime = () => {
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </Container>
+    </>
   );
 };
 

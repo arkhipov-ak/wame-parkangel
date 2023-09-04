@@ -1,10 +1,4 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 10%;
-  max-width: 1200px; /* это опционально, но позволяет контейнеру иметь максимальную ширину, например, 1200px, чтобы на больших экранах он не становился слишком широким */
-}
+
 .card_today {
   display: inline-flex;
   padding-left: 0.625rem;

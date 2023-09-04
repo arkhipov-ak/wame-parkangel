@@ -9,8 +9,7 @@ const SelectSearchGive = ({ setIsSearchActiveProp }) => {
   }, [isSearchActive, setIsSearchActiveProp]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.wrapper}>
+    <div className={styles.wrapper}>
         <button
           className={isSearchActive ? styles.active_btn : styles.not_active_btn}
           onClick={() => setIsSearchActive(true)}
@@ -23,7 +22,6 @@ const SelectSearchGive = ({ setIsSearchActiveProp }) => {
         >
           Сдать
         </button>
-      </div>
     </div>
   );
 };

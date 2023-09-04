@@ -13,7 +13,7 @@ const Home = () => {
     const tg = window?.Telegram?.WebApp;
     tg.expand()
 
-    const renderAgreementInfo = async () => {
+    /* const renderAgreementInfo = async () => {
       const user = tg.initDataUnsafe.user;
       if (user) {
         const chatId = user.id;
@@ -27,9 +27,11 @@ const Home = () => {
             navigate('/agreement');
           })
       }
-    }
+    } */
+   
+    /* renderAgreementInfo(); */
 
-    renderAgreementInfo();
+    navigate('/agreement');
   }, [navigate]);
 
   const handleImageLoad = () => {
@@ -49,7 +51,7 @@ const Home = () => {
           }} />
         )
       }
-      <img src={Logotype} alt="Логотип" onLoad={handleImageLoad} style={{ display: isImageLoaded ? 'block' : 'none' }} />
+      <img src={Logotype} alt="Логотип" onLoad={handleImageLoad} style={{ display: isImageLoaded ? "block" : "none" }} />
       <p className={styles.text_main}>
         {isImageLoaded ? "Сервис по поиску  и сдаче машино-мест:" : "Загрузка..."}
       </p>
