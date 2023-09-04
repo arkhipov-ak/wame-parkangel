@@ -1,0 +1,29 @@
+.checkbox_wrapper {
+  display: flex;
+	align-items: center;
+}
+.checked, .not_checked {
+  min-width: 22px;
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+  border: 1px solid #8A8AA4;
+}
+.checked {
+  background: #8A8AA4;
+}
+.not_checked {
+  background: #ffffff;
+}
+.label {
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 16px;
+  color: #192342;
+  margin: 0 0 0 10px;
+}

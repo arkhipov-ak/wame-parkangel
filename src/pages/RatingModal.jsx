@@ -1,12 +1,5 @@
-import React from 'react'
-import RatingModal from '../components/RatingModal/RatingModal'
+import RatingModal from "../components/RatingModal";
 
-const RatingModalPage = () => {
-  return (
-    <div>
-      <RatingModal/>
-    </div>
-  )
-}
+const RatingModalPage = () => <RatingModal/>
 
-export default RatingModalPage
+export default RatingModalPage;

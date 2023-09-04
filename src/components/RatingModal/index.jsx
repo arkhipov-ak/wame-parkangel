@@ -2,12 +2,19 @@ import { useState } from "react";
 import NavBar from "../NavBar";
 import Toggle from "react-styled-toggle";
 import styles from "./RatingModal.module.css";
+import Container from "../common/Container";
+import CustomCheckBox from "../common/CustomCheckbox";
 
 const RatingModal = () => {
   const [price, setPrice] = useState(350); // начальное значение цены
   const [height, setHeight] = useState("");
   const [height1, setHeight1] = useState("");
   const [height2, setHeight2] = useState("");
+  const [underground, setUnderground] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [covered, setCovered] = useState(false);
+  const [garage, setGarage] = useState(false);
+  
   const increment = () => {
     setPrice((prevHours) => prevHours + 10);
   };
@@ -43,25 +50,23 @@ const RatingModal = () => {
   };
   return (
     <div>
-      <NavBar />
-      <div className={styles.wrapper}>
+      <NavBar/>
+      <Container>
         <div className={styles.container}>
           <div className={styles.boxContainer}>
             <span className={styles.main_text}>Тип парковки</span>
-            <label>
-              <input type="radio" name="parkingType" value="Подземная" />{" "}
+            <CustomCheckBox checked={underground} onClick={setUnderground}>
               Подземная
-            </label>
-            <label>
-              <input type="radio" name="parkingType" value="Открытая" />{" "}
+            </CustomCheckBox>
+            <CustomCheckBox checked={open} onClick={setOpen}>
               Открытая
-            </label>
-            <label>
-              <input type="radio" name="parkingType" value="Крытая" /> Крытая
-            </label>
-            <label>
-              <input type="radio" name="parkingType" value="Гараж" /> Гараж
-            </label>
+            </CustomCheckBox>
+            <CustomCheckBox checked={covered} onClick={setCovered}>
+              Крытая
+            </CustomCheckBox>
+            <CustomCheckBox checked={garage} onClick={setGarage}>
+              Гараж
+            </CustomCheckBox>
           </div>
 
           <div className={styles.toggleContainer}>
@@ -163,7 +168,7 @@ const RatingModal = () => {
           </div>
         </div>
         <button className={styles.submit}>Сохранить параметры</button>
-      </div>
+      </Container>
     </div>
   );
 };
