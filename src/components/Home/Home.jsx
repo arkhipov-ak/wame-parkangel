@@ -10,7 +10,6 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('in use effect');
     window.Telegram.WebApp.ready();
     const tg = window?.Telegram?.WebApp;
     tg.expand()
@@ -18,10 +17,11 @@ const Home = () => {
     const renderAgreementInfo = async () => {
       const user = tg.initDataUnsafe.user;
       if (!user) {
-        /* const chatId = user.id; */
-        await axios.get(`http://185.238.2.176:5064/api/users/chatId/${3}`)
+        const chatId = user.id;
+        await axios.get(`http://185.238.2.176:5064/api/users/chatId/${chatId}`)
           .then(response => {
-            if (response.data.isAcceptAgreement) return;
+            if (!response.data.response.isAcceptAgreement) return navigate("/search-time");
+            console.log('after if');
             navigate("/agreement");
           })
           .catch(() => showErrorSnackbar({ message: "Что-то пошло не так", tryAgain: false }))
@@ -29,8 +29,6 @@ const Home = () => {
     }
    
     const timer = setTimeout(() => renderAgreementInfo(), 2500)
-
-    /* navigate('/agreement'); */
     return () => {
       clearTimeout(timer);
     };
