@@ -16,6 +16,7 @@ const Home = () => {
 
     const renderAgreementInfo = async () => {
       const user = tg.initDataUnsafe.user;
+      console.log(user);
       if (user) {
         const chatId = user.id;
         await axios.get(`http://185.238.2.176:5064/api/users/chatId/${chatId}`)
