@@ -18,9 +18,9 @@ const Home = () => {
       const user = tg.initDataUnsafe.user;
       console.log(user);
       if (user) {
-        const chatId = user.id;
-        console.log('chatId', chatId);
-        await axios.get(`http://185.238.2.176:5064/api/users/chatId/${chatId}`)
+        const userId = user.id;
+        console.log('userId', userId);
+        await axios.get(`http://185.238.2.176:5064/api/users/chatId/${userId}`)
           .then(response => {
             if (response.data.response.isAcceptAgreement) return navigate("/search-time");
             navigate("/agreement");

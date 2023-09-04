@@ -9,24 +9,38 @@ import styles from "./SearchTime.module.css";
 import { BiChevronRight } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import Container from "../common/Container/Container";
+import { showErrorSnackbar } from "../../utils/showErrorSnackBar";
 
 const SearchTime = () => {
   const [isSearchFromChild, setIsSearchFromChild] = useState(true);
   const [isImageLoaded, setImageLoaded] = useState(false);
-  const [adData, setAdData] = useState([]);
+  const [historyData, setHistoryData] = useState([]);
 
   const handleImageLoad = () => {
     setImageLoaded(true);
   };
 
-  useEffect(() => {
+ /*  useEffect(() => {
     // Здесь производится GET запрос на получение данных о рекламных объявлениях
     axios.get("http://185.238.2.176:5064/api/ad")
       .then(response => setAdData(response.data.response))
       .catch(error => {
         console.error("Error fetching ad data:", error);
       });
+  }, []); */
+
+  useEffect(() => {
+    window.Telegram.WebApp.ready();
+    const tg = window?.Telegram?.WebApp;
+    const user = tg.initDataUnsafe.user;
+    if (user) {
+      const userId = user.id;
+      axios.get(`http://185.238.2.176:5064/api/history/userId/${userId}`)
+        .then(response => setHistoryData(response.data.response))
+        .catch(() => showErrorSnackbar({ message: "Не удалось получить историю аренды", tryAgain: false }))
+    }
   }, []);
+
 
   return (
     <>
@@ -104,22 +118,20 @@ const SearchTime = () => {
           <div className={styles.wrapper_rent}>
             <h2 className={styles.history}>История аренды</h2>
             <div className={styles.wrapper_rentCard}>
-            {adData.length === 0 ? (
-              <div className={styles.noAds}>
-                У вас пока нет объявлений
-              </div>
-            ) : (
-              adData.map((ad, index) => (
-                <div key={index} className={styles.wrapper_rentCard}>
-                  <p className={styles.rent_location}>{ad.location}</p>
-                  <div className={styles.secondRow}>
-                    <p className={styles.rent_date}>{ad.date}</p>
-                    <p className={styles.rent_time}>{ad.time}</p>
-                    <p className={styles.rent_status}>{ad.status}</p>
+              {historyData.length ? (
+                historyData.map((history, index) => (
+                  <div key={index} className={styles.wrapper_rentCard}>
+                    <p className={styles.rent_location}>{history.location}</p>
+                    <div className={styles.secondRow}>
+                      <p className={styles.rent_date}>{history.date}</p>
+                      <p className={styles.rent_time}>{history.time}</p>
+                      <p className={styles.rent_status}>{history.status}</p>
+                    </div>
                   </div>
-                </div>
-              ))
-            )}
+                ))
+              ) : (
+                <div className={styles.noAds}>История аренды пуста</div>
+              )}
             </div>
           </div>
         </div>

@@ -29,17 +29,16 @@ import { SnackbarProvider } from "notistack";
 const App = () => {
   return (
     <SnackbarProvider
-						anchorOrigin={{
-							vertical: "top",
-							horizontal: "right",
-						}}
-						maxSnack={2}
-						autoHideDuration={2000}
-					>
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      maxSnack={2}
+      autoHideDuration={2000}
+    >
       <DataContextProvider>
         <Router>
           <ScrollToTop />
-          <div>
             <Routes>
               <Route path="/search-time" element={<SearchTimePage/>}/>
               <Route path="/" exact element={<HomePage/>} />
@@ -49,7 +48,7 @@ const App = () => {
                 element={<SelectAdressLocationPage/>}
               />
               <Route path="/AboutService" element={<AboutServicePage/>}/>
-              <Route path="/FAQ" element={<FAQPage />} />
+              <Route path="/FAQ" element={<FAQPage/>}/>
               <Route path="/ChooseTimeToday" element={<ChooseTimeTodayPage/>}/>
               <Route
                 path="/ChooseTimeTomorrow"
@@ -77,7 +76,6 @@ const App = () => {
               <Route path="/Add" element={<AddPage/>}/>
               <Route path="/ChooseMap" element={<ChooseMap/>}/>
             </Routes>
-          </div>
         </Router>
       </DataContextProvider>
     </SnackbarProvider>
