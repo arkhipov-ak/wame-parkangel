@@ -25,10 +25,7 @@ const Home = () => {
             if (response.data.response.isAcceptAgreement) return navigate("/search-time");
             navigate("/agreement");
           })
-          .catch((error) => {
-            console.log(error);
-            showErrorSnackbar({ message: "Что-то пошло не так", tryAgain: false })
-          })
+          .catch(() => showErrorSnackbar({ message: "Что-то пошло не так", tryAgain: false }))
       }
     }
    
