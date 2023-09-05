@@ -22,10 +22,14 @@ const Home = () => {
         console.log('userId', userId);
         await axios.get(`http://185.238.2.176:5064/api/users/chatId/${userId}`)
           .then(response => {
+            console.log(response);
             if (response.data.response.isAcceptAgreement) return navigate("/search-time");
             navigate("/agreement");
           })
-          .catch(() => showErrorSnackbar({ message: "Что-то пошло не так", tryAgain: false }))
+          .catch(() => {
+            console.log('in catch');
+            showErrorSnackbar({ message: "Что-то пошло не так", tryAgain: false })
+          })
       }
     }
    
