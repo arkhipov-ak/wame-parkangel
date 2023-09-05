@@ -23,8 +23,8 @@
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
 }
 .active_round {
-  left: 2px;
+  left: 22px;
 }
 .not_active_round {
-  left: 22px;
+  left: 2px;
 }

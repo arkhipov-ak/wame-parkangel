@@ -82,10 +82,10 @@ label {
   font-size: 20px;
 }
 .parent_container {
-  display: flex; /* Это разместит дочерние элементы в ряд */
-  justify-content: space-between; /* Это добавит пространство между блоками */
+  display: flex;
+  justify-content: space-between;
   align-items: flex-start;
-  background-color: none;
+  gap: 10px;
 }
 .size_main_text {
   color: var(--black, #192342);
