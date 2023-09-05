@@ -1,13 +1,15 @@
 import { useState } from "react";
 import NavBar from "../NavBar";
-import Toggle from "react-styled-toggle";
 import styles from "./RatingModal.module.css";
 import Container from "../common/Container";
 import CustomCheckBox from "../common/CustomCheckbox";
 import SwitchToggle from "../common/SwitchToggle";
+import SizeInput from "../common/SizeInput";
+import PriceCounterBlock from "../common/PriceCounterBlock";
+import Button from "../common/Button";
 
 const RatingModal = () => {
-  const [price, setPrice] = useState(350); // начальное значение цены
+  const [price, setPrice] = useState(350);
   const [height, setHeight] = useState("");
   const [width, setWidth] = useState("");
   const [length, setLength] = useState("");
@@ -17,22 +19,11 @@ const RatingModal = () => {
   const [garage, setGarage] = useState(false);
   const [security, setSecurity] = useState(false);
   const [heating, setHeating] = useState(false);
-  const [electroUnderground, setElectroUnderground] = useState(false);
-  const [electroOpen, setElectroOpen] = useState(false);
-  const [electroCovered, setElectroCovered] = useState(false);
-  const [electroGarage, setElectroGarage] = useState(false);
+  const [electroVolts, setElectroVolts] = useState(false);
+  const [electro, setElectro] = useState(false);
+  const [electroVoltsAndCharger, setElectroVoltsAndCharger] = useState(false);
+  const [electroWithoutPower, setElectroWithoutPower] = useState(false);
   const [nonStandardSizes, setNonStandardSizes] = useState(false);
-  
-  const increment = () => {
-    setPrice((prevHours) => prevHours + 10);
-  };
-
-  const decrement = () => {
-    if (price > 0) {
-      // проверка, чтобы предотвратить отрицательные значения
-      setPrice((prevHours) => prevHours - 10);
-    }
-  };
 
   return (
     <div>
@@ -60,10 +51,14 @@ const RatingModal = () => {
         </div>
         <div className={styles.electro_wrapper}>
           <span className={styles.main_text}>Для электромобилей</span>
-          <CustomCheckBox checked={electroUnderground} onClick={setElectroUnderground}>Подземная</CustomCheckBox>
-          <CustomCheckBox checked={electroOpen} onClick={setElectroOpen}>Открытая</CustomCheckBox>
-          <CustomCheckBox checked={electroCovered} onClick={setElectroCovered}>Крытая</CustomCheckBox>
-          <CustomCheckBox checked={electroGarage} onClick={setElectroGarage}>Гараж</CustomCheckBox>
+          <CustomCheckBox checked={electroVolts} onClick={setElectroVolts}>220V</CustomCheckBox>
+          <CustomCheckBox checked={electro} onClick={setElectro}>Электромобиль</CustomCheckBox>
+          <CustomCheckBox checked={electroVoltsAndCharger} onClick={setElectroVoltsAndCharger}>
+            220V и зарядка электромобиля
+          </CustomCheckBox>
+          <CustomCheckBox checked={electroWithoutPower} onClick={setElectroWithoutPower}>
+            Без электропитания
+          </CustomCheckBox>
           <label>
             <SwitchToggle active={nonStandardSizes} onClick={setNonStandardSizes}/>
             Нестандартные размеры авто
@@ -72,47 +67,16 @@ const RatingModal = () => {
         <div className={styles.sizes_wrapper}>
           <span className={styles.main_text}>Размеры, м</span>
           <div className={styles.parent_container}>
-            <div className={styles.size_wrapper}>
-              <p className={styles.header_text}>Высота</p>
-              <input
-                type="number"
-                value={height}
-                onChange={e => setHeight(e.target.value)}
-                className={styles.parameter}
-                required
-              />
-            </div>
-            <div className={styles.size_wrapper}>
-              <p className={styles.header_text}>Ширина</p>
-              <input
-                type="number"
-                value={width}
-                onChange={e => setWidth(e.target.value)}
-                className={styles.parameter}
-                required
-              />
-            </div>
-            <div className={styles.size_wrapper}>
-              <p className={styles.header_text}>Длина</p>
-              <input
-                type="number"
-                value={length}
-                onChange={e => setLength(e.target.value)}
-                className={styles.parameter}
-                required
-              />
-            </div>
+            <SizeInput value={height} onChange={e => setHeight(e.target.value)} label="Высота"/>
+            <SizeInput value={width} onChange={e => setWidth(e.target.value)} label="Длина"/>
+            <SizeInput value={length} onChange={e => setLength(e.target.value)} label="Ширина"/>
           </div>
         </div>
-        <div className={styles.cont}>
-          <h2 className={styles.title}>Макс. стоимость в час</h2>
-          <div className={styles.incrementWrapper}>
-            <p onClick={decrement} className={styles.incrementWithBorderMinus}>-</p>
-            <p className={styles.price}>{price} руб</p>
-            <p className={styles.incrementWithBorderPlus} onClick={increment}>+</p>
-          </div>
+        <div className={styles.price_counter_wrapper}>
+          <span className={styles.main_text}>Макс. стоимость в час, руб</span>
+          <PriceCounterBlock price={price} setPrice={setPrice}/>
         </div>
-        <button className={styles.submit}>Сохранить параметры</button>
+        <Button onClick={() => {}} text="Сохранить параметры"/>
       </Container>
     </div>
   );

@@ -20,7 +20,7 @@ const HoursCounterBlock = ({ hoursCount, setHoursCount }) => {
     <div className={styles.incrementWrapper}>
       <span onClick={decrement} className={styles.incrementWithBorderMinus}>-</span>
       <span className={styles.hours}>
-      {hoursCount} {declOfNum({number: hoursCount, array: ["час", "часа", "часов"]})}
+        {hoursCount} {declOfNum({number: hoursCount, array: ["час", "часа", "часов"]})}
       </span>
       <span onClick={increment} className={styles.incrementWithBorderPlus}>+</span>
     </div>

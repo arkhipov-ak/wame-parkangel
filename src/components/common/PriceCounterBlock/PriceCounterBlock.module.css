@@ -1,0 +1,30 @@
+.incrementWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 3.5rem;
+    width: 100%;
+    border-radius: 0.9375rem;
+    background: #fff;
+    box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+    margin-top: 2%;
+  }
+  .price {
+    font-size: 20px;
+  }
+  .incrementWithBorderMinus {
+    border-right: 1px solid #c0c0c0;
+  }
+  .incrementWithBorderPlus {
+    border-left: 1px solid #c0c0c0;
+  }
+  .incrementWithBorderMinus, .incrementWithBorderPlus {
+    width: 15%;
+    height: 3.5rem;
+    font-size: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    cursor: pointer;
+  }

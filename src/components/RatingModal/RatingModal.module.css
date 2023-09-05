@@ -6,7 +6,8 @@
 .box_container,
 .toggle_container,
 .electro_wrapper,
-.sizes_wrapper {
+.sizes_wrapper,
+.price_counter_wrapper {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -29,12 +30,6 @@ label {
 }
 .main_text {
   font-weight: 500;
-}
-.cont {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
 }
 .title {
   font-size: 18px;
@@ -85,55 +80,6 @@ label {
   margin-top: 20%;
   font-family: Montserrat;
   font-size: 20px;
-}
-.size_wrapper {
-  display: flex;
-  flex-direction: column; /* Это выстраивает элементы вертикально */
-  align-items: flex-start;
-  padding: 0.375rem 1.3125rem 0.375rem 1.25rem;
-  width: 15%;
-  text-align: center;
-  margin: 0 10px 0 10px;
-  justify-content: center;
-  align-items: center; /* Это центрирует элементы горизонтально */
-  gap: 0.0625rem;
-  border-radius: 0.9375rem;
-  background: #fff;
-  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
-  background-color: none;
-}
-.size_wrapper:first-child {
-  margin-left: 0;
-}
-.header_text,
-.parameter {
-  margin: 0; /* Уберите вертикальные маргины у текста */
-  padding: 0;
-  background-color: none;
-}
-.header_text {
-  color: #192342;
-  text-align: center;
-  font-family: Montserrat;
-  font-size: 0.75rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  letter-spacing: 0.0375rem;
-  opacity: 0.7;
-}
-.parameter {
-  color: #192342;
-  text-align: center;
-  font-family: Montserrat;
-  font-size: 1.125rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  letter-spacing: 0.05625rem;
-  border: none;
-  background-color: none;
-  width: 100%;
 }
 .parent_container {
   display: flex; /* Это разместит дочерние элементы в ряд */
