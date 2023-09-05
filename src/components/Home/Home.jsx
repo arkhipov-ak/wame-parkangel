@@ -15,22 +15,38 @@ const Home = () => {
     tg.expand()
 
     const renderAgreementInfo = async () => {
-      const user = tg.initDataUnsafe.user;
-      console.log(user);
-      if (user) {
-        const userId = user.id;
-        console.log('userId', userId);
-        await axios.get(`http://185.238.2.176:5064/api/users/chatId/${userId}`)
+      /* const user = tg.initDataUnsafe.user; */
+      /* console.log(user); */
+      /* if (user) { */
+        /* const userId = user.id; */
+        /* console.log('userId', userId); */
+        await axios.get(`http://185.238.2.176:5064/api/users/chatId/${546584406777}`)
           .then(response => {
             console.log(response);
+            if (!response.data.response) {
+              axios.post(
+                "http://185.238.2.176:5064/api/users",
+                {
+                  chatId: "5465844067777",
+                  name: "Stas",
+                  telegram: "telega",
+                  phoneNumber: "",
+                  username: "",
+                  email: "",
+                  password: "",
+                  city: ""
+                },
+              ).then(response => console.log(response))
+              .catch(() => showErrorSnackbar({ message: "Не удалось записать юзера" }))
+            }
             if (response.data.response.isAcceptAgreement) return navigate("/search-time");
             navigate("/agreement");
           })
           .catch(() => {
             console.log('in catch');
-            showErrorSnackbar({ message: "Что-то пошло не так", tryAgain: false })
+            showErrorSnackbar({ message: "Что-то пошло не так" })
           })
-      }
+      /* } */
     }
    
     const timer = setTimeout(() => renderAgreementInfo(), 2500)

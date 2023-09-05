@@ -37,10 +37,9 @@ const SearchTime = () => {
       const userId = user.id;
       axios.get(`http://185.238.2.176:5064/api/history/userId/${userId}`)
         .then(response => setHistoryData(response.data.response))
-        .catch(() => showErrorSnackbar({ message: "Не удалось получить историю аренды", tryAgain: false }))
+        .catch(() => showErrorSnackbar({ message: "Не удалось получить историю аренды" }))
     }
   }, []);
-
 
   return (
     <>
