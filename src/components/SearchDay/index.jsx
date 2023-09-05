@@ -28,47 +28,24 @@ const SearchDay = ({ day }) => {
   };
 
   useEffect(() => {
-    switch (day) {
-      case "сегодня":
-        state.todayRent = {
-          price: 350,
-          height: null,
-          width: null,
-          length: null,
-          underground: false,
-          open: false,
-          covered: false,
-          garage: false,
-          security: false,
-          heating: false,
-          electroVolts: false,
-          electro: false,
-          electroVoltsAndCharger: false,
-          electroWithoutPower: false,
-          nonStandardSizes: false,
-        }
-        break;
-      case "завтра": 
-        state.tomorrowRent = {
-          price: 450,
-          height: null,
-          width: null,
-          length: null,
-          underground: false,
-          open: false,
-          covered: false,
-          garage: false,
-          security: false,
-          heating: false,
-          electroVolts: false,
-          electro: false,
-          electroVoltsAndCharger: false,
-          electroWithoutPower: false,
-          nonStandardSizes: false,
-        }
-        break;
+    state.additionalOptions = {
+      price: 350,
+      height: "",
+      width: "",
+      length: "",
+      underground: false,
+      open: false,
+      covered: false,
+      garage: false,
+      security: false,
+      heating: false,
+      electroVolts: false,
+      electro: false,
+      electroVoltsAndCharger: false,
+      electroWithoutPower: false,
+      nonStandardSizes: false,
     }
-  }, [day])
+  }, [])
 
   return (
     <>

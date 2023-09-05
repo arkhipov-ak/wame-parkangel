@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import NavBar from "../NavBar";
 import styles from "./Options.module.css";
 import Container from "../common/Container";
@@ -7,81 +7,119 @@ import SwitchToggle from "../common/SwitchToggle";
 import SizeInput from "../common/SizeInput";
 import PriceCounterBlock from "../common/PriceCounterBlock";
 import Button from "../common/Button";
-import { useSnapshot } from "valtio";
 import { state } from "../../state";
+import { useState } from "react";
 
 const Options = () => {
-  const snap = useSnapshot(state);
-  const [price, setPrice] = useState(350);
-  const [height, setHeight] = useState("");
-  const [width, setWidth] = useState("");
-  const [length, setLength] = useState("");
-  const [underground, setUnderground] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [covered, setCovered] = useState(false);
-  const [garage, setGarage] = useState(false);
-  const [security, setSecurity] = useState(false);
-  const [heating, setHeating] = useState(false);
-  const [electroVolts, setElectroVolts] = useState(false);
-  const [electro, setElectro] = useState(false);
-  const [electroVoltsAndCharger, setElectroVoltsAndCharger] = useState(false);
-  const [electroWithoutPower, setElectroWithoutPower] = useState(false);
-  const [nonStandardSizes, setNonStandardSizes] = useState(false);
+  const [data, setData] = useState({
+      price: 0,
+      height: "",
+      width: "",
+      length: "",
+      underground: false,
+      open: false,
+      covered: false,
+      garage: false,
+      security: false,
+      heating: false,
+      electroVolts: false,
+      electro: false,
+      electroVoltsAndCharger: false,
+      electroWithoutPower: false,
+      nonStandardSizes: false,
+  })
+
+  const onHandleChange = (value, key) => {
+    let newObject = { ...data, ...{ [key]: value } }
+    setData(newObject)
+	}
+
+  const onHandleSaveOptions = (e) => {
+    e.preventDefault();
+    console.log(data);
+  }
+
+  useEffect(() => {
+    state.additionalOptions = {
+      price: 350,
+      height: "",
+      width: "",
+      length: "",
+      underground: false,
+      open: false,
+      covered: false,
+      garage: false,
+      security: false,
+      heating: false,
+      electroVolts: false,
+      electro: false,
+      electroVoltsAndCharger: false,
+      electroWithoutPower: false,
+      nonStandardSizes: false,
+    }
+    setData(state.additionalOptions)
+}, [])
 
   return (
-    <div>
-      <NavBar/>
-      <Container>
-        <div className={styles.container}>
-          <div className={styles.box_container}>
-            <span className={styles.main_text}>Тип парковки</span>
-            <CustomCheckBox checked={underground} onClick={setUnderground}>Подземная</CustomCheckBox>
-            <CustomCheckBox checked={open} onClick={setOpen}>Открытая</CustomCheckBox>
-            <CustomCheckBox checked={covered} onClick={setCovered}>Крытая</CustomCheckBox>
-            <CustomCheckBox checked={garage} onClick={setGarage}>Гараж</CustomCheckBox>
-          </div>
-          <div className={styles.toggle_container}>
-            <span className={styles.main_text}>Доп. опции</span>
-            <label>
-              <SwitchToggle active={security} onClick={setSecurity}/>
-              Охрана
-            </label>
-            <label>
-              <SwitchToggle active={heating} onClick={setHeating}/>
-              Обогрев
-            </label>
-          </div>
+    <>
+      {data ? (
+        <div>
+          <NavBar/>
+          <Container>
+            <form onSubmit={onHandleSaveOptions}>
+              <div className={styles.container}>
+                <div className={styles.box_container}>
+                  <span className={styles.main_text}>Тип парковки</span>
+                  <CustomCheckBox checked={data.underground} onClick={e => onHandleChange(e, "underground")}>Подземная</CustomCheckBox>
+                  <CustomCheckBox checked={data.open} onClick={e => onHandleChange(e, "open")}>Открытая</CustomCheckBox>
+                  <CustomCheckBox checked={data.covered} onClick={e => onHandleChange(e, "covered")}>Крытая</CustomCheckBox>
+                  <CustomCheckBox checked={data.garage} onClick={e => onHandleChange(e, "garage")}>Гараж</CustomCheckBox>
+                </div>
+                <div className={styles.toggle_container}>
+                  <span className={styles.main_text}>Доп. опции</span>
+                  <label>
+                    <SwitchToggle active={data.security} onClick={e => onHandleChange(e, "security")}/>
+                    Охрана
+                  </label>
+                  <label>
+                    <SwitchToggle active={data.heating} onClick={e => onHandleChange(e, "heating")}/>
+                    Обогрев
+                  </label>
+                </div>
+              </div>
+              <div className={styles.electro_wrapper}>
+                <span className={styles.main_text}>Для электромобилей</span>
+                <CustomCheckBox checked={data.electroVolts} onClick={e => onHandleChange(e, "electroVolts")}>220V</CustomCheckBox>
+                <CustomCheckBox checked={data.electro} onClick={e => onHandleChange(e, "electro")}>Электромобиль</CustomCheckBox>
+                <CustomCheckBox checked={data.electroVoltsAndCharger} onClick={e => onHandleChange(e, "electroVoltsAndCharger")}>
+                  220V и зарядка электромобиля
+                </CustomCheckBox>
+                <CustomCheckBox checked={data.electroWithoutPower} onClick={e => onHandleChange(e, "electroWithoutPower")}>
+                  Без электропитания
+                </CustomCheckBox>
+                <label>
+                  <SwitchToggle active={data.nonStandardSizes} onClick={e => onHandleChange(e, "nonStandardSizes")}/>
+                  Нестандартные размеры авто
+                </label>
+              </div>
+              <div className={styles.sizes_wrapper}>
+                <span className={styles.main_text}>Размеры, м</span>
+                <div className={styles.parent_container}>
+                  <SizeInput value={data.height} onChange={e => onHandleChange(e.target.value, "height")} label="Высота"/>
+                  <SizeInput value={data.width} onChange={e => onHandleChange(e.target.value, "width")} label="Длина"/>
+                  <SizeInput value={data.length} onChange={e => onHandleChange(e.target.value, "length")} label="Ширина"/>
+                </div>
+              </div>
+              <div className={styles.price_counter_wrapper}>
+                <span className={styles.main_text}>Макс. стоимость в час, руб</span>
+                <PriceCounterBlock price={data.price} setPrice={e => onHandleChange(e, "price")}/>
+              </div>
+              <Button type="submit" text="Сохранить параметры"/>
+            </form>
+          </Container>
         </div>
-        <div className={styles.electro_wrapper}>
-          <span className={styles.main_text}>Для электромобилей</span>
-          <CustomCheckBox checked={electroVolts} onClick={setElectroVolts}>220V</CustomCheckBox>
-          <CustomCheckBox checked={electro} onClick={setElectro}>Электромобиль</CustomCheckBox>
-          <CustomCheckBox checked={electroVoltsAndCharger} onClick={setElectroVoltsAndCharger}>
-            220V и зарядка электромобиля
-          </CustomCheckBox>
-          <CustomCheckBox checked={electroWithoutPower} onClick={setElectroWithoutPower}>
-            Без электропитания
-          </CustomCheckBox>
-          <label>
-            <SwitchToggle active={nonStandardSizes} onClick={setNonStandardSizes}/>
-            Нестандартные размеры авто
-          </label>
-        </div>
-        <div className={styles.sizes_wrapper}>
-          <span className={styles.main_text}>Размеры, м</span>
-          <div className={styles.parent_container}>
-            <SizeInput value={height} onChange={e => setHeight(e.target.value)} label="Высота"/>
-            <SizeInput value={width} onChange={e => setWidth(e.target.value)} label="Длина"/>
-            <SizeInput value={length} onChange={e => setLength(e.target.value)} label="Ширина"/>
-          </div>
-        </div>
-        <div className={styles.price_counter_wrapper}>
-          <span className={styles.main_text}>Макс. стоимость в час, руб</span>
-          <PriceCounterBlock price={price} setPrice={setPrice}/>
-        </div>
-        <Button onClick={() => {}} text="Сохранить параметры"/>
-      </Container>
-    </div>
+      ) : <div>Загрузка...</div>}
+    </>
   );
 };
 
