@@ -1,7 +1,9 @@
 import { proxy } from "valtio";
 
 export const initialState = proxy({
-    user: undefined,
+  user: null,
+	todayRent: null,
+  tomorrowRent: null,
 });
 
 export const state = proxy(initialState);

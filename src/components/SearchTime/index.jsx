@@ -14,7 +14,7 @@ import { useSnapshot } from "valtio";
 import { state } from "../../state";
 
 const SearchTime = () => {
-  const snap = useSnapshot(state)
+  const snap = useSnapshot(state);
   const [isSearchFromChild, setIsSearchFromChild] = useState(true);
   const [isImageLoaded, setImageLoaded] = useState(false);
   const [historyData, setHistoryData] = useState([]);

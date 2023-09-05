@@ -10,7 +10,7 @@ import ChooseTimeTomorrowPage from "./pages/ChooseTimeTomorrowPage";
 import PersonalAreaPage from "./pages/PersonalAreaPage";
 import ResultSearchPage from "./pages/ResultSearchPage";
 import ExtraOptionsPage from "./pages/ExtraOptionsPage";
-import RatingModalPage from "./pages/RatingModal";
+import OptionsPage from "./pages/OptionsPage";
 import ChooseAnotherTimePage from "./pages/ChooseAnotherTimePage";
 import ShowMapResultPage from "./pages/ShowMapResultPage";
 import SearchTodayPage from "./pages/SearchTodayPage";
@@ -101,7 +101,7 @@ const App = () => {
               <Route path="/PersonalArea" element={<PersonalAreaPage/>}/>
               <Route path="/ResultSearch" element={<ResultSearchPage/>}/>
               <Route path="/extra-options" element={<ExtraOptionsPage/>}/>
-              <Route path="/rating" element={<RatingModalPage/>}/>
+              <Route path="/options" element={<OptionsPage/>}/>
               <Route
                 path="/ChooseAnotherTime"
                 element={<ChooseAnotherTimePage/>}

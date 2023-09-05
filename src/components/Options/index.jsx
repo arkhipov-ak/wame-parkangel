@@ -1,14 +1,17 @@
 import { useState } from "react";
 import NavBar from "../NavBar";
-import styles from "./RatingModal.module.css";
+import styles from "./Options.module.css";
 import Container from "../common/Container";
 import CustomCheckBox from "../common/CustomCheckbox";
 import SwitchToggle from "../common/SwitchToggle";
 import SizeInput from "../common/SizeInput";
 import PriceCounterBlock from "../common/PriceCounterBlock";
 import Button from "../common/Button";
+import { useSnapshot } from "valtio";
+import { state } from "../../state";
 
-const RatingModal = () => {
+const Options = () => {
+  const snap = useSnapshot(state);
   const [price, setPrice] = useState(350);
   const [height, setHeight] = useState("");
   const [width, setWidth] = useState("");
@@ -82,4 +85,4 @@ const RatingModal = () => {
   );
 };
 
-export default RatingModal;
+export default Options;

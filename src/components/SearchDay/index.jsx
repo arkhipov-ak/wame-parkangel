@@ -7,6 +7,8 @@ import HoursCounterBlock from "../common/HoursCounterBlock";
 import Button from "../common/Button";
 import ParametersButton from "../common/ParametersButton";
 import ModalTime from "../common/ModalTime";
+import { useEffect } from "react";
+import { state } from "../../state";
 
 const SearchDay = ({ day }) => {
   const [hoursCount, setHoursCount] = useState(1);
@@ -25,6 +27,49 @@ const SearchDay = ({ day }) => {
     navigate("/SelectAdressLocation");
   };
 
+  useEffect(() => {
+    switch (day) {
+      case "сегодня":
+        state.todayRent = {
+          price: 350,
+          height: null,
+          width: null,
+          length: null,
+          underground: false,
+          open: false,
+          covered: false,
+          garage: false,
+          security: false,
+          heating: false,
+          electroVolts: false,
+          electro: false,
+          electroVoltsAndCharger: false,
+          electroWithoutPower: false,
+          nonStandardSizes: false,
+        }
+        break;
+      case "завтра": 
+        state.tomorrowRent = {
+          price: 450,
+          height: null,
+          width: null,
+          length: null,
+          underground: false,
+          open: false,
+          covered: false,
+          garage: false,
+          security: false,
+          heating: false,
+          electroVolts: false,
+          electro: false,
+          electroVoltsAndCharger: false,
+          electroWithoutPower: false,
+          nonStandardSizes: false,
+        }
+        break;
+    }
+  }, [day])
+
   return (
     <>
       <NavBar/>
@@ -36,7 +81,7 @@ const SearchDay = ({ day }) => {
         </div>
         <span className={styles.label}>На сколько часов</span>
         <HoursCounterBlock hoursCount={hoursCount} setHoursCount={setHoursCount}/>
-        <ParametersButton link="/rating"/>
+        <ParametersButton link="/options"/>
         <Button onClick={handleRedirect} text="Быстрая парковка"/>
         {openTimeModal && (
           <ModalTime
