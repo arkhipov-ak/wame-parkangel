@@ -1,13 +1,13 @@
 import styles from "./PriceCounterBlock.module.css";
 
-const PriceCounterBlock = ({ price, setPrice }) => {
+const PriceCounterBlock = ({ price, setPrice, currency = false, step = 10 }) => {
   const increment = () => {
-    setPrice(price + 10);
+    setPrice(price + step);
   };
 
   const decrement = () => {
     if (price > 0) {
-      setPrice(price - 10);
+      setPrice(price - step);
     }
   };
 
@@ -15,7 +15,7 @@ const PriceCounterBlock = ({ price, setPrice }) => {
     <div className={styles.incrementWrapper}>
       <span onClick={decrement} className={styles.incrementWithBorderMinus}>-</span>
       <span className={styles.price}>
-        {price}
+        {price} {currency && "руб"}
       </span>
       <span onClick={increment} className={styles.incrementWithBorderPlus}>+</span>
     </div>

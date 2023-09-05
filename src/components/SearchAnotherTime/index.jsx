@@ -11,12 +11,12 @@ const SearchAnotherTime = () => {
   const navigate = useNavigate();
   const [openStartTimeModal, setOpenStartTimeModal] = useState(false);
   const [openEndTimeModal, setOpenEndTimeModal] = useState(false);
-  const [selectedDateStart, setSelectedDateStart] = useState("");
   const [selectedDateEnd, setSelectedDateEnd] = useState("");
   const [selectedHourStart, setSelectedHourStart] = useState("00");
   const [selectedMinuteStart, setSelectedMinuteStart] = useState("00");
   const [selectedHourEnd, setSelectedHourEnd] = useState("00");
   const [selectedMinuteEnd, setSelectedMinuteEnd] = useState("00");
+  const [selectedDateStart, setSelectedDateStart] = useState("");
 
   const handleRedirectToSelect = () => {
     navigate("/SelectAdressLocation");
