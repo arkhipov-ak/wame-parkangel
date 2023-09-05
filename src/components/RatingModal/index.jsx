@@ -4,16 +4,24 @@ import Toggle from "react-styled-toggle";
 import styles from "./RatingModal.module.css";
 import Container from "../common/Container";
 import CustomCheckBox from "../common/CustomCheckbox";
+import SwitchToggle from "../common/SwitchToggle";
 
 const RatingModal = () => {
   const [price, setPrice] = useState(350); // начальное значение цены
   const [height, setHeight] = useState("");
-  const [height1, setHeight1] = useState("");
-  const [height2, setHeight2] = useState("");
+  const [width, setWidth] = useState("");
+  const [length, setLength] = useState("");
   const [underground, setUnderground] = useState(false);
   const [open, setOpen] = useState(false);
   const [covered, setCovered] = useState(false);
   const [garage, setGarage] = useState(false);
+  const [security, setSecurity] = useState(false);
+  const [heating, setHeating] = useState(false);
+  const [electroUnderground, setElectroUnderground] = useState(false);
+  const [electroOpen, setElectroOpen] = useState(false);
+  const [electroCovered, setElectroCovered] = useState(false);
+  const [electroGarage, setElectroGarage] = useState(false);
+  const [nonStandardSizes, setNonStandardSizes] = useState(false);
   
   const increment = () => {
     setPrice((prevHours) => prevHours + 10);
@@ -26,134 +34,71 @@ const RatingModal = () => {
     }
   };
 
-  const handleHeightChange = (event) => {
-    const inputValue = event.target.value;
-    const newValue = inputValue.replace(/[^\d,]/g, ""); // Удаляем все символы, кроме цифр и запятых
-    setHeight(newValue);
-  };
-  const handleHeightChange1 = (event) => {
-    const inputValue = event.target.value;
-    const newValue = inputValue.replace(/[^\d,]/g, ""); // Удаляем все символы, кроме цифр и запятых
-    setHeight(newValue);
-  };
-  const handleHeightChange2 = (event) => {
-    const inputValue = event.target.value;
-    const newValue = inputValue.replace(/[^\d,]/g, ""); // Удаляем все символы, кроме цифр и запятых
-    setHeight(newValue);
-  };
-
-  const handleBlur = () => {
-    if (height !== "") {
-      // Если инпут не пустой, добавляем "м" в конец
-      setHeight(height + " м");
-    }
-  };
   return (
     <div>
       <NavBar/>
       <Container>
         <div className={styles.container}>
-          <div className={styles.boxContainer}>
+          <div className={styles.box_container}>
             <span className={styles.main_text}>Тип парковки</span>
-            <CustomCheckBox checked={underground} onClick={setUnderground}>
-              Подземная
-            </CustomCheckBox>
-            <CustomCheckBox checked={open} onClick={setOpen}>
-              Открытая
-            </CustomCheckBox>
-            <CustomCheckBox checked={covered} onClick={setCovered}>
-              Крытая
-            </CustomCheckBox>
-            <CustomCheckBox checked={garage} onClick={setGarage}>
-              Гараж
-            </CustomCheckBox>
+            <CustomCheckBox checked={underground} onClick={setUnderground}>Подземная</CustomCheckBox>
+            <CustomCheckBox checked={open} onClick={setOpen}>Открытая</CustomCheckBox>
+            <CustomCheckBox checked={covered} onClick={setCovered}>Крытая</CustomCheckBox>
+            <CustomCheckBox checked={garage} onClick={setGarage}>Гараж</CustomCheckBox>
           </div>
-
-          <div className={styles.toggleContainer}>
+          <div className={styles.toggle_container}>
             <span className={styles.main_text}>Доп. опции</span>
             <label>
-              <div className={styles.toggleWrapper}>
-                <Toggle/>
-              </div>
+              <SwitchToggle active={security} onClick={setSecurity}/>
               Охрана
             </label>
             <label>
-              <div className={styles.toggleWrapper}>
-                <Toggle/>
-              </div>
+              <SwitchToggle active={heating} onClick={setHeating}/>
               Обогрев
             </label>
           </div>
         </div>
-        <div className={styles.elektro_wrapper}>
-          <p className={styles.size_main_text}>Для электромобилей</p>
-          <div>
-            <label>
-              <div className={styles.toggleWrapper}>
-                <div className={styles.third_style}>
-                  <label>
-                    <input type="radio" name="parkingType" value="Подземная" />{" "}
-                    Подземная
-                  </label>
-                  <label>
-                    <input type="radio" name="parkingType" value="Открытая" />{" "}
-                    Открытая
-                  </label>
-                  <label>
-                    <input type="radio" name="parkingType" value="Крытая" />{" "}
-                    Крытая
-                  </label>
-                  <label>
-                    <input type="radio" name="parkingType" value="Гараж" />{" "}
-                    Гараж
-                  </label>
-                </div>
-              </div>
-            </label>
-          </div>
+        <div className={styles.electro_wrapper}>
+          <span className={styles.main_text}>Для электромобилей</span>
+          <CustomCheckBox checked={electroUnderground} onClick={setElectroUnderground}>Подземная</CustomCheckBox>
+          <CustomCheckBox checked={electroOpen} onClick={setElectroOpen}>Открытая</CustomCheckBox>
+          <CustomCheckBox checked={electroCovered} onClick={setElectroCovered}>Крытая</CustomCheckBox>
+          <CustomCheckBox checked={electroGarage} onClick={setElectroGarage}>Гараж</CustomCheckBox>
           <label>
-            <div className={styles.toggleWrapper}>
-              <Toggle/>
-            </div>
+            <SwitchToggle active={nonStandardSizes} onClick={setNonStandardSizes}/>
             Нестандартные размеры авто
           </label>
         </div>
-        <div>
-          <p className={styles.size_main_text}>Размеры, м</p>
+        <div className={styles.sizes_wrapper}>
+          <span className={styles.main_text}>Размеры, м</span>
           <div className={styles.parent_container}>
             <div className={styles.size_wrapper}>
               <p className={styles.header_text}>Высота</p>
               <input
-                type="text"
-                placeholder="2.5"
+                type="number"
                 value={height}
-                onChange={handleHeightChange}
-                onBlur={handleBlur} // Обработчик потери фокуса
-                className={styles.parametr}
+                onChange={e => setHeight(e.target.value)}
+                className={styles.parameter}
                 required
               />
             </div>
             <div className={styles.size_wrapper}>
               <p className={styles.header_text}>Ширина</p>
               <input
-                type="text"
-                placeholder="1.2"
-                value={height1}
-                onChange={handleHeightChange2}
-                onBlur={handleBlur} // Обработчик потери фокуса
-                className={styles.parametr}
+                type="number"
+                value={width}
+                onChange={e => setWidth(e.target.value)}
+                className={styles.parameter}
                 required
               />
             </div>
             <div className={styles.size_wrapper}>
               <p className={styles.header_text}>Длина</p>
               <input
-                type="text"
-                placeholder="3.5"
-                value={height2}
-                onChange={handleHeightChange1}
-                onBlur={handleBlur} // Обработчик потери фокуса
-                className={styles.parametr}
+                type="number"
+                value={length}
+                onChange={e => setLength(e.target.value)}
+                className={styles.parameter}
                 required
               />
             </div>
