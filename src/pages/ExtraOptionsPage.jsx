@@ -1,4 +1,4 @@
-import ExtraOptions from "../components/ExtraOptions/ExtraOptions";
+import ExtraOptions from "../components/ExtraOptions";
 
 const ExtraOptionsPage = () => <ExtraOptions/>
 

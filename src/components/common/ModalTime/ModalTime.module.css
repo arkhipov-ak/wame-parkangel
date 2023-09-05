@@ -1,0 +1,58 @@
+.timeSelector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 110px;
+  margin-top: 10px;
+}
+.hour,
+.minute {
+  width: 40%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 120px;
+  margin: 0 5px;
+  display: flex;
+  font-size: 190%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.hour::-webkit-scrollbar,
+.minute::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+.time {
+  height: 40px;
+  opacity: 0.5;
+  display: flex;
+  color: #847171;
+  align-items: center;
+  justify-content: center;
+}
+.time.selected {
+  opacity: 1;
+  color: black;
+}
+.btnWrapper {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 10%;
+  gap: 10px;
+}
+.modal_button {
+  width: 125px;
+  height: 50px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  border-radius: 0.9375rem;
+  background: #8a8aa4;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+  border: none;
+  font-family: Montserrat;
+  font-size: 16px;
+}

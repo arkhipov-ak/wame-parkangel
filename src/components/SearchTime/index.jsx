@@ -23,15 +23,6 @@ const SearchTime = () => {
     setImageLoaded(true);
   };
 
- /*  useEffect(() => {
-    // Здесь производится GET запрос на получение данных о рекламных объявлениях
-    axios.get("http://185.238.2.176:5064/api/ad")
-      .then(response => setAdData(response.data.response))
-      .catch(error => {
-        console.error("Error fetching ad data:", error);
-      });
-  }, []); */
-
   useEffect(() => {
     if (snap && snap.user) {
       axios.get(`http://185.238.2.176:5064/api/history/userId/${snap.user.chatId}`)

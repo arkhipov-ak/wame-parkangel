@@ -5,6 +5,7 @@ import Toggle from "react-styled-toggle";
 import styles from "./ExtraOptions.module.css";
 import { Checkbox } from "antd";
 import { Button, Modal } from "antd";
+import Container from "../common/Container";
 
 const ExtraOptions = () => {
   const [hoursCount, setHoursCount] = useState(350);
@@ -178,8 +179,8 @@ const ExtraOptions = () => {
 
   return (
 		<div>
-			<NavBar />
-			<div className={styles.wrapper}>
+			<NavBar/>
+			<Container>
 				<div>
 					{showModal && modalIdentifier === "starting" && (
 						<div
@@ -670,7 +671,7 @@ const ExtraOptions = () => {
 						Далее
 					</button>
 				</div>
-			</div>
+			</Container>
 		</div>
 	)
 };

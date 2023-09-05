@@ -55,13 +55,13 @@ label {
   border-left: 1px solid #c0c0c0;
 }
 .incrementWithBorderMinus, .incrementWithBorderPlus {
-  width: 15%; /* установите ширину, которую вы хотите */
-  height: 3.5rem; /* установите высоту, которую вы хотите */
+  width: 15%;
+  height: 3.5rem;
   font-size: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: transparent; /* сделайте фон прозрачным */
+  background-color: transparent;
   cursor: pointer;
 }
 .submit {
