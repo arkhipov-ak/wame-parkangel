@@ -12,7 +12,8 @@ const Home = () => {
 
   useEffect(() => {
     const renderAgreementInfo = () => {
-      if (snap) {
+      if (!snap || !snap.user) return;
+      else {
         if (snap.user.isAcceptAgreement) navigate("/search-time");
         else navigate("/agreement");
       }

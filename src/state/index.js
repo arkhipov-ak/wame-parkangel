@@ -1,7 +1,7 @@
 import { proxy } from "valtio";
 
 export const initialState = proxy({
-    user: {}
+    user: undefined,
 });
 
 export const state = proxy(initialState);
