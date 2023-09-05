@@ -11,7 +11,8 @@ const SearchAnotherTime = () => {
   const navigate = useNavigate();
   const [openStartTimeModal, setOpenStartTimeModal] = useState(false);
   const [openEndTimeModal, setOpenEndTimeModal] = useState(false);
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDateStart, setSelectedDateStart] = useState("");
+  const [selectedDateEnd, setSelectedDateEnd] = useState("");
   const [selectedHourStart, setSelectedHourStart] = useState("00");
   const [selectedMinuteStart, setSelectedMinuteStart] = useState("00");
   const [selectedHourEnd, setSelectedHourEnd] = useState("00");
@@ -37,8 +38,8 @@ const SearchAnotherTime = () => {
                 ref={dateRef}
                 type="date"
                 min={currentDate}
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
+                value={selectedDateStart}
+                onChange={(e) => setSelectedDateStart(e.target.value)}
                 className={styles.dateInput}
               />
             </div>
@@ -55,8 +56,8 @@ const SearchAnotherTime = () => {
                     ref={dateRef}
                     type="date"
                     min={currentDate}
-                    value={selectedDate}
-                    onChange={(e) => setSelectedDate(e.target.value)}
+                    value={selectedDateEnd}
+                    onChange={(e) => setSelectedDateEnd(e.target.value)}
                     className={styles.dateInput}
                   />
                 </div>
