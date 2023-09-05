@@ -25,8 +25,52 @@ import ScrollToTop from "./components/ScrollToTop";
 import { DataContextProvider } from "./DataContext";
 import ChooseMap from "./components/ChooseMap/ChooseMap";
 import { SnackbarProvider } from "notistack";
+import { useEffect } from "react";
+import { showErrorSnackbar } from "./utils/showErrorSnackBar";
+import axios from "axios";
+import { state } from "./state";
 
 const App = () => {
+  useEffect(() => {
+    window.Telegram.WebApp.ready();
+    const tg = window?.Telegram?.WebApp;
+    tg.expand()
+    const getUser = async () => {
+      /* const user = tg.initDataUnsafe.user; */
+      /* console.log(user); */
+      /* if (user) { */
+        /* const userId = user.id; */
+        /* console.log('userId', userId); */
+        await axios.get(`http://185.238.2.176:5064/api/users/chatId/${5465844067777}`)
+          .then(response => {
+            if (response.data.response) state.user = response.data.response
+            else {
+              axios.post(
+                "http://185.238.2.176:5064/api/users",
+                {
+                  chatId: "5465844067777",
+                  name: "Stas",
+                  telegram: "telegramnick",
+                  phoneNumber: "",
+                  username: "",
+                  email: "",
+                  password: "",
+                  city: ""
+                },
+              ).then(response => state.user = response.data.response)
+              .catch(() => showErrorSnackbar({ message: "Не удалось записать юзера" }))
+            }
+          })
+          .catch(() => {
+            console.log('in catch');
+            showErrorSnackbar({ message: "Что-то пошло не так" })
+          })
+      /* } */
+    }
+   
+    getUser();
+  }, []);
+
   return (
     <SnackbarProvider
       anchorOrigin={{

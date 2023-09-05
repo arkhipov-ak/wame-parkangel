@@ -1,44 +1,31 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./Agreement.module.css";
 import ParkAngel from "/src/assets/ParkAngel.svg";
 import { useNavigate } from "react-router-dom";
 import Button from "../common/Button";
 import axios from "axios";
 import { showErrorSnackbar } from "../../utils/showErrorSnackBar";
+import { useSnapshot } from "valtio";
+import { state } from "../../state";
 
 const Agreement = () => {
+  const snap = useSnapshot(state)
   const navigate = useNavigate();
   const [isImageLoaded, setImageLoaded] = useState(false);
-  const [user, setUser] = useState({})
 
   const handleImageLoad = () => {
     setImageLoaded(true);
   };
 
   const handleAgreementClick = () => {
-    axios.put("http://185.238.2.176:5064/api/users", { ...user, isAcceptAgreement: true })
+    axios.put("http://185.238.2.176:5064/api/users", { ...snap.user, isAcceptAgreement: true })
       .then((response) => {
-        if (response.data.response) navigate("/search-time");
+        if (response.data.response) {
+          state.user = { ...snap.user, isAcceptAgreement: true };
+          navigate("/search-time");
+        }
       }).catch(() => showErrorSnackbar({ message: "Не удалось записать согласие" }))
   };
-
-  useEffect(() => {
-    /* const user = tg.initDataUnsafe.user; */
-    /* console.log(user); */
-    /* if (user) { */
-    /* const userId = user.id; */
-    /* console.log('userId', userId); */
-    const getUser = async () => {
-      await axios.get(
-        `http://185.238.2.176:5064/api/users/chatId/${546584406777}`
-      ).then((response) => {
-          if (response.data.response) setUser(response.data.response)
-        }
-      ).catch(() => showErrorSnackbar({ message: "Не удалось получить данные юзера" }))
-    };
-
-    getUser();
-  }, [])
 
   return (
     <div className={styles.container}>
@@ -59,7 +46,6 @@ const Agreement = () => {
           onLoad={handleImageLoad}
           style={{ display: isImageLoaded ? "block" : "none" }}
         />
-
         <div className={styles.text_wrapper}>
           <p className={styles.main_text}>
             Пользовательское соглашение

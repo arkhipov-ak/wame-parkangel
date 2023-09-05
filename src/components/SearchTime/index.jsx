@@ -10,8 +10,11 @@ import { BiChevronRight } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import Container from "../common/Container";
 import { showErrorSnackbar } from "../../utils/showErrorSnackBar";
+import { useSnapshot } from "valtio";
+import { state } from "../../state";
 
 const SearchTime = () => {
+  const snap = useSnapshot(state)
   const [isSearchFromChild, setIsSearchFromChild] = useState(true);
   const [isImageLoaded, setImageLoaded] = useState(false);
   const [historyData, setHistoryData] = useState([]);
@@ -30,16 +33,12 @@ const SearchTime = () => {
   }, []); */
 
   useEffect(() => {
-    window.Telegram.WebApp.ready();
-    const tg = window?.Telegram?.WebApp;
-    const user = tg.initDataUnsafe.user;
-    if (user) {
-      const userId = user.id;
-      axios.get(`http://185.238.2.176:5064/api/history/userId/${userId}`)
+    if (snap) {
+      axios.get(`http://185.238.2.176:5064/api/history/userId/${snap.user.chatId}`)
         .then(response => setHistoryData(response.data.response))
         .catch(() => showErrorSnackbar({ message: "Не удалось получить историю аренды" }))
     }
-  }, []);
+  }, [snap]);
 
   return (
     <>
