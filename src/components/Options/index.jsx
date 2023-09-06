@@ -9,56 +9,114 @@ import PriceCounterBlock from "../common/PriceCounterBlock";
 import Button from "../common/Button";
 import { state } from "../../state";
 import { useState } from "react";
+import axios from "axios";
+import { useSnapshot } from "valtio";
+import { showErrorSnackbar } from "../../utils/showErrorSnackBar";
 
 const Options = () => {
+  const snap = useSnapshot(state);
   const [data, setData] = useState({
-      price: 0,
-      height: "",
-      width: "",
-      length: "",
-      underground: false,
-      open: false,
-      covered: false,
-      garage: false,
-      security: false,
-      heating: false,
-      electroVolts: false,
-      electro: false,
-      electroVoltsAndCharger: false,
-      electroWithoutPower: false,
-      nonStandardSizes: false,
-  })
+    priceHour: 0,
+    height: 0,
+    width: 0,
+    length: 0,
+    isUnderground: false,
+    isOutDoor: false,
+    isCovered: false,
+    isGarage : false,
+    isProtected: false,
+    isHeated: false,
+    isVolts: false,
+    isElectroMobile: false,
+    isVoltsWithCharger: false,
+    isWithoutPower: false,
+    isCustomSize: false,
+    availabilityDateStart: "",
+    availabilityDateEnd: "",
+    availabilityTimeStart: "",
+    availabilityTimeEnd: "",
+    address: "",
+    region: "",
+  });
 
   const onHandleChange = (value, key) => {
     let newObject = { ...data, ...{ [key]: value } }
     setData(newObject)
-	}
+	};
 
   const onHandleSaveOptions = (e) => {
     e.preventDefault();
-    console.log(data);
-  }
+
+    if (+data.height <= 0) {
+      showErrorSnackbar({ message: "Высота должна быть больше нуля", tryAgain: true });
+      return;
+    }
+
+    if (+data.length <= 0) {
+      showErrorSnackbar({ message: "Длина должна быть больше нуля", tryAgain: true })
+      return;
+    }
+
+    if (+data.width <= 0) {
+      showErrorSnackbar({ message: "Ширина должна быть больше нуля", tryAgain: true })
+      return;
+    }
+
+    if (data.priceHour === 0) {
+      showErrorSnackbar({ message: "Стоимость в час должна быть больше нуля", tryAgain: true })
+      return;
+    }
+
+    const preparedData = {
+      ...data,
+      length: +data.length,
+      height: +data.height,
+      width: +data.width,
+      user_id: snap.user.chatId,
+    }
+
+    console.log(preparedData);
+
+    axios.post(
+      "http://185.238.2.176:5064/api/park", preparedData
+    ).then(response => console.log('response', response))
+    .catch(error => console.log(error))
+  };
 
   useEffect(() => {
-    state.additionalOptions = {
-      price: 350,
-      height: "",
-      width: "",
-      length: "",
-      underground: false,
-      open: false,
-      covered: false,
-      garage: false,
-      security: false,
-      heating: false,
-      electroVolts: false,
-      electro: false,
-      electroVoltsAndCharger: false,
-      electroWithoutPower: false,
-      nonStandardSizes: false,
+    if (snap && snap.user) {
+      /* axios.get(
+        `http://185.238.2.176:5064/api/park/${snap.user.chatId}`
+      ).then(response => console.log(response))
+      .catch(error => console.log(error)) */
+
+      state.parkOrder = {
+        priceHour: 0,
+        height: 0,
+        width: 0,
+        length: 0,
+        isUnderground: false,
+        isOutDoor: false,
+        isCovered: false,
+        isGarage : false,
+        isProtected: false,
+        isHeated: false,
+        isVolts: false,
+        isElectroMobile: false,
+        isVoltsWithCharger: false,
+        isWithoutPower: false,
+        isCustomSize: false,
+        availabilityDateStart: "",
+        availabilityDateEnd: "",
+        availabilityTimeStart: "",
+        availabilityTimeEnd: "",
+        address: "",
+        region: "",
+      } //TODO: проверить поле для крытой парковки
+
+      setData(snap.parkOrder)
     }
-    setData(state.additionalOptions)
-}, [])
+  }, [snap.user]);
 
   return (
     <>
@@ -70,35 +128,47 @@ const Options = () => {
               <div className={styles.container}>
                 <div className={styles.box_container}>
                   <span className={styles.main_text}>Тип парковки</span>
-                  <CustomCheckBox checked={data.underground} onClick={e => onHandleChange(e, "underground")}>Подземная</CustomCheckBox>
-                  <CustomCheckBox checked={data.open} onClick={e => onHandleChange(e, "open")}>Открытая</CustomCheckBox>
-                  <CustomCheckBox checked={data.covered} onClick={e => onHandleChange(e, "covered")}>Крытая</CustomCheckBox>
-                  <CustomCheckBox checked={data.garage} onClick={e => onHandleChange(e, "garage")}>Гараж</CustomCheckBox>
+                  <CustomCheckBox checked={data.isUnderground} onClick={e => onHandleChange(e, "isUnderground")}>
+                    Подземная
+                  </CustomCheckBox>
+                  <CustomCheckBox checked={data.isOutDoor} onClick={e => onHandleChange(e, "isOutDoor")}>
+                    Открытая
+                  </CustomCheckBox>
+                  <CustomCheckBox checked={data.isCovered} onClick={e => onHandleChange(e, "isCovered")}>
+                    Крытая
+                  </CustomCheckBox>
+                  <CustomCheckBox checked={data.isGarage} onClick={e => onHandleChange(e, "isGarage")}>
+                    Гараж
+                  </CustomCheckBox>
                 </div>
                 <div className={styles.toggle_container}>
                   <span className={styles.main_text}>Доп. опции</span>
                   <label>
-                    <SwitchToggle active={data.security} onClick={e => onHandleChange(e, "security")}/>
+                    <SwitchToggle active={data.isProtected} onClick={e => onHandleChange(e, "isProtected")}/>
                     Охрана
                   </label>
                   <label>
-                    <SwitchToggle active={data.heating} onClick={e => onHandleChange(e, "heating")}/>
+                    <SwitchToggle active={data.isHeated} onClick={e => onHandleChange(e, "isHeated")}/>
                     Обогрев
                   </label>
                 </div>
               </div>
               <div className={styles.electro_wrapper}>
                 <span className={styles.main_text}>Для электромобилей</span>
-                <CustomCheckBox checked={data.electroVolts} onClick={e => onHandleChange(e, "electroVolts")}>220V</CustomCheckBox>
-                <CustomCheckBox checked={data.electro} onClick={e => onHandleChange(e, "electro")}>Электромобиль</CustomCheckBox>
-                <CustomCheckBox checked={data.electroVoltsAndCharger} onClick={e => onHandleChange(e, "electroVoltsAndCharger")}>
+                <CustomCheckBox checked={data.isVolts} onClick={e => onHandleChange(e, "isVolts")}>
+                  220V
+                </CustomCheckBox>
+                <CustomCheckBox checked={data.isElectroMobile} onClick={e => onHandleChange(e, "isElectroMobile")}>
+                  Электромобиль
+                </CustomCheckBox>
+                <CustomCheckBox checked={data.isVoltsWithCharger} onClick={e => onHandleChange(e, "isVoltsWithCharger")}>
                   220V и зарядка электромобиля
                 </CustomCheckBox>
-                <CustomCheckBox checked={data.electroWithoutPower} onClick={e => onHandleChange(e, "electroWithoutPower")}>
+                <CustomCheckBox checked={data.isWithoutPower} onClick={e => onHandleChange(e, "isWithoutPower")}>
                   Без электропитания
                 </CustomCheckBox>
                 <label>
-                  <SwitchToggle active={data.nonStandardSizes} onClick={e => onHandleChange(e, "nonStandardSizes")}/>
+                  <SwitchToggle active={data.isCustomSize} onClick={e => onHandleChange(e, "isCustomSize")}/>
                   Нестандартные размеры авто
                 </label>
               </div>
@@ -112,13 +182,13 @@ const Options = () => {
               </div>
               <div className={styles.price_counter_wrapper}>
                 <span className={styles.main_text}>Макс. стоимость в час, руб</span>
-                <PriceCounterBlock price={data.price} setPrice={e => onHandleChange(e, "price")}/>
+                <PriceCounterBlock price={data.priceHour} setPrice={e => onHandleChange(e, "priceHour")}/>
               </div>
               <Button type="submit" text="Сохранить параметры"/>
             </form>
           </Container>
         </div>
-      ) : <div>Загрузка...</div>}
+      ) : <p>Загрузка...</p>}
     </>
   );
 };
