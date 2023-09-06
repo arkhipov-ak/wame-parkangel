@@ -50,7 +50,7 @@ const App = () => {
                 {
                   chatId: "5465844067777",
                   name: "Stas",
-                  telegram: "telegramnick",
+                  telegram: "telega",
                   phoneNumber: "",
                   username: "",
                   email: "",

@@ -32,10 +32,10 @@ const SearchDay = ({ day }) => {
 
   useEffect(() => {
     if (snap && snap.user) {
-      axios.get(
+      /* axios.get(
         `http://185.238.2.176:5064/api/park/${snap.user.chatId}`
       ).then(response => console.log(response))
-      .catch(error => console.log(error))
+      .catch(error => console.log(error)) */
 
       state.parkOrder = {
         priceHour: 0,

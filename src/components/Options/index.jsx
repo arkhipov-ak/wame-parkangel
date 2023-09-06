@@ -112,7 +112,7 @@ const Options = () => {
         availabilityTimeEnd: "",
         address: "",
         region: "",
-      } //TODO: проверить поле для крытой парковки
+      }
 
       setData(snap.parkOrder)
     }
