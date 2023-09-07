@@ -3,8 +3,12 @@ import NavBar from "../NavBar";
 import styles from "./SelectAddressLocation.module.css";
 import { useNavigate } from "react-router-dom";
 import { useDataContext } from "../../DataContext";
+import { useSnapshot } from "valtio";
+import { state } from "../../state";
+import Container from "../common/Container";
 
 const SelectAddressLocation = () => {
+  const snap = useSnapshot(state);
   const [activeButton, setActiveButton] = useState(null);
   const [activeMapButton, setActiveMapButton] = useState(null);
   const { setSelectedData } = useDataContext();
@@ -35,10 +39,12 @@ const SelectAddressLocation = () => {
     setActiveMapButton(buttonId);
   };
 
+  console.log(snap);
+
   return (
-    <div className={styles.nk}>
-      <NavBar />
-      <div className={styles.container}>
+    <>
+      <NavBar/>
+      <Container>
         <div>
           <p>Ваш регион</p>
           <button
@@ -80,8 +86,8 @@ const SelectAddressLocation = () => {
         <button onClick={handleRedirect} className={styles.search_btn}>
           Подобрать парковку
         </button>
-      </div>
-    </div>
+      </Container>
+    </>
   );
 };
 

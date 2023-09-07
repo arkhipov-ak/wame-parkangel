@@ -20,16 +20,6 @@ const SearchDay = ({ day }) => {
   const [selectedMinute, setSelectedMinute] = useState("00");
   const navigate = useNavigate();
 
-  const handleRedirect = () => {
-    const selectedData = {
-      selectedHour,
-      selectedMinute,
-      hoursCount,
-    };
-    console.log("Selected Data before redirect:", selectedData);
-    navigate("/select-address-location");
-  };
-
   useEffect(() => {
     if (snap && snap.user) {
       axios.get(
@@ -102,7 +92,7 @@ const SearchDay = ({ day }) => {
             <span className={styles.label}>На сколько времени</span>
             <HoursCounterBlock hoursCount={hoursCount} setHoursCount={setHoursCount}/>
             <ParametersButton link="/options"/>
-            <Button onClick={handleRedirect} text="Быстрая парковка"/>
+            <Button onClick={() => navigate("/select-address-location")} text="Быстрая парковка"/>
             {openTimeModal && (
               <ModalTime
                 setOpenTimeModal={setOpenTimeModal}
