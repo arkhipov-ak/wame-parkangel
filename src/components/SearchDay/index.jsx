@@ -10,6 +10,7 @@ import ModalTime from "../common/ModalTime";
 import { useEffect } from "react";
 import { state } from "../../state";
 import { useSnapshot } from "valtio";
+import axios from "axios";
 
 const SearchDay = ({ day }) => {
   const snap = useSnapshot(state);
@@ -31,13 +32,16 @@ const SearchDay = ({ day }) => {
 
   useEffect(() => {
     if (snap && snap.user) {
-      /* axios.get(
+      axios.get(
         `http://185.238.2.176:5064/api/park/${snap.user.chatId}`
       ).then(response => console.log(response))
-      .catch(error => console.log(error)) */
+      .catch(error => console.log(error))
 
       state.parkOrder = {
-        priceHour: 0,
+        priceHour: "",
+        priceDay: "",
+        priceWeek: "",
+        priceMonth: "",
         height: 0,
         width: 0,
         length: 0,
