@@ -40,7 +40,7 @@ const ResultSearch = () => {
     <>
       <NavBar />
       <Container>
-        <span className={styles.main_text}>Результаты поиска</span>
+        <h2 className={styles.main_text}>Результаты поиска</h2>
         {data.length ? (
           <>
             <div className={styles.wrapper_rentCard}>
@@ -58,9 +58,7 @@ const ResultSearch = () => {
             </Link>
           </>
         ) : (
-          <div className={styles.wrapper_zero_data}>
             <ZeroData>Подходящие объявления не найдены</ZeroData>
-          </div>
         )}
       </Container>
     </>

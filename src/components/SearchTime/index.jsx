@@ -107,15 +107,17 @@ const SearchTime = () => {
           </a>
           <div className={styles.wrapper_rent}>
             <h2 className={styles.history}>История аренды</h2>
-            <div className={styles.wrapper_rentCard}>
+            
               {historyData.length ? (
                 historyData.map((history, index) => (
                   <div key={index} className={styles.wrapper_rentCard}>
-                    <p className={styles.rent_location}>{history.location}</p>
-                    <div className={styles.secondRow}>
-                      <p className={styles.rent_date}>{history.date}</p>
-                      <p className={styles.rent_time}>{history.time}</p>
-                      <p className={styles.rent_status}>{history.status}</p>
+                    <div  className={styles.wrapper_rentCard}>
+                      <p className={styles.rent_location}>{history.location}</p>
+                      <div className={styles.secondRow}>
+                        <p className={styles.rent_date}>{history.date}</p>
+                        <p className={styles.rent_time}>{history.time}</p>
+                        <p className={styles.rent_status}>{history.status}</p>
+                      </div>
                     </div>
                   </div>
                 ))
@@ -123,7 +125,6 @@ const SearchTime = () => {
                 <ZeroData>История аренды пуста</ZeroData>
               )}
             </div>
-          </div>
         </div>
       </Container>
     </>

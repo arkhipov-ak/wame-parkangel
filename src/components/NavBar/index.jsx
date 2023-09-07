@@ -56,8 +56,8 @@ const NavBar = () => {
               <Link className={styles.linkfor} to="/search-time">На главную</Link>
               <Link className={styles.linkfor} to="/PersonalArea">Личный кабинет</Link>
               <Link className={styles.linkfor} to="/faq">Частые вопросы</Link>
-              <Link className={styles.linkfor} to="/AboutService">О сервисе</Link>
-              <Link className={styles.linkfor} to="/search-time">Связь с поддержкой</Link>
+              <Link className={styles.linkfor} to="/about-service">О сервисе</Link>
+              <a className={styles.linkfor} href="https://t.me/OlivsonM">Связь с поддержкой</a>
               <Link className={styles.linkfor} to="/agreement">
                 Пользовательское <br /> соглашение
               </Link>

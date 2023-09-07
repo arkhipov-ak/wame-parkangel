@@ -1,14 +1,9 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 1200px; /* это опционально, но позволяет контейнеру иметь максимальную ширину, например, 1200px, чтобы на больших экранах он не становился слишком широким */
-}
 .faq {
   font-weight: 500;
   font-size: 24px;
+  width: 100%;
+  text-align: left;
+  margin-top: 0;
 }
 .wrapper_question  {
   display: flex;
@@ -20,7 +15,7 @@
   gap: 0.625rem;
   border-radius: 0.9375rem;
   border: none;
-  background: #fff;
+  background: #ffffff;
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
   margin: 10px 0 10px 0;
 }

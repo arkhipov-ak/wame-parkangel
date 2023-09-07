@@ -2,6 +2,8 @@
   width: 100%;
   text-align: left;
   font-size: 20px;
+  margin-top: 0;
+  font-weight: 500;
 }
 .wrapper_rentCard {
   max-width: 100%;

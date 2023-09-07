@@ -97,8 +97,8 @@ const App = () => {
               path="/select-address-location"
               element={<SelectAddressLocationPage/>}
             />
-            <Route path="/AboutService" element={<AboutServicePage/>}/>
-            <Route path="/FAQ" element={<FAQPage/>}/>
+            <Route path="/about-service" element={<AboutServicePage/>}/>
+            <Route path="/faq" element={<FAQPage/>}/>
             <Route path="/ChooseTimeToday" element={<ChooseTimeTodayPage/>}/>
             <Route
               path="/ChooseTimeTomorrow"

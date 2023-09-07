@@ -1,4 +1,3 @@
-
 .card_today {
   display: inline-flex;
   padding-left: 0.625rem;
@@ -54,9 +53,9 @@
 }
 .wrapper_rentCard {
   width: 100%;
-  border-radius: 1.25rem;
+  border-radius: 15px;
   font-weight: 600;
-  background: #fff;
+  background: #ffffff;
   display: flex;
   flex-direction: column;
 }

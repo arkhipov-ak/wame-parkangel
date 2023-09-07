@@ -1,12 +1,5 @@
-import React from 'react'
-import AboutService from '../components/AboutService/AboutService'
+import AboutService from "../components/AboutService/AboutService";
 
-const AboutServicePage = () => {
-  return (
-    <>
-      <AboutService/>
-    </>
-  )
-}
+const AboutServicePage = () => <AboutService/>
 
-export default AboutServicePage
+export default AboutServicePage;
