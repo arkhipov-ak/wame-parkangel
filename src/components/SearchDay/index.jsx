@@ -77,10 +77,10 @@ const SearchDay = ({ day }) => {
       hoursEndTomorrow.setMinutes(selectedMinute);
 
       state.parkDate = {
-        dateStart: date.toISOString(),
-        dateEnd: date.toISOString(),
-        timeStart: hoursStart.toISOString(),
-        timeEnd: hoursEnd.toISOString(),
+        dateStart: tomorrow.toISOString(),
+        dateEnd: tomorrow.toISOString(),
+        timeStart: hoursStartTomorrow.toISOString(),
+        timeEnd: hoursEndTomorrow.toISOString(),
         hoursStart: selectedHour === "00" ? "00" : +selectedHour,
         minutes: selectedMinute,
         hoursCount: hoursCount,
@@ -147,10 +147,10 @@ const SearchDay = ({ day }) => {
       hoursEndTomorrow.setMinutes(selectedMinute);
 
       state.parkDate = {
-        dateStart: date.toISOString(),
-        dateEnd: date.toISOString(),
-        timeStart: hoursStart.toISOString(),
-        timeEnd: hoursEnd.toISOString(),
+        dateStart: tomorrow.toISOString(),
+        dateEnd: tomorrow.toISOString(),
+        timeStart: hoursStartTomorrow.toISOString(),
+        timeEnd: hoursEndTomorrow.toISOString(),
         hoursStart: selectedHour === "00" ? "00" : +selectedHour,
         minutes: selectedMinute,
         hoursCount: hoursCount,
