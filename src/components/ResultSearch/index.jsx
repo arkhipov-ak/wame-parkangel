@@ -8,10 +8,12 @@ import { useEffect } from "react";
 import axios from "axios";
 import { showErrorSnackbar } from "../../utils/showSnackBar";
 import Container from "../common/Container";
+import { useState } from "react";
 
 const ResultSearch = () => {
   const snap = useSnapshot(state);
   const navigate = useNavigate();
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     if (snap && snap.user && snap.options && snap.options[0]) {
@@ -38,22 +40,28 @@ const ResultSearch = () => {
       <NavBar />
       <Container>
         <span className={styles.main_text}>Результаты поиска</span>
-        <div>
-          <div className={styles.wrapper_rentCard}>
-            <p className={styles.rent_location}>Моховая улица, 15/1с1</p>
-            <div className={styles.secondRow}>
-              <p className={styles.rent_date}>
-                <img src={Location} /> 37 м
-              </p>
-              <p className={styles.rent_time}>12:00-16:00</p>
-              <p className={styles.rent_status}>450 руб/ч</p>
+        {data.length ? (
+          <>
+            <div className={styles.wrapper_rentCard}>
+              <p className={styles.rent_location}>Моховая улица, 15/1с1</p>
+              <div className={styles.secondRow}>
+                <span className={styles.rent_date}>
+                  <img src={Location} /> 37 м
+                </span>
+                <span className={styles.rent_time}>12:00-16:00</span>
+                <span className={styles.rent_status}>450 руб/ч</span>
+              </div>
             </div>
+            <Link to="/show-map-result" className={styles.submit}>
+              Посмотреть все на карте
+            </Link>
+          </>
+        ) : (
+          <div className={styles.wrapper_zero_data}>
+            <span>Подходящие объявления не найдены</span>
           </div>
-
-          <Link to="/show-map-result" className={styles.submit}>
-            Посмотреть все на карте
-          </Link>
-        </div>
+        )}
+        
       </Container>
     </>
   );

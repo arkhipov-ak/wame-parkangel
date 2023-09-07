@@ -4,25 +4,23 @@
   font-size: 20px;
 }
 .wrapper_rentCard {
-  width: 90%;
-  flex-shrink: 0;
+  max-width: 100%;
   margin: 5% 0;
-  border-radius: 1.25rem;
-  height: 6rem;
+  border-radius: 15px;
+  height: 100px;
   font-weight: 600;
-  background: #fff;
+  background: #ffffff;
   flex-wrap: wrap;
   display: flex;
-  padding: 0 0.5rem 0 0.5rem;
+  padding: 0 5%;
 }
-
 .wrapper_rentCard .secondRow {
   display: flex;
   justify-content: space-between;
   width: 100%;
   color: var(--black, #192342);
   font-family: Montserrat;
-  font-size: 0.925rem;
+  font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -30,22 +28,31 @@
 }
 .submit {
   display: flex;
-  padding: 0.875rem 3.5rem 0.875rem 3.4375rem;
-  width: 62%;
+  height: 50px;
+  width: 100%;
   text-decoration: none;
-  color: #fff;
+  color: #ffffff;
   font-size: 18px;
   justify-content: center;
   align-items: center;
-  border-radius: 0.9375rem;
+  border-radius: 15px;
   background: #8a8aa4;
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
-  color: white;
   border: none;
-  white-space: nowrap;
-  margin-top: 10%;
-  margin-bottom: 10%;
 }
 .rent_location {
   width: 100%;
+}
+.wrapper_zero_data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  font-weight: 600;
+  background: #ffffff;
+  padding: 0 5%;
+  margin: 5% 0;
+  border-radius: 15px;
+  height: 100px;
+  text-align: center;
 }
