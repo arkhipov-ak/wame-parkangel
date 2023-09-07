@@ -1,12 +1,5 @@
-import React from 'react'
-import ResultSearch from '../components/ResultSearch/ResultSearch'
+import ResultSearch from "../components/ResultSearch";
 
-const ResultSearchPage = () => {
-  return (
-    <div>
-      <ResultSearch/>
-    </div>
-  )
-}
+const ResultSearchPage = () => <ResultSearch/>
 
-export default ResultSearchPage
+export default ResultSearchPage;

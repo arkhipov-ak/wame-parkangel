@@ -1,22 +1,7 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-left: 5%;
-  max-width: 1200px; /* это опционально, но позволяет контейнеру иметь максимальную ширину, например, 1200px, чтобы на больших экранах он не становился слишком широким */
-}
-.nk {
-  margin-left: 5%;
-}
 .main_text {
-  color: var(--black, #192342);
-  padding-top: 10px;
-  font-size: 1.25rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
+  width: 100%;
+  text-align: left;
+  font-size: 20px;
 }
 .wrapper_rentCard {
   width: 90%;

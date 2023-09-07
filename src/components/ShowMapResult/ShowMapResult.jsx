@@ -1,10 +1,8 @@
-import React from "react";
 import { YMaps, Map } from "@pbe/react-yandex-maps";
 import NavBar from "../NavBar";
 import styles from "./ShowMapResult.module.css";
 import navigation from "../../assets/navigation.svg";
 import Location from '../../assets/location.svg'
-import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const ShowMapResult = () => {

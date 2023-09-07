@@ -22,7 +22,6 @@ import YourAddPage from "./pages/YourAddPage";
 import ExtraPage from "./pages/ExtraPage";
 import AddPage from "./pages/AddPage";
 import ScrollToTop from "./components/ScrollToTop";
-import { DataContextProvider } from "./DataContext";
 import ChooseMap from "./components/ChooseMap/ChooseMap";
 import { SnackbarProvider } from "notistack";
 import { useEffect } from "react";
@@ -88,48 +87,46 @@ const App = () => {
       maxSnack={2}
       autoHideDuration={3000}
     >
-      <DataContextProvider>
-        <Router>
-          <ScrollToTop />
-            <Routes>
-              <Route path="/search-time" element={<SearchTimePage/>}/>
-              <Route path="/" exact element={<HomePage/>} />
-              <Route path="/agreement" element={<AgreementPage/>}/>
-              <Route
-                path="/select-address-location"
-                element={<SelectAddressLocationPage/>}
-              />
-              <Route path="/AboutService" element={<AboutServicePage/>}/>
-              <Route path="/FAQ" element={<FAQPage/>}/>
-              <Route path="/ChooseTimeToday" element={<ChooseTimeTodayPage/>}/>
-              <Route
-                path="/ChooseTimeTomorrow"
-                element={<ChooseTimeTomorrowPage/>}
-              />
-              <Route path="/PersonalArea" element={<PersonalAreaPage/>}/>
-              <Route path="/ResultSearch" element={<ResultSearchPage/>}/>
-              <Route path="/extra-options" element={<ExtraOptionsPage/>}/>
-              <Route path="/options" element={<OptionsPage/>}/>
-              <Route
-                path="/ChooseAnotherTime"
-                element={<ChooseAnotherTimePage/>}
-              />
-              <Route path="/ShowMapResult" element={<ShowMapResultPage/>}/>
-              <Route path="/search-today" element={<SearchTodayPage/>}/>
-              <Route
-                path="/search-another-time"
-                element={<SearchAnotherTimePage/>}
-              />
-              <Route path="/search-tomorrow" element={<SearchTomorrowPage/>}/>
-              <Route path="/SelectInMap" element={<SelectInMapPage/>}/>
-              <Route path="/Review" element={<ReviewPage/>}/>
-              <Route path="/YourAdd" element={<YourAddPage/>}/>
-              <Route path="/Extra" element={<ExtraPage/>}/>
-              <Route path="/Add" element={<AddPage/>}/>
-              <Route path="/ChooseMap" element={<ChooseMap/>}/>
-            </Routes>
-        </Router>
-      </DataContextProvider>
+      <Router>
+        <ScrollToTop />
+          <Routes>
+            <Route path="/search-time" element={<SearchTimePage/>}/>
+            <Route path="/" exact element={<HomePage/>} />
+            <Route path="/agreement" element={<AgreementPage/>}/>
+            <Route
+              path="/select-address-location"
+              element={<SelectAddressLocationPage/>}
+            />
+            <Route path="/AboutService" element={<AboutServicePage/>}/>
+            <Route path="/FAQ" element={<FAQPage/>}/>
+            <Route path="/ChooseTimeToday" element={<ChooseTimeTodayPage/>}/>
+            <Route
+              path="/ChooseTimeTomorrow"
+              element={<ChooseTimeTomorrowPage/>}
+            />
+            <Route path="/PersonalArea" element={<PersonalAreaPage/>}/>
+            <Route path="/result-search" element={<ResultSearchPage/>}/>
+            <Route path="/extra-options" element={<ExtraOptionsPage/>}/>
+            <Route path="/options" element={<OptionsPage/>}/>
+            <Route
+              path="/ChooseAnotherTime"
+              element={<ChooseAnotherTimePage/>}
+            />
+            <Route path="/show-map-result" element={<ShowMapResultPage/>}/>
+            <Route path="/search-today" element={<SearchTodayPage/>}/>
+            <Route
+              path="/search-another-time"
+              element={<SearchAnotherTimePage/>}
+            />
+            <Route path="/search-tomorrow" element={<SearchTomorrowPage/>}/>
+            <Route path="/SelectInMap" element={<SelectInMapPage/>}/>
+            <Route path="/Review" element={<ReviewPage/>}/>
+            <Route path="/YourAdd" element={<YourAddPage/>}/>
+            <Route path="/Extra" element={<ExtraPage/>}/>
+            <Route path="/Add" element={<AddPage/>}/>
+            <Route path="/ChooseMap" element={<ChooseMap/>}/>
+          </Routes>
+      </Router>
     </SnackbarProvider>
   );
 };

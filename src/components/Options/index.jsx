@@ -48,17 +48,6 @@ const Options = () => {
   const onHandleSaveOptions = (e) => {
     e.preventDefault();
 
-    /* if (
-      !data.availabilityDateStart ||
-      !data.availabilityDateEnd ||
-      !data.availabilityTimeStart ||
-      !data.availabilityTimeEnd
-    ) {
-      showErrorSnackbar({ message: "Не удалось получить дату", tryAgain: true });
-      navigate("/search-time");
-      return;
-    } */
-
     if (+data.height <= 0) {
       showErrorSnackbar({ message: "Высота должна быть больше нуля", tryAgain: true });
       return;

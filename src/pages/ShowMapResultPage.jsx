@@ -1,12 +1,5 @@
-import React from 'react'
-import ShowMapResult from '../components/ShowMapResult/ShowMapResult'
+import ShowMapResult from "../components/ShowMapResult/ShowMapResult";
 
-const ShowMapResultPage = () => {
-  return (
-    <div>
-      <ShowMapResult/>
-    </div>
-  )
-}
+const ShowMapResultPage = () => <ShowMapResult/>
 
-export default ShowMapResultPage
+export default ShowMapResultPage;

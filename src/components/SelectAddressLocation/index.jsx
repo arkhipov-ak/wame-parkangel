@@ -2,45 +2,46 @@ import { useState } from "react";
 import NavBar from "../NavBar";
 import styles from "./SelectAddressLocation.module.css";
 import { useNavigate } from "react-router-dom";
-import { useDataContext } from "../../DataContext";
 import { useSnapshot } from "valtio";
 import { state } from "../../state";
 import Container from "../common/Container";
 import Button from "../common/Button";
+import { showErrorSnackbar } from "../../utils/showSnackBar";
 
 const SelectAddressLocation = () => {
   const snap = useSnapshot(state);
-  const [activeButton, setActiveButton] = useState(null);
-  const [activeMapButton, setActiveMapButton] = useState(null);
-  const { setSelectedData } = useDataContext();
+  const [activeRegion, setActiveRegion] = useState(null);
+  const [address, setAddress] = useState("");
+  const [activeNearMeButton, setActiveNearMeButton] = useState(false);
   const navigate = useNavigate();
 
   const handleButtonClick = (buttonId) => {
-    setActiveButton(buttonId);
+    setActiveRegion(buttonId);
   };
 
   const handleRedirect = () => {
-    const selectedData = {
-      activeButton,
-      activeMapButton,
-    };
-
-    setSelectedData(selectedData);
-
-    console.log("Selected Data before redirect:", selectedData);
-
-    navigate("/resultsearch");
+    console.log(snap);
+    if (!snap.parkDate) {
+      showErrorSnackbar({ message: "Не удалось получить дату", tryAgain: true });
+      navigate("/search-time");
+      return;
+    }
+    state.options[0] = {
+      ...snap.options[0],
+      address: address,
+      region: activeRegion,
+      availabilityDateEnd: snap.parkDate.dateEnd,
+      availabilityDateStart: snap.parkDate.dateStart,
+      availabilityTimeEnd: snap.parkDate.timeEnd,
+      availabilityTimeStart: snap.parkDate.timeStart,
+    }
+    
+    navigate("/result-search");
   };
 
   const handleRedirectToMap = () => {
     navigate("/ChooseMap");
   };
-
-  const handleMapButtonClick = (buttonId) => {
-    setActiveMapButton(buttonId);
-  };
-
-  console.log(snap);
 
   return (
     <>
@@ -48,19 +49,21 @@ const SelectAddressLocation = () => {
       <Container>
         <span className={styles.label}>Ваш регион</span>
         <button
-          className={`${styles.btn_style} ${activeButton === "moscow" ? styles.active : ""}`}
+          className={`${styles.btn_style} ${activeRegion === "moscow" ? styles.active : ""}`}
           onClick={() => handleButtonClick("moscow")}
         >
           Москва и область
         </button>
         <button
-          className={`${styles.btn_style} ${activeButton === "spb" ? styles.active : ""}`}
+          className={`${styles.btn_style} ${activeRegion === "spb" ? styles.active : ""}`}
           onClick={() => handleButtonClick("spb")}
         >
           СПб и область
         </button>
         <span className={styles.label}>Адрес</span>
         <input
+          value={address}
+          onChange={e => setAddress(e.target.value)}
           className={styles.input_style}
           placeholder="Введите адрес"
           type="text"
@@ -69,8 +72,8 @@ const SelectAddressLocation = () => {
           Указать на карте
         </button>
         <button
-          className={`${styles.btn_style} ${activeMapButton === "nearby" ? styles.active : ""}`}
-          onClick={() => handleMapButtonClick("nearby")}
+          className={`${styles.btn_style} ${activeNearMeButton ? styles.active : ""}`}
+          onClick={() => setActiveNearMeButton(true)}
         >
           Найти рядом со мной
         </button>
