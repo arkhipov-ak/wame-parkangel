@@ -12,6 +12,7 @@ import Container from "../common/Container";
 import { showErrorSnackbar } from "../../utils/showSnackBar";
 import { useSnapshot } from "valtio";
 import { state } from "../../state";
+import ZeroData from "../common/ZeroData";
 
 const SearchTime = () => {
   const snap = useSnapshot(state);
@@ -119,7 +120,7 @@ const SearchTime = () => {
                   </div>
                 ))
               ) : (
-                <div className={styles.no_history}>История аренды пуста</div>
+                <ZeroData>История аренды пуста</ZeroData>
               )}
             </div>
           </div>

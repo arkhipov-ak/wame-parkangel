@@ -9,6 +9,7 @@ import axios from "axios";
 import { showErrorSnackbar } from "../../utils/showSnackBar";
 import Container from "../common/Container";
 import { useState } from "react";
+import ZeroData from "../common/ZeroData";
 
 const ResultSearch = () => {
   const snap = useSnapshot(state);
@@ -58,10 +59,9 @@ const ResultSearch = () => {
           </>
         ) : (
           <div className={styles.wrapper_zero_data}>
-            <span>Подходящие объявления не найдены</span>
+            <ZeroData>Подходящие объявления не найдены</ZeroData>
           </div>
         )}
-        
       </Container>
     </>
   );

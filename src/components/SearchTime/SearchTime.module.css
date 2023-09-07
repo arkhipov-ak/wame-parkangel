@@ -73,15 +73,11 @@
   opacity: 0.7;
 }
 .wrapper_rentCard .secondRow p {
-  margin: 0; /* Удалит стандартные отступы у <p> */
+  margin: 0;
 }
 .wrapper_rentCard {
   align-items: flex-start;
 }
 .wrapper_rentCard .secondRow p {
   line-height: 1.2;
-}
-.no_history {
-  margin: 0 auto;
-  padding: 5% 0 5% 0;
 }
