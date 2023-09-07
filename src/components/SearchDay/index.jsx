@@ -54,11 +54,20 @@ const SearchDay = ({ day }) => {
         region: "",
       }
 
-      setSelectedHour(snap.parkOrder?.availabilityTimeStart.split(":")[0] || "00")
-      setSelectedMinute(snap.parkOrder?.availabilityTimeStart.split(":")[1] || "00")
-      setHoursCount(
-        +snap.parkOrder?.availabilityTimeEnd.split(":")[0] - +snap.parkOrder?.availabilityTimeStart.split(":")[0] || 0
-      );
+      if (snap.parkOrder?.availabilityTimeStart) {
+        setSelectedHour(+new Date(snap.parkOrder.availabilityTimeStart).toLocaleTimeString("en",
+          { timeStyle: "short", hour12: false, timeZone: "UTC" }).split(":")[0]
+        );
+        setSelectedMinute(new Date(snap.parkOrder.availabilityTimeStart).toLocaleTimeString("en",
+          { timeStyle: "short", hour12: false, timeZone: "UTC" }).split(":")[1]
+        );
+        setHoursCount(
+          +new Date(snap.parkOrder.availabilityTimeEnd).toLocaleTimeString("en",
+            { timeStyle: "short", hour12: false, timeZone: "UTC" }).split(":")[0] -
+          +new Date(snap.parkOrder.availabilityTimeStart).toLocaleTimeString("en",
+            { timeStyle: "short", hour12: false, timeZone: "UTC" }).split(":")[0]
+        );
+      }
     }
   }, [snap.user]);
 
