@@ -25,24 +25,20 @@
   margin: 0;
   padding: 0 10px;
 }
-
 .down_img {
   width: 24px; /* примерное значение, подстройте под свои нужды */
   height: 24px;
   padding: 0 10px;
 }
-
 .answer {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.4s ease-in-out; 
   padding: 0 10px 0 10px;
 }
-
 .open {
   max-height: 100px; /* Вы можете установить большее значение, если ваши ответы длинные */
 }
-
 .text_with_icon {
   display: flex;
   justify-content: center;

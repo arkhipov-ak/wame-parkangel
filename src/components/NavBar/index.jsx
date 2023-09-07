@@ -14,9 +14,9 @@ const NavBar = () => {
      if (location.state && location.state.from) {
         navigate(location.state.from);
      } else {
-        navigate(-1);  // Назад по истории браузера
+        navigate(-1);
      }
-  }
+  };
 
   return (
     <nav className={styles.wrapper}>

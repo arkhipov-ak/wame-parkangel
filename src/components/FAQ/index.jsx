@@ -54,11 +54,7 @@ const Faq = () => {
                     <BiChevronDown className={styles.down_img} />
                   )}
                 </div>
-                <div
-                  className={`${styles.answer} ${
-                    activeQuestion === index ? styles.open : ""
-                  }`}
-                >
+                <div className={`${styles.answer} ${activeQuestion === index ? styles.open : ""}`}>
                   {item.answer}
                 </div>
               </div>

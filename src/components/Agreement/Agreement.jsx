@@ -9,7 +9,7 @@ import { useSnapshot } from "valtio";
 import { state } from "../../state";
 
 const Agreement = () => {
-  const snap = useSnapshot(state)
+  const snap = useSnapshot(state);
   const navigate = useNavigate();
   const [isImageLoaded, setImageLoaded] = useState(false);
 
@@ -69,7 +69,15 @@ const Agreement = () => {
             удаление Вашей информации из нашей базы данных.
           </p>
         </div>
-        <Button onClick={handleAgreementClick}>Я согласен</Button>
+        {snap.user.isAcceptAgreement ? (
+          <Button onClick={() => navigate(-1)}>
+            Вернуться
+          </Button>
+        ) : (
+          <Button onClick={handleAgreementClick}>
+            Я согласен
+          </Button>
+        )}
       </div>
     </div>
   );
