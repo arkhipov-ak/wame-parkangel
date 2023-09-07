@@ -27,7 +27,7 @@ const SearchDay = ({ day }) => {
       hoursCount,
     };
     console.log("Selected Data before redirect:", selectedData);
-    navigate("/SelectAdressLocation");
+    navigate("/select-address-location");
   };
 
   useEffect(() => {

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import NavBar from "../NavBar";
-import styles from "./SelectAdressLocation.module.css";
+import styles from "./SelectAddressLocation.module.css";
 import { useNavigate } from "react-router-dom";
 import { useDataContext } from "../../DataContext";
 
-const SelectAdressLocation = () => {
+const SelectAddressLocation = () => {
   const [activeButton, setActiveButton] = useState(null);
   const [activeMapButton, setActiveMapButton] = useState(null);
   const { setSelectedData } = useDataContext();
@@ -85,4 +85,4 @@ const SelectAdressLocation = () => {
   );
 };
 
-export default SelectAdressLocation;
+export default SelectAddressLocation;

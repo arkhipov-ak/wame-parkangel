@@ -1,7 +1,7 @@
 import HomePage from "./pages/HomePage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AgreementPage from "./pages/AgreementPage";
-import SelectAdressLocationPage from "./pages/SelectAdressLocationPage";
+import SelectAddressLocationPage from "./pages/SelectAddressLocationPage";
 import AboutServicePage from "./pages/AboutServicePage";
 import FAQPage from "./pages/FAQPage";
 import SearchTimePage from "./pages/SearchTimePage";
@@ -88,8 +88,8 @@ const App = () => {
               <Route path="/" exact element={<HomePage/>} />
               <Route path="/agreement" element={<AgreementPage/>}/>
               <Route
-                path="/SelectAdressLocation"
-                element={<SelectAdressLocationPage/>}
+                path="/select-address-location"
+                element={<SelectAddressLocationPage/>}
               />
               <Route path="/AboutService" element={<AboutServicePage/>}/>
               <Route path="/FAQ" element={<FAQPage/>}/>

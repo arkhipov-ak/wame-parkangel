@@ -19,7 +19,7 @@ const SearchAnotherTime = () => {
   const [selectedDateStart, setSelectedDateStart] = useState("");
 
   const handleRedirectToSelect = () => {
-    navigate("/SelectAdressLocation");
+    navigate("/select-address-location");
   };
 
   const dateRef = useRef(null);
