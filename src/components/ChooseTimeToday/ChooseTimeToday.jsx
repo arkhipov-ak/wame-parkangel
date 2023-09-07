@@ -150,7 +150,7 @@ const ChooseTimeToday = ({ day }) => {
               {selectedHour}:{selectedMinute}
             </div>
 
-            <p>На сколько часов</p>
+            <p>На сколько времени</p>
             <div className={styles.incrementWrapper}>
               <p
                 onClick={decrement}

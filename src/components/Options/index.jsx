@@ -41,8 +41,8 @@ const Options = () => {
   });
 
   const onHandleChange = (value, key) => {
-    let newObject = { ...data, ...{ [key]: value } }
-    setData(newObject)
+    let newObject = { ...data, ...{ [key]: value } };
+    setData(newObject);
 	};
 
   const onHandleSaveOptions = (e) => {

@@ -19,8 +19,6 @@ const SearchDay = ({ day }) => {
   const [selectedMinute, setSelectedMinute] = useState("00");
   const navigate = useNavigate();
 
-  console.log(snap);
-
   const handleRedirect = () => {
     const selectedData = {
       selectedHour,
@@ -97,7 +95,7 @@ const SearchDay = ({ day }) => {
             <div onClick={() => setOpenTimeModal(true)} className={styles.time_present}>
               {selectedHour}:{selectedMinute}
             </div>
-            <span className={styles.label}>На сколько часов</span>
+            <span className={styles.label}>На сколько времени</span>
             <HoursCounterBlock hoursCount={hoursCount} setHoursCount={setHoursCount}/>
             <ParametersButton link="/options"/>
             <Button onClick={handleRedirect} text="Быстрая парковка"/>
