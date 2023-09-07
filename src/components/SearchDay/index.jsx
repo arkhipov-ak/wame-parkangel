@@ -133,7 +133,7 @@ const SearchDay = ({ day }) => {
           <span className={styles.label}>На сколько времени</span>
           <HoursCounterBlock hoursCount={hoursCount} setHoursCount={setHoursCount}/>
           <ParametersButton onClick={onHandleParametersClick}/>
-          <Button onClick={() => navigate("/select-address-location")} text="Быстрая парковка"/>
+          <Button onClick={() => navigate("/select-address-location")}>Быстрая парковка</Button>
           {openTimeModal && (
             <ModalTime
               setOpenTimeModal={setOpenTimeModal}

@@ -69,7 +69,7 @@ const SearchAnotherTime = () => {
                 </div>
               </div>
               <ParametersButton link="/extra-options"/>
-              <Button onClick={handleRedirectToSelect} text="Быстрая парковка"/>
+              <Button onClick={handleRedirectToSelect}>Быстрая парковка</Button>
             </div>
           </div>
           {openStartTimeModal && (

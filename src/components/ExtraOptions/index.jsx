@@ -149,7 +149,7 @@ const ExtraOptions = () => {
             после завершения аренды
           </CustomCheckBox>
         </div>
-        <Button onClick={handleRedirect} text="Далее"/>
+        <Button onClick={handleRedirect}>Далее</Button>
         {hourModalOpen && (
           <Modal 
             setOpenModal={setHourModalOpen}
@@ -162,7 +162,7 @@ const ExtraOptions = () => {
                 setPrice={e => onHandleChange(e, "hourPrice")}
                 currency
               />
-              <Button onClick={() => setHourModalOpen(false)} text="Готово"/>
+              <Button onClick={() => setHourModalOpen(false)}>Готово</Button>
             </>
           </Modal>
         )}
@@ -179,7 +179,7 @@ const ExtraOptions = () => {
                 currency
                 step={100}
               />
-              <Button onClick={() => setDayModalOpen(false)} text="Готово"/>
+              <Button onClick={() => setDayModalOpen(false)}>Готово</Button>
             </>
           </Modal>
         )}
@@ -196,7 +196,7 @@ const ExtraOptions = () => {
                 currency
                 step={500}
               />
-              <Button onClick={() => setWeekModalOpen(false)} text="Готово"/>
+              <Button onClick={() => setWeekModalOpen(false)}>Готово</Button>
             </>
           </Modal>
         )}
@@ -213,7 +213,7 @@ const ExtraOptions = () => {
                 currency
                 step={1000}
               />
-              <Button onClick={() => setMonthModalOpen(false)} text="Готово"/>
+              <Button onClick={() => setMonthModalOpen(false)}>Готово</Button>
             </>
           </Modal>
         )}

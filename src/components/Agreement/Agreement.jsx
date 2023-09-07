@@ -69,7 +69,7 @@ const Agreement = () => {
             удаление Вашей информации из нашей базы данных.
           </p>
         </div>
-        <Button onClick={handleAgreementClick} text="Я согласен"/>
+        <Button onClick={handleAgreementClick}>Я согласен</Button>
       </div>
     </div>
   );

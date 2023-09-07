@@ -174,7 +174,7 @@ const Options = () => {
                 <span className={styles.main_text}>Макс. стоимость в час, руб</span>
                 <PriceCounterBlock price={+data.priceHour} setPrice={e => onHandleChange(e, "priceHour")}/>
               </div>
-              <Button type="submit" text="Сохранить параметры"/>
+              <Button type="submit">Сохранить параметры</Button>
             </form>
           </Container>
         </div>
