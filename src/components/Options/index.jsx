@@ -18,10 +18,6 @@ const Options = () => {
   const snap = useSnapshot(state);
   const navigate = useNavigate();
   const [data, setData] = useState({
-    availabilityDateStart: "",
-    availabilityDateEnd: "",
-    availabilityTimeStart: "",
-    availabilityTimeEnd: "",
     priceHour: null,
     priceDay: null,
     priceWeek: null,
@@ -52,7 +48,7 @@ const Options = () => {
   const onHandleSaveOptions = (e) => {
     e.preventDefault();
 
-    if (
+    /* if (
       !data.availabilityDateStart ||
       !data.availabilityDateEnd ||
       !data.availabilityTimeStart ||
@@ -61,7 +57,7 @@ const Options = () => {
       showErrorSnackbar({ message: "Не удалось получить дату", tryAgain: true });
       navigate("/search-time");
       return;
-    }
+    } */
 
     if (+data.height <= 0) {
       showErrorSnackbar({ message: "Высота должна быть больше нуля", tryAgain: true });
@@ -91,22 +87,42 @@ const Options = () => {
       user_id: snap.user.id,
     }
 
-    axios.post(
-      "http://185.238.2.176:5064/api/park", preparedData
-    ).then(response => {
-      if (response) {
-        showSuccessSnackbar({ message: "Параметры сохранены" })
-        navigate(-1);
-      }
-    })
-    .catch(showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
+    if (snap.options[0]) {
+      axios.put(
+        "http://185.238.2.176:5064/api/options", preparedData
+      ).then(response => {
+        if (response) {
+          showSuccessSnackbar({ message: "Параметры сохранены" })
+          navigate(-1);
+        }
+      })
+      .catch(showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
+    } else {
+      axios.post(
+        "http://185.238.2.176:5064/api/options", preparedData
+      ).then(response => {
+        if (response) {
+          showSuccessSnackbar({ message: "Параметры сохранены" })
+          navigate(-1);
+        }
+      })
+      .catch(showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
+    }
   };
 
   useEffect(() => {
-    if (snap && snap.user && snap.parkOrder) {
-      setData(snap.parkOrder);
+    if (snap && snap.user) {
+      axios.get(`http://185.238.2.176:5064/api/options/userId/${snap.user.id}`)
+        .then(response => state.options = response.data.response)
+        .catch(() => showErrorSnackbar({ message: "Не удалось загрузить опции" }))
     }
   }, [snap.user]);
+
+  useEffect(() => {
+    if (snap && snap.user && snap.options && snap.options[0]) {
+      setData(snap.options[0]);
+    }
+  }, [snap.user, snap.options]);
 
   return (
     <>

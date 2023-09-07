@@ -6,8 +6,11 @@ import ParametersButton from "../common/ParametersButton";
 import Container from "../common/Container";
 import Button from "../common/Button";
 import ModalTime from "../common/ModalTime";
+import { useSnapshot } from "valtio";
+import { state } from "../../state";
 
 const SearchAnotherTime = () => {
+  const snap = useSnapshot(state);
   const navigate = useNavigate();
   const [openStartTimeModal, setOpenStartTimeModal] = useState(false);
   const [openEndTimeModal, setOpenEndTimeModal] = useState(false);
@@ -17,6 +20,10 @@ const SearchAnotherTime = () => {
   const [selectedHourEnd, setSelectedHourEnd] = useState("00");
   const [selectedMinuteEnd, setSelectedMinuteEnd] = useState("00");
   const [selectedDateStart, setSelectedDateStart] = useState("");
+
+  const onHandleParametersClick = () => {
+    navigate("/extra-options");
+  };
 
   const handleRedirectToSelect = () => {
     navigate("/select-address-location");
@@ -68,7 +75,7 @@ const SearchAnotherTime = () => {
                   {selectedHourEnd}:{selectedMinuteEnd}
                 </div>
               </div>
-              <ParametersButton link="/extra-options"/>
+              <ParametersButton onClick={onHandleParametersClick}/>
               <Button onClick={handleRedirectToSelect}>Быстрая парковка</Button>
             </div>
           </div>

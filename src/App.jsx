@@ -29,8 +29,11 @@ import { useEffect } from "react";
 import { showErrorSnackbar } from "./utils/showSnackBar";
 import axios from "axios";
 import { state } from "./state";
+import { useSnapshot } from "valtio";
 
 const App = () => {
+  const snap = useSnapshot(state);
+
   useEffect(() => {
     window.Telegram.WebApp.ready();
     const tg = window?.Telegram?.WebApp;
@@ -61,15 +64,20 @@ const App = () => {
               .catch(() => showErrorSnackbar({ message: "Не удалось записать юзера" }))
             }
           })
-          .catch(() => {
-            console.log('in catch');
-            showErrorSnackbar({ message: "Что-то пошло не так" })
-          })
+          .catch(() => {showErrorSnackbar({ message: "Что-то пошло не так" })})
       /* } */
     }
    
     getUser();
   }, []);
+
+  useEffect(() => {
+    if (snap && snap.user) {
+      axios.get(`http://185.238.2.176:5064/api/options/userId/${snap.user.id}`)
+        .then(response => state.options = response.data.response)
+        .catch(() => showErrorSnackbar({ message: "Не удалось загрузить опции" }))
+    }
+  }, [snap.user]);
 
   return (
     <SnackbarProvider
