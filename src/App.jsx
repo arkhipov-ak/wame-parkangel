@@ -26,7 +26,7 @@ import { DataContextProvider } from "./DataContext";
 import ChooseMap from "./components/ChooseMap/ChooseMap";
 import { SnackbarProvider } from "notistack";
 import { useEffect } from "react";
-import { showErrorSnackbar } from "./utils/showErrorSnackBar";
+import { showErrorSnackbar } from "./utils/showSnackBar";
 import axios from "axios";
 import { state } from "./state";
 
@@ -78,7 +78,7 @@ const App = () => {
         horizontal: "right",
       }}
       maxSnack={2}
-      autoHideDuration={2000}
+      autoHideDuration={3000}
     >
       <DataContextProvider>
         <Router>

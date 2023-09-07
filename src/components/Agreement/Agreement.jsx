@@ -4,7 +4,7 @@ import ParkAngel from "/src/assets/ParkAngel.svg";
 import { useNavigate } from "react-router-dom";
 import Button from "../common/Button";
 import axios from "axios";
-import { showErrorSnackbar } from "../../utils/showErrorSnackBar";
+import { showErrorSnackbar } from "../../utils/showSnackBar";
 import { useSnapshot } from "valtio";
 import { state } from "../../state";
 

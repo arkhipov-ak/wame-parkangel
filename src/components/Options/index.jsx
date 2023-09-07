@@ -10,7 +10,7 @@ import Button from "../common/Button";
 import { state } from "../../state";
 import { useState } from "react";
 import { useSnapshot } from "valtio";
-import { showErrorSnackbar } from "../../utils/showErrorSnackBar";
+import { showErrorSnackbar, showSuccessSnackbar } from "../../utils/showSnackBar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -18,10 +18,14 @@ const Options = () => {
   const snap = useSnapshot(state);
   const navigate = useNavigate();
   const [data, setData] = useState({
-    priceHour: "",
-    priceDay: "",
-    priceWeek: "",
-    priceMonth: "",
+    availabilityDateStart: "",
+    availabilityDateEnd: "",
+    availabilityTimeStart: "",
+    availabilityTimeEnd: "",
+    priceHour: null,
+    priceDay: null,
+    priceWeek: null,
+    priceMonth: null,
     height: 0,
     width: 0,
     length: 0,
@@ -36,10 +40,6 @@ const Options = () => {
     isVoltsWithCharger: false,
     isWithoutPower: false,
     isCustomSize: false,
-    availabilityDateStart: "",
-    availabilityDateEnd: "",
-    availabilityTimeStart: "",
-    availabilityTimeEnd: "",
     address: "",
     region: "",
   });
@@ -51,6 +51,17 @@ const Options = () => {
 
   const onHandleSaveOptions = (e) => {
     e.preventDefault();
+
+    if (
+      !data.availabilityDateStart ||
+      !data.availabilityDateEnd ||
+      !data.availabilityTimeStart ||
+      !data.availabilityTimeEnd
+    ) {
+      showErrorSnackbar({ message: "Не удалось получить дату", tryAgain: true });
+      navigate("/search-time");
+      return;
+    }
 
     if (+data.height <= 0) {
       showErrorSnackbar({ message: "Высота должна быть больше нуля", tryAgain: true });
@@ -77,63 +88,25 @@ const Options = () => {
       length: +data.length,
       height: +data.height,
       width: +data.width,
-      availabilityDateStart: snap.parkOrderDate,
-      availabilityDateEnd: snap.parkOrderDate,
-      user_id: snap.user.chatId,
+      user_id: snap.user.id,
     }
-
-    if (!preparedData.availabilityDateStart) {
-      showErrorSnackbar({ message: "Не удалось получить дату", tryAgain: true });
-      navigate("/search-time");
-      return;
-    }
-
-    console.log(preparedData);
 
     axios.post(
       "http://185.238.2.176:5064/api/park", preparedData
-    ).then(response => console.log('response', response))
-    .catch(error => console.log(error))
+    ).then(response => {
+      if (response) {
+        showSuccessSnackbar({ message: "Параметры сохранены" })
+        navigate(-1);
+      }
+    })
+    .catch(showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
   };
 
   useEffect(() => {
-    if (snap && snap.user) {
-      axios.get(
-        `http://185.238.2.176:5064/api/park/${snap.user.chatId}`
-      ).then(response => console.log(response))
-      .catch(error => console.log(error))
-
-      state.parkOrder = {
-        priceHour: "",
-        priceDay: "",
-        priceWeek: "",
-        priceMonth: "",
-        height: 0,
-        width: 0,
-        length: 0,
-        isUnderground: false,
-        isOutDoor: false,
-        isCovered: false,
-        isGarage : false,
-        isProtected: false,
-        isHeated: false,
-        isVolts: false,
-        isElectroMobile: false,
-        isVoltsWithCharger: false,
-        isWithoutPower: false,
-        isCustomSize: false,
-        availabilityDateStart: "",
-        availabilityDateEnd: "",
-        availabilityTimeStart: "",
-        availabilityTimeEnd: "",
-        address: "",
-        region: "",
-      }
-
-      setData(snap.parkOrder)
+    if (snap && snap.user && snap.parkOrder) {
+      setData(snap.parkOrder);
     }
   }, [snap.user]);
-
 
   return (
     <>

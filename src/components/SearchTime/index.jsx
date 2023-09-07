@@ -9,7 +9,7 @@ import styles from "./SearchTime.module.css";
 import { BiChevronRight } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import Container from "../common/Container";
-import { showErrorSnackbar } from "../../utils/showErrorSnackBar";
+import { showErrorSnackbar } from "../../utils/showSnackBar";
 import { useSnapshot } from "valtio";
 import { state } from "../../state";
 
