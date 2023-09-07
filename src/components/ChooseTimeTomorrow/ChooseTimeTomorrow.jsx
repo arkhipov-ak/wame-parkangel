@@ -1,12 +1,5 @@
-import React from 'react'
-import ChooseTimeToday from '../ChooseTimeToday/ChooseTimeToday'
+import ChooseTimeToday from "../ChooseTimeToday/ChooseTimeToday";
 
-const ChooseTimeTomorrow = () => {
-  return (
-    <div>
-      <ChooseTimeToday day={"завтра"}/>
-    </div>
-  )
-}
+const ChooseTimeTomorrow = () => <ChooseTimeToday day="завтра"/>
 
-export default ChooseTimeTomorrow
+export default ChooseTimeTomorrow;

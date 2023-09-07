@@ -9,7 +9,6 @@ import ParametersButton from "../common/ParametersButton";
 import ModalTime from "../common/ModalTime";
 import { useEffect } from "react";
 import { state } from "../../state";
-import axios from "axios";
 import { useSnapshot } from "valtio";
 
 const SearchDay = ({ day }) => {
@@ -19,6 +18,8 @@ const SearchDay = ({ day }) => {
   const [selectedHour, setSelectedHour] = useState("00");
   const [selectedMinute, setSelectedMinute] = useState("00");
   const navigate = useNavigate();
+
+  console.log(snap);
 
   const handleRedirect = () => {
     const selectedData = {
@@ -68,6 +69,22 @@ const SearchDay = ({ day }) => {
       );
     }
   }, [snap.user]);
+
+  useEffect(() => {
+    switch (day) {
+      case "сегодня": {
+        state.parkOrderDate = new Date().toISOString();
+        break;
+      }
+      case "завтра": {
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1)
+        state.parkOrderDate = tomorrow.toISOString();
+        break;
+      }
+    }
+  }, [day]);
 
   return (
     <>

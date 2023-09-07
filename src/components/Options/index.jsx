@@ -9,12 +9,13 @@ import PriceCounterBlock from "../common/PriceCounterBlock";
 import Button from "../common/Button";
 import { state } from "../../state";
 import { useState } from "react";
-import axios from "axios";
 import { useSnapshot } from "valtio";
 import { showErrorSnackbar } from "../../utils/showErrorSnackBar";
+import { useNavigate } from "react-router-dom";
 
 const Options = () => {
   const snap = useSnapshot(state);
+  const navigate = useNavigate();
   const [data, setData] = useState({
     priceHour: 0,
     height: 0,
@@ -72,15 +73,23 @@ const Options = () => {
       length: +data.length,
       height: +data.height,
       width: +data.width,
+      availabilityDateStart: snap.parkOrderDate,
+      availabilityDateEnd: snap.parkOrderDate,
       user_id: snap.user.chatId,
+    }
+
+    if (!preparedData.availabilityDateStart) {
+      showErrorSnackbar({ message: "Не удалось получить дату", tryAgain: true });
+      navigate("/search-time");
+      return;
     }
 
     console.log(preparedData);
 
-    axios.post(
+    /* axios.post(
       "http://185.238.2.176:5064/api/park", preparedData
     ).then(response => console.log('response', response))
-    .catch(error => console.log(error))
+    .catch(error => console.log(error)) */
   };
 
   useEffect(() => {
@@ -117,6 +126,8 @@ const Options = () => {
       setData(snap.parkOrder)
     }
   }, [snap.user]);
+
+  console.log(snap);
 
   return (
     <>
