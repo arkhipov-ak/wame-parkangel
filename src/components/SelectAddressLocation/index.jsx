@@ -20,7 +20,6 @@ const SelectAddressLocation = () => {
   };
 
   const handleRedirect = () => {
-    console.log(snap);
     if (!snap.parkDate) {
       showErrorSnackbar({ message: "Не удалось получить дату", tryAgain: true });
       navigate("/search-time");

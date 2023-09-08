@@ -37,6 +37,9 @@
   border: none;
   margin: 2.5% 0 5% 0;
 }
+.input_style:focus {
+  outline: none;
+}
 .search_btn {
   padding: 0.875rem 0rem 0.875rem 0rem;
   width: 85%;

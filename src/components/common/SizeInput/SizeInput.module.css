@@ -45,3 +45,6 @@
   background-color: transparent;
   width: 100%;
 }
+.parameter:focus {
+  outline: none;
+}
