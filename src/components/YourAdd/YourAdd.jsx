@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Modal } from "antd";
+import { useState } from "react";
+import { Modal } from "antd";
 import { Rate } from "antd";
 import NavBar from "../NavBar";
 import { YMaps, Map } from "@pbe/react-yandex-maps";

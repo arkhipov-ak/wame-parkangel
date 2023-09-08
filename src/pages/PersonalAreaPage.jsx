@@ -1,12 +1,6 @@
-import React from 'react'
-import PersonalArea from '../components/PersonalArea/PersonalArea'
 
-const PersonalAreaPage = () => {
-  return (
-    <div>
-      <PersonalArea/>
-    </div>
-  )
-}
+import PersonalArea from "../components/PersonalArea";
 
-export default PersonalAreaPage
+const PersonalAreaPage = () => <PersonalArea/>
+
+export default PersonalAreaPage;

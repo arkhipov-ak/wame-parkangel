@@ -104,7 +104,7 @@ const App = () => {
               path="/ChooseTimeTomorrow"
               element={<ChooseTimeTomorrowPage/>}
             />
-            <Route path="/PersonalArea" element={<PersonalAreaPage/>}/>
+            <Route path="/personal-area" element={<PersonalAreaPage/>}/>
             <Route path="/result-search" element={<ResultSearchPage/>}/>
             <Route path="/extra-options" element={<ExtraOptionsPage/>}/>
             <Route path="/options" element={<OptionsPage/>}/>
