@@ -51,8 +51,8 @@ const App = () => {
                 "http://185.238.2.176:5064/api/users",
                 {
                   chatId: "5465844067777",
-                  name: "Stas",
-                  telegram: "telega",
+                  name: "",
+                  telegram: "",
                   phoneNumber: "",
                   username: "",
                   email: "",

@@ -7,6 +7,7 @@ import Button from "../common/Button";
 import { useSnapshot } from "valtio";
 import { state } from "../../state";
 import CustomCheckBox from "../common/CustomCheckbox";
+import { showErrorSnackbar, showSuccessSnackbar } from "../../utils/showSnackBar";
 
 const PersonalArea = () => {
   const snap = useSnapshot(state);
@@ -16,9 +17,9 @@ const PersonalArea = () => {
     email: "",
     city: "",
     password: "",
-    isNameVisible: false,
-    isPhoneVisible: false,
-    isTelegramVisible: false,
+    isShowName: false,
+    isShowPhoneNumber: false,
+    isShowTelegram: false,
   });
 
   const onHandleChange = (value, key) => {
@@ -30,26 +31,14 @@ const PersonalArea = () => {
     e.preventDefault();
     console.log(data);
 
-    /* if (id) {
-      axios
-        .put("/api/users/:id", userData)
-        .then((response) => {
-          console.log("User data updated:", response.data);
-        })
-        .catch((error) => {
-          console.error("Error updating user data:", error);
-        });
-    } else {
-      axios
-        .post("/api/users", userData)
-        .then((response) => {
-          console.log("New user created:", response.data);
-        })
-        .catch((error) => {
-          console.error("Error creating user:", error);
-        });
-    } */
+    axios.put("http://185.238.2.176:5064/api/users", data)
+      .then(() => showSuccessSnackbar({ message: "Данные профиля обновлены" }))
+      .catch(() => showErrorSnackbar({ message: "Не удалось обновить данные профиля" }))
   };
+
+  useEffect(() => {
+    if (snap && snap.user) setData(snap.user)
+  }, [snap.user]);
 
   return (
     <>
@@ -99,13 +88,13 @@ const PersonalArea = () => {
               className={styles.question_input}
               type="text"
             />
-            <CustomCheckBox checked={data.isNameVisible} onClick={e => onHandleChange(e, "isNameVisible")}>
+            <CustomCheckBox checked={data.isShowName} onClick={e => onHandleChange(e, "isShowName")}>
               Имя
             </CustomCheckBox>
-            <CustomCheckBox checked={data.isPhoneVisible} onClick={e => onHandleChange(e, "isPhoneVisible")}>
+            <CustomCheckBox checked={data.isShowPhoneNumber} onClick={e => onHandleChange(e, "isShowPhoneNumber")}>
               Телефон
             </CustomCheckBox>
-            <CustomCheckBox checked={data.isTelegramVisible} onClick={e => onHandleChange(e, "isTelegramVisible")}>
+            <CustomCheckBox checked={data.isShowTelegram} onClick={e => onHandleChange(e, "isShowTelegram")}>
               Telegram-никнейм
             </CustomCheckBox>
           <Button type="submit">Сохранить</Button>
