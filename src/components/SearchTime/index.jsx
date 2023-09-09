@@ -31,10 +31,6 @@ const SearchTime = () => {
     }
   }, [snap]);
 
-  useEffect(() => {
-    state.isSearchPark = true;
-  }, []);
-
   return (
     <>
       <NavBar/>
