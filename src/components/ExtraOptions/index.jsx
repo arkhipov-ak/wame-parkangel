@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar";
 import styles from "./ExtraOptions.module.css";
 import Container from "../common/Container";
-import ModalTime from "../common/ModalTime";
 import CustomCheckBox from "../common/CustomCheckbox";
 import SwitchToggle from "../common/SwitchToggle";
 import Button from "../common/Button";
@@ -11,42 +10,40 @@ import PriceCounterBlock from "../common/PriceCounterBlock";
 import Modal from "../common/Modal";
 import { useSnapshot } from "valtio";
 import { state } from "../../state";
-import { showErrorSnackbar } from "../../utils/showSnackBar";
+import { showErrorSnackbar, showSuccessSnackbar } from "../../utils/showSnackBar";
+import axios from "axios";
 
 const ExtraOptions = () => {
   const snap = useSnapshot(state);
-  const [openStartTimeModal, setOpenStartTimeModal] = useState(false);
-  const [openEndTimeModal, setOpenEndTimeModal] = useState(false);
-  const [selectedHourStart, setSelectedHourStart] = useState("00");
-  const [selectedMinuteStart, setSelectedMinuteStart] = useState("00");
-  const [selectedHourEnd, setSelectedHourEnd] = useState("00");
-  const [selectedMinuteEnd, setSelectedMinuteEnd] = useState("00");
+  /* const [openStartTimeModal, setOpenStartTimeModal] = useState(false); */
+  /* const [openEndTimeModal, setOpenEndTimeModal] = useState(false); */
   const [hourModalOpen, setHourModalOpen] = useState(false);
   const [dayModalOpen, setDayModalOpen] = useState(false);
   const [weekModalOpen, setWeekModalOpen] = useState(false);
   const [monthModalOpen, setMonthModalOpen] = useState(false);
   const navigate = useNavigate();
   const [data, setData] = useState({
-    hourPrice: 0,
-    dayPrice: 0,
-    weekPrice: 0,
-    monthPrice: 0,
-    height: "",
-    width: "",
-    length: "",
-    underground: false,
-    open: false,
-    covered: false,
-    garage: false,
-    security: false,
-    heating: false,
-    electroVolts: false,
-    electro: false,
-    electroVoltsAndCharger: false,
-    electroWithoutPower: false,
-    nonStandardSizes: false,
-    resumeAds: false,
-})
+    priceHour: null,
+    priceDay: null,
+    priceWeek: null,
+    priceMonth: null,
+    height: 0,
+    width: 0,
+    length: 0,
+    isUnderground: false,
+    isOutDoor: false,
+    isCovered: false,
+    isGarage : false,
+    isProtected: false,
+    isHeated: false,
+    isVolts: false,
+    isElectroMobile: false,
+    isVoltsWithCharger: false,
+    isWithoutPower: false,
+    isCustomSize: false,
+    address: "",
+    region: "",
+  });
 
   const onHandleChange = (value, key) => {
     let newObject = { ...data, ...{ [key]: value } }
@@ -56,6 +53,46 @@ const ExtraOptions = () => {
   const handleRedirect = () => {
     navigate("/review", { state: data });
   };
+
+  const onHandleSaveOptions = (e) => {
+    e.preventDefault();
+
+    if (snap.options[0]) {
+      axios.put(
+        "http://185.238.2.176:5064/api/options", data
+      ).then(response => {
+        if (response) {
+          showSuccessSnackbar({ message: "Параметры сохранены" })
+          navigate(-1);
+        }
+      })
+      .catch(showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
+    } else {
+      axios.post(
+        "http://185.238.2.176:5064/api/options", data
+      ).then(response => {
+        if (response) {
+          showSuccessSnackbar({ message: "Параметры сохранены" })
+          navigate(-1);
+        }
+      })
+      .catch(showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
+    }
+  };
+
+  useEffect(() => {
+    if (snap && snap.user) {
+      axios.get(`http://185.238.2.176:5064/api/options/userId/${snap.user.id}`)
+        .then(response => state.options = response.data.response)
+        .catch(() => showErrorSnackbar({ message: "Не удалось загрузить опции" }))
+    }
+  }, [snap.user]);
+
+  useEffect(() => {
+    if (snap && snap.user && snap.options && snap.options[0]) {
+      setData(snap.options[0]);
+    }
+  }, [snap.user, snap.options]);
 
   useEffect(() => {
     if (snap && snap.user) {
@@ -70,103 +107,117 @@ const ExtraOptions = () => {
 		<>
 			<NavBar/>
 			<Container>
-				{/* <div className={styles.box_container}>
-					<span className={styles.main_text}>Период</span>
-					<div className={styles.periods_wrapper}>
-						<div className={styles.period}>
-							<p className={styles.header_text}>Начиная с</p>
-							<p onClick={() => setOpenStartTimeModal(true)} className={styles.parameter}>
-								{selectedHourStart}:{selectedMinuteStart}
-							</p>
-						</div>
-						<div className={styles.period}>
-							<p className={styles.header_text}>По</p>
-							<p onClick={() => setOpenEndTimeModal(true)} className={styles.parameter}>
-								{selectedHourEnd}:{selectedMinuteEnd}
-							</p>
-						</div>
-					</div>
-				</div> */}
-        <div className={styles.container}>
-          <div className={styles.box_container}>
-            <span className={styles.main_text}>Тип парковки</span>
-            <CustomCheckBox checked={data.underground} onClick={e => onHandleChange(e, "underground")}>Подземная</CustomCheckBox>
-            <CustomCheckBox checked={data.open} onClick={e => onHandleChange(e, "open")}>Открытая</CustomCheckBox>
-            <CustomCheckBox checked={data.covered} onClick={e => onHandleChange(e, "covered")}>Крытая</CustomCheckBox>
-            <CustomCheckBox checked={data.garage} onClick={e => onHandleChange(e, "garage")}>Гараж</CustomCheckBox>
-          </div>
-          <div className={styles.box_container}>
-            <span className={styles.main_text}>Доп. опции</span>
-            <label>
-              <SwitchToggle active={data.security} onClick={e => onHandleChange(e, "security")}/>
-              Охрана
-            </label>
-            <label>
-              <SwitchToggle active={data.heating} onClick={e => onHandleChange(e, "heating")}/>
-              Обогрев
-            </label>
-          </div>
-        </div>
-        <div className={styles.box_container}>
-          <span className={styles.main_text}>Для электромобилей</span>
-          <CustomCheckBox checked={data.electroVolts} onClick={e => onHandleChange(e, "electroVolts")}>220V</CustomCheckBox>
-          <CustomCheckBox checked={data.electro} onClick={e => onHandleChange(e, "electro")}>Электромобиль</CustomCheckBox>
-          <CustomCheckBox checked={data.electroVoltsAndCharger} onClick={e => onHandleChange(e, "electroVoltsAndCharger")}>
-            220V и зарядка электромобиля
-          </CustomCheckBox>
-          <CustomCheckBox checked={data.electroWithoutPower} onClick={e => onHandleChange(e, "electroWithoutPower")}>
-            Без электропитания
-          </CustomCheckBox>
-          <label>
-            <SwitchToggle active={data.nonStandardSizes} onClick={e => onHandleChange(e, "nonStandardSizes")}/>
-            Нестандартные размеры авто
-          </label>
-        </div>
-        <div className={styles.box_container}>
-          <span className={styles.main_text}>Цены</span>
-          <div className={styles.price_blocks}>
-            <div className={styles.period}>
-              <p className={styles.header_text}>Цена за час</p>
-              <p onClick={() => setHourModalOpen(true)} className={styles.parameter}>
-                {data.hourPrice} руб
-              </p>
-            </div>
-            <div className={styles.period}>
-              <p className={styles.header_text}>Цена за день</p>
-              <p onClick={() => setDayModalOpen(true)} className={styles.parameter}>
-                {data.dayPrice} руб
-              </p>
-            </div>
-
-            <div className={styles.period}>
-              <p className={styles.header_text}>Цена за неделю</p>
-              <p onClick={() => setWeekModalOpen(true)} className={styles.parameter}>
-                {data.weekPrice} руб
-              </p>
-            </div>
-            <div className={styles.period}>
-              <div className={styles.size_wrapper_2}>
-                <p className={styles.header_text}>Цена за месяц</p>
-                <p onClick={() => setMonthModalOpen(true)} className={styles.parameter}>
-                  {data.monthPrice} руб
+        <form onSubmit={onHandleSaveOptions}>
+          {/* <div className={styles.box_container}>
+            <span className={styles.main_text}>Период</span>
+            <div className={styles.periods_wrapper}>
+              <div className={styles.period}>
+                <p className={styles.header_text}>Начиная с</p>
+                <p onClick={() => setOpenStartTimeModal(true)} className={styles.parameter}>
+                  {selectedHourStart}:{selectedMinuteStart}
+                </p>
+              </div>
+              <div className={styles.period}>
+                <p className={styles.header_text}>По</p>
+                <p onClick={() => setOpenEndTimeModal(true)} className={styles.parameter}>
+                  {selectedHourEnd}:{selectedMinuteEnd}
                 </p>
               </div>
             </div>
+          </div> */}
+          <div className={styles.container}>
+            <div className={styles.box_container}>
+              <span className={styles.main_text}>Тип парковки</span>
+              <CustomCheckBox checked={data.isUnderground} onClick={e => onHandleChange(e, "isUnderground")}>
+                Подземная
+              </CustomCheckBox>
+              <CustomCheckBox checked={data.isOutDoor} onClick={e => onHandleChange(e, "isOutDoor")}>
+                Открытая
+              </CustomCheckBox>
+              <CustomCheckBox checked={data.isCovered} onClick={e => onHandleChange(e, "isCovered")}>
+                Крытая
+              </CustomCheckBox>
+              <CustomCheckBox checked={data.isGarage} onClick={e => onHandleChange(e, "isGarage")}>
+                Гараж
+              </CustomCheckBox>
+            </div>
+            <div className={styles.box_container}>
+              <span className={styles.main_text}>Доп. опции</span>
+              <label>
+                <SwitchToggle active={data.isProtected} onClick={e => onHandleChange(e, "isProtected")}/>
+                Охрана
+              </label>
+              <label>
+                <SwitchToggle active={data.isHeated} onClick={e => onHandleChange(e, "isHeated")}/>
+                Обогрев
+              </label>
+            </div>
           </div>
-        </div>
-        <div className={styles.box_container}>
-          <CustomCheckBox checked={data.resumeAds} onClick={e => onHandleChange(e, "resumeAds")}>
-            Возобновлять объявление
-            <br />
-            после завершения аренды
-          </CustomCheckBox>
-        </div>
-        {snap.isSearchPark ? (
-          <Button onClick={handleRedirect}>Сохранить параметры</Button>
-        ) : (
-          <Button onClick={handleRedirect}>Далее</Button>
-        )}
-        
+          <div className={styles.box_container}>
+            <span className={styles.main_text}>Для электромобилей</span>
+            <CustomCheckBox checked={data.isVolts} onClick={e => onHandleChange(e, "isVolts")}>
+              220V
+            </CustomCheckBox>
+            <CustomCheckBox checked={data.isElectroMobile} onClick={e => onHandleChange(e, "isElectroMobile")}>
+              Электромобиль
+            </CustomCheckBox>
+            <CustomCheckBox checked={data.isVoltsWithCharger} onClick={e => onHandleChange(e, "isVoltsWithCharger")}>
+              220V и зарядка электромобиля
+            </CustomCheckBox>
+            <CustomCheckBox checked={data.isWithoutPower} onClick={e => onHandleChange(e, "isWithoutPower")}>
+              Без электропитания
+            </CustomCheckBox>
+            <label>
+              <SwitchToggle active={data.isCustomSize} onClick={e => onHandleChange(e, "isCustomSize")}/>
+              Нестандартные размеры авто
+            </label>
+          </div>
+          <div className={styles.box_container}>
+            <span className={styles.main_text}>Цены</span>
+            <div className={styles.price_blocks}>
+              <div className={styles.period}>
+                <p className={styles.header_text}>Цена за час</p>
+                <p onClick={() => setHourModalOpen(true)} className={styles.parameter}>
+                  {data.priceHour ?? 0} руб
+                </p>
+              </div>
+              <div className={styles.period}>
+                <p className={styles.header_text}>Цена за день</p>
+                <p onClick={() => setDayModalOpen(true)} className={styles.parameter}>
+                  {data.priceDay ?? 0} руб
+                </p>
+              </div>
+              <div className={styles.period}>
+                <p className={styles.header_text}>Цена за неделю</p>
+                <p onClick={() => setWeekModalOpen(true)} className={styles.parameter}>
+                  {data.priceWeek ?? 0} руб
+                </p>
+              </div>
+              <div className={styles.period}>
+                <div className={styles.size_wrapper_2}>
+                  <p className={styles.header_text}>Цена за месяц</p>
+                  <p onClick={() => setMonthModalOpen(true)} className={styles.parameter}>
+                    {data.priceMonth ?? 0} руб
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {snap.isSearchPark === false && (
+            <div className={styles.box_container}>
+              <CustomCheckBox checked={data.resumeAds} onClick={e => onHandleChange(e, "resumeAds")}>
+                Возобновлять объявление
+                <br />
+                после завершения аренды
+              </CustomCheckBox>
+            </div>
+          )}
+          {snap.isSearchPark === true ? (
+            <Button type="submit">Сохранить параметры</Button>
+          ) : (
+            <Button onClick={handleRedirect}>Далее</Button>
+          )}
+        </form>
         {hourModalOpen && (
           <Modal 
             setOpenModal={setHourModalOpen}
@@ -175,8 +226,8 @@ const ExtraOptions = () => {
           >
             <>
               <PriceCounterBlock
-                price={data.hourPrice}
-                setPrice={e => onHandleChange(e, "hourPrice")}
+                price={data.priceHour ?? 0}
+                setPrice={e => onHandleChange(e, "priceHour")}
                 currency
               />
               <Button onClick={() => setHourModalOpen(false)}>Готово</Button>
@@ -191,8 +242,8 @@ const ExtraOptions = () => {
           >
             <>
               <PriceCounterBlock
-                price={data.dayPrice}
-                setPrice={e => onHandleChange(e, "dayPrice")}
+                price={data.priceDay ?? 0}
+                setPrice={e => onHandleChange(e, "priceDay")}
                 currency
                 step={100}
               />
@@ -208,8 +259,8 @@ const ExtraOptions = () => {
           >
             <>
               <PriceCounterBlock
-                price={data.weekPrice}
-                setPrice={e => onHandleChange(e, "weekPrice")}
+                price={data.priceWeek ?? 0}
+                setPrice={e => onHandleChange(e, "priceWeek")}
                 currency
                 step={500}
               />
@@ -225,8 +276,8 @@ const ExtraOptions = () => {
           >
             <>
               <PriceCounterBlock
-                price={data.monthPrice}
-                setPrice={e => onHandleChange(e, "monthPrice")}
+                price={data.priceMonth ?? 0}
+                setPrice={e => onHandleChange(e, "priceMonth")}
                 currency
                 step={1000}
               />
