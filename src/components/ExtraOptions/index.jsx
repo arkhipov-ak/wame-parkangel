@@ -12,6 +12,7 @@ import { useSnapshot } from "valtio";
 import { state } from "../../state";
 import { showErrorSnackbar, showSuccessSnackbar } from "../../utils/showSnackBar";
 import axios from "axios";
+import SizeInput from "../common/SizeInput";
 
 const ExtraOptions = () => {
   const snap = useSnapshot(state);
@@ -27,9 +28,9 @@ const ExtraOptions = () => {
     priceDay: null,
     priceWeek: null,
     priceMonth: null,
-    height: 0,
-    width: 0,
-    length: 0,
+    height: "",
+    width: "",
+    length: "",
     isUnderground: false,
     isOutDoor: false,
     isCovered: false,
@@ -57,9 +58,41 @@ const ExtraOptions = () => {
   const onHandleSaveOptions = (e) => {
     e.preventDefault();
 
+    if (data.height && +data.height <= 0) {
+      showErrorSnackbar({ message: "Высота должна быть больше нуля", tryAgain: true });
+      return;
+    }
+
+    if (data.length && +data.length <= 0) {
+      showErrorSnackbar({ message: "Длина должна быть больше нуля", tryAgain: true })
+      return;
+    }
+
+    if (data.width && +data.width <= 0) {
+      showErrorSnackbar({ message: "Ширина должна быть больше нуля", tryAgain: true })
+      return;
+    }
+
+    const preparedData = {
+      ...data,
+      length: data.length ? +data.length : null,
+      height: data.height ? +data.height : null,
+      width: data.width ? +data.width : null,
+      user_id: snap.user.id,
+    }
+
+    if (!preparedData.height) delete preparedData.height;
+    if (!preparedData.width) delete preparedData.width;
+    if (!preparedData.length) delete preparedData.length;
+    if (!preparedData.priceHour) delete preparedData.priceHour;
+    if (!preparedData.priceDay) delete preparedData.priceDay;
+    if (!preparedData.priceWeek) delete preparedData.priceWeek;
+    if (!preparedData.priceMonth) delete preparedData.priceMonth;
+
+
     if (snap.options[0]) {
       axios.put(
-        "http://185.238.2.176:5064/api/options", data
+        "http://185.238.2.176:5064/api/options", preparedData
       ).then(response => {
         if (response) {
           showSuccessSnackbar({ message: "Параметры сохранены" })
@@ -69,7 +102,7 @@ const ExtraOptions = () => {
       .catch(showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
     } else {
       axios.post(
-        "http://185.238.2.176:5064/api/options", data
+        "http://185.238.2.176:5064/api/options", preparedData
       ).then(response => {
         if (response) {
           showSuccessSnackbar({ message: "Параметры сохранены" })
@@ -173,31 +206,39 @@ const ExtraOptions = () => {
             </label>
           </div>
           <div className={styles.box_container}>
-            <span className={styles.main_text}>Цены</span>
+            <span className={styles.main_text}>Размеры, м</span>
+            <div className={styles.parent_container}>
+              <SizeInput value={data.height} onChange={e => onHandleChange(e.target.value, "height")} label="Высота"/>
+              <SizeInput value={data.length} onChange={e => onHandleChange(e.target.value, "length")} label="Длина"/>
+              <SizeInput value={data.width} onChange={e => onHandleChange(e.target.value, "width")} label="Ширина"/>
+            </div>
+          </div>
+          <div className={styles.box_container}>
+            <span className={styles.main_text}>Цены, руб</span>
             <div className={styles.price_blocks}>
               <div className={styles.period}>
                 <p className={styles.header_text}>Цена за час</p>
                 <p onClick={() => setHourModalOpen(true)} className={styles.parameter}>
-                  {data.priceHour ?? 0} руб
+                  {data.priceHour ?? 0}
                 </p>
               </div>
               <div className={styles.period}>
                 <p className={styles.header_text}>Цена за день</p>
                 <p onClick={() => setDayModalOpen(true)} className={styles.parameter}>
-                  {data.priceDay ?? 0} руб
+                  {data.priceDay ?? 0}
                 </p>
               </div>
               <div className={styles.period}>
                 <p className={styles.header_text}>Цена за неделю</p>
                 <p onClick={() => setWeekModalOpen(true)} className={styles.parameter}>
-                  {data.priceWeek ?? 0} руб
+                  {data.priceWeek ?? 0}
                 </p>
               </div>
               <div className={styles.period}>
                 <div className={styles.size_wrapper_2}>
                   <p className={styles.header_text}>Цена за месяц</p>
                   <p onClick={() => setMonthModalOpen(true)} className={styles.parameter}>
-                    {data.priceMonth ?? 0} руб
+                    {data.priceMonth ?? 0}
                   </p>
                 </div>
               </div>

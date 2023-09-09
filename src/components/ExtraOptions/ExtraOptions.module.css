@@ -62,3 +62,9 @@
   letter-spacing: 0.05625rem;
   white-space: nowrap;
 }
+.parent_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}

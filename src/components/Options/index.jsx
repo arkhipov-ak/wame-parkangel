@@ -22,9 +22,9 @@ const Options = () => {
     priceDay: null,
     priceWeek: null,
     priceMonth: null,
-    height: 0,
-    width: 0,
-    length: 0,
+    height: "",
+    width: "",
+    length: "",
     isUnderground: false,
     isOutDoor: false,
     isCovered: false,
@@ -48,17 +48,17 @@ const Options = () => {
   const onHandleSaveOptions = (e) => {
     e.preventDefault();
 
-    if (+data.height <= 0) {
+    if (data.height && +data.height <= 0) {
       showErrorSnackbar({ message: "Высота должна быть больше нуля", tryAgain: true });
       return;
     }
 
-    if (+data.length <= 0) {
+    if (data.length && +data.length <= 0) {
       showErrorSnackbar({ message: "Длина должна быть больше нуля", tryAgain: true })
       return;
     }
 
-    if (+data.width <= 0) {
+    if (data.width && +data.width <= 0) {
       showErrorSnackbar({ message: "Ширина должна быть больше нуля", tryAgain: true })
       return;
     }
@@ -70,11 +70,19 @@ const Options = () => {
 
     const preparedData = {
       ...data,
-      length: +data.length,
-      height: +data.height,
-      width: +data.width,
+      length: data.length ? +data.length : "",
+      height: data.height ? +data.height : "",
+      width: data.width ? +data.width : "",
       user_id: snap.user.id,
     }
+
+    if (!preparedData.height) delete preparedData.height;
+    if (!preparedData.width) delete preparedData.width;
+    if (!preparedData.length) delete preparedData.length;
+    if (!preparedData.priceHour) delete preparedData.priceHour;
+    if (!preparedData.priceDay) delete preparedData.priceDay;
+    if (!preparedData.priceWeek) delete preparedData.priceWeek;
+    if (!preparedData.priceMonth) delete preparedData.priceMonth;
 
     if (snap.options[0]) {
       axios.put(
@@ -171,8 +179,8 @@ const Options = () => {
                 <span className={styles.main_text}>Размеры, м</span>
                 <div className={styles.parent_container}>
                   <SizeInput value={data.height} onChange={e => onHandleChange(e.target.value, "height")} label="Высота"/>
-                  <SizeInput value={data.width} onChange={e => onHandleChange(e.target.value, "width")} label="Длина"/>
-                  <SizeInput value={data.length} onChange={e => onHandleChange(e.target.value, "length")} label="Ширина"/>
+                  <SizeInput value={data.length} onChange={e => onHandleChange(e.target.value, "length")} label="Длина"/>
+                  <SizeInput value={data.width} onChange={e => onHandleChange(e.target.value, "width")} label="Ширина"/>
                 </div>
               </div>
               <div className={styles.price_counter_wrapper}>
