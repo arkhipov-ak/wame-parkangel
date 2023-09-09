@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import NavBar from "../NavBar";
 import styles from "./SearchAnotherTime.module.css";
 import { useNavigate } from "react-router-dom";
@@ -8,29 +8,62 @@ import Button from "../common/Button";
 import ModalTime from "../common/ModalTime";
 import { useSnapshot } from "valtio";
 import { state } from "../../state";
+import { showErrorSnackbar } from "../../utils/showSnackBar";
 
 const SearchAnotherTime = () => {
   const snap = useSnapshot(state);
   const navigate = useNavigate();
   const [openStartTimeModal, setOpenStartTimeModal] = useState(false);
   const [openEndTimeModal, setOpenEndTimeModal] = useState(false);
+  const [selectedDateStart, setSelectedDateStart] = useState("");
   const [selectedDateEnd, setSelectedDateEnd] = useState("");
   const [selectedHourStart, setSelectedHourStart] = useState("00");
   const [selectedMinuteStart, setSelectedMinuteStart] = useState("00");
   const [selectedHourEnd, setSelectedHourEnd] = useState("00");
   const [selectedMinuteEnd, setSelectedMinuteEnd] = useState("00");
-  const [selectedDateStart, setSelectedDateStart] = useState("");
-
-  const onHandleParametersClick = () => {
-    navigate("/extra-options");
-  };
-
-  const handleRedirectToSelect = () => {
-    navigate("/select-address-location");
-  };
-
   const dateRef = useRef(null);
   const currentDate = new Date().toISOString().split("T")[0];
+
+  const onHandleRedirect = (link) => {
+    if (!selectedDateStart || !selectedDateEnd) {
+      showErrorSnackbar({ message: "Не указана дата", tryAgain: true })
+      return;
+    }
+
+    const dateStart = new Date(selectedDateStart);
+    dateStart.setHours(selectedHourStart);
+    dateStart.setMinutes(selectedMinuteStart);
+
+    const dateEnd = new Date(selectedDateEnd);
+    dateEnd.setHours(selectedHourEnd);
+    dateEnd.setMinutes(selectedMinuteEnd);
+
+    state.parkDate = {
+      dateStartISO: dateStart.toISOString(),
+      dateEndISO: dateEnd.toISOString(),
+      timeStart: dateStart.toISOString(),
+      timeEnd: dateEnd.toISOString(),
+      hoursStart: selectedHourStart === "00" ? "00" : +selectedHourStart,
+      minutesStart: selectedMinuteStart,
+      hoursEnd: selectedHourEnd === "00" ? "00" : +selectedHourEnd,
+      minutesEnd: selectedMinuteEnd,
+      dateStart : selectedDateStart,
+      dateEnd: selectedDateEnd,
+    };
+
+    navigate(link);
+  }
+
+  useEffect(() => {
+    if (snap && snap.user && snap.parkDate) {
+      setSelectedHourStart(snap.parkDate.hoursStart || "00");
+      setSelectedMinuteStart(snap.parkDate.minutesStart || "00");
+      setSelectedHourEnd(snap.parkDate.hoursEnd || "00");
+      setSelectedMinuteEnd(snap.parkDate.minutesEnd || "00");
+      setSelectedDateStart(snap.parkDate.dateStart);
+      setSelectedDateEnd(snap.parkDate.dateEnd);
+    }
+  }, [snap.user, snap.parkDate])
 
   return (
     <div>
@@ -75,8 +108,8 @@ const SearchAnotherTime = () => {
                   {selectedHourEnd}:{selectedMinuteEnd}
                 </div>
               </div>
-              <ParametersButton onClick={onHandleParametersClick}/>
-              <Button onClick={handleRedirectToSelect}>Быстрая парковка</Button>
+              <ParametersButton onClick={() => onHandleRedirect("/extra-options")}/>
+              <Button onClick={() => onHandleRedirect("/select-address-location")}>Быстрая парковка</Button>
             </div>
           </div>
           {openStartTimeModal && (

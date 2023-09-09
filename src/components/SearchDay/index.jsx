@@ -20,156 +20,68 @@ const SearchDay = ({ day }) => {
   const [selectedMinute, setSelectedMinute] = useState("00");
   const navigate = useNavigate();
 
-  const onHandleParametersClick = () => {
+  const onHandleRedirect = (link) => {
+    let hoursEndTemp = +selectedHour + +hoursCount;
+
+    if (hoursEndTemp > 23) {
+      showErrorSnackbar({ message: 'Время заходит на следующий день, выберите опцию "На другой срок"' });
+      return;
+    }
+
     if (day === "сегодня") {
-      const date = new Date();
-      
-      let hoursStart = new Date();
-      hoursStart.setHours(selectedHour)
-      hoursStart.setMinutes(selectedMinute);
+      const dateStart = new Date();
+      dateStart.setHours(selectedHour);
+      dateStart.setMinutes(selectedMinute);
 
-      let hoursEndTemp = +selectedHour + +hoursCount;
-
-      if (hoursEndTemp > 23) {
-        showErrorSnackbar({ message: 'Время заходит на следующий день, выберите опцию "На другой срок"' });
-        return;
-      }
-
-      let hoursEnd = new Date();
-      hoursEnd.setHours(hoursEndTemp)
-      hoursEnd.setMinutes(selectedMinute);
+      const dateEnd = new Date();
+      dateEnd.setHours(hoursEndTemp);
+      dateEnd.setMinutes(selectedMinute);
 
       state.parkDate = {
-        dateStart: date.toISOString(),
-        dateEnd: date.toISOString(),
-        timeStart: hoursStart.toISOString(),
-        timeEnd: hoursEnd.toISOString(),
-        hoursStart: selectedHour === "00" ? "00" : +selectedHour,
-        minutes: selectedMinute,
-        hoursCount: hoursCount,
+        dateStartISO: dateStart.toISOString(),
+        dateEndISO: dateEnd.toISOString(),
+        timeStart: dateStart.toISOString(),
+        timeEnd: dateEnd.toISOString(),
+        hoursStartOneDay: selectedHour === "00" ? "00" : +selectedHour,
+        minutesOneDay: selectedMinute,
+        hoursCountOneDay: hoursCount,
       };
     }
 
     if (day === "завтра") {
       const date = new Date();
-      const tomorrow = new Date(date);
-      tomorrow.setDate(date.getDate() + 1)
+      const tomorrowStart = new Date(date);
+      tomorrowStart.setDate(date.getDate() + 1);
+      tomorrowStart.setHours(selectedHour);
+      tomorrowStart.setMinutes(selectedMinute);
 
-      let hoursStart = new Date();
-      const hoursStartTomorrow = new Date(hoursStart);
-      hoursStartTomorrow.setDate(date.getDate() + 1)
-
-      hoursStartTomorrow.setHours(selectedHour)
-      hoursStartTomorrow.setMinutes(selectedMinute);
-
-      let hoursEndTemp = +selectedHour + +hoursCount;
-
-      if (hoursEndTemp > 23) {
-        showErrorSnackbar({ message: 'Время заходит на следующий день, выберите опцию "На другой срок"' });
-        return;
-      }
-
-      let hoursEnd = new Date();
-      let hoursEndTomorrow = new Date(hoursEnd);
-      hoursEndTomorrow.setDate(date.getDate() + 1)
-
-      hoursEndTomorrow.setHours(hoursEndTemp)
-      hoursEndTomorrow.setMinutes(selectedMinute);
+      const tomorrowEnd = new Date(date);
+      tomorrowEnd.setDate(date.getDate() + 1);
+      tomorrowEnd.setHours(hoursEndTemp);
+      tomorrowEnd.setMinutes(selectedMinute);
 
       state.parkDate = {
-        dateStart: tomorrow.toISOString(),
-        dateEnd: tomorrow.toISOString(),
-        timeStart: hoursStartTomorrow.toISOString(),
-        timeEnd: hoursEndTomorrow.toISOString(),
-        hoursStart: selectedHour === "00" ? "00" : +selectedHour,
-        minutes: selectedMinute,
-        hoursCount: hoursCount,
+        dateStart: tomorrowStart.toISOString(),
+        dateEnd: tomorrowEnd.toISOString(),
+        timeStart: tomorrowStart.toISOString(),
+        timeEnd: tomorrowEnd.toISOString(),
+        hoursStartOneDay: selectedHour === "00" ? "00" : +selectedHour,
+        minutesOneDay: selectedMinute,
+        hoursCountOneDay: hoursCount,
       };
     }
 
-    navigate("/options");
-  }
-
-  const onHandleQuickParkClick = () => {
-    if (day === "сегодня") {
-      const date = new Date();
-      
-      let hoursStart = new Date();
-      hoursStart.setHours(selectedHour)
-      hoursStart.setMinutes(selectedMinute);
-
-      let hoursEndTemp = +selectedHour + +hoursCount;
-
-      if (hoursEndTemp > 23) {
-        showErrorSnackbar({ message: 'Время заходит на следующий день, выберите опцию "На другой срок"' });
-        return;
-      }
-
-      let hoursEnd = new Date();
-      hoursEnd.setHours(hoursEndTemp)
-      hoursEnd.setMinutes(selectedMinute);
-
-      state.parkDate = {
-        dateStart: date.toISOString(),
-        dateEnd: date.toISOString(),
-        timeStart: hoursStart.toISOString(),
-        timeEnd: hoursEnd.toISOString(),
-        hoursStart: selectedHour === "00" ? "00" : +selectedHour,
-        minutes: selectedMinute,
-        hoursCount: hoursCount,
-      };
-    }
-
-    if (day === "завтра") {
-      const date = new Date();
-      const tomorrow = new Date(date);
-      tomorrow.setDate(date.getDate() + 1)
-
-      let hoursStart = new Date();
-      const hoursStartTomorrow = new Date(hoursStart);
-      hoursStartTomorrow.setDate(date.getDate() + 1)
-
-      hoursStartTomorrow.setHours(selectedHour)
-      hoursStartTomorrow.setMinutes(selectedMinute);
-
-      let hoursEndTemp = +selectedHour + +hoursCount;
-
-      if (hoursEndTemp > 23) {
-        showErrorSnackbar({ message: 'Время заходит на следующий день, выберите опцию "На другой срок"' });
-        return;
-      }
-
-      let hoursEnd = new Date();
-      let hoursEndTomorrow = new Date(hoursEnd);
-      hoursEndTomorrow.setDate(date.getDate() + 1)
-
-      hoursEndTomorrow.setHours(hoursEndTemp)
-      hoursEndTomorrow.setMinutes(selectedMinute);
-
-      state.parkDate = {
-        dateStart: tomorrow.toISOString(),
-        dateEnd: tomorrow.toISOString(),
-        timeStart: hoursStartTomorrow.toISOString(),
-        timeEnd: hoursEndTomorrow.toISOString(),
-        hoursStart: selectedHour === "00" ? "00" : +selectedHour,
-        minutes: selectedMinute,
-        hoursCount: hoursCount,
-      };
-    }
-
-    navigate("/select-address-location");
+    navigate(link);
   }
 
   useEffect(() => {
-    if (snap && snap.parkDate) {
-      setSelectedHour(snap.parkDate.hoursStart)
-      setSelectedMinute(snap.parkDate.minutes)
-      setHoursCount(snap.parkDate.hoursCount)
+    if (snap && snap.user && snap.parkDate) {
+      setSelectedHour(snap.parkDate.hoursStartOneDay || "00")
+      setSelectedMinute(snap.parkDate.minutesOneDay  || "00")
+      setHoursCount(snap.parkDate.hoursCountOneDay || 1)
     }
-  }, [snap.parkDate])
+  }, [snap.user, snap.parkDate])
 
-  console.log(snap);
-  
   return (
     <>
       <NavBar/>
@@ -181,8 +93,8 @@ const SearchDay = ({ day }) => {
         </div>
         <span className={styles.label}>На сколько времени</span>
         <HoursCounterBlock hoursCount={hoursCount} setHoursCount={setHoursCount}/>
-        <ParametersButton onClick={onHandleParametersClick}/>
-        <Button onClick={onHandleQuickParkClick}>Быстрая парковка</Button>
+        <ParametersButton onClick={() => onHandleRedirect("/options")}/>
+        <Button onClick={() => onHandleRedirect("/select-address-location")}>Быстрая парковка</Button>
         {openTimeModal && (
           <ModalTime
             setOpenTimeModal={setOpenTimeModal}

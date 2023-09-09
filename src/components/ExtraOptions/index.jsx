@@ -52,7 +52,7 @@ const ExtraOptions = () => {
 	}
 
   const handleRedirect = () => {
-    navigate("/review", { state: data });
+    navigate("/review");
   };
 
   const onHandleSaveOptions = (e) => {
@@ -208,9 +208,9 @@ const ExtraOptions = () => {
           <div className={styles.box_container}>
             <span className={styles.main_text}>Размеры, м</span>
             <div className={styles.parent_container}>
-              <SizeInput value={data.height} onChange={e => onHandleChange(e.target.value, "height")} label="Высота"/>
-              <SizeInput value={data.length} onChange={e => onHandleChange(e.target.value, "length")} label="Длина"/>
-              <SizeInput value={data.width} onChange={e => onHandleChange(e.target.value, "width")} label="Ширина"/>
+              <SizeInput value={data.height || ""} onChange={e => onHandleChange(e.target.value, "height")} label="Высота"/>
+              <SizeInput value={data.length || ""} onChange={e => onHandleChange(e.target.value, "length")} label="Длина"/>
+              <SizeInput value={data.width || ""} onChange={e => onHandleChange(e.target.value, "width")} label="Ширина"/>
             </div>
           </div>
           <div className={styles.box_container}>

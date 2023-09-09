@@ -29,8 +29,8 @@ const SelectAddressLocation = () => {
       ...snap.options[0],
       address: address,
       region: activeRegion,
-      availabilityDateEnd: snap.parkDate.dateEnd,
-      availabilityDateStart: snap.parkDate.dateStart,
+      availabilityDateEnd: snap.parkDate.dateEndISO,
+      availabilityDateStart: snap.parkDate.dateStartISO,
       availabilityTimeEnd: snap.parkDate.timeEnd,
       availabilityTimeStart: snap.parkDate.timeStart,
     }

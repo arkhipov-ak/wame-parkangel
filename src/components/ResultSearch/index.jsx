@@ -24,11 +24,19 @@ const ResultSearch = () => {
         return;
       }
 
-      delete snap.options[0].user;
-      delete snap.options[0].id;
+      const preparedData = { ...snap.options[0] };
+
+      if (snap.parkDate.hoursCountOneDay || snap.parkDate.hoursStartOneDay || snap.parkDate.minutesOneDay) {
+        delete preparedData.priceDay;
+        delete preparedData.priceWeek;
+        delete preparedData.priceMonth;
+      } // если ищем парковку на сегодня или на завтра, то нам не нужны поля цен на день, на неделю и на месяц
+
+      delete preparedData.user;
+      delete preparedData.id;
       
       axios.get("http://185.238.2.176:5064/api/ad", {
-        params: { ...snap.options[0]}
+        params: { ...preparedData }
       }).then(response => setData(response.data.response))
       .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления"}))
     }
