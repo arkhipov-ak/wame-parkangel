@@ -40,8 +40,6 @@ const SearchDay = ({ day }) => {
       state.parkDate = {
         dateStartISO: dateStart.toISOString(),
         dateEndISO: dateEnd.toISOString(),
-        timeStart: dateStart.toISOString(),
-        timeEnd: dateEnd.toISOString(),
         hoursStartOneDay: selectedHour === "00" ? "00" : +selectedHour,
         minutesOneDay: selectedMinute,
         hoursCountOneDay: hoursCount,
@@ -63,8 +61,6 @@ const SearchDay = ({ day }) => {
       state.parkDate = {
         dateStart: tomorrowStart.toISOString(),
         dateEnd: tomorrowEnd.toISOString(),
-        timeStart: tomorrowStart.toISOString(),
-        timeEnd: tomorrowEnd.toISOString(),
         hoursStartOneDay: selectedHour === "00" ? "00" : +selectedHour,
         minutesOneDay: selectedMinute,
         hoursCountOneDay: hoursCount,

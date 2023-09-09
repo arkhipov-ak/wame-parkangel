@@ -31,8 +31,6 @@ const SelectAddressLocation = () => {
       region: activeRegion,
       availabilityDateEnd: snap.parkDate.dateEndISO,
       availabilityDateStart: snap.parkDate.dateStartISO,
-      availabilityTimeEnd: snap.parkDate.timeEnd,
-      availabilityTimeStart: snap.parkDate.timeStart,
     }
     
     navigate("/result-search");
