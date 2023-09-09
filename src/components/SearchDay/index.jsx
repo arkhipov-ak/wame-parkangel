@@ -14,8 +14,8 @@ import { useEffect } from "react";
 
 const SearchDay = ({ day }) => {
   const snap = useSnapshot(state);
-  const [hoursCount, setHoursCount] = useState(1);
   const [openTimeModal, setOpenTimeModal] = useState(false);
+  const [hoursCount, setHoursCount] = useState(1);
   const [selectedHour, setSelectedHour] = useState("00");
   const [selectedMinute, setSelectedMinute] = useState("00");
   const navigate = useNavigate();

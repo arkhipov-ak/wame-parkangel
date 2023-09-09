@@ -15,10 +15,6 @@ const SelectAddressLocation = () => {
   const [activeNearMeButton, setActiveNearMeButton] = useState(false);
   const navigate = useNavigate();
 
-  const handleButtonClick = (buttonId) => {
-    setActiveRegion(buttonId);
-  };
-
   const handleRedirect = () => {
     if (!snap.parkDate) {
       showErrorSnackbar({ message: "Не удалось получить дату", tryAgain: true });
@@ -47,13 +43,13 @@ const SelectAddressLocation = () => {
         <span className={styles.label}>Ваш регион</span>
         <button
           className={`${styles.btn_style} ${activeRegion === "moscow" ? styles.active : ""}`}
-          onClick={() => handleButtonClick("moscow")}
+          onClick={() => setActiveRegion("moscow")}
         >
           Москва и область
         </button>
         <button
           className={`${styles.btn_style} ${activeRegion === "spb" ? styles.active : ""}`}
-          onClick={() => handleButtonClick("spb")}
+          onClick={() => setActiveRegion("spb")}
         >
           СПб и область
         </button>
