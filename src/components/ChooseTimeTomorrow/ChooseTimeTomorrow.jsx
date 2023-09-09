@@ -1,4 +1,4 @@
-import ChooseTimeToday from "../ChooseTimeToday/ChooseTimeToday";
+import ChooseTimeToday from "../ChooseTimeToday";
 
 const ChooseTimeTomorrow = () => <ChooseTimeToday day="завтра"/>
 

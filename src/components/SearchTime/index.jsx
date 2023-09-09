@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import NavBar from "../NavBar";
-import SelectSearchGive from "./selectSearchGive/selectSearchGive";
+import SelectSearchGive from "./selectSearchGive";
 import TodayImg from "../../assets/today_img.svg";
 import TomorrowImg from "../../assets/tomorrow_image.svg";
 import FouinImg from "../../assets/fouin_img.svg";
@@ -16,7 +16,6 @@ import ZeroData from "../common/ZeroData";
 
 const SearchTime = () => {
   const snap = useSnapshot(state);
-  const [isSearchFromChild, setIsSearchFromChild] = useState(true);
   const [isImageLoaded, setImageLoaded] = useState(false);
   const [historyData, setHistoryData] = useState([]);
 
@@ -36,10 +35,10 @@ const SearchTime = () => {
     <>
       <NavBar/>
       <Container>
-        <SelectSearchGive setIsSearchActiveProp={setIsSearchFromChild} />
+        <SelectSearchGive/>
         <div className={styles.wrapper_cards}>
           <Link
-            to={isSearchFromChild ? "/search-today" : "/ChooseTimeToday"}
+            to={snap.isSearchPark ? "/search-today" : "/choose-time-today"}
             className={styles.card_today}
           >
             {!isImageLoaded && (
@@ -61,7 +60,7 @@ const SearchTime = () => {
             <p className={styles.text_today}>На сегодня</p>
           </Link>
           <Link
-            to={isSearchFromChild ? "/search-tomorrow" : "/ChooseTimeTomorrow"}
+            to={snap.isSearchPark ? "/search-tomorrow" : "/ChooseTimeTomorrow"}
             className={styles.card_today}
           >
             {!isImageLoaded && (
@@ -103,7 +102,7 @@ const SearchTime = () => {
             <BiChevronRight className={styles.last_icon}/>
           </Link>
           <a href="#" className={styles.title}>
-            {isSearchFromChild ? "Как снять парковку?" : "Как сдать парковку?"}
+            {snap.isSearchPark ? "Как снять парковку?" : "Как сдать парковку?"}
           </a>
           <div className={styles.wrapper_rent}>
             <h2 className={styles.history}>История аренды</h2>
