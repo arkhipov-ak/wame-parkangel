@@ -78,12 +78,6 @@ const App = () => {
     }
   }, [snap.user]);
 
-  useEffect(() => {
-    if (snap && snap.user) {
-      state.isSearchPark = true;
-    }
-  }, [snap.user]);
-
   return (
     <SnackbarProvider
       anchorOrigin={{

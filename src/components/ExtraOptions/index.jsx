@@ -134,7 +134,7 @@ const ExtraOptions = () => {
         navigate("/search-time");
       }
     }
-  }, [snap.user, snap.isSearchPark])
+  }, [snap.user, snap.isSearchPark]);
 
   return (
 		<>

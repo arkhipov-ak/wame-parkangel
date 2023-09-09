@@ -27,6 +27,8 @@ const ChooseTimeToday = ({ day }) => {
     navigate("/ChooseAnotherTime");
   };
 
+  /* console.log(snap); */
+
   return (
     <>
       <NavBar />
