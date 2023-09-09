@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar";
 import styles from "./ExtraOptions.module.css";
@@ -9,8 +9,12 @@ import SwitchToggle from "../common/SwitchToggle";
 import Button from "../common/Button";
 import PriceCounterBlock from "../common/PriceCounterBlock";
 import Modal from "../common/Modal";
+import { useSnapshot } from "valtio";
+import { state } from "../../state";
+import { showErrorSnackbar } from "../../utils/showSnackBar";
 
 const ExtraOptions = () => {
+  const snap = useSnapshot(state);
   const [openStartTimeModal, setOpenStartTimeModal] = useState(false);
   const [openEndTimeModal, setOpenEndTimeModal] = useState(false);
   const [selectedHourStart, setSelectedHourStart] = useState("00");
@@ -50,15 +54,23 @@ const ExtraOptions = () => {
 	}
 
   const handleRedirect = () => {
-    
     navigate("/review", { state: data });
   };
+
+  useEffect(() => {
+    if (snap && snap.user) {
+      if (snap.isSearchPark === null) {
+        showErrorSnackbar({ message: "Пожалуйста, повторите попытку" });
+        navigate("/search-time");
+      }
+    }
+  }, [snap.user, snap.isSearchPark])
 
   return (
 		<>
 			<NavBar/>
 			<Container>
-				<div className={styles.box_container}>
+				{/* <div className={styles.box_container}>
 					<span className={styles.main_text}>Период</span>
 					<div className={styles.periods_wrapper}>
 						<div className={styles.period}>
@@ -74,7 +86,7 @@ const ExtraOptions = () => {
 							</p>
 						</div>
 					</div>
-				</div>
+				</div> */}
         <div className={styles.container}>
           <div className={styles.box_container}>
             <span className={styles.main_text}>Тип парковки</span>
@@ -149,7 +161,12 @@ const ExtraOptions = () => {
             после завершения аренды
           </CustomCheckBox>
         </div>
-        <Button onClick={handleRedirect}>Далее</Button>
+        {snap.isSearchPark ? (
+          <Button onClick={handleRedirect}>Сохранить параметры</Button>
+        ) : (
+          <Button onClick={handleRedirect}>Далее</Button>
+        )}
+        
         {hourModalOpen && (
           <Modal 
             setOpenModal={setHourModalOpen}
@@ -217,7 +234,7 @@ const ExtraOptions = () => {
             </>
           </Modal>
         )}
-        {openStartTimeModal && (
+        {/* {openStartTimeModal && (
           <ModalTime
             setOpenTimeModal={setOpenStartTimeModal}
             openTimeModal={openStartTimeModal}
@@ -232,7 +249,7 @@ const ExtraOptions = () => {
             setSelectedMinute={setSelectedMinuteEnd}
             setSelectedHour={setSelectedHourEnd}
           />
-        )}
+        )} */}
 			</Container>
 		</>
 	)

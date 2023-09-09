@@ -4,7 +4,7 @@ export const initialState = proxy({
 	user: null,
 	parkDate: null,
 	options: null,
-	isSearchPark: true,
+	isSearchPark: null,
 });
 
 export const state = proxy(initialState);

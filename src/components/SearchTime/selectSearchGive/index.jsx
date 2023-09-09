@@ -8,13 +8,13 @@ const SelectSearchGive = () => {
   return (
     <div className={styles.wrapper}>
         <button
-          className={snap.isSearchPark ? styles.active_btn : styles.not_active_btn}
+          className={snap.isSearchPark === true ? styles.active_btn : styles.not_active_btn}
           onClick={() => state.isSearchPark = true}
         >
           Найти
         </button>
         <button
-          className={!snap.isSearchPark ? styles.active_btn : styles.not_active_btn}
+          className={snap.isSearchPark === false ? styles.active_btn : styles.not_active_btn}
           onClick={() => state.isSearchPark = false}
         >
           Сдать

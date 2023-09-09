@@ -31,6 +31,10 @@ const SearchTime = () => {
     }
   }, [snap]);
 
+  useEffect(() => {
+    state.isSearchPark = true;
+  }, []);
+
   return (
     <>
       <NavBar/>
@@ -38,7 +42,7 @@ const SearchTime = () => {
         <SelectSearchGive/>
         <div className={styles.wrapper_cards}>
           <Link
-            to={snap.isSearchPark ? "/search-today" : "/choose-time-today"}
+            to={snap.isSearchPark === true ? "/search-today" : "/choose-time-today"}
             className={styles.card_today}
           >
             {!isImageLoaded && (
@@ -60,7 +64,7 @@ const SearchTime = () => {
             <p className={styles.text_today}>На сегодня</p>
           </Link>
           <Link
-            to={snap.isSearchPark ? "/search-tomorrow" : "/ChooseTimeTomorrow"}
+            to={snap.isSearchPark === true ? "/search-tomorrow" : "/ChooseTimeTomorrow"}
             className={styles.card_today}
           >
             {!isImageLoaded && (
@@ -102,7 +106,7 @@ const SearchTime = () => {
             <BiChevronRight className={styles.last_icon}/>
           </Link>
           <a href="#" className={styles.title}>
-            {snap.isSearchPark ? "Как снять парковку?" : "Как сдать парковку?"}
+            {snap.isSearchPark === true ? "Как снять парковку?" : "Как сдать парковку?"}
           </a>
           <div className={styles.wrapper_rent}>
             <h2 className={styles.history}>История аренды</h2>
