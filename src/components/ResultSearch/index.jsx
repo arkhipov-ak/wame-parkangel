@@ -24,15 +24,13 @@ const ResultSearch = () => {
         return;
       }
 
-      console.log(snap.options[0]);
-
-      const getAds = async () => {
-        await axios.post("http://185.238.2.176:5064/api/park", snap.options[0])
-          .then(response => console.log(response))
-          .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления"}))
-      };
-  
-      getAds();
+      delete snap.options[0].user;
+      delete snap.options[0].id;
+      
+      axios.get("http://185.238.2.176:5064/api/ad", {
+        params: { ...snap.options[0]}
+      }).then(response => setData(response.data.response))
+      .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления"}))
     }
   }, [snap.user, snap.options]);
 
