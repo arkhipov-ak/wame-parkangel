@@ -1,12 +1,5 @@
-import React from 'react'
-import Review from '../components/Review/Review'
+import Review from "../components/Review";
 
-const ReviewPage = () => {
-  return (
-    <div>
-      <Review/>
-    </div>
-  )
-}
+const ReviewPage = () => <Review/>
 
-export default ReviewPage
+export default ReviewPage;

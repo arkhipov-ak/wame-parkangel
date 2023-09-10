@@ -17,10 +17,11 @@ const SelectAddressLocation = () => {
 
   const handleRedirect = () => {
     if (!snap.parkDate) {
-      showErrorSnackbar({ message: "Не удалось получить дату", tryAgain: true });
+      showErrorSnackbar({ message: "Не удалось получить данные", tryAgain: true });
       navigate("/search-time");
       return;
     }
+
     state.options[0] = {
       ...snap.options[0],
       address: address,

@@ -19,7 +19,7 @@ const ResultSearch = () => {
   useEffect(() => {
     if (snap && snap.user && snap.options && snap.options[0]) {
       if (!snap.parkDate) {
-        showErrorSnackbar({ message: "Не удалось получить дату", tryAgain: true });
+        showErrorSnackbar({ message: "Не удалось получить данные", tryAgain: true });
         navigate("/search-time");
         return;
       }

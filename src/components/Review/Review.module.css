@@ -1,67 +1,46 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15%;
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 1200px;
+.title {
+  width: 100%;
+  text-align: left;
+  font-size: 24px;
+  font-weight: 450;
+  margin-top: 0;
 }
 .styles_container {
   display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.content_wrapper {
+  display: flex;
   justify-content: space-between;
-  white-space: nowrap;
-  width: 100%;
-  padding: 0 10px 0 10px;
+  gap: 10px;
 }
-.styles_left {
-  color: var(--black, #192342);
-  font-family: Montserrat;
-  font-size: 0.8125rem;
-  font-style: normal;
+.wrapper_div {
+  border-radius: 15px;
+  background: #ffffff;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 10px;
+}
+.address {
+  font-size: 18px;
   font-weight: 500;
-  line-height: 150%; /* 1.21875rem */
-  opacity: 0.7;
 }
-.styles_right {
-  color: var(--black, #192342);
-  font-family: Montserrat;
-  font-size: 0.8125rem;
-  font-style: normal;
+.label {
+  font-size: 14px;
   font-weight: 500;
-  line-height: 150%;
+  opacity: 0.6;
+  text-align: left;
 }
-.styles_left,
-.styles_right {
-  flex: 0.48;
-}
-/* ... ваш текущий CSS ... */
-.review_text {
-  color: var(--black, #192342);
-  font-family: Montserrat;
-  font-size: 1.25rem;
-  font-style: normal;
+.value {
+  font-size: 14px;
   font-weight: 500;
-  line-height: normal;
-}
-.main_text {
-  text-align: center;
-  color: var(--black, #192342);
-  font-size: 0.9375rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  padding-top: 10px;
+  text-align: right;
 }
 
-.wrapper_div {
-  height: 100%;
-  font-size: 90%;
-  flex-shrink: 0;
-  border-radius: 0.9375rem;
-  background: #fff;
-  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
-}
 .next {
   display: inline-flex;
   padding: 0.875rem 4.75rem 0.875rem 4.8125rem;

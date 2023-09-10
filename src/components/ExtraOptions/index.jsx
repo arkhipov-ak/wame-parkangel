@@ -52,6 +52,26 @@ const ExtraOptions = () => {
 	}
 
   const handleRedirect = () => {
+    if (data.height && +data.height <= 0) {
+      showErrorSnackbar({ message: "Высота должна быть больше нуля", tryAgain: true });
+      return;
+    }
+
+    if (data.length && +data.length <= 0) {
+      showErrorSnackbar({ message: "Длина должна быть больше нуля", tryAgain: true })
+      return;
+    }
+
+    if (data.width && +data.width <= 0) {
+      showErrorSnackbar({ message: "Ширина должна быть больше нуля", tryAgain: true })
+      return;
+    }
+
+    state.parkDate = {
+      ...snap.parkDate,
+      data,
+    };
+    
     navigate("/review");
   };
 
@@ -88,7 +108,6 @@ const ExtraOptions = () => {
     if (!preparedData.priceDay) delete preparedData.priceDay;
     if (!preparedData.priceWeek) delete preparedData.priceWeek;
     if (!preparedData.priceMonth) delete preparedData.priceMonth;
-
 
     if (snap.options[0]) {
       axios.put(
@@ -246,7 +265,7 @@ const ExtraOptions = () => {
           </div>
           {snap.isSearchPark === false && (
             <div className={styles.box_container}>
-              <CustomCheckBox checked={data.resumeAds} onClick={e => onHandleChange(e, "resumeAds")}>
+              <CustomCheckBox checked={data.isRenewable} onClick={e => onHandleChange(e, "isRenewable")}>
                 Возобновлять объявление
                 <br />
                 после завершения аренды
