@@ -1,12 +1,5 @@
-import React from 'react'
-import ChooseAnotherTime from '../components/ChooseAnotherTime/ChooseAnotherTime'
+import ChooseAnotherTime from "../components/ChooseAnotherTime";
 
-const ChooseAnotherTimePage = () => {
-  return (
-    <div>
-      <ChooseAnotherTime/>
-    </div>
-  )
-}
+const ChooseAnotherTimePage = () => <ChooseAnotherTime/>
 
-export default ChooseAnotherTimePage
+export default ChooseAnotherTimePage;

@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar";
-import styles from "./ChooseAnotherTime.module.css";
+import styles from "./ChooseMap.module.css"
 import navigation from "../../assets/navigation.svg";
 import axios from "axios";
 
-const ChooseAnotherTime = () => {
+const ChooseMap = () => {
   const API_KEY = "cfb7ca98-9e16-49b6-9147-4daad6d34284";
 
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -94,4 +94,4 @@ const ChooseAnotherTime = () => {
   );
 };
 
-export default ChooseAnotherTime;
+export default ChooseMap;

@@ -128,7 +128,7 @@ const ChooseTimeToday = ({ day }) => {
             placeholder="Введите адрес"
             type="text"
           />
-          <button className={styles.btn_style} onClick={() => onHandleRedirect("/ChooseAnotherTime")}>
+          <button className={styles.btn_style} onClick={() => onHandleRedirect("/map")}>
             Указать на карте
           </button>
         </div>

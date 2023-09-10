@@ -33,7 +33,7 @@ const SelectAddressLocation = () => {
   };
 
   const handleRedirectToMap = () => {
-    navigate("/ChooseMap");
+    navigate("/map");
   };
 
   return (

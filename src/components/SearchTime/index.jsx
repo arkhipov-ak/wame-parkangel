@@ -64,7 +64,7 @@ const SearchTime = () => {
             <p className={styles.text_today}>На сегодня</p>
           </Link>
           <Link
-            to={snap.isSearchPark === true ? "/search-tomorrow" : "/ChooseTimeTomorrow"}
+            to={snap.isSearchPark === true ? "/search-tomorrow" : "/choose-time-tomorrow"}
             className={styles.card_today}
           >
             {!isImageLoaded && (
@@ -85,7 +85,10 @@ const SearchTime = () => {
             />
             <p className={styles.text_today}>На завтра</p>
           </Link>
-          <Link to="/search-another-time" className={styles.card_today}>
+          <Link
+            to={snap.isSearchPark === true ? "/search-another-time" : "/choose-another-time"}
+            className={styles.card_today}
+          >
             {!isImageLoaded && (
               <div
                 style={{

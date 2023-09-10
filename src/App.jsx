@@ -7,11 +7,11 @@ import FAQPage from "./pages/FAQPage";
 import SearchTimePage from "./pages/SearchTimePage";
 import ChooseTimeTodayPage from "./pages/ChooseTimeTodayPage";
 import ChooseTimeTomorrowPage from "./pages/ChooseTimeTomorrowPage";
+import ChooseAnotherTimePage from "./pages/ChooseAnotherTimePage";
 import PersonalAreaPage from "./pages/PersonalAreaPage";
 import ResultSearchPage from "./pages/ResultSearchPage";
 import ExtraOptionsPage from "./pages/ExtraOptionsPage";
 import OptionsPage from "./pages/OptionsPage";
-import ChooseAnotherTimePage from "./pages/ChooseAnotherTimePage";
 import ShowMapResultPage from "./pages/ShowMapResultPage";
 import SearchTodayPage from "./pages/SearchTodayPage";
 import SearchAnotherTimePage from "./pages/SearchAnotherTimePage";
@@ -22,7 +22,7 @@ import YourAddPage from "./pages/YourAddPage";
 import ExtraPage from "./pages/ExtraPage";
 import AddPage from "./pages/AddPage";
 import ScrollToTop from "./components/ScrollToTop";
-import ChooseMap from "./components/ChooseMap/ChooseMap";
+import ChooseMap from "./components/ChooseMap";
 import { SnackbarProvider } from "notistack";
 import { useEffect } from "react";
 import { showErrorSnackbar } from "./utils/showSnackBar";
@@ -101,17 +101,17 @@ const App = () => {
             <Route path="/faq" element={<FAQPage/>}/>
             <Route path="/choose-time-today" element={<ChooseTimeTodayPage/>}/>
             <Route
-              path="/ChooseTimeTomorrow"
+              path="/choose-time-tomorrow"
               element={<ChooseTimeTomorrowPage/>}
+            />
+            <Route
+              path="/choose-another-time"
+              element={<ChooseAnotherTimePage/>}
             />
             <Route path="/personal-area" element={<PersonalAreaPage/>}/>
             <Route path="/result-search" element={<ResultSearchPage/>}/>
             <Route path="/extra-options" element={<ExtraOptionsPage/>}/>
             <Route path="/options" element={<OptionsPage/>}/>
-            <Route
-              path="/ChooseAnotherTime"
-              element={<ChooseAnotherTimePage/>}
-            />
             <Route path="/show-map-result" element={<ShowMapResultPage/>}/>
             <Route path="/search-today" element={<SearchTodayPage/>}/>
             <Route
@@ -124,7 +124,7 @@ const App = () => {
             <Route path="/YourAdd" element={<YourAddPage/>}/>
             <Route path="/Extra" element={<ExtraPage/>}/>
             <Route path="/Add" element={<AddPage/>}/>
-            <Route path="/ChooseMap" element={<ChooseMap/>}/>
+            <Route path="/map" element={<ChooseMap/>}/>
           </Routes>
       </Router>
     </SnackbarProvider>

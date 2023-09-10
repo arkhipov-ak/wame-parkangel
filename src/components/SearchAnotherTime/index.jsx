@@ -41,8 +41,6 @@ const SearchAnotherTime = () => {
     state.parkDate = {
       dateStartISO: dateStart.toISOString(),
       dateEndISO: dateEnd.toISOString(),
-      timeStart: dateStart.toISOString(),
-      timeEnd: dateEnd.toISOString(),
       hoursStart: selectedHourStart === "00" ? "00" : +selectedHourStart,
       minutesStart: selectedMinuteStart,
       hoursEnd: selectedHourEnd === "00" ? "00" : +selectedHourEnd,
