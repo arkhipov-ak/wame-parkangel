@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import NavBar from "../NavBar";
-import SelectSearchGive from "./SelectSearchGive";
+import SelectSearchGive from "../SelectSearchGive";
 import TodayImg from "../../assets/today_img.svg";
 import TomorrowImg from "../../assets/tomorrow_image.svg";
 import FouinImg from "../../assets/fouin_img.svg";

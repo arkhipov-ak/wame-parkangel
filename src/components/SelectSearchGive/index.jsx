@@ -1,5 +1,5 @@
 import styles from "./SelectSearchGive.module.css";
-import { state } from "../../../state";
+import { state } from "../../state";
 import { useSnapshot } from "valtio";
 
 const SelectSearchGive = () => {
