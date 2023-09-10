@@ -72,9 +72,9 @@ const SearchDay = ({ day }) => {
 
   useEffect(() => {
     if (snap && snap.user && snap.parkDate) {
-      setSelectedHour(snap.parkDate.hoursStartOneDay || "00")
-      setSelectedMinute(snap.parkDate.minutesOneDay  || "00")
-      setHoursCount(snap.parkDate.hoursCountOneDay || 1)
+      setSelectedHour(snap.parkDate.hoursStartOneDay || "00");
+      setSelectedMinute(snap.parkDate.minutesOneDay  || "00");
+      setHoursCount(snap.parkDate.hoursCountOneDay || 1);
     }
   }, [snap.user, snap.parkDate]);
 

@@ -8,6 +8,8 @@ import { state } from "../../state";
 import HoursCounterBlock from "../common/HoursCounterBlock";
 import ModalTime from "../common/ModalTime";
 import Button from "../common/Button";
+import { showErrorSnackbar } from "../../utils/showSnackBar";
+import { useEffect } from "react";
 
 const ChooseTimeToday = ({ day }) => {
   const snap = useSnapshot(state);
@@ -19,15 +21,79 @@ const ChooseTimeToday = ({ day }) => {
   const [address, setAddress] = useState("");
   const navigate = useNavigate();
 
-  const handleRedirect = () => {
-    navigate("/extra-options");
-  };
-  
-  const handleRedirectToMap = () => {
-    navigate("/ChooseAnotherTime");
+  const onHandleRedirect = (link) => {
+    if (!activeRegion) {
+      showErrorSnackbar({ message: "Не указан регион", tryAgain: true });
+      return;
+    }
+
+    if (!address.trim()) {
+      showErrorSnackbar({ message: "Не указан адрес", tryAgain: true });
+      return;
+    }
+
+    let hoursEndTemp = +selectedHour + +hoursCount;
+
+    if (hoursEndTemp > 23) {
+      showErrorSnackbar({ message: 'Время заходит на следующий день, выберите опцию "На другой срок"' });
+      return;
+    }
+
+    if (day === "сегодня") {
+      const dateStart = new Date();
+      dateStart.setHours(selectedHour);
+      dateStart.setMinutes(selectedMinute);
+
+      const dateEnd = new Date();
+      dateEnd.setHours(hoursEndTemp);
+      dateEnd.setMinutes(selectedMinute);
+
+      state.parkDate = {
+        dateStartISO: dateStart.toISOString(),
+        dateEndISO: dateEnd.toISOString(),
+        hoursStartOneDay: selectedHour === "00" ? "00" : +selectedHour,
+        minutesOneDay: selectedMinute,
+        hoursCountOneDay: hoursCount,
+        region: activeRegion,
+        address: address,
+      };
+    }
+
+    if (day === "завтра") {
+      const date = new Date();
+      const tomorrowStart = new Date(date);
+      tomorrowStart.setDate(date.getDate() + 1);
+      tomorrowStart.setHours(selectedHour);
+      tomorrowStart.setMinutes(selectedMinute);
+
+      const tomorrowEnd = new Date(date);
+      tomorrowEnd.setDate(date.getDate() + 1);
+      tomorrowEnd.setHours(hoursEndTemp);
+      tomorrowEnd.setMinutes(selectedMinute);
+
+      state.parkDate = {
+        dateStart: tomorrowStart.toISOString(),
+        dateEnd: tomorrowEnd.toISOString(),
+        hoursStartOneDay: selectedHour === "00" ? "00" : +selectedHour,
+        minutesOneDay: selectedMinute,
+        hoursCountOneDay: hoursCount,
+        region: activeRegion,
+        address: address,
+      };
+    }
+
+    navigate(link);
   };
 
-  /* console.log(snap); */
+  useEffect(() => {
+    if (snap && snap.user && snap.parkDate) {
+      setSelectedHour(snap.parkDate.hoursStartOneDay || "00");
+      setSelectedMinute(snap.parkDate.minutesOneDay  || "00");
+      setHoursCount(snap.parkDate.hoursCountOneDay || 1);
+      setActiveRegion(snap.parkDate.region || 1);
+      setAddress(snap.parkDate.address || 1);
+    }
+  }, [snap.user, snap.parkDate]);
 
   return (
     <>
@@ -62,11 +128,11 @@ const ChooseTimeToday = ({ day }) => {
             placeholder="Введите адрес"
             type="text"
           />
-          <button className={styles.btn_style} onClick={handleRedirectToMap}>
+          <button className={styles.btn_style} onClick={() => onHandleRedirect("/ChooseAnotherTime")}>
             Указать на карте
           </button>
         </div>
-        <Button onClick={handleRedirect}>
+        <Button onClick={() => onHandleRedirect("/extra-options")}>
           Далее
         </Button>
         {openTimeModal && (
