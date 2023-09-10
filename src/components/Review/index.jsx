@@ -37,7 +37,18 @@ const Review = () => {
     return array.length ? array.join(", ") : "Не указано";
   };
 
-  console.log(snap);
+  const renderTime = () => {
+    const dateStart = new Date(snap.parkDate.dateStartISO);
+    const hoursStart = dateStart.getHours();
+    const minutesStart = dateStart.getMinutes();
+
+    const dateEnd = new Date(snap.parkDate.dateEndISO);
+    const hoursEnd = dateEnd.getHours();
+    const minutesEnd = dateEnd.getMinutes();
+
+    return `${hoursStart}:${minutesStart}-${hoursEnd}:${minutesEnd}`;
+  };
+
   useEffect(() => {
     if (!snap.parkDate) {
       showErrorSnackbar({ message: "Не удалось получить данные", tryAgain: true });
@@ -73,7 +84,7 @@ const Review = () => {
               </div>
               <div className={styles.content_wrapper}>
                 <span className={styles.label}>Время доступности</span>
-                <span className={styles.value}>{"Время"}</span>
+                <span className={styles.value}>{renderTime()}</span>
               </div>
               <div className={styles.content_wrapper}>
                 <span className={styles.label}>Стоимость в час</span>
