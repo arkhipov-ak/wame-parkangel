@@ -1,0 +1,126 @@
+.title {
+  width: 100%;
+  text-align: left;
+  font-size: 24px;
+  font-weight: 450;
+  margin-top: 0;
+}
+.datePickerWrapper {
+  display: flex;
+  width: 100%;
+  padding: 0.875rem 0rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.9375rem;
+  background: #fff;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+  font-size: 20px;
+}
+.dateInput {
+  display: block;
+  font-size: 20px;
+  font-family: "Montserrat";
+  font-weight: 400;
+  color: #444;
+  line-height: 1.3;
+  text-align: center;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  border-radius: 0.5em;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  border: none;
+  background-position: right 0.7em top 50%, 0 0;
+  background-size: 2.5em auto, 100%;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+.date_time_container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 5% 0;
+}
+.dateInput:focus {
+  outline: none;
+  border-color: #ac8efe;
+}
+.data_time_text {
+  color: var(--black, #192342);
+  font-family: Montserrat;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.wrapper_input {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.9375rem;
+  background: #fff;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+  font-size: 20px;
+}
+.time_present {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.9375rem;
+  background: #fff;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+  font-size: 20px;
+}
+.block_wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5%;
+}
+.btn_style {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 400;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  background: #fff;
+  color: #192342;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+  border: none;
+  margin: 2.5% 0 5% 0;
+}
+.btn_style.active {
+  border: 2px solid #8a8aa4;
+}
+.input_style {
+  height: 50px;
+  width: 100%; 
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 400;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.9375rem;
+  background: #fff;
+  color: #192342;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+  border: none;
+  margin: 2.5% 0 5% 0;
+}
+.input_style:focus {
+  outline: none;
+}

@@ -1,56 +1,9 @@
-.modalOverlay {
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
+.title {
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1;
-}
-
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 70%;
-  height: 35%;
-  border-radius: 15px;
-  background-color: white;
-  padding: 20px;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.buttonConfirm {
-  margin-top: 20px;
-  display: inline-flex;
-  width: 125px;
-  height: 50px;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  border-radius: 0.9375rem;
-  background: #8a8aa4;
-  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
-  border: none;
-  font-family: Montserrat;
-}
-.btnWrapper {
-  display: flex;
-  justify-content: space-evenly;
-  margin-top: 20%;
-  gap: 10px;
-}
-.timeSelector {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-height: 110px;
-  overflow: hidden;
+  text-align: left;
+  font-size: 24px;
+  font-weight: 450;
+  margin-top: 0;
 }
 .hour,
 .minute {
@@ -67,30 +20,6 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
-.colon {
-  margin: 0 5px;
-  font-size: 1.5em;
-  font-weight: bold;
-}
-.time {
-  opacity: 0.5;
-  display: flex;
-  color: #847171;
-  align-items: center;
-  justify-content: center;
-}
-.time.selected {
-  opacity: 1;
-  color: black;
-}
-.hour::-webkit-scrollbar,
-.minute::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
-}
-.give_today {
-  font-weight: 450;
-  font-size: 24px;
-}
 .data_time_text {
   color: var(--black, #192342);
   font-family: Montserrat;
@@ -98,16 +27,6 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-}
-.search_text {
-  font-family: Montserrat;
-  font-size: 1.25rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  text-align: left;
-  width: 100%;
-  margin: 0 0 5% 0;
 }
 .time_present {
   display: flex;

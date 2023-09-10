@@ -22,22 +22,24 @@ const ChooseTimeToday = ({ day }) => {
   const navigate = useNavigate();
 
   const onHandleRedirect = (link) => {
-    if (!activeRegion) {
-      showErrorSnackbar({ message: "Не указан регион", tryAgain: true });
-      return;
-    }
-
-    if (!address.trim()) {
-      showErrorSnackbar({ message: "Не указан адрес", tryAgain: true });
-      return;
-    }
-
     let hoursEndTemp = +selectedHour + +hoursCount;
 
-    if (hoursEndTemp > 23) {
-      showErrorSnackbar({ message: 'Время заходит на следующий день, выберите опцию "На другой срок"' });
-      return;
-    }
+    if (link === "/extra-options") {
+      if (!activeRegion) {
+        showErrorSnackbar({ message: "Не указан регион", tryAgain: true });
+        return;
+      }
+  
+      if (!address.trim()) {
+        showErrorSnackbar({ message: "Не указан адрес", tryAgain: true });
+        return;
+      }
+  
+      if (hoursEndTemp > 23) {
+        showErrorSnackbar({ message: 'Время заходит на следующий день, выберите опцию "На другой срок"' });
+        return;
+      }
+    } //делаем валидацию только по клику на кнопку "Далее"
 
     if (day === "сегодня") {
       const dateStart = new Date();
@@ -90,8 +92,8 @@ const ChooseTimeToday = ({ day }) => {
       setSelectedHour(snap.parkDate.hoursStartOneDay || "00");
       setSelectedMinute(snap.parkDate.minutesOneDay  || "00");
       setHoursCount(snap.parkDate.hoursCountOneDay || 1);
-      setActiveRegion(snap.parkDate.region || 1);
-      setAddress(snap.parkDate.address || 1);
+      setActiveRegion(snap.parkDate.region || null);
+      setAddress(snap.parkDate.address || "");
     }
   }, [snap.user, snap.parkDate]);
 

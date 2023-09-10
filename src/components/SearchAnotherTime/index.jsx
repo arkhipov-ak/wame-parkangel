@@ -50,7 +50,7 @@ const SearchAnotherTime = () => {
     };
 
     navigate(link);
-  }
+  };
 
   useEffect(() => {
     if (snap && snap.user && snap.parkDate) {
@@ -58,16 +58,16 @@ const SearchAnotherTime = () => {
       setSelectedMinuteStart(snap.parkDate.minutesStart || "00");
       setSelectedHourEnd(snap.parkDate.hoursEnd || "00");
       setSelectedMinuteEnd(snap.parkDate.minutesEnd || "00");
-      setSelectedDateStart(snap.parkDate.dateStart);
-      setSelectedDateEnd(snap.parkDate.dateEnd);
+      setSelectedDateStart(snap.parkDate.dateStart || "");
+      setSelectedDateEnd(snap.parkDate.dateEnd || "");
     }
-  }, [snap.user, snap.parkDate])
+  }, [snap.user, snap.parkDate]);
 
   return (
     <div>
       <NavBar/>
       <Container>
-        <h2 className={styles.search_text}>Найти на другой срок</h2>
+        <h2 className={styles.title}>Найти на другой срок</h2>
         <div style={{ width: "100%" }}>
           <span className={styles.data_time_text}>Дата и время начала</span>
           <div className={styles.date_time_container}>
@@ -85,30 +85,25 @@ const SearchAnotherTime = () => {
               {selectedHourStart}:{selectedMinuteStart}
             </div>
           </div>
+          <span className={styles.data_time_text}>Дата и время окончания</span>
           <div>
-            <span className={styles.data_time_text}>Дата и время окончания</span>
-            <div>
-              <div className={styles.date_time_container}>
-                <div className={styles.wrapper_input}>
-                  <input
-                    ref={dateRef}
-                    type="date"
-                    min={currentDate}
-                    value={selectedDateEnd}
-                    onChange={(e) => setSelectedDateEnd(e.target.value)}
-                    className={styles.dateInput}
-                  />
-                </div>
-                <div
-                  onClick={() => setOpenEndTimeModal(true)}
-                  className={styles.time_present}
-                >
-                  {selectedHourEnd}:{selectedMinuteEnd}
-                </div>
+            <div className={styles.date_time_container}>
+              <div className={styles.wrapper_input}>
+                <input
+                  ref={dateRef}
+                  type="date"
+                  min={currentDate}
+                  value={selectedDateEnd}
+                  onChange={(e) => setSelectedDateEnd(e.target.value)}
+                  className={styles.dateInput}
+                />
               </div>
-              <ParametersButton onClick={() => onHandleRedirect("/extra-options")}/>
-              <Button onClick={() => onHandleRedirect("/select-address-location")}>Быстрая парковка</Button>
+              <div onClick={() => setOpenEndTimeModal(true)} className={styles.time_present}>
+                {selectedHourEnd}:{selectedMinuteEnd}
+              </div>
             </div>
+            <ParametersButton onClick={() => onHandleRedirect("/extra-options")}/>
+            <Button onClick={() => onHandleRedirect("/select-address-location")}>Быстрая парковка</Button>
           </div>
           {openStartTimeModal && (
             <ModalTime
