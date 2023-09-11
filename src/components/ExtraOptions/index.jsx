@@ -205,7 +205,7 @@ const ExtraOptions = () => {
     }
   }, [snap.user, snap.isSearchPark]);
 
-  console.log(data);
+  console.log('data', data);
 
   return (
 		<>
