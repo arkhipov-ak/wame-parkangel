@@ -6,6 +6,7 @@ import { useSnapshot } from "valtio";
 import { state } from "../../state";
 import Modal from "../common/Modal";
 import Button from "../common/Button";
+import { showErrorSnackbar } from "../../utils/showSnackBar";
 
 const Home = () => {
   const snap = useSnapshot(state)
@@ -15,8 +16,13 @@ const Home = () => {
   const [password, setPassword] = useState("");
 
   const onHandleSubmit = () => {
-    console.log('submit')
-  }
+    if (password === snap.user.password) {
+      setOpenPasswordModal(false);
+      navigate("/search-time");
+    } else {
+      showErrorSnackbar({ message: "Неверный пароль", tryAgain: true });
+    }
+  };
 
   useEffect(() => {
     const renderAgreementInfo = () => {
@@ -29,7 +35,6 @@ const Home = () => {
       
       if (snap.user.isAcceptAgreement) navigate("/search-time");
       else navigate("/agreement");
-      
     };
    
     const timer = setTimeout(() => renderAgreementInfo(), 2500);
@@ -42,8 +47,6 @@ const Home = () => {
   const handleImageLoad = () => {
     setImageLoaded(true);
   };
-
-  console.log(snap);
 
   return (
     <div className={styles.wrapper}>
@@ -79,7 +82,7 @@ const Home = () => {
               type="text"
             />
             <div className={styles.text_block}>
-              <span>Забыли пароль?</span>
+              <span>Забыли пароль?</span><br/>
               <a href="https://t.me/OlivsonM" className={styles.link}>Напишите в поддержку.</a>
             </div>
             <Button type="submit">Войти</Button>

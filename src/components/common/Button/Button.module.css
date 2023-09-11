@@ -1,6 +1,6 @@
 .button {
     display: inline-flex;
-    padding: 0.875rem 3.5rem 0.875rem 3.4375rem;
+    height: 50px;
     width: 100%;
     justify-content: center;
     align-items: center;
