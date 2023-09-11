@@ -34,6 +34,15 @@ const ResultSearch = () => {
 
       delete preparedData.user;
       delete preparedData.id;
+      delete preparedData.createdAt;
+      delete preparedData.updatedAt;
+      if (!preparedData.height) delete preparedData.height;
+      if (!preparedData.width) delete preparedData.width;
+      if (!preparedData.length) delete preparedData.length;
+      if (!preparedData.priceHour) delete preparedData.priceHour;
+      if (!preparedData.priceDay) delete preparedData.priceDay;
+      if (!preparedData.priceWeek) delete preparedData.priceWeek;
+      if (!preparedData.priceMonth) delete preparedData.priceMonth;
 
       console.log(preparedData);
       console.log(JSON.stringify(preparedData));

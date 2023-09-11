@@ -16,8 +16,6 @@ import SizeInput from "../common/SizeInput";
 
 const ExtraOptions = () => {
   const snap = useSnapshot(state);
-  /* const [openStartTimeModal, setOpenStartTimeModal] = useState(false); */
-  /* const [openEndTimeModal, setOpenEndTimeModal] = useState(false); */
   const [hourModalOpen, setHourModalOpen] = useState(false);
   const [dayModalOpen, setDayModalOpen] = useState(false);
   const [weekModalOpen, setWeekModalOpen] = useState(false);
@@ -207,28 +205,13 @@ const ExtraOptions = () => {
     }
   }, [snap.user, snap.isSearchPark]);
 
+  console.log(data);
+
   return (
 		<>
 			<NavBar/>
 			<Container>
         <form onSubmit={onHandleSaveOptions}>
-          {/* <div className={styles.box_container}>
-            <span className={styles.main_text}>Период</span>
-            <div className={styles.periods_wrapper}>
-              <div className={styles.period}>
-                <p className={styles.header_text}>Начиная с</p>
-                <p onClick={() => setOpenStartTimeModal(true)} className={styles.parameter}>
-                  {selectedHourStart}:{selectedMinuteStart}
-                </p>
-              </div>
-              <div className={styles.period}>
-                <p className={styles.header_text}>По</p>
-                <p onClick={() => setOpenEndTimeModal(true)} className={styles.parameter}>
-                  {selectedHourEnd}:{selectedMinuteEnd}
-                </p>
-              </div>
-            </div>
-          </div> */}
           <div className={styles.container}>
             <div className={styles.box_container}>
               <span className={styles.main_text}>Тип парковки</span>
@@ -406,22 +389,6 @@ const ExtraOptions = () => {
             </>
           </Modal>
         )}
-        {/* {openStartTimeModal && (
-          <ModalTime
-            setOpenTimeModal={setOpenStartTimeModal}
-            openTimeModal={openStartTimeModal}
-            setSelectedMinute={setSelectedMinuteStart}
-            setSelectedHour={setSelectedHourStart}
-          />
-        )}
-        {openEndTimeModal && (
-          <ModalTime
-            setOpenTimeModal={setOpenEndTimeModal}
-            openTimeModal={openEndTimeModal}
-            setSelectedMinute={setSelectedMinuteEnd}
-            setSelectedHour={setSelectedHourEnd}
-          />
-        )} */}
 			</Container>
 		</>
 	)
