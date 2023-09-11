@@ -34,6 +34,9 @@ const ResultSearch = () => {
 
       delete preparedData.user;
       delete preparedData.id;
+
+      console.log(preparedData);
+      console.log(JSON.stringify(preparedData));
       
       axios.get("https://parkangel-backend.protomusic.ru/api/ad", {
         params: { ...preparedData }
