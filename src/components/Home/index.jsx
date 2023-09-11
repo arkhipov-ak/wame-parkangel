@@ -70,7 +70,7 @@ const Home = () => {
           openModal={openPasswordModal}
           closeButton={false}
         >
-          <form onSubmit={onHandleSubmit}>
+          <form onSubmit={onHandleSubmit} className={styles.form}>
             <input
               value={password}
               onChange={(e) => setPassword(e.target.value, "password")}
@@ -78,7 +78,10 @@ const Home = () => {
               className={styles.password_input}
               type="text"
             />
-            <span>Забыли пароль?</span> <a href="https://t.me/OlivsonM">Напишите в поддержку.</a>
+            <div className={styles.text_block}>
+              <span>Забыли пароль?</span>
+              <a href="https://t.me/OlivsonM" className={styles.link}>Напишите в поддержку.</a>
+            </div>
             <Button type="submit">Войти</Button>
           </form>
         </Modal>
