@@ -43,7 +43,6 @@ const App = () => {
       console.log(user);
       if (user) {
         const chatId = user.id;
-        console.log('chatId', chatId);
         await axios.get(`https://parkangel-backend.protomusic.ru/api/users/chatId/${chatId}`)
           .then(response => {
             console.log(response);
@@ -52,7 +51,9 @@ const App = () => {
               axios.post(
                 "https://parkangel-backend.protomusic.ru/api/users",
                 {
-                  chatId: chatId,
+                  chatId: chatId + "",
+                  telegram: user.username,
+                  name: user.first_name,
                 },
               ).then(response => state.user = response.data.response)
               .catch(() => showErrorSnackbar({ message: "Не удалось записать юзера" }))
