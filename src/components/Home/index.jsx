@@ -22,10 +22,10 @@ const Home = () => {
     const renderAgreementInfo = () => {
       if (!snap || !snap.user) return;
 
-      /* if (snap.user.password) {
+      if (snap.user.password) {
         setOpenPasswordModal(true);
         return;
-      } */
+      }
       
       if (snap.user.isAcceptAgreement) navigate("/search-time");
       else navigate("/agreement");
