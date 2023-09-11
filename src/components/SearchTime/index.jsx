@@ -25,7 +25,7 @@ const SearchTime = () => {
 
   useEffect(() => {
     if (snap && snap.user) {
-      axios.get(`http://185.238.2.176:5064/api/history/userId/${snap.user.chatId}`)
+      axios.get(`https://parkangel-backend.protomusic.ru/api/history/userId/${snap.user.chatId}`)
         .then(response => setHistoryData(response.data.response))
         .catch(() => showErrorSnackbar({ message: "Не удалось получить историю аренды" }))
     }

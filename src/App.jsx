@@ -39,27 +39,20 @@ const App = () => {
     const tg = window?.Telegram?.WebApp;
     tg.expand()
     const getUser = async () => {
-      /* const user = tg.initDataUnsafe.user; */
-      /* console.log(user); */
-      /* if (user) { */
-        /* const userId = user.id; */
-        /* console.log('userId', userId); */
-        await axios.get(`http://185.238.2.176:5064/api/users/chatId/${5465844067777}`)
+      const user = tg.initDataUnsafe.user;
+      console.log(user);
+      if (user) {
+        const chatId = user.id;
+        console.log('chatId', chatId);
+        await axios.get(`https://parkangel-backend.protomusic.ru/api/users/chatId/${chatId}`)
           .then(response => {
-            /* console.log(response); */
+            console.log(response);
             if (response.data.response) state.user = response.data.response
             else {
               axios.post(
-                "http://185.238.2.176:5064/api/users",
+                "https://parkangel-backend.protomusic.ru/api/users",
                 {
-                  chatId: "5465844067777",
-                  name: "",
-                  telegram: "",
-                  phoneNumber: "",
-                  username: "",
-                  email: "",
-                  password: "",
-                  city: ""
+                  chatId: chatId,
                 },
               ).then(response => state.user = response.data.response)
               .catch(() => showErrorSnackbar({ message: "Не удалось записать юзера" }))
@@ -74,7 +67,7 @@ const App = () => {
 
   useEffect(() => {
     if (snap && snap.user) {
-      axios.get(`http://185.238.2.176:5064/api/options/userId/${snap.user.id}`)
+      axios.get(`https://parkangel-backend.protomusic.ru/api/options/userId/${snap.user.id}`)
         .then(response => {
           /* console.log('response', response); */
           state.options = response.data.response

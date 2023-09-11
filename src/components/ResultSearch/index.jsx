@@ -35,7 +35,7 @@ const ResultSearch = () => {
       delete preparedData.user;
       delete preparedData.id;
       
-      axios.get("http://185.238.2.176:5064/api/ad", {
+      axios.get("https://parkangel-backend.protomusic.ru/api/ad", {
         params: { ...preparedData }
       }).then(response => setData(response.data.response))
       .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления"}))

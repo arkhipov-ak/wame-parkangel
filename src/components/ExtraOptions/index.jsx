@@ -99,14 +99,14 @@ const ExtraOptions = () => {
 
     if (snap.options[0]) {
       axios.put(
-        "http://185.238.2.176:5064/api/options", preparedData
+        "https://parkangel-backend.protomusic.ru/api/options", preparedData
       ).then(response => {
         if (response) showSuccessSnackbar({ message: "Параметры сохранены" });
       })
       .catch(showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
     } else {
       axios.post(
-        "http://185.238.2.176:5064/api/options", preparedData
+        "https://parkangel-backend.protomusic.ru/api/options", preparedData
       ).then(response => {
         if (response) showSuccessSnackbar({ message: "Параметры сохранены" });
       })
@@ -122,7 +122,7 @@ const ExtraOptions = () => {
     delete preparedParkData.id;
 
     axios.post(
-      "http://185.238.2.176:5064/api/park", preparedParkData
+      "https://parkangel-backend.protomusic.ru/api/park", preparedParkData
     ).then(response => {
       if (response) navigate("/review");
     })
@@ -165,7 +165,7 @@ const ExtraOptions = () => {
 
     if (snap.options[0]) {
       axios.put(
-        "http://185.238.2.176:5064/api/options", preparedData
+        "https://parkangel-backend.protomusic.ru/api/options", preparedData
       ).then(response => {
         if (response) {
           showSuccessSnackbar({ message: "Параметры сохранены" })
@@ -175,7 +175,7 @@ const ExtraOptions = () => {
       .catch(showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
     } else {
       axios.post(
-        "http://185.238.2.176:5064/api/options", preparedData
+        "https://parkangel-backend.protomusic.ru/api/options", preparedData
       ).then(response => {
         if (response) {
           showSuccessSnackbar({ message: "Параметры сохранены" })
@@ -188,7 +188,7 @@ const ExtraOptions = () => {
 
   useEffect(() => {
     if (snap && snap.user) {
-      axios.get(`http://185.238.2.176:5064/api/options/userId/${snap.user.id}`)
+      axios.get(`https://parkangel-backend.protomusic.ru/api/options/userId/${snap.user.id}`)
         .then(response => state.options = response.data.response)
         .catch(() => showErrorSnackbar({ message: "Не удалось загрузить опции" }))
     }

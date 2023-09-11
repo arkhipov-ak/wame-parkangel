@@ -26,7 +26,7 @@ const Faq = () => {
 
   useEffect(() => {
     axios
-      .get("http://185.238.2.176:5064/api/faq")
+      .get("https://parkangel-backend.protomusic.ru/api/faq")
       .then((response) => setFaqData(response.data.response))
       .catch(() => showErrorSnackbar({ message: "Не удалось получить вопросы" }));
   }, []);

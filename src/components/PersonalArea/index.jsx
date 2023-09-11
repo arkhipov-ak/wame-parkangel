@@ -40,7 +40,7 @@ const PersonalArea = () => {
       return;
     }
 
-    axios.put("http://185.238.2.176:5064/api/users", data)
+    axios.put("https://parkangel-backend.protomusic.ru/api/users", data)
       .then(() => showSuccessSnackbar({ message: "Данные профиля обновлены" }))
       .catch(() => showErrorSnackbar({ message: "Не удалось обновить данные профиля" }))
   };

@@ -18,7 +18,7 @@ const Agreement = () => {
   };
 
   const handleAgreementClick = () => {
-    axios.put("http://185.238.2.176:5064/api/users", { ...snap.user, isAcceptAgreement: true })
+    axios.put("https://parkangel-backend.protomusic.ru/api/users", { ...snap.user, isAcceptAgreement: true })
       .then((response) => {
         if (response.data.response) {
           state.user = { ...snap.user, isAcceptAgreement: true };
