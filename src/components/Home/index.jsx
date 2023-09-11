@@ -15,7 +15,9 @@ const Home = () => {
   const [openPasswordModal, setOpenPasswordModal] = useState(false);
   const [password, setPassword] = useState("");
 
-  const onHandleSubmit = () => {
+  const onHandleSubmit = (e) => {
+    e.preventDefault();
+    
     if (password === snap.user.password) {
       setOpenPasswordModal(false);
       navigate("/search-time");
