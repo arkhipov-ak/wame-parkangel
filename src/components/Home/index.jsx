@@ -4,19 +4,13 @@ import Logotype from "/src/assets/logo.svg";
 import { useNavigate } from "react-router-dom";
 import { useSnapshot } from "valtio";
 import { state } from "../../state";
-import Modal from "../common/Modal";
-import Button from "../common/Button";
+import ModalPassword from "../common/ModalPassword";
 
 const Home = () => {
   const snap = useSnapshot(state)
   const [isImageLoaded, setImageLoaded] = useState(false);
   const navigate = useNavigate();
   const [openPasswordModal, setOpenPasswordModal] = useState(false);
-  const [password, setPassword] = useState("");
-
-  const onHandleSubmit = () => {
-    console.log('submit')
-  }
 
   useEffect(() => {
     const renderAgreementInfo = () => {
@@ -29,7 +23,6 @@ const Home = () => {
       
       if (snap.user.isAcceptAgreement) navigate("/search-time");
       else navigate("/agreement");
-      
     };
    
     const timer = setTimeout(() => renderAgreementInfo(), 2500);
@@ -65,22 +58,7 @@ const Home = () => {
         {isImageLoaded ? "от часа до года" : " "}
       </span>
       {openPasswordModal && (
-        <Modal
-          setOpenModal={setOpenPasswordModal}
-          openModal={openPasswordModal}
-          closeButton={false}
-        >
-          <form onSubmit={onHandleSubmit}>
-            <input
-              value={password}
-              onChange={(e) => setPassword(e.target.value, "password")}
-              placeholder="Введите пароль"
-              className={styles.password_input}
-              type="text"
-            />
-            <Button type="submit">Войти</Button>
-          </form>
-        </Modal>
+        <ModalPassword openModal={openPasswordModal} setOpenModal={setOpenPasswordModal}/>
       )}
     </div>
   );
