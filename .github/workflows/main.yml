@@ -3,12 +3,12 @@ name: Main
 on:
   push:
     branches:
-      - main
+      - master
 
 env:
   USER_PATH: "/home/www"
   DOMAIN: "parkangel-front.protomusic.ru"
-  BRANCH: "main"
+  BRANCH: "master"
 
 jobs:
   deploy:
