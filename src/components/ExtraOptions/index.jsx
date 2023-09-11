@@ -44,35 +44,89 @@ const ExtraOptions = () => {
     isCustomSize: false,
     address: "",
     region: "",
+    isRenewable: false,
   });
 
   const onHandleChange = (value, key) => {
     let newObject = { ...data, ...{ [key]: value } }
     setData(newObject)
-	}
+	};
 
   const handleRedirect = () => {
+    if (snap.parkDate.hoursCountOneDay && snap.parkDate.hoursStartOneDay && snap.parkDate.minutesOneDay) {
+      if (!data.priceHour) {
+        showErrorSnackbar({ message: "Стоимость в час должна быть больше нуля", tryAgain: true });
+        return;
+      }
+    }
+
     if (data.height && +data.height <= 0) {
       showErrorSnackbar({ message: "Высота должна быть больше нуля", tryAgain: true });
       return;
     }
 
     if (data.length && +data.length <= 0) {
-      showErrorSnackbar({ message: "Длина должна быть больше нуля", tryAgain: true })
+      showErrorSnackbar({ message: "Длина должна быть больше нуля", tryAgain: true });
       return;
     }
 
     if (data.width && +data.width <= 0) {
-      showErrorSnackbar({ message: "Ширина должна быть больше нуля", tryAgain: true })
+      showErrorSnackbar({ message: "Ширина должна быть больше нуля", tryAgain: true });
       return;
     }
 
-    state.parkDate = {
-      ...snap.parkDate,
-      data,
+    state.parkDate = { ...snap.parkDate, isRenewable: data.isRenewable };
+
+    const preparedData = {
+      ...data,
+      length: data.length ? +data.length : null,
+      height: data.height ? +data.height : null,
+      width: data.width ? +data.width : null,
+      address: snap.parkDate.address,
+      region: snap.parkDate.region,
+      user_id: snap.user.id,
     };
-    
-    navigate("/review");
+
+    if (!preparedData.height) delete preparedData.height;
+    if (!preparedData.width) delete preparedData.width;
+    if (!preparedData.length) delete preparedData.length;
+    if (!preparedData.priceHour) delete preparedData.priceHour;
+    if (!preparedData.priceDay) delete preparedData.priceDay;
+    if (!preparedData.priceWeek) delete preparedData.priceWeek;
+    if (!preparedData.priceMonth) delete preparedData.priceMonth;
+    delete preparedData.user;
+    delete preparedData.isRenewable;
+
+    if (snap.options[0]) {
+      axios.put(
+        "http://185.238.2.176:5064/api/options", preparedData
+      ).then(response => {
+        if (response) showSuccessSnackbar({ message: "Параметры сохранены" });
+      })
+      .catch(showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
+    } else {
+      axios.post(
+        "http://185.238.2.176:5064/api/options", preparedData
+      ).then(response => {
+        if (response) showSuccessSnackbar({ message: "Параметры сохранены" });
+      })
+      .catch(showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
+    }
+
+    const preparedParkData = {
+      ...preparedData,
+      availabilityDateEnd: snap.parkDate.dateEndISO,
+      availabilityDateStart: snap.parkDate.dateStartISO,
+    };
+
+    delete preparedParkData.id;
+
+    axios.post(
+      "http://185.238.2.176:5064/api/park", preparedParkData
+    ).then(response => {
+      if (response) navigate("/review");
+    })
+    .catch(showErrorSnackbar({ message: "Не удалось создать парковку" }))
   };
 
   const onHandleSaveOptions = (e) => {
@@ -141,9 +195,7 @@ const ExtraOptions = () => {
   }, [snap.user]);
 
   useEffect(() => {
-    if (snap && snap.user && snap.options && snap.options[0]) {
-      setData(snap.options[0]);
-    }
+    if (snap && snap.user && snap.options && snap.options[0]) setData(snap.options[0]);
   }, [snap.user, snap.options]);
 
   useEffect(() => {
@@ -233,35 +285,44 @@ const ExtraOptions = () => {
             </div>
           </div>
           <div className={styles.box_container}>
-            <span className={styles.main_text}>Цены, руб</span>
-            <div className={styles.price_blocks}>
-              <div className={styles.period}>
-                <p className={styles.header_text}>Цена за час</p>
-                <p onClick={() => setHourModalOpen(true)} className={styles.parameter}>
-                  {data.priceHour ?? 0}
-                </p>
-              </div>
-              <div className={styles.period}>
-                <p className={styles.header_text}>Цена за день</p>
-                <p onClick={() => setDayModalOpen(true)} className={styles.parameter}>
-                  {data.priceDay ?? 0}
-                </p>
-              </div>
-              <div className={styles.period}>
-                <p className={styles.header_text}>Цена за неделю</p>
-                <p onClick={() => setWeekModalOpen(true)} className={styles.parameter}>
-                  {data.priceWeek ?? 0}
-                </p>
-              </div>
-              <div className={styles.period}>
-                <div className={styles.size_wrapper_2}>
-                  <p className={styles.header_text}>Цена за месяц</p>
-                  <p onClick={() => setMonthModalOpen(true)} className={styles.parameter}>
-                    {data.priceMonth ?? 0}
-                  </p>
+            {(snap.parkDate.hoursCountOneDay || snap.parkDate.hoursStartOneDay || snap.parkDate.minutesOneDay) ? (
+              <>
+                <span className={styles.main_text}>Макс. стоимость в час, руб</span>
+                <PriceCounterBlock price={+data.priceHour} setPrice={e => onHandleChange(e, "priceHour")}/>
+              </>
+            ) : (
+              <>
+                <span className={styles.main_text}>Цены, руб</span>
+                <div className={styles.price_blocks}>
+                  <div className={styles.period}>
+                    <p className={styles.header_text}>Цена за час</p>
+                    <p onClick={() => setHourModalOpen(true)} className={styles.parameter}>
+                      {data.priceHour ?? 0}
+                    </p>
+                  </div>
+                  <div className={styles.period}>
+                    <p className={styles.header_text}>Цена за день</p>
+                    <p onClick={() => setDayModalOpen(true)} className={styles.parameter}>
+                      {data.priceDay ?? 0}
+                    </p>
+                  </div>
+                  <div className={styles.period}>
+                    <p className={styles.header_text}>Цена за неделю</p>
+                    <p onClick={() => setWeekModalOpen(true)} className={styles.parameter}>
+                      {data.priceWeek ?? 0}
+                    </p>
+                  </div>
+                  <div className={styles.period}>
+                    <div className={styles.size_wrapper_2}>
+                      <p className={styles.header_text}>Цена за месяц</p>
+                      <p onClick={() => setMonthModalOpen(true)} className={styles.parameter}>
+                        {data.priceMonth ?? 0}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </>
+            )}
           </div>
           {snap.isSearchPark === false && (
             <div className={styles.box_container}>

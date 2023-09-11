@@ -5,9 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { useSnapshot } from "valtio";
 import { state } from "../../state";
 import Container from "../common/Container";
-import { showErrorSnackbar } from "../../utils/showSnackBar";
+import { showErrorSnackbar, showSuccessSnackbar } from "../../utils/showSnackBar";
 import { useEffect } from "react";
 import Button from "../common/Button";
+import axios from "axios";
 
 const Review = () => {
   const snap = useSnapshot(state);
@@ -17,10 +18,10 @@ const Review = () => {
   const renderParkingType = () => {
     let array = [];
 
-    if (snap.parkDate.data.isUnderground) array.push("Подземная");
-    if (snap.parkDate.data.isOutDoor) array.push("Открытая");
-    if (snap.parkDate.data.isCovered) array.push("Крытая");
-    if (snap.parkDate.data.isGarage) array.push("Гараж");
+    if (snap.options[0].isUnderground) array.push("Подземная");
+    if (snap.options[0].isOutDoor) array.push("Открытая");
+    if (snap.options[0].isCovered) array.push("Крытая");
+    if (snap.options[0].isGarage) array.push("Гараж");
 
     return array.length ? array.join(", ") : "Не указан";
   };
@@ -28,10 +29,10 @@ const Review = () => {
   const renderElectroType = () => {
     let array = [];
 
-    if (snap.parkDate.data.isVolts) array.push("220V");
-    if (snap.parkDate.data.isElectroMobile) array.push("Электромобиль");
-    if (snap.parkDate.data.isVoltsWithCharger) array.push("220V и зарядка электромобиля");
-    if (snap.parkDate.data.isWithoutPower) array.push("Без электропитания");
+    if (snap.options[0].isVolts) array.push("220V");
+    if (snap.options[0].isElectroMobile) array.push("Электромобиль");
+    if (snap.options[0].isVoltsWithCharger) array.push("220V и зарядка электромобиля");
+    if (snap.options[0].isWithoutPower) array.push("Без электропитания");
 
     return array.length ? array.join(", ") : "Не указано";
   };
@@ -79,7 +80,36 @@ const Review = () => {
   };
 
   const onHandleClick = () => {
+    const preparedData = {
+      ...snap.options[0],
+      isRenewable: snap.parkDate.isRenewable,
+      availabilityDateEnd: snap.parkDate.dateEndISO,
+      availabilityDateStart: snap.parkDate.dateStartISO,
+      user_id: snap.user.id,
+      park_id: snap.options[0].id,
+    };
 
+    delete preparedData.id;
+    delete preparedData.user;
+    if (!preparedData.height) delete preparedData.height;
+    if (!preparedData.width) delete preparedData.width;
+    if (!preparedData.length) delete preparedData.length;
+    if (!preparedData.priceHour) delete preparedData.priceHour;
+    if (!preparedData.priceDay) delete preparedData.priceDay;
+    if (!preparedData.priceWeek) delete preparedData.priceWeek;
+    if (!preparedData.priceMonth) delete preparedData.priceMonth;
+
+    /* console.log('preparedData', preparedData); */
+
+    axios.post("http://185.238.2.176:5064/api/ad", preparedData)
+      .then(response => {
+        if (response) {
+          showSuccessSnackbar({ message: "Объявление опубликовано" });
+          navigate("/search-time");
+        }
+      })
+      .catch(() => showErrorSnackbar({ message: "Не удалось опубликовать объявление"})
+    );
   };
 
   useEffect(() => {
@@ -89,13 +119,24 @@ const Review = () => {
     }
   }, [snap.parkDate]);
 
+  useEffect(() => {
+    if (snap && snap.user) {
+      axios.get(`http://185.238.2.176:5064/api/options/userId/${snap.user.id}`)
+        .then(response => state.options = response.data.response)
+        .catch(() => {
+          showErrorSnackbar({ message: "Не удалось загрузить опции", tryAgain: true });
+          navigate("/search-time");
+        })
+    }
+  }, [snap.user]);
+
   return (
     <>
       <NavBar />
       <Container>
           <h2 className={styles.title}>Предпросмотр</h2>
           <div className={styles.wrapper_div}>
-            <p className={styles.address}>{snap.parkDate.address}</p>
+            <p className={styles.address}>{snap.options[0].address}</p>
             <div className={styles.styles_container}>
               <div className={styles.content_wrapper}>
                 <span className={styles.label}>Тип паркинга</span>
@@ -103,11 +144,11 @@ const Review = () => {
               </div>
               <div className={styles.content_wrapper}>
                 <span className={styles.label}>Охрана</span>
-                <span className={styles.value}>{snap.parkDate.data.isProtected ? "Да" : "Нет"}</span>
+                <span className={styles.value}>{snap.options[0].isProtected ? "Да" : "Нет"}</span>
               </div>
               <div className={styles.content_wrapper}>
                 <span className={styles.label}>Обогрев</span>
-                <span className={styles.value}>{snap.parkDate.data.isHeated ? "Да" : "Нет"}</span>
+                <span className={styles.value}>{snap.options[0].isHeated ? "Да" : "Нет"}</span>
               </div>
               <div className={styles.content_wrapper}>
                 <span className={styles.label}>Для электромобилей</span>
@@ -124,25 +165,25 @@ const Review = () => {
               <div className={styles.content_wrapper}>
                 <span className={styles.label}>Стоимость в час</span>
                 <span className={styles.value}>
-                  {snap.parkDate.data.priceHour ? `${snap.parkDate.data.priceHour} руб` : "Не указана"}
+                  {snap.options[0].priceHour ? `${snap.options[0].priceHour} руб` : "Не указана"}
                 </span>
               </div>
               <div className={styles.content_wrapper}>
                 <span className={styles.label}>Стоимость в день</span>
                 <span className={styles.value}>
-                  {snap.parkDate.data.priceDay ? `${snap.parkDate.data.priceDay} руб` : "Не указана"}
+                  {snap.options[0].priceDay ? `${snap.options[0].priceDay} руб` : "Не указана"}
                 </span>
               </div>
               <div className={styles.content_wrapper}>
                 <span className={styles.label}>Стоимость в неделю</span>
                 <span className={styles.value}>
-                  {snap.parkDate.data.priceWeek ? `${snap.parkDate.data.priceWeek} руб` : "Не указана"}
+                  {snap.options[0].priceWeek ? `${snap.options[0].priceWeek} руб` : "Не указана"}
                 </span>
               </div>
               <div className={styles.content_wrapper}>
                 <span className={styles.label}>Стоимость в месяц</span>
                 <span className={styles.value}>
-                  {snap.parkDate.data.priceMonth ? `${snap.parkDate.data.priceMonth} руб` : "Не указана"}
+                  {snap.options[0].priceMonth ? `${snap.options[0].priceMonth} руб` : "Не указана"}
                 </span>
               </div>
               {snap.user.isShowName && (

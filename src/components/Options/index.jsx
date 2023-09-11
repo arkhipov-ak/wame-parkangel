@@ -54,17 +54,17 @@ const Options = () => {
     }
 
     if (data.length && +data.length <= 0) {
-      showErrorSnackbar({ message: "Длина должна быть больше нуля", tryAgain: true })
+      showErrorSnackbar({ message: "Длина должна быть больше нуля", tryAgain: true });
       return;
     }
 
     if (data.width && +data.width <= 0) {
-      showErrorSnackbar({ message: "Ширина должна быть больше нуля", tryAgain: true })
+      showErrorSnackbar({ message: "Ширина должна быть больше нуля", tryAgain: true });
       return;
     }
 
     if (data.priceHour === 0) {
-      showErrorSnackbar({ message: "Стоимость в час должна быть больше нуля", tryAgain: true })
+      showErrorSnackbar({ message: "Стоимость в час должна быть больше нуля", tryAgain: true });
       return;
     }
 

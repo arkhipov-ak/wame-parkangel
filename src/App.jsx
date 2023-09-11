@@ -46,7 +46,7 @@ const App = () => {
         /* console.log('userId', userId); */
         await axios.get(`http://185.238.2.176:5064/api/users/chatId/${5465844067777}`)
           .then(response => {
-            console.log(response);
+            /* console.log(response); */
             if (response.data.response) state.user = response.data.response
             else {
               axios.post(
@@ -75,7 +75,10 @@ const App = () => {
   useEffect(() => {
     if (snap && snap.user) {
       axios.get(`http://185.238.2.176:5064/api/options/userId/${snap.user.id}`)
-        .then(response => state.options = response.data.response)
+        .then(response => {
+          /* console.log('response', response); */
+          state.options = response.data.response
+        })
         .catch(() => showErrorSnackbar({ message: "Не удалось загрузить опции" }))
     }
   }, [snap.user]);
