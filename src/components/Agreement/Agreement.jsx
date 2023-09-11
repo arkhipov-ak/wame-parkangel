@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./Agreement.module.css";
-import ParkAngel from "/src/assets/ParkAngel.svg";
+import parkAngel from "/src/assets/ParkAngel.svg";
 import { useNavigate } from "react-router-dom";
 import Button from "../common/Button";
 import axios from "axios";
@@ -42,7 +42,7 @@ const Agreement = () => {
         )}
         <img
           className={styles.logotype}
-          src={ParkAngel}
+          src={parkAngel}
           onLoad={handleImageLoad}
           style={{ display: isImageLoaded ? "block" : "none" }}
         />

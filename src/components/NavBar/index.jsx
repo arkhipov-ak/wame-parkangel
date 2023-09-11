@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./NavBar.module.css";
-import ParkAngel from "/src/assets/ParkAngel.svg";
+import parkAngel from "/src/assets/ParkAngel.svg";
 import { AiOutlineLeft } from "react-icons/ai";
 import { BiAlignRight } from "react-icons/bi";
 import { useNavigate, useLocation, Link } from "react-router-dom";
@@ -29,7 +29,7 @@ const NavBar = () => {
           }}
         />
       </button>
-      <img className={styles.logo} src={ParkAngel} />
+      <img className={styles.logo} src={parkAngel} />
       <button
         className={styles.option__btn}
         onClick={() => setMenuOpen(!isMenuOpen)}
