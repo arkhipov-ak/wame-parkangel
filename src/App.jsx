@@ -64,7 +64,7 @@ const App = () => {
               .catch(() => showErrorSnackbar({ message: "Не удалось записать юзера" }))
             }
           })
-          .catch(() => {showErrorSnackbar({ message: "Что-то пошло не так" })})
+          .catch(() => showErrorSnackbar({ message: "Что-то пошло не так" }))
       }
     }
    

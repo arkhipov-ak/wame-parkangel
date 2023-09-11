@@ -5,12 +5,18 @@ import { useNavigate } from "react-router-dom";
 import { useSnapshot } from "valtio";
 import { state } from "../../state";
 import Modal from "../common/Modal";
+import Button from "../common/Button";
 
 const Home = () => {
   const snap = useSnapshot(state)
   const [isImageLoaded, setImageLoaded] = useState(false);
   const navigate = useNavigate();
   const [openPasswordModal, setOpenPasswordModal] = useState(false);
+  const [password, setPassword] = useState("");
+
+  const onHandleSubmit = () => {
+    console.log('submit')
+  }
 
   useEffect(() => {
     const renderAgreementInfo = () => {
@@ -31,7 +37,7 @@ const Home = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, [navigate, snap]);
+  }, [navigate, snap, openPasswordModal]);
 
   const handleImageLoad = () => {
     setImageLoaded(true);
@@ -44,10 +50,10 @@ const Home = () => {
       {
         !isImageLoaded && (
           <div style={{
-            width: '9.3125rem',
-            height: '9.3125rem',
-            borderRadius: '1.9375rem',
-            background: '#353536'
+            width: "9.3125rem",
+            height: "9.3125rem",
+            borderRadius: "1.9375rem",
+            background: "#353536",
           }} />
         )
       }
@@ -63,11 +69,17 @@ const Home = () => {
           setOpenModal={setOpenPasswordModal}
           openModal={openPasswordModal}
           closeButton={false}
-          title="Введите пароль"
         >
-          <>
-            modal
-          </>
+          <form onSubmit={onHandleSubmit}>
+            <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value, "password")}
+              placeholder="Введите пароль"
+              className={styles.password_input}
+              type="text"
+            />
+            <Button type="submit">Войти</Button>
+          </form>
         </Modal>
       )}
     </div>
