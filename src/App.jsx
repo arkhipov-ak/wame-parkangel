@@ -34,18 +34,15 @@ const App = () => {
   const snap = useSnapshot(state);
 
   useEffect(() => {
-    console.log('in use effect');
     window.Telegram.WebApp.ready();
     const tg = window?.Telegram?.WebApp;
     tg.expand()
     const getUser = async () => {
       const user = tg.initDataUnsafe.user;
-      console.log(user);
       if (user) {
         const chatId = user.id;
         await axios.get(`https://parkangel-backend.protomusic.ru/api/users/chatId/${chatId}`)
           .then(response => {
-            console.log(response);
             if (response.data.response) state.user = response.data.response
             else {
               axios.post(
@@ -77,13 +74,12 @@ const App = () => {
   useEffect(() => {
     if (snap && snap.user) {
       axios.get(`https://parkangel-backend.protomusic.ru/api/options/userId/${snap.user.id}`)
-        .then(response => {
-          /* console.log('response', response); */
-          state.options = response.data.response
-        })
+        .then(response => state.options = response.data.response)
         .catch(() => showErrorSnackbar({ message: "Не удалось загрузить опции" }))
     }
   }, [snap.user]);
+
+  console.log('test');
 
   return (
     <SnackbarProvider
