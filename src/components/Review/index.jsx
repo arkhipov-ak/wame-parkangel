@@ -15,8 +15,6 @@ const Review = () => {
   const API_KEY = "cfb7ca98-9e16-49b6-9147-4daad6d34284";
   const navigate = useNavigate();
 
-  
-
   const renderParkingType = () => {
     let array = [];
 
@@ -131,6 +129,8 @@ const Review = () => {
         })
     }
   }, [snap.user]);
+
+  console.log(snap);
 
   return (
     <>
