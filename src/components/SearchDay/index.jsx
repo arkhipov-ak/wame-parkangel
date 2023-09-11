@@ -59,8 +59,8 @@ const SearchDay = ({ day }) => {
       tomorrowEnd.setMinutes(selectedMinute);
 
       state.parkDate = {
-        dateStart: tomorrowStart.toISOString(),
-        dateEnd: tomorrowEnd.toISOString(),
+        dateStartISO: tomorrowStart.toISOString(),
+        dateEndISO: tomorrowEnd.toISOString(),
         hoursStartOneDay: selectedHour === "00" ? "00" : +selectedHour,
         minutesOneDay: selectedMinute,
         hoursCountOneDay: hoursCount,

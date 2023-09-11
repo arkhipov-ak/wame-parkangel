@@ -11,9 +11,7 @@ import { useEffect } from "react";
 const Review = () => {
   const snap = useSnapshot(state);
   const API_KEY = "cfb7ca98-9e16-49b6-9147-4daad6d34284";
-  const queryParams = new URLSearchParams(window.location.search);
   const navigate = useNavigate();
-  const selectedAddress = queryParams.get("address");
 
   const renderParkingType = () => {
     let array = [];
@@ -49,11 +47,35 @@ const Review = () => {
     return `${hoursStart}:${minutesStart}-${hoursEnd}:${minutesEnd}`;
   };
 
+  const renderDate = () => {
+    const dateStart = new Date(snap.parkDate.dateStartISO);
+    console.log(dateStart);
+    const dayStart = dateStart.getDate();
+    const monthStart = (dateStart.getMonth() + 1 + "").length === 1 
+      ? `0${dateStart.getMonth() + 1}`
+      : dateStart.getMonth() + 1
+    ;
+    const yearStart = dateStart.getFullYear();
+
+    if (snap.parkDate.hoursCountOneDay || snap.parkDate.hoursStartOneDay || snap.parkDate.minutesOneDay) {
+      return `${dayStart}.${monthStart}.${yearStart}`;
+    } //если сдаем на один день, то выводим одну дату
+
+    const dateEnd = new Date(snap.parkDate.dateEndISO);
+    const dayEnd = dateEnd.getDate();
+    const monthEnd = (dateEnd.getMonth() + 1 + "").length === 1 
+      ? `0${dateEnd.getMonth() + 1}`
+      : dateEnd.getMonth() + 1
+    ;
+    const yearEnd = dateEnd.getFullYear();
+
+    return `${dayStart}.${monthStart}.${yearStart} - ${dayEnd}.${monthEnd}.${yearEnd}`;
+  };
+
   useEffect(() => {
     if (!snap.parkDate) {
       showErrorSnackbar({ message: "Не удалось получить данные", tryAgain: true });
       navigate("/search-time");
-      return;
     }
   }, [snap.parkDate]);
 
@@ -81,6 +103,10 @@ const Review = () => {
               <div className={styles.content_wrapper}>
                 <span className={styles.label}>Для электромобилей</span>
                 <span className={styles.value}>{renderElectroType()}</span>
+              </div>
+              <div className={styles.content_wrapper}>
+                <span className={styles.label}>Дата доступности</span>
+                <span className={styles.value}>{renderDate()}</span>
               </div>
               <div className={styles.content_wrapper}>
                 <span className={styles.label}>Время доступности</span>
@@ -140,7 +166,6 @@ const Review = () => {
             </YMaps>
           </div>
           <Link className={styles.next}>Опубликовать</Link>
-          <Link className={styles.return}>Вернуться</Link>
         </div>
       </Container>
     </>
