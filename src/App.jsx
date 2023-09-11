@@ -54,6 +54,13 @@ const App = () => {
                   chatId: chatId + "",
                   telegram: user.username,
                   name: user.first_name,
+                  phoneNumber: "",
+                  password: "",
+                  email: "",
+                  isAcceptAgreement: false,
+                  isShowTelegram: false,
+                  isShowPhoneNumber: false,
+                  isShowName: false,
                 },
               ).then(response => state.user = response.data.response)
               .catch(() => showErrorSnackbar({ message: "Не удалось записать юзера" }))
