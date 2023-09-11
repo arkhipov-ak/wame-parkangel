@@ -1,0 +1,40 @@
+name: Main
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  USER_PATH: "/home/www"
+  DOMAIN: "parkangel-front.protomusic.ru"
+  BRANCH: "main"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set environment variable
+        run: |
+          echo "DOMAIN=${{ env.DOMAIN }}" >> $GITHUB_ENV
+          echo "BRANCH=${{ env.BRANCH }}" >> $GITHUB_ENV
+          echo "PROJECT_PATH=${{ env.USER_PATH }}/${{ env.DOMAIN }}" >> $GITHUB_ENV
+
+      - name: Deploy
+        run: |
+          sshpass -p "${PASSWORD}" ssh -o StrictHostKeyChecking=no "${USERNAME}@${HOST}" "bash -s" << EOF
+          BRANCH=${{ env.BRANCH }}
+          PROJECT_PATH=${{ env.PROJECT_PATH }}
+          
+          cd ${PROJECT_PATH}
+          git restore .
+          git pull origin ${BRANCH}
+          yarn install
+          yarn build
+          
+          EOF
+
+        env:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
