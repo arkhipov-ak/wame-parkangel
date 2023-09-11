@@ -43,7 +43,7 @@ const App = () => {
         const chatId = user.id;
         await axios.get(`https://parkangel-backend.protomusic.ru/api/users/chatId/${chatId}`)
           .then(response => {
-            if (response.data.response) state.user = response.data.response
+            if (response.data.response) state.user = response.data.response;
             else {
               axios.post(
                 "https://parkangel-backend.protomusic.ru/api/users",
