@@ -47,8 +47,13 @@ const ResultSearch = () => {
       console.log(preparedData);
       console.log(JSON.stringify(preparedData));
       
-      axios.get("https://parkangel-backend.protomusic.ru/api/ad", {
+      /* axios.get("https://parkangel-backend.protomusic.ru/api/ad", {
         params: { ...preparedData }
+      }).then(response => setData(response.data.response))
+      .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления"})) */
+
+      axios.get("https://parkangel-backend.protomusic.ru/api/ad", {
+        params: { user_id: preparedData.user_id }
       }).then(response => setData(response.data.response))
       .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления"}))
     }
