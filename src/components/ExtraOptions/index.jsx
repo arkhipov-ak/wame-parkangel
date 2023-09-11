@@ -20,6 +20,7 @@ const ExtraOptions = () => {
   const [dayModalOpen, setDayModalOpen] = useState(false);
   const [weekModalOpen, setWeekModalOpen] = useState(false);
   const [monthModalOpen, setMonthModalOpen] = useState(false);
+  const [isRenewable, setIsRenewable] = useState(false);
   const navigate = useNavigate();
   const [data, setData] = useState({
     priceHour: null,
@@ -42,7 +43,6 @@ const ExtraOptions = () => {
     isCustomSize: false,
     address: "",
     region: "",
-    isRenewable: false,
   });
 
   const onHandleChange = (value, key) => {
@@ -73,7 +73,7 @@ const ExtraOptions = () => {
       return;
     }
 
-    state.parkDate = { ...snap.parkDate, isRenewable: data.isRenewable };
+    state.parkDate = { ...snap.parkDate, isRenewable: isRenewable };
 
     const preparedData = {
       ...data,
@@ -93,7 +93,6 @@ const ExtraOptions = () => {
     if (!preparedData.priceWeek) delete preparedData.priceWeek;
     if (!preparedData.priceMonth) delete preparedData.priceMonth;
     delete preparedData.user;
-    delete preparedData.isRenewable;
 
     if (snap.options[0]) {
       axios.put(
@@ -151,7 +150,7 @@ const ExtraOptions = () => {
       height: data.height ? +data.height : null,
       width: data.width ? +data.width : null,
       user_id: snap.user.id,
-    }
+    };
 
     if (!preparedData.height) delete preparedData.height;
     if (!preparedData.width) delete preparedData.width;
@@ -309,7 +308,7 @@ const ExtraOptions = () => {
           </div>
           {snap.isSearchPark === false && (
             <div className={styles.box_container}>
-              <CustomCheckBox checked={data.isRenewable} onClick={e => onHandleChange(e, "isRenewable")}>
+              <CustomCheckBox checked={isRenewable} onClick={() => setIsRenewable(!isRenewable)}>
                 Возобновлять объявление
                 <br />
                 после завершения аренды
