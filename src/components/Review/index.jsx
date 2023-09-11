@@ -1,12 +1,13 @@
 import NavBar from "../NavBar";
 import { YMaps, Map } from "@pbe/react-yandex-maps";
 import styles from "./Review.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSnapshot } from "valtio";
 import { state } from "../../state";
 import Container from "../common/Container";
 import { showErrorSnackbar } from "../../utils/showSnackBar";
 import { useEffect } from "react";
+import Button from "../common/Button";
 
 const Review = () => {
   const snap = useSnapshot(state);
@@ -77,6 +78,10 @@ const Review = () => {
     return `${dayStart}.${monthStart}.${yearStart} - ${dayEnd}.${monthEnd}.${yearEnd}`;
   };
 
+  const onHandleClick = () => {
+
+  };
+
   useEffect(() => {
     if (!snap.parkDate) {
       showErrorSnackbar({ message: "Не удалось получить данные", tryAgain: true });
@@ -88,7 +93,6 @@ const Review = () => {
     <>
       <NavBar />
       <Container>
-        <div>
           <h2 className={styles.title}>Предпросмотр</h2>
           <div className={styles.wrapper_div}>
             <p className={styles.address}>{snap.parkDate.address}</p>
@@ -176,8 +180,7 @@ const Review = () => {
               ></Map>
             </YMaps>
           </div>
-          <Link className={styles.next}>Опубликовать</Link>
-        </div>
+          <Button onClick={onHandleClick}>Опубликовать</Button>
       </Container>
     </>
   );
