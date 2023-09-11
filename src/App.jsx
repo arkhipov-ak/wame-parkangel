@@ -79,8 +79,6 @@ const App = () => {
     }
   }, [snap.user]);
 
-  console.log('test');
-
   return (
     <SnackbarProvider
       anchorOrigin={{
