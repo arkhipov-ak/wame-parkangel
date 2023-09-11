@@ -38,18 +38,23 @@ const Review = () => {
   const renderTime = () => {
     const dateStart = new Date(snap.parkDate.dateStartISO);
     const hoursStart = dateStart.getHours();
-    const minutesStart = dateStart.getMinutes();
+    const minutesStart = (dateStart.getMinutes() + "").length === 1
+      ? `0${dateStart.getMinutes()}`
+      : dateStart.getMinutes()
+    ;
 
     const dateEnd = new Date(snap.parkDate.dateEndISO);
     const hoursEnd = dateEnd.getHours();
-    const minutesEnd = dateEnd.getMinutes();
+    const minutesEnd = (dateEnd.getMinutes() + "").length === 1
+      ? `0${dateEnd.getMinutes()}`
+      : dateEnd.getMinutes()
+    ;
 
-    return `${hoursStart}:${minutesStart}-${hoursEnd}:${minutesEnd}`;
+    return `${hoursStart}:${minutesStart} - ${hoursEnd}:${minutesEnd}`;
   };
 
   const renderDate = () => {
     const dateStart = new Date(snap.parkDate.dateStartISO);
-    console.log(dateStart);
     const dayStart = dateStart.getDate();
     const monthStart = (dateStart.getMonth() + 1 + "").length === 1 
       ? `0${dateStart.getMonth() + 1}`
@@ -136,18 +141,24 @@ const Review = () => {
                   {snap.parkDate.data.priceMonth ? `${snap.parkDate.data.priceMonth} руб` : "Не указана"}
                 </span>
               </div>
-              <div className={styles.content_wrapper}>
-                <span className={styles.label}>Имя</span>
-                <span className={styles.value}>{"Имя"}</span>
-              </div>
-              <div className={styles.content_wrapper}>
-                <span className={styles.label}>Номер телефона</span>
-                <span className={styles.value}>{"Телефон"}</span>
-              </div>
-              <div className={styles.content_wrapper}>
-                <span className={styles.label}>Telegram</span>
-                <span className={styles.value}>{"Телега"}</span>
-              </div>
+              {snap.user.isShowName && (
+                <div className={styles.content_wrapper}>
+                  <span className={styles.label}>Имя</span>
+                  <span className={styles.value}>{snap.user.name}</span>
+                </div>
+              )}
+              {snap.user.isShowPhoneNumber && (
+                <div className={styles.content_wrapper}>
+                  <span className={styles.label}>Номер телефона</span>
+                  <span className={styles.value}>{snap.user.phoneNumber}</span>
+                </div>
+              )}
+              {snap.user.isShowTelegram && (
+                <div className={styles.content_wrapper}>
+                  <span className={styles.label}>Telegram</span>
+                  <span className={styles.value}>{snap.user.telegram}</span>
+                </div>
+              )}
             </div>
             <YMaps apiKey={API_KEY}>
               <Map

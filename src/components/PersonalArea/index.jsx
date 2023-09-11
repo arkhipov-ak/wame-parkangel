@@ -29,7 +29,16 @@ const PersonalArea = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(data);
+
+    if (data.isShowName && !data.name.trim().length) {
+      showErrorSnackbar({ message: "Если поставили галочку, то заполните имя" });
+      return;
+    }
+
+    if (data.isShowPhoneNumber && !data.phoneNumber.trim().length) {
+      showErrorSnackbar({ message: "Если поставили галочку, то заполните телефон" });
+      return;
+    }
 
     axios.put("http://185.238.2.176:5064/api/users", data)
       .then(() => showSuccessSnackbar({ message: "Данные профиля обновлены" }))

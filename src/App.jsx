@@ -34,6 +34,7 @@ const App = () => {
   const snap = useSnapshot(state);
 
   useEffect(() => {
+    console.log('in use effect');
     window.Telegram.WebApp.ready();
     const tg = window?.Telegram?.WebApp;
     tg.expand()
@@ -45,6 +46,7 @@ const App = () => {
         /* console.log('userId', userId); */
         await axios.get(`http://185.238.2.176:5064/api/users/chatId/${5465844067777}`)
           .then(response => {
+            console.log(response);
             if (response.data.response) state.user = response.data.response
             else {
               axios.post(
@@ -120,7 +122,7 @@ const App = () => {
             />
             <Route path="/search-tomorrow" element={<SearchTomorrowPage/>}/>
             <Route path="/SelectInMap" element={<SelectInMapPage/>}/>
-            <Route path="/Review" element={<ReviewPage/>}/>
+            <Route path="/review" element={<ReviewPage/>}/>
             <Route path="/YourAdd" element={<YourAddPage/>}/>
             <Route path="/Extra" element={<ExtraPage/>}/>
             <Route path="/Add" element={<AddPage/>}/>
