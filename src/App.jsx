@@ -59,7 +59,7 @@ const App = () => {
             }
           })
           .catch(() => {showErrorSnackbar({ message: "Что-то пошло не так" })})
-      /* } */
+      }
     }
    
     getUser();
