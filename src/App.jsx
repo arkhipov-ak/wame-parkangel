@@ -57,6 +57,7 @@ const App = () => {
                   phoneNumber: "",
                   password: "",
                   email: "",
+                  city: "",
                   isAcceptAgreement: false,
                   isShowTelegram: false,
                   isShowPhoneNumber: false,
