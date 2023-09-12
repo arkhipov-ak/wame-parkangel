@@ -20,7 +20,6 @@ const ResultSearchElement = () => {
   const [openModal, setOpenModal] = useState(false);
   const [rating, setRating] = useState(2.5);
 	const [comment, setComment] = useState("");
-  console.log(snap);
 
   const renderParkingType = () => {
     let array = [];
@@ -163,24 +162,22 @@ const ResultSearchElement = () => {
                   {snap.resultElement.park.priceMonth ? `${snap.resultElement.park.priceMonth} руб` : "Не указана"}
                 </span>
               </div>
-              {snap.user.isShowName && (
+              {snap.resultElement.user.isShowName && (
                 <div className={styles.content_wrapper}>
                   <span className={styles.label}>Имя</span>
                   <span className={styles.value}>{snap.user.name}</span>
                 </div>
               )}
-              {snap.user.isShowPhoneNumber && (
+              {snap.resultElement.user.isShowPhoneNumber && (
                 <div className={styles.content_wrapper}>
                   <span className={styles.label}>Номер телефона</span>
                   <span className={styles.value}>{snap.user.phoneNumber}</span>
                 </div>
               )}
-              {snap.user.isShowTelegram && (
-                <div className={styles.content_wrapper}>
-                  <span className={styles.label}>Telegram</span>
-                  <span className={styles.value}>{snap.user.telegram}</span>
-                </div>
-              )}
+              <div className={styles.content_wrapper}>
+                <span className={styles.label}>Telegram</span>
+                <span className={styles.value}>{snap.user.telegram}</span>
+              </div>
             </div>
             <YMaps apiKey={API_KEY}>
               <Map
@@ -200,7 +197,9 @@ const ResultSearchElement = () => {
           </div>
           <div className={styles.buttons_wrapper}>
             <LinkButton href={`https://t.me/${snap.resultElement.user.telegram}`}>Написать в Telegram</LinkButton>
-            <LinkButton href={`tel:${snap.resultElement.user.phoneNumber}`}>Позвонить</LinkButton>
+            {snap.resultElement.user.isShowPhoneNumber && (
+              <LinkButton href={`tel:${snap.resultElement.user.phoneNumber}`}>Позвонить</LinkButton>
+            )}
             <button type="button" onClick={() => setOpenModal(true)} className={styles.review_button}>Оставить отзыв</button>
           </div>
         </div>

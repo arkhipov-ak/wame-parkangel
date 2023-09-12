@@ -198,12 +198,10 @@ const Review = () => {
                   <span className={styles.value}>{snap.user.phoneNumber}</span>
                 </div>
               )}
-              {snap.user.isShowTelegram && (
-                <div className={styles.content_wrapper}>
-                  <span className={styles.label}>Telegram</span>
-                  <span className={styles.value}>{snap.user.telegram}</span>
-                </div>
-              )}
+              <div className={styles.content_wrapper}>
+                <span className={styles.label}>Telegram</span>
+                <span className={styles.value}>{snap.user.telegram}</span>
+              </div>
             </div>
             <YMaps apiKey={API_KEY}>
               <Map

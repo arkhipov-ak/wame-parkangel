@@ -19,7 +19,7 @@ const PersonalArea = () => {
     password: "",
     isShowName: false,
     isShowPhoneNumber: false,
-    isShowTelegram: false,
+    isShowTelegram: true,
   });
 
   const onHandleChange = (value, key) => {
@@ -54,8 +54,6 @@ const PersonalArea = () => {
   useEffect(() => {
     if (snap && snap.user) setData(snap.user)
   }, [snap.user]);
-
-  console.log(snap);
 
   return (
     <>
@@ -110,9 +108,6 @@ const PersonalArea = () => {
             </CustomCheckBox>
             <CustomCheckBox checked={data.isShowPhoneNumber} onClick={e => onHandleChange(e, "isShowPhoneNumber")}>
               Телефон
-            </CustomCheckBox>
-            <CustomCheckBox checked={data.isShowTelegram} onClick={e => onHandleChange(e, "isShowTelegram")}>
-              Telegram-никнейм
             </CustomCheckBox>
           <Button type="submit">Сохранить</Button>
         </form>
