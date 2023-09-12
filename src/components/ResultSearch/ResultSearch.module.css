@@ -6,8 +6,10 @@
   font-weight: 500;
 }
 .wrapper_rentCard {
+  width: 100%;
   margin-bottom: 5%;
   border-radius: 15px;
+  border: none;
   height: 100px;
   font-weight: 600;
   background: #ffffff;
@@ -43,6 +45,9 @@
 }
 .rent_location {
   width: 100%;
+  text-align: left;
+  font-family: Montserrat;
+  font-size: 16px;
 }
 .wrapper_zero_data {
   display: flex;

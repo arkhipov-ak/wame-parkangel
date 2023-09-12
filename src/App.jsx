@@ -111,8 +111,8 @@ const App = () => {
               element={<ChooseAnotherTimePage/>}
             />
             <Route path="/personal-area" element={<PersonalAreaPage/>}/>
+            <Route path="/result-search/:id" element={<ResultSearchElementPage/>}/>
             <Route path="/result-search" element={<ResultSearchPage/>}/>
-            <Route path="/result-search/:id" component={<ResultSearchElementPage/>} />
             <Route path="/extra-options" element={<ExtraOptionsPage/>}/>
             <Route path="/options" element={<OptionsPage/>}/>
             <Route path="/show-map-result" element={<ShowMapResultPage/>}/>

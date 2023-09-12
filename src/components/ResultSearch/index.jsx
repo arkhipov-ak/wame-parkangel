@@ -34,6 +34,10 @@ const ResultSearch = () => {
     return `${hoursStart}:${minutesStart} - ${hoursEnd}:${minutesEnd}`;
   };
 
+  const onHandleClick = (park_id) => {
+    navigate(`/result-search/${park_id}`);
+  }
+
   useEffect(() => {
     if (snap && snap.user && snap.options && snap.options[0]) {
       if (!snap.parkDate) {
@@ -66,15 +70,15 @@ const ResultSearch = () => {
       console.log(preparedData);
       console.log(JSON.stringify(preparedData));
       
-      axios.post(
+      /* axios.post(
         "https://parkangel-backend.protomusic.ru/api/ad/park", preparedData
       ).then(response => setData(response.data.response))
-      .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления"}))
+      .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления"})) */
 
-      /* axios.get("https://parkangel-backend.protomusic.ru/api/ad", {
+      axios.get("https://parkangel-backend.protomusic.ru/api/ad", {
         params: { user_id: preparedData.user_id }
       }).then(response => setData(response.data.response))
-      .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления"})) */
+      .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления"}))
     }
   }, [snap.user, snap.options, navigate]);
 
@@ -88,7 +92,12 @@ const ResultSearch = () => {
         {data.length ? (
           <div style={{ width: "100%" }}>
             {data.map((item, index) => (
-              <Link to={`/result-search/${item.park_id}`} key={index} className={styles.wrapper_rentCard}>
+              <button
+                type="button"
+                onClick={() => onHandleClick(item.park_id)}
+                key={index}
+                className={styles.wrapper_rentCard}
+              >
                 <p className={styles.rent_location}>{item.park.address}</p>
                 <div className={styles.secondRow}>
                   <span className={styles.rent_date}>
@@ -97,7 +106,7 @@ const ResultSearch = () => {
                   <span className={styles.rent_time}>{renderTime(item.park)}</span>
                   <span className={styles.rent_status}>{item.park.priceHour} руб/ч</span>
                 </div>
-              </Link>
+              </button>
             ))}
             <Link to="/show-map-result" className={styles.submit}>
               Посмотреть все на карте

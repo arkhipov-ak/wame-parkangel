@@ -12,7 +12,7 @@ const ResultSearchElement = () => {
     <>
       <NavBar />
       <Container>
-        element
+        <h2 className={styles.title}>Выбранная парковка</h2>
       </Container>
     </>
   );
