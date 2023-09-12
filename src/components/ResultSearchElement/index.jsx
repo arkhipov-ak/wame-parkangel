@@ -165,7 +165,6 @@ const ResultSearchElement = () => {
             </div>
             <YMaps apiKey={API_KEY}>
               <Map
-                width="100%"
                 height="30vh"
                 defaultState={{
                   center: [55.7558, 37.6173], // Координаты Москвы
