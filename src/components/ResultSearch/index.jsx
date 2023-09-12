@@ -51,6 +51,7 @@ const ResultSearch = () => {
       } // если ищем парковку на сегодня или на завтра, то нам не нужны поля цен на день, на неделю и на месяц
 
       delete preparedData.user;
+      delete preparedData.user_id;
       delete preparedData.id;
       delete preparedData.createdAt;
       delete preparedData.updatedAt;
@@ -62,12 +63,12 @@ const ResultSearch = () => {
       if (!preparedData.priceWeek) delete preparedData.priceWeek;
       if (!preparedData.priceMonth) delete preparedData.priceMonth;
 
-      /* console.log(preparedData);
-      console.log(JSON.stringify(preparedData)); */
+      console.log(preparedData);
+      console.log(JSON.stringify(preparedData));
       
-      axios.get("https://parkangel-backend.protomusic.ru/api/ad", {
-        params: { ...preparedData }
-      }).then(response => setData(response.data.response))
+      axios.post(
+        "https://parkangel-backend.protomusic.ru/api/ad/park", preparedData
+      ).then(response => setData(response.data.response))
       .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления"}))
 
       /* axios.get("https://parkangel-backend.protomusic.ru/api/ad", {
@@ -75,7 +76,7 @@ const ResultSearch = () => {
       }).then(response => setData(response.data.response))
       .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления"})) */
     }
-  }, [snap.user, snap.options]);
+  }, [snap.user, snap.options, navigate]);
 
   return (
     <>

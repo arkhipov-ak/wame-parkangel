@@ -86,7 +86,7 @@ const Review = () => {
       availabilityDateEnd: snap.parkDate.dateEndISO,
       availabilityDateStart: snap.parkDate.dateStartISO,
       user_id: snap.user.id,
-      park_id: snap.options[0].id,
+      park_id: snap.parkDate.park_id,
     };
 
     delete preparedData.id;
@@ -129,8 +129,6 @@ const Review = () => {
         })
     }
   }, [snap.user]);
-
-  console.log(snap);
 
   return (
     <>

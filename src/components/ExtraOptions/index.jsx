@@ -121,7 +121,10 @@ const ExtraOptions = () => {
     axios.post(
       "https://parkangel-backend.protomusic.ru/api/park", preparedParkData
     ).then(response => {
-      if (response) navigate("/review");
+      if (response) {
+        state.parkDate = { ...snap.parkDate, isRenewable: isRenewable, park_id: response.data.response.id };
+        navigate("/review");
+      }
     })
     .catch(showErrorSnackbar({ message: "Не удалось создать парковку" }))
   };
@@ -203,8 +206,6 @@ const ExtraOptions = () => {
       }
     }
   }, [snap.user, snap.isSearchPark]);
-
-  console.log('data', data);
 
   return (
 		<>
