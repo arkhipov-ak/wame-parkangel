@@ -78,29 +78,31 @@ const ResultSearch = () => {
     }
   }, [snap.user, snap.options, navigate]);
 
+  /* console.log(data); */
+
   return (
     <>
       <NavBar />
       <Container>
         <h2 className={styles.main_text}>Результаты поиска</h2>
         {data.length ? (
-          <>
+          <div style={{ width: "100%" }}>
             {data.map((item, index) => (
-              <div key={index} className={styles.wrapper_rentCard}>
+              <Link to={`/result-search/${item.park_id}`} key={index} className={styles.wrapper_rentCard}>
                 <p className={styles.rent_location}>{item.park.address}</p>
                 <div className={styles.secondRow}>
-                  {/* <span className={styles.rent_date}>
+                  <span className={styles.rent_date}>
                     <img src={Location} /> 37 м
-                  </span> */}
+                  </span>
                   <span className={styles.rent_time}>{renderTime(item.park)}</span>
                   <span className={styles.rent_status}>{item.park.priceHour} руб/ч</span>
                 </div>
-              </div>
+              </Link>
             ))}
             <Link to="/show-map-result" className={styles.submit}>
               Посмотреть все на карте
             </Link>
-          </>
+          </div>
         ) : (
             <ZeroData>Подходящие объявления не найдены</ZeroData>
         )}

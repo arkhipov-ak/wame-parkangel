@@ -10,6 +10,7 @@ import ChooseTimeTomorrowPage from "./pages/ChooseTimeTomorrowPage";
 import ChooseAnotherTimePage from "./pages/ChooseAnotherTimePage";
 import PersonalAreaPage from "./pages/PersonalAreaPage";
 import ResultSearchPage from "./pages/ResultSearchPage";
+import ResultSearchElementPage from "./pages/ResultSearchElementPage";
 import ExtraOptionsPage from "./pages/ExtraOptionsPage";
 import OptionsPage from "./pages/OptionsPage";
 import ShowMapResultPage from "./pages/ShowMapResultPage";
@@ -41,16 +42,16 @@ const App = () => {
       const user = tg.initDataUnsafe.user;
       if (user) {
         const chatId = user.id;
-        await axios.get(`https://parkangel-backend.protomusic.ru/api/users/chatId/${chatId}`)
+        await axios.get(`https://parkangel-backend.protomusic.ru/api/users/chatId/${222}`)
           .then(response => {
             if (response.data.response) state.user = response.data.response;
             else {
               axios.post(
                 "https://parkangel-backend.protomusic.ru/api/users",
                 {
-                  chatId: chatId + "",
-                  telegram: user.username,
-                  name: user.first_name,
+                  chatId: "222",
+                  telegram: "user.username",
+                  name: "user.first_name",
                   phoneNumber: "",
                   password: "",
                   email: "",
@@ -111,6 +112,7 @@ const App = () => {
             />
             <Route path="/personal-area" element={<PersonalAreaPage/>}/>
             <Route path="/result-search" element={<ResultSearchPage/>}/>
+            <Route path="/result-search/:id" component={<ResultSearchElementPage/>} />
             <Route path="/extra-options" element={<ExtraOptionsPage/>}/>
             <Route path="/options" element={<OptionsPage/>}/>
             <Route path="/show-map-result" element={<ShowMapResultPage/>}/>
