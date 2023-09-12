@@ -42,16 +42,16 @@ const App = () => {
       const user = tg.initDataUnsafe.user;
       if (user) {
         const chatId = user.id;
-        await axios.get(`https://parkangel-backend.protomusic.ru/api/users/chatId/${222}`)
+        await axios.get(`https://parkangel-backend.protomusic.ru/api/users/chatId/${chatId}`)
           .then(response => {
             if (response.data.response) state.user = response.data.response;
             else {
               axios.post(
                 "https://parkangel-backend.protomusic.ru/api/users",
                 {
-                  chatId: "222",
-                  telegram: "user.username",
-                  name: "user.first_name",
+                  chatId: chatId + "",
+                  telegram: user.username,
+                  name: user.first_name,
                   phoneNumber: "",
                   password: "",
                   email: "",
