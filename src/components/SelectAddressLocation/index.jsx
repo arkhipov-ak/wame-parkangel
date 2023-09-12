@@ -22,6 +22,11 @@ const SelectAddressLocation = () => {
       return;
     }
 
+    if (!activeRegion) {
+      showErrorSnackbar({ message: "Не указан регион", tryAgain: true });
+      return;
+    }
+
     state.options[0] = {
       ...snap.options[0],
       address: address,
