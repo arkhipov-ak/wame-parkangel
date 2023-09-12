@@ -71,15 +71,15 @@ const ResultSearch = () => {
       console.log(preparedData);
       console.log(JSON.stringify(preparedData));
       
-      /* axios.post(
+      axios.post(
         "https://parkangel-backend.protomusic.ru/api/ad/park", preparedData
       ).then(response => setData(response.data.response))
-      .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления"})) */
+      .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления"}))
 
-      axios.get("https://parkangel-backend.protomusic.ru/api/ad", {
+     /*  axios.get("https://parkangel-backend.protomusic.ru/api/ad", {
         params: { user_id: preparedData.user_id }
       }).then(response => setData(response.data.response))
-      .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления"}))
+      .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления"})) */
     }
   }, [snap.user, snap.options, navigate]);
 
