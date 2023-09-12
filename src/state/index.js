@@ -5,6 +5,7 @@ export const initialState = proxy({
 	parkDate: null,
 	options: null,
 	isSearchPark: null,
+	resultElement: null,
 });
 
 export const state = proxy(initialState);

@@ -34,8 +34,9 @@ const ResultSearch = () => {
     return `${hoursStart}:${minutesStart} - ${hoursEnd}:${minutesEnd}`;
   };
 
-  const onHandleClick = (park_id) => {
-    navigate(`/result-search/${park_id}`);
+  const onHandleClick = (item) => {
+    state.resultElement = { ...item };
+    navigate(`/result-search/${item.park_id}`);
   }
 
   useEffect(() => {
@@ -94,7 +95,7 @@ const ResultSearch = () => {
             {data.map((item, index) => (
               <button
                 type="button"
-                onClick={() => onHandleClick(item.park_id)}
+                onClick={() => onHandleClick(item)}
                 key={index}
                 className={styles.wrapper_rentCard}
               >
