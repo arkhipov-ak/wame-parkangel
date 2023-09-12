@@ -36,7 +36,7 @@ const ResultSearch = () => {
 
   const onHandleClick = (item) => {
     state.resultElement = { ...item };
-    navigate(`/result-search/${item.park_id}`);
+    navigate(`/result-search/${item.id}`);
   }
 
   useEffect(() => {

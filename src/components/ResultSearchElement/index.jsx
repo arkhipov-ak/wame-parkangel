@@ -5,7 +5,7 @@ import { state } from "../../state";
 import Container from "../common/Container";
 import { Map, YMaps } from "@pbe/react-yandex-maps";
 import { useEffect, useState } from "react";
-import { showErrorSnackbar } from "../../utils/showSnackBar";
+import { showErrorSnackbar, showSuccessSnackbar } from "../../utils/showSnackBar";
 import { useNavigate } from "react-router-dom";
 import LinkButton from "../common/LinkButton";
 import axios from "axios";
@@ -87,14 +87,19 @@ const ResultSearchElement = () => {
   };
 
   const handleOkBtn = () => {
-		axios
-			.post("/api/review", { rating, message: comment, ad_id, user_id })
-			.then((response) => setOpenModal(false))
-			.catch(() => showErrorSnackbar({ message: "Не удалось записать отзыв" }))
+		axios.post(
+      "https://parkangel-backend.protomusic.ru/api/review",
+      { rating, message: comment, ad_id: snap.resultElement.id, user_id: snap.user.id }
+    ).then((response) => {
+      if (response) {
+        showSuccessSnackbar({ message: "Отзыв оставлен успешно" });
+        setOpenModal(false);
+      }
+    })
+    .catch(() => showErrorSnackbar({ message: "Не удалось записать отзыв" }))
 	}
 
   useEffect(() => {
-    console.log('in use effect');
     if (!snap.resultElement) {
       showErrorSnackbar({ message: "Пожалуйста, повторите попытку" });
       navigate("/search-time");
@@ -214,7 +219,7 @@ const ResultSearchElement = () => {
               type="text"
               value={comment}
               onChange={e => setComment(e.target.value)}
-              rows={10}
+              rows={5}
             />
             <Button onClick={handleOkBtn} className={styles.submit}>Отправить</Button>
 					</Modal>

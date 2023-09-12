@@ -19,7 +19,6 @@ import SearchAnotherTimePage from "./pages/SearchAnotherTimePage";
 import SearchTomorrowPage from "./pages/SearchTomorrowPage";
 import SelectInMapPage from "./pages/SelectInMapPage";
 import ReviewPage from "./pages/ReviewPage";
-import YourAddPage from "./pages/YourAddPage";
 import ExtraPage from "./pages/ExtraPage";
 import AddPage from "./pages/AddPage";
 import ScrollToTop from "./components/ScrollToTop";
@@ -124,7 +123,6 @@ const App = () => {
             <Route path="/search-tomorrow" element={<SearchTomorrowPage/>}/>
             <Route path="/SelectInMap" element={<SelectInMapPage/>}/>
             <Route path="/review" element={<ReviewPage/>}/>
-            <Route path="/YourAdd" element={<YourAddPage/>}/>
             <Route path="/Extra" element={<ExtraPage/>}/>
             <Route path="/Add" element={<AddPage/>}/>
             <Route path="/map" element={<ChooseMap/>}/>
