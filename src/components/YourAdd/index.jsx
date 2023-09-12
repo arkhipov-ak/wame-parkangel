@@ -7,12 +7,12 @@ import axios from "axios"
 import styles from "./YourAdd.module.css"
 import { Link } from "react-router-dom"
 
-const YourAdd = ({ ad_id, user_id }) => {
-	const API_KEY = "cfb7ca98-9e16-49b6-9147-4daad6d34284"
+const YourAdd = () => {
+	const API_KEY = "cfb7ca98-9e16-49b6-9147-4daad6d34284";
 
-	const [isModalOpen, setIsModalOpen] = useState(false)
-	const [rating, setRating] = useState(2.5)
-	const [comment, setComment] = useState("")
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [rating, setRating] = useState(2.5);
+	const [comment, setComment] = useState("");
 	const showModal = () => {
 		setIsModalOpen(true)
 	}
@@ -22,11 +22,11 @@ const YourAdd = ({ ad_id, user_id }) => {
 	const handleCancel = () => {
 		setIsModalOpen(false)
 	}
-	const handleOkbtn = () => {
+	const handleOkBtn = () => {
 		axios
 			.post("/api/review", { rating, message: comment, ad_id, user_id })
 			.then(response => {
-				setModalOpen(false)
+				setIsModalOpen(false)
 			})
 			.catch(error => {
 				console.error("Error submitting review:", error)

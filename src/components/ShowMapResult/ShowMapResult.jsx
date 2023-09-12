@@ -10,7 +10,7 @@ const ShowMapResult = () => {
   const navigate = useNavigate();
 
   const handleRedirect = () => {
-    navigate("/youradd")
+    navigate("/your-add")
   }
 
   return (

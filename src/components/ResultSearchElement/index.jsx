@@ -4,15 +4,22 @@ import { useSnapshot } from "valtio";
 import { state } from "../../state";
 import Container from "../common/Container";
 import { Map, YMaps } from "@pbe/react-yandex-maps";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { showErrorSnackbar } from "../../utils/showSnackBar";
 import { useNavigate } from "react-router-dom";
 import LinkButton from "../common/LinkButton";
+import axios from "axios";
+import Modal from "../common/Modal";
+import { Rate } from "antd";
+import Button from "../common/Button";
 
 const ResultSearchElement = () => {
   const snap = useSnapshot(state);
   const API_KEY = "cfb7ca98-9e16-49b6-9147-4daad6d34284";
   const navigate = useNavigate();
+  const [openModal, setOpenModal] = useState(false);
+  const [rating, setRating] = useState(2.5);
+	const [comment, setComment] = useState("");
   console.log(snap);
 
   const renderParkingType = () => {
@@ -78,6 +85,13 @@ const ResultSearchElement = () => {
 
     return `${dayStart}.${monthStart}.${yearStart} - ${dayEnd}.${monthEnd}.${yearEnd}`;
   };
+
+  const handleOkBtn = () => {
+		axios
+			.post("/api/review", { rating, message: comment, ad_id, user_id })
+			.then((response) => setOpenModal(false))
+			.catch(() => showErrorSnackbar({ message: "Не удалось записать отзыв" }))
+	}
 
   useEffect(() => {
     console.log('in use effect');
@@ -165,6 +179,7 @@ const ResultSearchElement = () => {
             </div>
             <YMaps apiKey={API_KEY}>
               <Map
+                width="100%"
                 height="30vh"
                 defaultState={{
                   center: [55.7558, 37.6173], // Координаты Москвы
@@ -181,9 +196,29 @@ const ResultSearchElement = () => {
           <div className={styles.buttons_wrapper}>
             <LinkButton href={`https://t.me/${snap.resultElement.user.telegram}`}>Написать в Telegram</LinkButton>
             <LinkButton href={`tel:${snap.resultElement.user.phoneNumber}`}>Позвонить</LinkButton>
-            <button type="button" onClick={() => {}} className={styles.review_button}>Оставить отзыв</button>
+            <button type="button" onClick={() => setOpenModal(true)} className={styles.review_button}>Оставить отзыв</button>
           </div>
         </div>
+        {openModal && (
+          <Modal openModal={openModal} setOpenModal={setOpenModal} title="Как все прошло?">
+            <Rate
+              allowHalf
+              value={rating}
+              onChange={value => setRating(value)}
+              style={{ fontSize: "36px" }}
+            />
+            <p className={styles.description}>Ваш отзыв</p>
+            <textarea
+              className={styles.textarea_style}
+              placeholder="Опишите ваш опыт"
+              type="text"
+              value={comment}
+              onChange={e => setComment(e.target.value)}
+              rows={10}
+            />
+            <Button onClick={handleOkBtn} className={styles.submit}>Отправить</Button>
+					</Modal>
+        )}
       </Container>
     </>
   );

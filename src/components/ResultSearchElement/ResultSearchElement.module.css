@@ -65,3 +65,21 @@
   cursor: pointer;
   text-decoration-line: none;
 }
+.description {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0; 
+}
+.textarea_style {
+  border-radius: 15px;
+  padding: 10px;
+  background: rgba(241, 243, 249, 0.5);
+  font-size: 14px;
+}
+.textarea_style::placeholder {
+  color: #192342;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.5;
+}

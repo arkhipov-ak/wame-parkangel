@@ -108,18 +108,11 @@
   width: 55%;
   font-size: 120%;
 }
-.input_style {
-  display: inline-flex;
-  height: 3.5rem;
-  width: 65%;
-  padding: 0.0625rem 5.125rem 6.875rem 1.4375rem;
-  align-items: center;
-  flex-shrink: 0;
-  border-radius: 0.9375rem;
+.textarea_style {
+  border-radius:15px;
   background: rgba(241, 243, 249, 0.5);
-  border: none;
 }
-.input_style::placeholder {
+.textarea_style::placeholder {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
