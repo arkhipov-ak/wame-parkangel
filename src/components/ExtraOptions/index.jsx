@@ -100,14 +100,14 @@ const ExtraOptions = () => {
       ).then(response => {
         if (response) showSuccessSnackbar({ message: "Параметры сохранены" });
       })
-      .catch(showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
+      .catch(() => showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
     } else {
       axios.post(
         "https://parkangel-backend.protomusic.ru/api/options", preparedData
       ).then(response => {
         if (response) showSuccessSnackbar({ message: "Параметры сохранены" });
       })
-      .catch(showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
+      .catch(() => showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
     }
 
     const preparedParkData = {
@@ -126,7 +126,7 @@ const ExtraOptions = () => {
         navigate("/review");
       }
     })
-    .catch(showErrorSnackbar({ message: "Не удалось создать парковку" }))
+    .catch(() => showErrorSnackbar({ message: "Не удалось создать парковку" }))
   };
 
   const onHandleSaveOptions = (e) => {
