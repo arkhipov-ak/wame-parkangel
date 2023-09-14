@@ -12,10 +12,10 @@ import axios from "axios";
 import Modal from "../common/Modal";
 import { Rate } from "antd";
 import Button from "../common/Button";
+import { API_KEY, mainChatID, telegramToken } from "../../utils/constants";
 
 const ResultSearchElement = () => {
   const snap = useSnapshot(state);
-  const API_KEY = "cfb7ca98-9e16-49b6-9147-4daad6d34284";
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
   const [rating, setRating] = useState(2.5);
@@ -91,6 +91,9 @@ const ResultSearchElement = () => {
       { rating, message: comment, ad_id: snap.resultElement.id, user_id: snap.user.id }
     ).then((response) => {
       if (response) {
+        axios.get(`
+          https://api.telegram.org/bot${telegramToken}/sendMessage?chat_id=${mainChatID}&text=${comment}`
+        )
         showSuccessSnackbar({ message: "Отзыв оставлен успешно" });
         setOpenModal(false);
       }

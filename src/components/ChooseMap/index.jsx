@@ -5,10 +5,9 @@ import NavBar from "../NavBar";
 import styles from "./ChooseMap.module.css"
 import navigation from "../../assets/navigation.svg";
 import axios from "axios";
+import { API_KEY } from "../../utils/constants";
 
 const ChooseMap = () => {
-  const API_KEY = "cfb7ca98-9e16-49b6-9147-4daad6d34284";
-
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState("");
 

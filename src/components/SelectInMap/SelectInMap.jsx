@@ -1,9 +1,8 @@
-import React from "react";
 import { YMaps, Map } from "@pbe/react-yandex-maps";
 import NavBar from "../NavBar";
+import { API_KEY } from "../../utils/constants";
 
 const SelectInMap = () => {
-  const API_KEY = "cfb7ca98-9e16-49b6-9147-4daad6d34284";
   return (
     <div>
       <NavBar/>

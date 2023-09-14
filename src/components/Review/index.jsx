@@ -9,10 +9,10 @@ import { showErrorSnackbar, showSuccessSnackbar } from "../../utils/showSnackBar
 import { useEffect } from "react";
 import Button from "../common/Button";
 import axios from "axios";
+import { API_KEY } from "../../utils/constants";
 
 const Review = () => {
   const snap = useSnapshot(state);
-  const API_KEY = "cfb7ca98-9e16-49b6-9147-4daad6d34284";
   const navigate = useNavigate();
 
   const renderParkingType = () => {
@@ -102,7 +102,7 @@ const Review = () => {
     /* console.log('preparedData', preparedData); */
 
     axios.post("https://parkangel-backend.protomusic.ru/api/ad", preparedData)
-      .then(response => {
+      .then((response) => {
         if (response) {
           showSuccessSnackbar({ message: "Объявление опубликовано" });
           navigate("/search-time");
@@ -121,7 +121,7 @@ const Review = () => {
 
   useEffect(() => {
     axios.get(`https://parkangel-backend.protomusic.ru/api/options/userId/${snap.user.id}`)
-      .then(response => state.options = response.data.response)
+      .then((response) => state.options = response.data.response)
       .catch(() => {
         showErrorSnackbar({ message: "Не удалось загрузить опции", tryAgain: true });
         navigate("/search-time");
