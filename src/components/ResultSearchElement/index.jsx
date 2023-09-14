@@ -92,7 +92,7 @@ const ResultSearchElement = () => {
     ).then((response) => {
       if (response) {
         axios.get(`
-          https://api.telegram.org/bot${telegramToken}/sendMessage?chat_id=${mainChatID}&text=${comment}`
+          https://api.telegram.org/bot${telegramToken}/sendMessage?chat_id=${mainChatID}&text=${comment}&rating=${rating}`
         )
         showSuccessSnackbar({ message: "Отзыв оставлен успешно" });
         setOpenModal(false);
