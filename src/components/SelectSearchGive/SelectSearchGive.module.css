@@ -21,6 +21,7 @@
   border: none;
   transition: all .1s ease-in-out;
   padding: 0;
+  cursor: pointer;
 }
 .not_active_btn {
   background-color: transparent;
@@ -33,4 +34,5 @@
   font-size: 17px;
   border: none;
   padding: 0;
+  cursor: pointer;
 }

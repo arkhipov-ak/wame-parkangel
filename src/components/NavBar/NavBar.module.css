@@ -23,6 +23,7 @@
   flex-shrink: 0;
   border: none;
   border-radius: 50%;
+  cursor: pointer;
 }
 .option__btn {
   width: 3rem;
@@ -30,11 +31,11 @@
   flex-shrink: 0;
   border: none;
   border-radius: 50%;
+  cursor: pointer;
 }
 .container {
   position: relative;
 }
-
 .overlay {
   position: fixed;
   top: 0;
@@ -63,7 +64,6 @@
 .sideMenu.open {
   transform: translateX(0);
 }
-
 .wrapper_text {
   display: flex;
   flex-direction: column;

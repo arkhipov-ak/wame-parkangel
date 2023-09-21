@@ -14,7 +14,7 @@ import { useEffect } from "react";
 const ChooseTimeToday = ({ day }) => {
   const snap = useSnapshot(state);
   const [openTimeModal, setOpenTimeModal] = useState(false);
-  const [activeRegion, setActiveRegion] = useState(null);
+  const [activeRegion, setActiveRegion] = useState("moscow");
   const [selectedHour, setSelectedHour] = useState("00");
   const [selectedMinute, setSelectedMinute] = useState("00");
   const [hoursCount, setHoursCount] = useState(1);
@@ -109,19 +109,16 @@ const ChooseTimeToday = ({ day }) => {
         <span className={styles.label}>На сколько времени</span>
         <HoursCounterBlock hoursCount={hoursCount} setHoursCount={setHoursCount}/>
         <div className={styles.block_wrapper}>
+          
           <span className={styles.label}>Ваш регион</span>
-          <button
-            className={`${styles.btn_style} ${activeRegion === "moscow" ? styles.active : ""}`}
-            onClick={() => setActiveRegion("moscow")}
+          <select
+            value={activeRegion}
+            onChange={(e) => setActiveRegion(e.target.value)}
+            className={styles.region_select}
           >
-            Москва и область
-          </button>
-          <button
-            className={`${styles.btn_style} ${activeRegion === "spb" ? styles.active : ""}`}
-            onClick={() => setActiveRegion("spb")}
-          >
-            СПб и область
-          </button>
+            <option value="moscow">Москва и область</option>
+            <option value="spb">СПб и область</option>
+          </select>
           <span className={styles.label}>Адрес</span>
           <input
             value={address}
