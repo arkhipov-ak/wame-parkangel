@@ -27,6 +27,8 @@ const Agreement = () => {
       }).catch(() => showErrorSnackbar({ message: "Не удалось записать согласие" }))
   };
 
+  console.log(snap);
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -70,9 +72,12 @@ const Agreement = () => {
           </p>
         </div>
         {snap.user.isAcceptAgreement ? (
-          <Button onClick={() => navigate(-1)}>
-            Вернуться
-          </Button>
+          <>
+            <Button onClick={() => navigate(-1)}>
+              Вернуться
+            </Button>
+            <span style={{ marginTop: "20px" }}>Дата принятия соглашения: {snap.user.dateAcceptAgreement}</span>
+          </>
         ) : (
           <Button onClick={handleAgreementClick}>
             Я согласен
