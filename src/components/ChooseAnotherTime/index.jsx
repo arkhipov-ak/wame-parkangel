@@ -10,12 +10,13 @@ import ModalTime from "../common/ModalTime";
 import { showErrorSnackbar } from "../../utils/showSnackBar";
 import { useRef } from "react";
 import { useEffect } from "react";
+import RegionSelect from "../common/RegionSelect";
 
 const ChooseAnotherTime = () => {
 	const snap = useSnapshot(state);
   const [openStartTimeModal, setOpenStartTimeModal] = useState(false);
   const [openEndTimeModal, setOpenEndTimeModal] = useState(false);
-	const [activeRegion, setActiveRegion] = useState(null);
+	const [activeRegion, setActiveRegion] = useState("moscow");
 	const [address, setAddress] = useState("");
   const [selectedDateStart, setSelectedDateStart] = useState("");
   const [selectedDateEnd, setSelectedDateEnd] = useState("");
@@ -122,18 +123,7 @@ const ChooseAnotherTime = () => {
           </div>
           <div className={styles.block_wrapper}>
             <span className={styles.data_time_text}>Ваш регион</span>
-            <button
-              className={`${styles.btn_style} ${activeRegion === "moscow" ? styles.active : ""}`}
-              onClick={() => setActiveRegion("moscow")}
-            >
-              Москва и область
-            </button>
-            <button
-              className={`${styles.btn_style} ${activeRegion === "spb" ? styles.active : ""}`}
-              onClick={() => setActiveRegion("spb")}
-            >
-              СПб и область
-            </button>
+            <RegionSelect activeRegion={activeRegion} setActiveRegion={setActiveRegion}/>
             <span className={styles.data_time_text}>Адрес</span>
             <input
               value={address}
@@ -142,7 +132,12 @@ const ChooseAnotherTime = () => {
               placeholder="Введите адрес"
               type="text"
             />
-            <button className={styles.btn_style} onClick={() => onHandleRedirect("/map")}>
+            <button
+              type="button"
+              className={styles.btn_style}
+              onClick={() => onHandleRedirect("/map")}
+              style={{ marginBottom: "15%" }}
+            >
               Указать на карте
             </button>
           </div>

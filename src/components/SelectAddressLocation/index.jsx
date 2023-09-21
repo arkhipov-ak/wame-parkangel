@@ -7,10 +7,11 @@ import { state } from "../../state";
 import Container from "../common/Container";
 import Button from "../common/Button";
 import { showErrorSnackbar } from "../../utils/showSnackBar";
+import RegionSelect from "../common/RegionSelect";
 
 const SelectAddressLocation = () => {
   const snap = useSnapshot(state);
-  const [activeRegion, setActiveRegion] = useState(null);
+  const [activeRegion, setActiveRegion] = useState("moscow");
   const [address, setAddress] = useState("");
   const [activeNearMeButton, setActiveNearMeButton] = useState(false);
   const navigate = useNavigate();
@@ -47,18 +48,7 @@ const SelectAddressLocation = () => {
       <NavBar/>
       <Container>
         <span className={styles.label}>Ваш регион</span>
-        <button
-          className={`${styles.btn_style} ${activeRegion === "moscow" ? styles.active : ""}`}
-          onClick={() => setActiveRegion("moscow")}
-        >
-          Москва и область
-        </button>
-        <button
-          className={`${styles.btn_style} ${activeRegion === "spb" ? styles.active : ""}`}
-          onClick={() => setActiveRegion("spb")}
-        >
-          СПб и область
-        </button>
+        <RegionSelect activeRegion={activeRegion} setActiveRegion={setActiveRegion}/>
         <span className={styles.label}>Адрес</span>
         <input
           value={address}
@@ -67,11 +57,13 @@ const SelectAddressLocation = () => {
           placeholder="Введите адрес"
           type="text"
         />
-        <button className={styles.btn_style} onClick={handleRedirectToMap}>
+        <button type="button" className={styles.btn_style} onClick={handleRedirectToMap}>
           Указать на карте
         </button>
         <button
+          type="button"
           className={`${styles.btn_style} ${activeNearMeButton ? styles.active : ""}`}
+          style={{ marginBottom: "15%" }}
           onClick={() => setActiveNearMeButton(true)}
         >
           Найти рядом со мной

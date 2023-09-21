@@ -10,6 +10,7 @@ import ModalTime from "../common/ModalTime";
 import Button from "../common/Button";
 import { showErrorSnackbar } from "../../utils/showSnackBar";
 import { useEffect } from "react";
+import RegionSelect from "../common/RegionSelect";
 
 const ChooseTimeToday = ({ day }) => {
   const snap = useSnapshot(state);
@@ -109,16 +110,8 @@ const ChooseTimeToday = ({ day }) => {
         <span className={styles.label}>На сколько времени</span>
         <HoursCounterBlock hoursCount={hoursCount} setHoursCount={setHoursCount}/>
         <div className={styles.block_wrapper}>
-          
           <span className={styles.label}>Ваш регион</span>
-          <select
-            value={activeRegion}
-            onChange={(e) => setActiveRegion(e.target.value)}
-            className={styles.region_select}
-          >
-            <option value="moscow">Москва и область</option>
-            <option value="spb">СПб и область</option>
-          </select>
+          <RegionSelect activeRegion={activeRegion} setActiveRegion={setActiveRegion}/>
           <span className={styles.label}>Адрес</span>
           <input
             value={address}
@@ -127,7 +120,12 @@ const ChooseTimeToday = ({ day }) => {
             placeholder="Введите адрес"
             type="text"
           />
-          <button className={styles.btn_style} onClick={() => onHandleRedirect("/map")}>
+          <button
+            type="button"
+            className={styles.btn_style}
+            onClick={() => onHandleRedirect("/map")}
+            style={{ marginBottom: "15%" }}
+          >
             Указать на карте
           </button>
         </div>
