@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./NavBar.module.css";
 import parkAngel from "/src/assets/ParkAngel.svg";
 import { AiOutlineLeft } from "react-icons/ai";
-import { BiAlignRight } from "react-icons/bi";
+import { BiMenuAltLeft } from "react-icons/bi";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 
 const NavBar = () => {
@@ -11,11 +11,8 @@ const NavBar = () => {
   const location = useLocation();
 
   const handleGoBack = () => {
-     if (location.state && location.state.from) {
-        navigate(location.state.from);
-     } else {
-        navigate(-1);
-     }
+     if (location.state && location.state.from) navigate(location.state.from);
+     else navigate(-1);
   };
 
   return (
@@ -36,7 +33,7 @@ const NavBar = () => {
         className={styles.option__btn}
         onClick={() => setMenuOpen(!isMenuOpen)}
       >
-        <BiAlignRight
+        <BiMenuAltLeft
           style={{
             color: "#192342",
             width: "60%",
