@@ -20,15 +20,17 @@ const NavBar = () => {
 
   return (
     <nav className={styles.wrapper}>
-      <button onClick={handleGoBack} className={styles.return__btn}>
-        <AiOutlineLeft
-          style={{
-            color: "#192342",
-            width: "60%",
-            height: "60%",
-          }}
-        />
-      </button>
+      {location.pathname !== "/search-time" && (
+        <button onClick={handleGoBack} className={styles.return__btn}>
+          <AiOutlineLeft
+            style={{
+              color: "#192342",
+              width: "60%",
+              height: "60%",
+            }}
+          />
+        </button>
+      )}
       <img className={styles.logo} src={parkAngel} />
       <button
         className={styles.option__btn}
