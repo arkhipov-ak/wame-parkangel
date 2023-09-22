@@ -9,6 +9,7 @@ env:
   USER_PATH: "/home/www"
   DOMAIN: "app.parkangel.ru"
   BRANCH: "master"
+  
 
 jobs:
   deploy:
