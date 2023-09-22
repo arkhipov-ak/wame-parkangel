@@ -35,6 +35,8 @@ const SearchTime = () => {
     state.isSearchPark = true;
   }, []);
 
+  console.log(snap);
+
   return (
     <>
       <NavBar/>
