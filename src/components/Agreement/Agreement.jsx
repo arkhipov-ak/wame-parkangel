@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./Agreement.module.css";
 import parkAngel from "/src/assets/ParkAngel.svg";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ const Agreement = () => {
   const snap = useSnapshot(state);
   const navigate = useNavigate();
   const [isImageLoaded, setImageLoaded] = useState(false);
+  const [date, setDate] = useState(null);
 
   const handleImageLoad = () => {
     setImageLoaded(true);
@@ -31,6 +32,17 @@ const Agreement = () => {
         }
       }).catch(() => showErrorSnackbar({ message: "Не удалось записать согласие" }))
   };
+
+  useEffect(() => {
+    if (snap && snap.user && snap.user.dateAcceptAgreement) {
+      let date = new Date(snap.user.dateAcceptAgreement);
+      let day = (date.getDate() + "").length === 1 ? `0${date.getDate()}` : date.getDate();
+      let month = (date.getMonth() + 1 + "").length === 1 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
+      let year = date.getFullYear();
+      setDate(`${day}.${month}.${year}`);
+    }
+  }, [snap.user, snap.user.dateAcceptAgreement])
+;
 
   return (
     <div className={styles.container}>
@@ -79,8 +91,8 @@ const Agreement = () => {
             <Button onClick={() => navigate(-1)}>
               Вернуться
             </Button>
-            {snap.user.dateAcceptAgreement && (
-              <span style={{ marginTop: "20px" }}>Дата принятия соглашения: {snap.user.dateAcceptAgreement}</span>
+            {date && (
+              <span style={{ marginTop: "20px" }}>Дата принятия соглашения: {date}</span>
             )}
           </>
         ) : (

@@ -55,10 +55,6 @@ const App = () => {
                   password: "",
                   email: "",
                   city: "",
-                  isAcceptAgreement: false,
-                  isShowTelegram: false,
-                  isShowPhoneNumber: false,
-                  isShowName: false,
                 },
               ).then(response => state.user = response.data.response)
               .catch(() => showErrorSnackbar({ message: "Не удалось записать юзера" }))
