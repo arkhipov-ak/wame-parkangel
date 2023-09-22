@@ -41,6 +41,7 @@ const App = () => {
       const user = tg.initDataUnsafe.user;
       if (user) {
         const chatId = user.id;
+        console.log(chatId);
         await axios.get(`https://parkangel-backend.protomusic.ru/api/users/chatId/${chatId}`)
           .then(response => {
             if (response.data.response) state.user = response.data.response;
