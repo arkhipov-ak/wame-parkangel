@@ -41,8 +41,7 @@ const Agreement = () => {
       let year = date.getFullYear();
       setDate(`${day}.${month}.${year}`);
     }
-  }, [snap.user, snap.user.dateAcceptAgreement])
-;
+  }, [snap.user, snap.user.dateAcceptAgreement]);
 
   return (
     <div className={styles.container}>
