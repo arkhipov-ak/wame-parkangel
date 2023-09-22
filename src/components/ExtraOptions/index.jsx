@@ -37,18 +37,12 @@ const ExtraOptions = () => {
     isProtected: false,
     isHeated: false,
     isVolts: false,
-    isElectroMobile: false,
-    isVoltsWithCharger: false,
-    isWithoutPower: false,
-    isCustomSize: false,
+    isSpecializedCharger: false,
     address: "",
     region: "",
   });
 
-  const onHandleChange = (value, key) => {
-    let newObject = { ...data, ...{ [key]: value } }
-    setData(newObject)
-	};
+  const onHandleChange = (newData) => setData(newData);
 
   const handleRedirect = () => {
     if (snap.parkDate.hoursCountOneDay && snap.parkDate.hoursStartOneDay && snap.parkDate.minutesOneDay) {
@@ -215,63 +209,194 @@ const ExtraOptions = () => {
           <div className={styles.container}>
             <div className={styles.box_container}>
               <span className={styles.main_text}>Тип парковки</span>
-              <CustomCheckBox checked={data.isUnderground} onClick={e => onHandleChange(e, "isUnderground")}>
+              <CustomCheckBox
+                checked={data.isUnderground}
+                onClick={(e) => {
+                  if (snap.isSearchPark === true) {
+                    onHandleChange({...data, ["isUnderground"]: e});
+                    return;
+                  }
+                  if (data.isUnderground) {
+                    onHandleChange({...data, ["isUnderground"]: false});
+                    return;
+                  }
+                  onHandleChange({
+                    ...data,
+                    ["isUnderground"]: true,
+                    ["isOutDoor"]: false,
+                    ["isCovered"]: false,
+                    ["isGarage"]: false,
+                    ["isVolts"]: false,
+                    ["isSpecializedCharger"]: false,
+                  });
+                }}
+              >
                 Подземная
               </CustomCheckBox>
-              <CustomCheckBox checked={data.isOutDoor} onClick={e => onHandleChange(e, "isOutDoor")}>
+              <CustomCheckBox
+                checked={data.isOutDoor}
+                onClick={(e) => {
+                  if (snap.isSearchPark === true) {
+                    onHandleChange({...data, ["isOutDoor"]: e});
+                    return;
+                  }
+                  if (data.isOutDoor) {
+                    onHandleChange({...data, ["isOutDoor"]: false});
+                    return;
+                  }
+                  onHandleChange({
+                    ...data,
+                    ["isOutDoor"]: true,
+                    ["isUnderground"]: false,
+                    ["isCovered"]: false,
+                    ["isGarage"]: false,
+                    ["isVolts"]: false,
+                    ["isSpecializedCharger"]: false,
+                  });
+                }}
+              >
                 Открытая
               </CustomCheckBox>
-              <CustomCheckBox checked={data.isCovered} onClick={e => onHandleChange(e, "isCovered")}>
+              <CustomCheckBox
+                checked={data.isCovered}
+                onClick={(e) => {
+                  if (snap.isSearchPark === true) {
+                    onHandleChange({...data, ["isCovered"]: e});
+                    return;
+                  }
+                  if (data.isCovered) {
+                    onHandleChange({...data, ["isCovered"]: false});
+                    return;
+                  }
+                  onHandleChange({
+                    ...data,
+                    ["isCovered"]: true,
+                    ["isOutDoor"]: false,
+                    ["isUnderground"]: false,
+                    ["isGarage"]: false,
+                    ["isVolts"]: false,
+                    ["isSpecializedCharger"]: false,
+                  });
+                }}
+              >
                 Крытая
               </CustomCheckBox>
-              <CustomCheckBox checked={data.isGarage} onClick={e => onHandleChange(e, "isGarage")}>
+              <CustomCheckBox
+                checked={data.isGarage}
+                onClick={(e) => {
+                  if (snap.isSearchPark === true) {
+                    onHandleChange({...data, ["isGarage"]: e});
+                    return;
+                  }
+                  if (data.isGarage) {
+                    onHandleChange({...data, ["isGarage"]: false});
+                    return;
+                  }
+                  onHandleChange({
+                    ...data,
+                    ["isGarage"]: true,
+                    ["isOutDoor"]: false,
+                    ["isCovered"]: false,
+                    ["isUnderground"]: false,
+                    ["isVolts"]: false,
+                    ["isSpecializedCharger"]: false,
+                  });
+                }}
+              >
                 Гараж
               </CustomCheckBox>
             </div>
             <div className={styles.box_container}>
               <span className={styles.main_text}>Доп. опции</span>
               <label>
-                <SwitchToggle active={data.isProtected} onClick={e => onHandleChange(e, "isProtected")}/>
+                <SwitchToggle active={data.isProtected} onClick={(e) => onHandleChange({...data, ["isProtected"]: e})}/>
                 Охрана
               </label>
               <label>
-                <SwitchToggle active={data.isHeated} onClick={e => onHandleChange(e, "isHeated")}/>
+                <SwitchToggle active={data.isHeated} onClick={(e) => onHandleChange({...data, ["isHeated"]: e})}/>
                 Обогрев
               </label>
             </div>
           </div>
           <div className={styles.box_container}>
             <span className={styles.main_text}>Для электромобилей</span>
-            <CustomCheckBox checked={data.isVolts} onClick={e => onHandleChange(e, "isVolts")}>
+            <CustomCheckBox
+              checked={data.isVolts}
+              onClick={(e) => {
+                if (snap.isSearchPark === true) {
+                  onHandleChange({...data, ["isVolts"]: e});
+                  return;
+                }
+                if (data.isVolts) {
+                  onHandleChange({...data, ["isVolts"]: false});
+                  return;
+                }
+                onHandleChange({
+                  ...data,
+                  ["isVolts"]: true,
+                  ["isOutDoor"]: false,
+                  ["isCovered"]: false,
+                  ["isGarage"]: false,
+                  ["isUnderground"]: false,
+                  ["isSpecializedCharger"]: false,
+                });
+              }}
+            >
               220V
             </CustomCheckBox>
-            <CustomCheckBox checked={data.isElectroMobile} onClick={e => onHandleChange(e, "isElectroMobile")}>
-              Электромобиль
+            <CustomCheckBox
+              checked={data.isSpecializedCharger}
+              onClick={(e) => {
+                if (snap.isSearchPark === true) {
+                  onHandleChange({...data, ["isSpecializedCharger"]: e});
+                  return;
+                }
+                if (data.isSpecializedCharger) {
+                  onHandleChange({...data, ["isSpecializedCharger"]: false});
+                  return;
+                }
+                onHandleChange({
+                  ...data,
+                  ["isSpecializedCharger"]: true,
+                  ["isOutDoor"]: false,
+                  ["isCovered"]: false,
+                  ["isGarage"]: false,
+                  ["isUnderground"]: false,
+                  ["isVolts"]: false,
+                });
+              }}
+            >
+              Специализированная зарядка
             </CustomCheckBox>
-            <CustomCheckBox checked={data.isVoltsWithCharger} onClick={e => onHandleChange(e, "isVoltsWithCharger")}>
-              220V и зарядка электромобиля
-            </CustomCheckBox>
-            <CustomCheckBox checked={data.isWithoutPower} onClick={e => onHandleChange(e, "isWithoutPower")}>
-              Без электропитания
-            </CustomCheckBox>
-            <label>
-              <SwitchToggle active={data.isCustomSize} onClick={e => onHandleChange(e, "isCustomSize")}/>
-              Нестандартные размеры авто
-            </label>
           </div>
           <div className={styles.box_container}>
-            <span className={styles.main_text}>Размеры, м</span>
+            <span className={styles.main_text}>Нестандартные размеры авто, м</span>
             <div className={styles.parent_container}>
-              <SizeInput value={data.height || ""} onChange={e => onHandleChange(e.target.value, "height")} label="Высота"/>
-              <SizeInput value={data.length || ""} onChange={e => onHandleChange(e.target.value, "length")} label="Длина"/>
-              <SizeInput value={data.width || ""} onChange={e => onHandleChange(e.target.value, "width")} label="Ширина"/>
+              <SizeInput
+                value={data.height || ""}
+                onChange={(e) => onHandleChange({...data, ["height"]: e.target.value})}
+                label="Высота"
+              />
+              <SizeInput
+                value={data.length || ""}
+                onChange={(e) => onHandleChange({...data, ["length"]: e.target.value})}
+                label="Длина"
+              />
+              <SizeInput
+                value={data.width || ""}
+                onChange={e => onHandleChange({...data, ["width"]: e.target.value})}
+                label="Ширина"
+              />
             </div>
           </div>
           <div className={styles.box_container}>
-            {(snap.parkDate.hoursCountOneDay || snap.parkDate.hoursStartOneDay || snap.parkDate.minutesOneDay) ? (
+            {(snap.parkDate?.hoursCountOneDay || snap.parkDate?.hoursStartOneDay || snap.parkDate?.minutesOneDay) ? (
               <>
                 <span className={styles.main_text}>Макс. стоимость в час, руб</span>
-                <PriceCounterBlock price={+data.priceHour} setPrice={e => onHandleChange(e, "priceHour")}/>
+                <PriceCounterBlock
+                  price={data.priceHour ? +data.priceHour : 0}
+                  setPrice={(e) => onHandleChange({...data, ["priceHour"]: e})}
+                />
               </>
             ) : (
               <>
@@ -296,12 +421,10 @@ const ExtraOptions = () => {
                     </p>
                   </div>
                   <div className={styles.period}>
-                    <div className={styles.size_wrapper_2}>
-                      <p className={styles.header_text}>Цена за месяц</p>
-                      <p onClick={() => setMonthModalOpen(true)} className={styles.parameter}>
-                        {data.priceMonth ?? 0}
-                      </p>
-                    </div>
+                    <p className={styles.header_text}>Цена за месяц</p>
+                    <p onClick={() => setMonthModalOpen(true)} className={styles.parameter}>
+                      {data.priceMonth ?? 0}
+                    </p>
                   </div>
                 </div>
               </>
@@ -331,7 +454,7 @@ const ExtraOptions = () => {
             <>
               <PriceCounterBlock
                 price={data.priceHour ?? 0}
-                setPrice={e => onHandleChange(e, "priceHour")}
+                setPrice={e => onHandleChange({...data, ["priceHour"]: e})}
                 currency
               />
               <Button onClick={() => setHourModalOpen(false)}>Готово</Button>
@@ -347,7 +470,7 @@ const ExtraOptions = () => {
             <>
               <PriceCounterBlock
                 price={data.priceDay ?? 0}
-                setPrice={e => onHandleChange(e, "priceDay")}
+                setPrice={e => onHandleChange({...data, ["priceDay"]: e})}
                 currency
                 step={100}
               />
@@ -364,7 +487,7 @@ const ExtraOptions = () => {
             <>
               <PriceCounterBlock
                 price={data.priceWeek ?? 0}
-                setPrice={e => onHandleChange(e, "priceWeek")}
+                setPrice={e => onHandleChange({...data, ["priceWeek"]: e})}
                 currency
                 step={500}
               />
@@ -381,7 +504,7 @@ const ExtraOptions = () => {
             <>
               <PriceCounterBlock
                 price={data.priceMonth ?? 0}
-                setPrice={e => onHandleChange(e, "priceMonth")}
+                setPrice={e => onHandleChange({...data, ["priceMonth"]: e})}
                 currency
                 step={1000}
               />

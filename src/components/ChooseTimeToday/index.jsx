@@ -93,7 +93,7 @@ const ChooseTimeToday = ({ day }) => {
       setSelectedHour(snap.parkDate.hoursStartOneDay || "00");
       setSelectedMinute(snap.parkDate.minutesOneDay  || "00");
       setHoursCount(snap.parkDate.hoursCountOneDay || 1);
-      setActiveRegion(snap.parkDate.region || null);
+      setActiveRegion(snap.parkDate.region || "moscow");
       setAddress(snap.parkDate.address || "");
     }
   }, [snap.user, snap.parkDate]);

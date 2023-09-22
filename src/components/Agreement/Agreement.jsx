@@ -27,7 +27,7 @@ const Agreement = () => {
     })
       .then((response) => {
         if (response.data.response) {
-          state.user = { ...snap.user, isAcceptAgreement: true };
+          state.user = { ...snap.user, isAcceptAgreement: true, dateAcceptAgreement: today.toISOString() };
           navigate("/search-time");
         }
       }).catch(() => showErrorSnackbar({ message: "Не удалось записать согласие" }))

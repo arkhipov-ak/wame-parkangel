@@ -12,7 +12,6 @@
   justify-content: center;
   cursor: pointer;
   transition: all .3s ease-in-out;
-  border: 1px solid #8A8AA4;
 }
 .checked {
   background: #8A8AA4;

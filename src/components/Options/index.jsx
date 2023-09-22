@@ -32,10 +32,7 @@ const Options = () => {
     isProtected: false,
     isHeated: false,
     isVolts: false,
-    isElectroMobile: false,
-    isVoltsWithCharger: false,
-    isWithoutPower: false,
-    isCustomSize: false,
+    isSpecializedCharger: false,
     address: "",
     region: "",
   });
@@ -161,22 +158,12 @@ const Options = () => {
                 <CustomCheckBox checked={data.isVolts} onClick={e => onHandleChange(e, "isVolts")}>
                   220V
                 </CustomCheckBox>
-                <CustomCheckBox checked={data.isElectroMobile} onClick={e => onHandleChange(e, "isElectroMobile")}>
-                  Электромобиль
+                <CustomCheckBox checked={data.isElectroMobile} onClick={e => onHandleChange(e, "isSpecializedCharger")}>
+                  Специализированная зарядка
                 </CustomCheckBox>
-                <CustomCheckBox checked={data.isVoltsWithCharger} onClick={e => onHandleChange(e, "isVoltsWithCharger")}>
-                  220V и зарядка электромобиля
-                </CustomCheckBox>
-                <CustomCheckBox checked={data.isWithoutPower} onClick={e => onHandleChange(e, "isWithoutPower")}>
-                  Без электропитания
-                </CustomCheckBox>
-                <label>
-                  <SwitchToggle active={data.isCustomSize} onClick={e => onHandleChange(e, "isCustomSize")}/>
-                  Нестандартные размеры авто
-                </label>
               </div>
               <div className={styles.sizes_wrapper}>
-                <span className={styles.main_text}>Размеры, м</span>
+                <span className={styles.main_text}>Нестандартные размеры авто, м</span>
                 <div className={styles.parent_container}>
                   <SizeInput value={data.height || ""} onChange={e => onHandleChange(e.target.value, "height")} label="Высота"/>
                   <SizeInput value={data.length || ""} onChange={e => onHandleChange(e.target.value, "length")} label="Длина"/>
