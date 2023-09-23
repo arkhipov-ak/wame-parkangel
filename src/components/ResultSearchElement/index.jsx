@@ -91,8 +91,8 @@ const ResultSearchElement = () => {
       { rating, message: comment, ad_id: snap.resultElement.id, user_id: snap.user.id }
     ).then((response) => {
       if (response) {
-        axios.get(`
-          https://api.telegram.org/bot${telegramToken}/sendMessage?chat_id=${mainChatID}&text=${comment}&rating=${rating}`
+        axios.get(
+          `https://api.telegram.org/bot${telegramToken}/sendMessage?chat_id=${mainChatID}&text=${comment}&rating=${rating}`
         )
         showSuccessSnackbar({ message: "Отзыв оставлен успешно" });
         setOpenModal(false);

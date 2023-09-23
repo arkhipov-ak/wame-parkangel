@@ -67,9 +67,9 @@ const Options = () => {
 
     const preparedData = {
       ...data,
-      length: data.length ? +data.length : "",
-      height: data.height ? +data.height : "",
-      width: data.width ? +data.width : "",
+      length: data.length ? data.length : null,
+      height: data.height ? data.height : null,
+      width: data.width ? data.width : null,
       user_id: snap.user.id,
     }
 
@@ -84,30 +84,30 @@ const Options = () => {
     if (snap.options[0]) {
       axios.put(
         "https://parkangel-backend.protomusic.ru/api/options", preparedData
-      ).then(response => {
+      ).then((response) => {
         if (response) {
           showSuccessSnackbar({ message: "Параметры сохранены" })
           navigate(-1);
         }
       })
-      .catch(showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
+      .catch(() => showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
     } else {
       axios.post(
         "https://parkangel-backend.protomusic.ru/api/options", preparedData
-      ).then(response => {
+      ).then((response) => {
         if (response) {
           showSuccessSnackbar({ message: "Параметры сохранены" })
           navigate(-1);
         }
       })
-      .catch(showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
+      .catch(() => showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
     }
   };
 
   useEffect(() => {
     if (snap && snap.user) {
       axios.get(`https://parkangel-backend.protomusic.ru/api/options/userId/${snap.user.id}`)
-        .then(response => state.options = response.data.response)
+        .then((response) => state.options = response.data.response)
         .catch(() => showErrorSnackbar({ message: "Не удалось загрузить опции" }))
     }
   }, [snap.user]);
@@ -158,7 +158,7 @@ const Options = () => {
                 <CustomCheckBox checked={data.isVolts} onClick={e => onHandleChange(e, "isVolts")}>
                   220V
                 </CustomCheckBox>
-                <CustomCheckBox checked={data.isElectroMobile} onClick={e => onHandleChange(e, "isSpecializedCharger")}>
+                <CustomCheckBox checked={data.isSpecializedCharger} onClick={e => onHandleChange(e, "isSpecializedCharger")}>
                   Специализированная зарядка
                 </CustomCheckBox>
               </div>

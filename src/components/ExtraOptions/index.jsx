@@ -71,12 +71,14 @@ const ExtraOptions = () => {
 
     const preparedData = {
       ...data,
-      length: data.length ? +data.length : null,
-      height: data.height ? +data.height : null,
-      width: data.width ? +data.width : null,
+      length: data.length ? data.length : null,
+      height: data.height ? data.height : null,
+      width: data.width ? data.width : null,
       address: snap.parkDate.address,
       region: snap.parkDate.region,
       user_id: snap.user.id,
+      availabilityDateEnd: snap.parkDate.dateEndISO,
+      availabilityDateStart: snap.parkDate.dateStartISO,
     };
 
     if (!preparedData.height) delete preparedData.height;
@@ -87,33 +89,10 @@ const ExtraOptions = () => {
     if (!preparedData.priceWeek) delete preparedData.priceWeek;
     if (!preparedData.priceMonth) delete preparedData.priceMonth;
     delete preparedData.user;
-
-    if (snap.options[0]) {
-      axios.put(
-        "https://parkangel-backend.protomusic.ru/api/options", preparedData
-      ).then(response => {
-        if (response) showSuccessSnackbar({ message: "Параметры сохранены" });
-      })
-      .catch(() => showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
-    } else {
-      axios.post(
-        "https://parkangel-backend.protomusic.ru/api/options", preparedData
-      ).then(response => {
-        if (response) showSuccessSnackbar({ message: "Параметры сохранены" });
-      })
-      .catch(() => showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
-    }
-
-    const preparedParkData = {
-      ...preparedData,
-      availabilityDateEnd: snap.parkDate.dateEndISO,
-      availabilityDateStart: snap.parkDate.dateStartISO,
-    };
-
-    delete preparedParkData.id;
+    delete preparedData.id;
 
     axios.post(
-      "https://parkangel-backend.protomusic.ru/api/park", preparedParkData
+      "https://parkangel-backend.protomusic.ru/api/park", preparedData
     ).then(response => {
       if (response) {
         state.parkDate = { ...snap.parkDate, isRenewable: isRenewable, park_id: response.data.response.id };
@@ -160,37 +139,41 @@ const ExtraOptions = () => {
     if (snap.options[0]) {
       axios.put(
         "https://parkangel-backend.protomusic.ru/api/options", preparedData
-      ).then(response => {
+      ).then((response) => {
         if (response) {
           showSuccessSnackbar({ message: "Параметры сохранены" })
           navigate(-1);
         }
       })
-      .catch(showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
+      .catch(() => showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
     } else {
       axios.post(
         "https://parkangel-backend.protomusic.ru/api/options", preparedData
-      ).then(response => {
+      ).then((response) => {
         if (response) {
           showSuccessSnackbar({ message: "Параметры сохранены" })
           navigate(-1);
         }
       })
-      .catch(showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
+      .catch(() => showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
     }
   };
 
   useEffect(() => {
     if (snap && snap.user) {
+      if (snap.isSearchPark === false) return;
       axios.get(`https://parkangel-backend.protomusic.ru/api/options/userId/${snap.user.id}`)
         .then(response => state.options = response.data.response)
         .catch(() => showErrorSnackbar({ message: "Не удалось загрузить опции" }))
     }
-  }, [snap.user]);
+  }, [snap.user, snap.isSearchPark]);
 
   useEffect(() => {
-    if (snap && snap.user && snap.options && snap.options[0]) setData(snap.options[0]);
-  }, [snap.user, snap.options]);
+    if (snap && snap.user && snap.options && snap.options[0]) {
+      if (snap.isSearchPark === false) return;
+      setData(snap.options[0]);
+    }
+  }, [snap.user, snap.options, snap.isSearchPark]);
 
   useEffect(() => {
     if (snap && snap.user) {
