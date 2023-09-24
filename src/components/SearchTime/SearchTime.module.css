@@ -53,11 +53,15 @@
 }
 .wrapper_rentCard {
   width: 100%;
+  margin-bottom: 5%;
   border-radius: 15px;
+  border: none;
   font-weight: 600;
   background: #ffffff;
+  flex-wrap: wrap;
   display: flex;
-  flex-direction: column;
+  padding: 5%;
+  gap: 10px;
 }
 .wrapper_rentCard .secondRow {
   display: flex;
@@ -65,18 +69,16 @@
   width: 100%;
   color: var(--black, #192342);
   font-family: Montserrat;
-  font-size: 0.925rem;
+  font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
   opacity: 0.7;
 }
-.wrapper_rentCard .secondRow p {
+.rent_location {
+  width: 100%;
+  text-align: left;
+  font-family: Montserrat;
+  font-size: 16px;
   margin: 0;
-}
-.wrapper_rentCard {
-  align-items: flex-start;
-}
-.wrapper_rentCard .secondRow p {
-  line-height: 1.2;
 }

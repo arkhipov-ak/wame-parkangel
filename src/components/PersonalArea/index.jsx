@@ -15,7 +15,7 @@ const PersonalArea = () => {
     name: "",
     phoneNumber: "",
     email: "",
-    city: "",
+    city: "moscow",
     password: "",
     isShowName: false,
     isShowPhoneNumber: false,
@@ -23,9 +23,9 @@ const PersonalArea = () => {
   });
 
   const onHandleChange = (value, key) => {
-    let newObject = { ...data, ...{ [key]: value } }
-    setData(newObject)
-	}
+    let newObject = { ...data, ...{ [key]: value } };
+    setData(newObject);
+	};
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -54,6 +54,8 @@ const PersonalArea = () => {
   useEffect(() => {
     if (snap && snap.user) setData(snap.user)
   }, [snap.user]);
+
+  console.log(data);
 
   return (
     <>
@@ -88,13 +90,14 @@ const PersonalArea = () => {
               type="text"
             />
             <span className={styles.label}>Предпочтительный город</span>
-            <input
+            <select
               value={data.city}
               onChange={(e) => onHandleChange(e.target.value, "city")}
-              placeholder="Введите название"
-              className={styles.question_input}
-              type="text"
-            />
+              className={styles.region_select}
+          >
+              <option value="moscow">Москва и область</option>
+              <option value="spb">СПб и область</option>
+            </select>
             <span className={styles.label}>Пароль (необязательно)</span>
             <input
               value={data.password}
@@ -109,6 +112,7 @@ const PersonalArea = () => {
             <CustomCheckBox checked={data.isShowPhoneNumber} onClick={e => onHandleChange(e, "isShowPhoneNumber")}>
               Телефон
             </CustomCheckBox>
+            <p>*Выбранные вами параметры отразятся в размещенном объявлении и станут видимы для соискателей.</p>
           <Button type="submit">Сохранить</Button>
         </form>
       </Container>

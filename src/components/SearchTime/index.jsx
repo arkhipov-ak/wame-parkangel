@@ -17,16 +17,61 @@ import ZeroData from "../common/ZeroData";
 const SearchTime = () => {
   const snap = useSnapshot(state);
   const [isImageLoaded, setImageLoaded] = useState(false);
-  const [historyData, setHistoryData] = useState([]);
+  const [myAds, setMyAds] = useState([]);
 
-  const handleImageLoad = () => {
-    setImageLoaded(true);
+  const renderTime = (item) => {
+    const dateStart = new Date(item.availabilityDateStart);
+    const hoursStart = dateStart.getHours();
+    const minutesStart = (dateStart.getMinutes() + "").length === 1
+      ? `0${dateStart.getMinutes()}`
+      : dateStart.getMinutes()
+    ;
+
+    const dateEnd = new Date(item.availabilityDateEnd);
+    const hoursEnd = dateEnd.getHours();
+    const minutesEnd = (dateEnd.getMinutes() + "").length === 1
+      ? `0${dateEnd.getMinutes()}`
+      : dateEnd.getMinutes()
+    ;
+
+    return `${hoursStart}:${minutesStart} - ${hoursEnd}:${minutesEnd}`;
+  };
+
+    const renderDate = (item) => {
+    const dateStart = new Date(item.availabilityDateStart);
+    const dayStart = (dateStart.getDate() + ""). length === 1
+      ? `0${dateStart.getDate()}`
+      : dateStart.getDate()
+    ;
+    const monthStart = (dateStart.getMonth() + 1 + "").length === 1 
+      ? `0${dateStart.getMonth() + 1}`
+      : dateStart.getMonth() + 1
+    ;
+    const yearStart = dateStart.getFullYear();
+
+    const dateEnd = new Date(item.availabilityDateEnd);
+    const dayEnd = dateEnd.getDate();
+    const monthEnd = (dateEnd.getMonth() + 1 + "").length === 1 
+      ? `0${dateEnd.getMonth() + 1}`
+      : dateEnd.getMonth() + 1
+    ;
+    const yearEnd = dateEnd.getFullYear();
+
+    if (`${dayStart}.${monthStart}.${yearStart}` === `${dayEnd}.${monthEnd}.${yearEnd}`) return `${dayStart}.${monthStart}.${yearStart}`;
+
+    return `${dayStart}.${monthStart}.${yearStart} - ${dayEnd}.${monthEnd}.${yearEnd}`;
+  };
+
+  const renderRating = (item) => {
+    if (!item.length) return "Недостаточно оценок";
+    const ratings = item.map((elem) => elem.rating);
+    return ratings.reduce((acc, rating) => acc + rating, 0) / ratings.length;
   };
 
   useEffect(() => {
     if (snap && snap.user) {
-      axios.get(`https://parkangel-backend.protomusic.ru/api/history/userId/${snap.user.chatId}`)
-        .then(response => setHistoryData(response.data.response))
+      axios.get(`https://parkangel-backend.protomusic.ru/api/ad/userId/${snap.user.id}`)
+        .then((response) => setMyAds(response.data.response))
         .catch(() => showErrorSnackbar({ message: "Не удалось получить историю аренды" }))
     }
   }, [snap]);
@@ -58,7 +103,7 @@ const SearchTime = () => {
             <img
               className={styles.img_today}
               src={TodayImg}
-              onLoad={handleImageLoad}
+              onLoad={() => setImageLoaded(true)}
               style={{ display: isImageLoaded ? "block" : "none" }}
             />
             <p className={styles.text_today}>На сегодня</p>
@@ -80,7 +125,7 @@ const SearchTime = () => {
             <img
               className={styles.img_today}
               src={TomorrowImg}
-              onLoad={handleImageLoad}
+              onLoad={() => setImageLoaded(true)}
               style={{ display: isImageLoaded ? "block" : "none" }}
             />
             <p className={styles.text_today}>На завтра</p>
@@ -102,7 +147,7 @@ const SearchTime = () => {
             <img
               className={styles.img_today}
               src={FouinImg}
-              onLoad={handleImageLoad}
+              onLoad={() => setImageLoaded(true)}
               style={{ display: isImageLoaded ? "block" : "none" }}
             />
             <p className={styles.text_today}>На другой срок</p>
@@ -112,23 +157,21 @@ const SearchTime = () => {
             {snap.isSearchPark === true ? "Как снять парковку?" : "Как сдать парковку?"}
           </a>
           <div className={styles.wrapper_rent}>
-            <h2 className={styles.history}>История аренды</h2>
-            
-              {historyData.length ? (
-                historyData.map((history, index) => (
+            <h2 className={styles.history}>Мои объявления</h2>
+              {myAds.length ? (
+                myAds.map((ad, index) => (
                   <div key={index} className={styles.wrapper_rentCard}>
-                    <div  className={styles.wrapper_rentCard}>
-                      <p className={styles.rent_location}>{history.location}</p>
-                      <div className={styles.secondRow}>
-                        <p className={styles.rent_date}>{history.date}</p>
-                        <p className={styles.rent_time}>{history.time}</p>
-                        <p className={styles.rent_status}>{history.status}</p>
-                      </div>
+                    <p className={styles.rent_location}>{ad.park.address}</p>
+                    <div className={styles.secondRow}>
+                      <span className={styles.rent_time}>{renderDate(ad.park)}</span>
+                      <span className={styles.rent_time}>{renderTime(ad.park)}</span>
+                      <span className={styles.rent_status}>{ad.park.priceHour} руб/ч</span>
                     </div>
+                    <p className={styles.rent_location}>Средний рейтинг: {renderRating(ad.review)}</p>
                   </div>
                 ))
               ) : (
-                <ZeroData>История аренды пуста</ZeroData>
+                <ZeroData>Объявлений нет</ZeroData>
               )}
             </div>
         </div>

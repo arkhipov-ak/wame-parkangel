@@ -43,7 +43,7 @@ const App = () => {
         const chatId = user.id;
         console.log(chatId);
         await axios.get(`https://parkangel-backend.protomusic.ru/api/users/chatId/${chatId}`)
-          .then(response => {
+          .then((response) => {
             if (response.data.response) state.user = response.data.response;
             else {
               axios.post(
@@ -57,7 +57,7 @@ const App = () => {
                   email: "",
                   city: "",
                 },
-              ).then(response => state.user = response.data.response)
+              ).then((response) => state.user = response.data.response)
               .catch(() => showErrorSnackbar({ message: "Не удалось записать юзера" }))
             }
           })
@@ -71,7 +71,7 @@ const App = () => {
   useEffect(() => {
     if (snap && snap.user) {
       axios.get(`https://parkangel-backend.protomusic.ru/api/options/userId/${snap.user.id}`)
-        .then(response => state.options = response.data.response)
+        .then((response) => state.options = response.data.response)
         .catch(() => showErrorSnackbar({ message: "Не удалось загрузить опции" }))
     }
   }, [snap.user]);

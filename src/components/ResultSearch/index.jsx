@@ -34,6 +34,12 @@ const ResultSearch = () => {
     return `${hoursStart}:${minutesStart} - ${hoursEnd}:${minutesEnd}`;
   };
 
+  const renderRating = (item) => {
+    if (item.length === 0) return "Недостаточно оценок";
+    const ratings = item.map((elem) => elem.rating);
+    return ratings.reduce((acc, rating) => acc + rating, 0) / ratings.length;
+  };
+
   const onHandleClick = (item) => {
     state.resultElement = { ...item };
     navigate(`/result-search/${item.id}`);
@@ -97,6 +103,7 @@ const ResultSearch = () => {
                   <span className={styles.rent_time}>{renderTime(item.park)}</span>
                   <span className={styles.rent_status}>{item.park.priceHour} руб/ч</span>
                 </div>
+                <p className={styles.rent_location}>Средний рейтинг: {renderRating(item.review)}</p>
               </button>
             ))}
             <Link to="/show-map-result" className={styles.submit}>
