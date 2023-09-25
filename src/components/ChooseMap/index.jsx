@@ -4,12 +4,17 @@ import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar";
 import styles from "./ChooseMap.module.css"
 import navigation from "../../assets/navigation.svg";
+import navigationDark from "../../assets/navigation-black.svg";
 import axios from "axios";
 import { API_KEY } from "../../utils/constants";
+import { useSnapshot } from "valtio";
+import { state } from "../../state";
 
 const ChooseMap = () => {
+  const snap = useSnapshot(state);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState("");
+  const navigate = useNavigate();
 
   const handleMapClick = async (e) => {
     setSelectedLocation(e.get("coords"));
@@ -39,8 +44,6 @@ const ChooseMap = () => {
     }
   }, [selectedLocation]);
 
-  const navigate = useNavigate();
-
   const handleSelectClick = () => {
     if (selectedAddress) {
       navigate(`/review?address=${encodeURIComponent(selectedAddress)}`);
@@ -51,7 +54,6 @@ const ChooseMap = () => {
     <div>
       <div className={styles.mapContainer}>
         <NavBar />
-
         <div className={styles.container}>
           <div className={styles.wrapper_div}>
             {selectedAddress || "Выберите местоположение на карте"}
@@ -63,7 +65,7 @@ const ChooseMap = () => {
             <div className={styles.img_wrapper}>
               <img
                 className={styles.img}
-                src={navigation}
+                src={snap.user?.theme === "light" ? navigation : navigationDark}
                 alt="Navigation Icon"
               />
             </div>
@@ -83,7 +85,7 @@ const ChooseMap = () => {
               suppressMapOpenBlock: true,
               suppressYandexSearch: true,
             }}
-            onClick={handleMapClick} // Обработчик клика по карте
+            onClick={handleMapClick}
           >
             {selectedLocation && <Placemark geometry={selectedLocation} />}
           </Map>
