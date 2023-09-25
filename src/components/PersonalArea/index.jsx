@@ -20,6 +20,7 @@ const PersonalArea = () => {
     isShowName: false,
     isShowPhoneNumber: false,
     isShowTelegram: true,
+    theme: "light",
   });
 
   const onHandleChange = (value, key) => {
@@ -52,7 +53,7 @@ const PersonalArea = () => {
   };
 
   useEffect(() => {
-    if (snap && snap.user) setData(snap.user)
+    if (snap && snap.user) setData(snap.user);
   }, [snap.user]);
 
   return (
@@ -110,7 +111,9 @@ const PersonalArea = () => {
             <CustomCheckBox checked={data.isShowPhoneNumber} onClick={e => onHandleChange(e, "isShowPhoneNumber")}>
               Телефон
             </CustomCheckBox>
-            <p>*Выбранные вами параметры отразятся в размещенном объявлении и станут видимы для соискателей.</p>
+            <p className={styles.paragraph}>
+              *Выбранные вами параметры отразятся в размещенном объявлении и станут видимы для соискателей.
+            </p>
           <Button type="submit">Сохранить</Button>
         </form>
       </Container>

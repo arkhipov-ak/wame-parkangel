@@ -4,10 +4,12 @@
   width: 100%;
   text-align: left;
   margin: 0;
+  color: var(--text-primary);
 }
 .text {
   text-align: left;
   width: 100%;
+  color: var(--text-primary);
 }
 .instruction_descr {
   color: #8a8aa4;

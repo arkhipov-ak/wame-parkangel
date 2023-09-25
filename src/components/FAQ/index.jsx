@@ -10,7 +10,7 @@ import ZeroData from "../common/ZeroData";
 const Faq = () => {
   const [activeQuestion, setActiveQuestion] = useState(null);
   const [faqData, setFaqData] = useState([
-    /* {
+    {
       question: "Вопрос 1",
       answer: "Ответ 1"
     },
@@ -21,7 +21,7 @@ const Faq = () => {
     {
       question: "Вопрос 3",
       answer: "Ответ 3"
-    }, */
+    },
   ]);
 
   useEffect(() => {
@@ -30,8 +30,6 @@ const Faq = () => {
       .then((response) => setFaqData(response.data.response))
       .catch(() => showErrorSnackbar({ message: "Не удалось получить вопросы" }));
   }, []);
-
-  console.log(faqData);
 
   return (
     <>
