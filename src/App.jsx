@@ -34,33 +34,34 @@ const App = () => {
   useEffect(() => {
     window.Telegram.WebApp.ready();
     const tg = window?.Telegram?.WebApp;
-    tg.expand()
-      const user = tg.initDataUnsafe.user;
-      if (user) {
-        const chatId = user.id;
-        console.log(chatId);
-        axios.get(`https://parkangel-backend.protomusic.ru/api/users/chatId/${chatId}`)
-          .then((response) => {
-            if (response.data.response) state.user = response.data.response;
-            else {
-              axios.post(
-                "https://parkangel-backend.protomusic.ru/api/users",
-                {
-                  chatId: chatId + "",
-                  telegram: user.username,
-                  name: user.first_name,
-                  phoneNumber: "",
-                  password: "",
-                  email: "",
-                  city: "moscow",
-                  theme: "light",
-                },
-              ).then((response) => state.user = response.data.response)
-              .catch(() => showErrorSnackbar({ message: "Не удалось записать юзера" }))
-            }
-          })
-          .catch(() => showErrorSnackbar({ message: "Что-то пошло не так" }))
-      }
+    tg.expand();
+    const user = tg.initDataUnsafe.user;
+    
+    if (user) {
+      const chatId = user.id;
+      console.log(chatId);
+      axios.get(`https://parkangel-backend.protomusic.ru/api/users/chatId/${chatId}`)
+        .then((response) => {
+          if (response.data.response) state.user = response.data.response;
+          else {
+            axios.post(
+              "https://parkangel-backend.protomusic.ru/api/users",
+              {
+                chatId: chatId + "",
+                telegram: user.username,
+                name: user.first_name,
+                phoneNumber: "",
+                password: "",
+                email: "",
+                city: "moscow",
+                theme: "light",
+              },
+            ).then((response) => state.user = response.data.response)
+            .catch(() => showErrorSnackbar({ message: "Не удалось записать юзера" }))
+          }
+        })
+        .catch(() => showErrorSnackbar({ message: "Что-то пошло не так" }))
+    }
   }, []);
 
   useEffect(() => {
