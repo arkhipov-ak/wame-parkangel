@@ -19,8 +19,6 @@ import SearchAnotherTimePage from "./pages/SearchAnotherTimePage";
 import SearchTomorrowPage from "./pages/SearchTomorrowPage";
 import SelectInMapPage from "./pages/SelectInMapPage";
 import ReviewPage from "./pages/ReviewPage";
-import ExtraPage from "./pages/ExtraPage";
-import AddPage from "./pages/AddPage";
 import ScrollToTop from "./components/ScrollToTop";
 import ChooseMap from "./components/ChooseMap";
 import { SnackbarProvider } from "notistack";
@@ -121,8 +119,6 @@ const App = () => {
               <Route path="/search-tomorrow" element={<SearchTomorrowPage/>}/>
               <Route path="/SelectInMap" element={<SelectInMapPage/>}/>
               <Route path="/review" element={<ReviewPage/>}/>
-              <Route path="/Extra" element={<ExtraPage/>}/>
-              <Route path="/Add" element={<AddPage/>}/>
               <Route path="/map" element={<ChooseMap/>}/>
             </Routes>
         </Router>
