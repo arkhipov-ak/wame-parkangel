@@ -89,7 +89,7 @@ const ChooseAnotherTime = () => {
 			<Container>
 				<h2 className={styles.title}>Сдать на другой срок</h2>
         <div style={{ width: "100%" }}>
-          <span className={styles.data_time_text}>Дата и время начала</span>
+          <span className={styles.label}>Дата и время начала</span>
           <div className={styles.date_time_container}>
             <div className={styles.wrapper_input}>
               <input
@@ -105,7 +105,7 @@ const ChooseAnotherTime = () => {
               {selectedHourStart}:{selectedMinuteStart}
             </div>
           </div>
-          <span className={styles.data_time_text}>Дата и время окончания</span>
+          <span className={styles.label}>Дата и время окончания</span>
           <div className={styles.date_time_container}>
             <div className={styles.wrapper_input}>
               <input
@@ -122,9 +122,9 @@ const ChooseAnotherTime = () => {
             </div>
           </div>
           <div className={styles.block_wrapper}>
-            <span className={styles.data_time_text}>Ваш регион</span>
+            <span className={styles.label}>Ваш регион</span>
             <RegionSelect activeRegion={activeRegion} setActiveRegion={setActiveRegion}/>
-            <span className={styles.data_time_text}>Адрес</span>
+            <span className={styles.label}>Адрес</span>
             <input
               value={address}
               onChange={e => setAddress(e.target.value)}

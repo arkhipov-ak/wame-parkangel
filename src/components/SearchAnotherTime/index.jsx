@@ -69,7 +69,7 @@ const SearchAnotherTime = () => {
       <Container>
         <h2 className={styles.title}>Найти на другой срок</h2>
         <div style={{ width: "100%" }}>
-          <span className={styles.data_time_text}>Дата и время начала</span>
+          <span className={styles.label}>Дата и время начала</span>
           <div className={styles.date_time_container}>
             <div className={styles.wrapper_input}>
               <input
@@ -85,7 +85,7 @@ const SearchAnotherTime = () => {
               {selectedHourStart}:{selectedMinuteStart}
             </div>
           </div>
-          <span className={styles.data_time_text}>Дата и время окончания</span>
+          <span className={styles.label}>Дата и время окончания</span>
           <div>
             <div className={styles.date_time_container}>
               <div className={styles.wrapper_input}>

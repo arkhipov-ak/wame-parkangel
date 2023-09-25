@@ -4,6 +4,7 @@
   font-size: 24px;
   font-weight: 450;
   margin-top: 0;
+  color: var(--text-primary);
 }
 .datePickerWrapper {
   display: flex;
@@ -12,14 +13,14 @@
   justify-content: center;
   align-items: center;
   border-radius: 0.9375rem;
-  background: #fff;
+  background: var(--background-secondary);
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
   font-size: 20px;
 }
 .dateInput {
   display: block;
   font-size: 20px;
-  font-family: "Montserrat";
+  font-family: Montserrat;
   font-weight: 400;
   color: #444;
   line-height: 1.3;
@@ -32,7 +33,8 @@
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  background-color: #fff;
+  background: var(--background-secondary);
+  color: var(--text-primary);
   border: none;
   background-position: right 0.7em top 50%, 0 0;
   background-size: 2.5em auto, 100%;
@@ -50,8 +52,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   outline: none;
   border-color: #ac8efe;
 }
-.data_time_text {
-  color: var(--black, #192342);
+.label {
+  color: var(--text-primary);
   font-family: Montserrat;
   font-size: 1rem;
   font-style: normal;
@@ -64,8 +66,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   height: 50px;
   justify-content: center;
   align-items: center;
-  border-radius: 0.9375rem;
-  background: #fff;
+  border-radius: 15px;
+  background: var(--background-secondary);
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
   font-size: 20px;
 }
@@ -75,8 +77,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   height: 50px;
   justify-content: center;
   align-items: center;
-  border-radius: 0.9375rem;
-  background: #fff;
+  border-radius: 15px;
+  background: var(--background-secondary);
+  color: var(--text-primary);
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
   font-size: 20px;
 }
@@ -96,14 +99,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   justify-content: center;
   align-items: center;
   border-radius: 15px;
-  background: #fff;
-  color: #192342;
+  background: var(--background-secondary);
+  color: var(--text-primary);
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
   border: none;
   margin: 2.5% 0 5% 0;
-}
-.btn_style.active {
-  border: 2px solid #8a8aa4;
 }
 .input_style {
   height: 50px;
@@ -115,12 +115,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   justify-content: center;
   align-items: center;
   border-radius: 0.9375rem;
-  background: #fff;
-  color: #192342;
+  background: var(--background-secondary);
+  color: var(--text-primary);
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
   border: none;
   margin: 2.5% 0 5% 0;
 }
 .input_style:focus {
   outline: none;
+}
+.input_style::placeholder {
+  color: var(--text-primary);
 }

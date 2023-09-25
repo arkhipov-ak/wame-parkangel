@@ -6,15 +6,18 @@
   font-weight: 400;
   text-align: center;
   border-radius: 15px;
-  background: #fff;
-  color: #192342;
+  background: var(--background-secondary);
+  color: var(--text-primary);
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
   border: none;
   margin: 2.5% 0 5% 0;
   padding: 0 5%;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-image: url("/src/assets/drop-icon.svg");
+  background-image: var(--select-arrow);
   background-position: calc(100% - 1.3em) center;
   background-repeat: no-repeat;
+}
+.region_select:focus {
+  outline: none;
 }

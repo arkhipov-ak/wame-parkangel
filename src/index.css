@@ -5,6 +5,7 @@
   --text-primary: #192342;
   --background-secondary: #FFFFFF;
   --background-select: #8A8AA4;
+  --select-arrow: url("/src/assets/drop-icon.svg");
 }
 
 [data-theme="dark"] {
@@ -12,6 +13,7 @@
   --text-primary: #FFFFFF;
   --background-secondary: #434343;
   --background-select: #000000;
+  --select-arrow: url("/src/assets/drop-icon-white.svg");
 }
 
 body {
