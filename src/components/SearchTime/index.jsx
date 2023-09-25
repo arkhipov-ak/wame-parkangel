@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import NavBar from "../NavBar";
 import SelectSearchGive from "../SelectSearchGive";
-import TodayImg from "../../assets/today_img.svg";
-import TomorrowImg from "../../assets/tomorrow_image.svg";
-import FouinImg from "../../assets/fouin_img.svg";
+import todayImg from "../../assets/today_img.svg";
+import tomorrowImg from "../../assets/tomorrow_image.svg";
+import anotherImg from "../../assets/fouin_img.svg";
+import deleteImg from "../../assets/delete.svg";
+import editImg from "../../assets/edit.svg";
 import styles from "./SearchTime.module.css";
 import { BiChevronRight } from "react-icons/bi";
 import { Link } from "react-router-dom";
@@ -102,7 +104,7 @@ const SearchTime = () => {
             )}
             <img
               className={styles.img_today}
-              src={TodayImg}
+              src={todayImg}
               onLoad={() => setImageLoaded(true)}
               style={{ display: isImageLoaded ? "block" : "none" }}
             />
@@ -124,7 +126,7 @@ const SearchTime = () => {
             )}
             <img
               className={styles.img_today}
-              src={TomorrowImg}
+              src={tomorrowImg}
               onLoad={() => setImageLoaded(true)}
               style={{ display: isImageLoaded ? "block" : "none" }}
             />
@@ -146,7 +148,7 @@ const SearchTime = () => {
             )}
             <img
               className={styles.img_today}
-              src={FouinImg}
+              src={anotherImg}
               onLoad={() => setImageLoaded(true)}
               style={{ display: isImageLoaded ? "block" : "none" }}
             />
@@ -168,6 +170,10 @@ const SearchTime = () => {
                       <span className={styles.rent_status}>{ad.park.priceHour} руб/ч</span>
                     </div>
                     <p className={styles.rent_location}>Средний рейтинг: {renderRating(ad.review)}</p>
+                    <div className={styles.image_block}>
+                      <img src={editImg} alt="edit"/>
+                      <img src={deleteImg} alt="delete"/>
+                    </div>
                   </div>
                 ))
               ) : (
