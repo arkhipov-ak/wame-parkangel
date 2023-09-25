@@ -37,13 +37,8 @@ const NavBar = () => {
 
       {isMenuOpen && (
         <>
-          <div
-            className={styles.overlay}
-            onClick={() => setMenuOpen(false)}
-          ></div>
-          <div
-            className={`${styles.sideMenu} ${isMenuOpen ? styles.open : ""}`}
-          >
+          <div className={styles.overlay} onClick={() => setMenuOpen(false)}/>
+          <div className={`${styles.sideMenu} ${isMenuOpen ? styles.open : ""}`}>
             <div className={styles.wrapper_text}>
               <Link className={styles.linkfor} to="/search-time">На главную</Link>
               <Link className={styles.linkfor} to="/personal-area">Личный кабинет</Link>
@@ -53,6 +48,16 @@ const NavBar = () => {
               <Link className={styles.linkfor} to="/agreement">
                 Пользовательское <br /> соглашение
               </Link>
+              <button
+                type="button"
+                onClick={() => {
+                  if (snap.theme === "light") state.theme = "dark";
+                  else if (snap.theme === "dark") state.theme = "light";
+                }}
+                className={styles.linkfor}
+              >
+                Включить {snap.theme === "light" ? "темную" : "светлую"} тему
+              </button>
             </div>
           </div>
         </>

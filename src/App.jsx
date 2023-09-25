@@ -77,7 +77,7 @@ const App = () => {
   }, [snap.user]);
 
   return (
-    <div /* data-theme="light" */ data-theme={snap.theme}>
+    <div data-theme={snap.theme}>
       <SnackbarProvider
         anchorOrigin={{
           vertical: "top",
