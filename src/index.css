@@ -6,6 +6,7 @@
   --background-secondary: #FFFFFF;
   --button-primary: #8A8AA4;
   --select-arrow: url("/src/assets/drop-icon.svg");
+  --background-icon: #F1F3F9;
 }
 
 [data-theme="dark"] {
@@ -14,6 +15,7 @@
   --background-secondary: #434343;
   --button-primary: #000000;
   --select-arrow: url("/src/assets/drop-icon-white.svg");
+  --background-icon: #000000;
 }
 
 body {

@@ -54,6 +54,7 @@ const App = () => {
                   password: "",
                   email: "",
                   city: "moscow",
+                  theme: "light",
                 },
               ).then((response) => state.user = response.data.response)
               .catch(() => showErrorSnackbar({ message: "Не удалось записать юзера" }))

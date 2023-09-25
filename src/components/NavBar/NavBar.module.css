@@ -34,7 +34,7 @@
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  background: var(--button-primary);
+  background: var(--background-icon);
 }
 .container {
   position: relative;
