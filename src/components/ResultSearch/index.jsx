@@ -104,7 +104,7 @@ const ResultSearch = () => {
                   <span className={styles.rent_time}>{renderTime(item.park)}</span>
                   <span className={styles.rent_status}>{item.park.priceHour} руб/ч</span>
                 </div>
-                <p className={styles.rent_location}>Средний рейтинг: {renderRating(item.review)}</p>
+                <p className={styles.rent_location}>Рейтинг: {renderRating(item.review)}</p>
               </button>
             ))}
             <Link to="/show-map-result" className={styles.submit}>

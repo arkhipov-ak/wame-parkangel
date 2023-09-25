@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import axios from "axios";
 import NavBar from "../NavBar";
 import SelectSearchGive from "../SelectSearchGive";
@@ -11,14 +11,16 @@ import styles from "./SearchTime.module.css";
 import { BiChevronRight } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import Container from "../common/Container";
-import { showErrorSnackbar } from "../../utils/showSnackBar";
+import { showErrorSnackbar, showSuccessSnackbar } from "../../utils/showSnackBar";
 import { useSnapshot } from "valtio";
 import { state } from "../../state";
 import ZeroData from "../common/ZeroData";
+import Modal from "../common/Modal";
 
 const SearchTime = () => {
   const snap = useSnapshot(state);
   const [isImageLoaded, setImageLoaded] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [myAds, setMyAds] = useState([]);
 
   const renderTime = (item) => {
@@ -39,7 +41,7 @@ const SearchTime = () => {
     return `${hoursStart}:${minutesStart} - ${hoursEnd}:${minutesEnd}`;
   };
 
-    const renderDate = (item) => {
+  const renderDate = (item) => {
     const dateStart = new Date(item.availabilityDateStart);
     const dayStart = (dateStart.getDate() + ""). length === 1
       ? `0${dateStart.getDate()}`
@@ -70,11 +72,26 @@ const SearchTime = () => {
     return ratings.reduce((acc, rating) => acc + rating, 0) / ratings.length;
   };
 
+  const onHandleDeleteClick = (ad) => {
+    axios.delete(`https://parkangel-backend.protomusic.ru/api/ad/${ad.id}`)
+      .then(() => {
+        showSuccessSnackbar({ message: "Объявление удалено" });
+        setOpenDeleteModal(false);
+        axios.get(`https://parkangel-backend.protomusic.ru/api/ad/userId/${snap.user.id}`)
+          .then((response) => setMyAds(response.data.response))
+          .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления" }))
+      })
+      .catch(() => {
+        showErrorSnackbar({ message: "Не удалось удалить объявление" });
+        setOpenDeleteModal(false);
+      })
+  };
+
   useEffect(() => {
     if (snap && snap.user) {
       axios.get(`https://parkangel-backend.protomusic.ru/api/ad/userId/${snap.user.id}`)
         .then((response) => setMyAds(response.data.response))
-        .catch(() => showErrorSnackbar({ message: "Не удалось получить историю аренды" }))
+        .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления" }))
     }
   }, [snap]);
 
@@ -162,19 +179,37 @@ const SearchTime = () => {
             <h2 className={styles.history}>Мои объявления</h2>
               {myAds.length ? (
                 myAds.map((ad) => (
-                  <div key={ad.id} className={styles.wrapper_rentCard}>
-                    <p className={styles.rent_location}>{ad.park.address}</p>
-                    <div className={styles.secondRow}>
-                      <span className={styles.rent_time}>{renderDate(ad.park)}</span>
-                      <span className={styles.rent_time}>{renderTime(ad.park)}</span>
-                      <span className={styles.rent_status}>{ad.park.priceHour} руб/ч</span>
+                  <Fragment key={ad.id}>
+                    <div className={styles.wrapper_rentCard}>
+                      <p className={styles.rent_location}>{ad.park.address}</p>
+                      <div className={styles.secondRow}>
+                        <span className={styles.rent_time}>{renderDate(ad.park)}</span>
+                        <span className={styles.rent_time}>{renderTime(ad.park)}</span>
+                        <span className={styles.rent_status}>{ad.park.priceHour} руб/ч</span>
+                      </div>
+                      <p className={styles.rent_location}>Рейтинг: {renderRating(ad.review)}</p>
+                      <div className={styles.image_block}>
+                        <img src={editImg} alt="edit"/>
+                        <img src={deleteImg} alt="delete" onClick={() => setOpenDeleteModal(true)}/>
+                      </div>
                     </div>
-                    <p className={styles.rent_location}>Средний рейтинг: {renderRating(ad.review)}</p>
-                    <div className={styles.image_block}>
-                      <img src={editImg} alt="edit"/>
-                      <img src={deleteImg} alt="delete"/>
-                    </div>
-                  </div>
+                    {openDeleteModal && (
+                      <Modal
+                        setOpenModal={setOpenDeleteModal}
+                        openModal={openDeleteModal}
+                        title="Удалить объявление?"
+                      >
+                        <div className={styles.btnWrapper}>
+                          <button type="button" className={styles.modal_button} onClick={() => setOpenDeleteModal(false)}>
+                            Нет
+                          </button>
+                          <button type="button" onClick={() => onHandleDeleteClick(ad)} className={styles.modal_button}>
+                            Да
+                          </button>
+                        </div>
+                      </Modal>
+                    )}
+                  </Fragment>
                 ))
               ) : (
                 <ZeroData>Объявлений нет</ZeroData>
