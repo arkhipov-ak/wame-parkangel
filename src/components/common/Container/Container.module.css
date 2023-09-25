@@ -4,4 +4,5 @@
     align-items: center;
     padding: 10%;
     background: var(--background);
+    min-height: calc(100vh - 156px);
   }

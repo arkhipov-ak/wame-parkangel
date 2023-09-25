@@ -4,20 +4,24 @@
   --background: #F1F3F9;
   --text-primary: #192342;
   --background-secondary: #FFFFFF;
+  --background-select: #8A8AA4;
 }
 
 [data-theme="dark"] {
   --background: linear-gradient(312deg, #47494E 7.62%, #121212 91.89%);
   --text-primary: #FFFFFF;
   --background-secondary: #434343;
+  --background-select: #000000;
 }
 
 body {
   padding: 0;
   margin: 0;
-  font-family: "Montserrat";
-  /* background: #F1F3F9; */
+  font-family: Montserrat;
   scroll-behavior: smooth;
+  min-height: 100vh;
+  min-width: 100vw;
+  width: 100vw;
 }
 
 html {

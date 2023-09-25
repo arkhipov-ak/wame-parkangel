@@ -1,19 +1,19 @@
 .card_today {
   display: inline-flex;
-  padding-left: 0.625rem;
+  padding-left: 5%;
   align-items: center;
   gap: 1.25rem;
   border-radius: 0.9375rem;
   text-decoration: none;
-  color: #0000;
-  background: #fff;
+  color: var(--text-primary);
+  background: var(--background-secondary);
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
   margin-bottom: 5%;
-  width: 100%;
+  width: 95%;
   white-space: nowrap;
 }
 .text_today {
-  color: #192342;
+  color: var(--text-primary);
   font-weight: 500;
   font-size: 130%;
 }
@@ -22,17 +22,17 @@
   height: 25px;
 }
 .title {
-  color: var(--black, #192342);
+  color: var(--text-primary);
   font-family: Montserrat;
   font-size: 0.9375rem;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   text-decoration-line: none;
-  border-bottom: 1px solid var(--black, #192342);
+  border-bottom: 1px solid var(--text-primary);
 }
 .history {
-  color: var(--black, #192342);
+  color: var(--text-primary);
   font-size: 1.8rem;
   font-style: normal;
   font-weight: 450;

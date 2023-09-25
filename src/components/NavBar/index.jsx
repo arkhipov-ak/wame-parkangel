@@ -1,11 +1,15 @@
 import { useState } from "react";
 import styles from "./NavBar.module.css";
 import parkAngel from "/src/assets/park-angel.svg";
+import parkAngelDark from "/src/assets/park-angel-dark.svg";
 import { AiOutlineLeft } from "react-icons/ai";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useSnapshot } from "valtio";
+import { state } from "../../state";
 
 const NavBar = () => {
+  const snap = useSnapshot(state);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,27 +23,15 @@ const NavBar = () => {
     <nav className={styles.wrapper}>
       {location.pathname !== "/search-time" && (
         <button onClick={handleGoBack} className={styles.return__btn}>
-          <AiOutlineLeft
-            style={{
-              color: "#192342",
-              width: "60%",
-              height: "60%",
-            }}
-          />
+          <AiOutlineLeft className={styles.icon}/>
         </button>
       )}
-      <img className={styles.logo} src={parkAngel} />
+      <img className={styles.logo} src={snap.theme === "light" ? parkAngel : parkAngelDark} />
       <button
         className={styles.option__btn}
         onClick={() => setMenuOpen(!isMenuOpen)}
       >
-        <BiMenuAltLeft
-          style={{
-            color: "#192342",
-            width: "60%",
-            height: "60%",
-          }}
-        />
+        <BiMenuAltLeft className={styles.icon}/>
       </button>
 
       {isMenuOpen && (

@@ -1,8 +1,8 @@
 .wrapper {
-  width: 100%;
+  width: 98%;
   height: 50px;
   border-radius: 1.5625rem;
-  background: #fff;
+  background: var(--background-secondary);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -13,11 +13,11 @@
   width: 49%;
   height: 42px;
   border-radius: 25px;
-  color: #fff;
+  color: #FFFFFF;
   font-family: Montserrat;
   font-weight: 500;
   font-size: 17px;
-  background: #8a8aa4;
+  background: var(--background-select);
   border: none;
   transition: all .1s ease-in-out;
   padding: 0;
@@ -27,7 +27,7 @@
   background-color: transparent;
   width: 49%;
   border-radius: 25px;
-  color: #111111;
+  color: var(--text-primary);
   height: 42px;
   font-family: Montserrat;
   font-weight: 500;

@@ -2,7 +2,7 @@
   width: 100%;
   border-radius: 15px;
   font-weight: 500;
-  background: #ffffff;
+  background: var(--background-secondary);
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -10,4 +10,5 @@
 .no_data {
   margin: 0 auto;
   padding: 5% 0;
+  color: var(--text-primary);
 }
