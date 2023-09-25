@@ -35,12 +35,11 @@ const App = () => {
     window.Telegram.WebApp.ready();
     const tg = window?.Telegram?.WebApp;
     tg.expand()
-    const getUser = async () => {
       const user = tg.initDataUnsafe.user;
       if (user) {
         const chatId = user.id;
         console.log(chatId);
-        await axios.get(`https://parkangel-backend.protomusic.ru/api/users/chatId/${chatId}`)
+        axios.get(`https://parkangel-backend.protomusic.ru/api/users/chatId/${chatId}`)
           .then((response) => {
             if (response.data.response) state.user = response.data.response;
             else {
@@ -62,9 +61,6 @@ const App = () => {
           })
           .catch(() => showErrorSnackbar({ message: "Что-то пошло не так" }))
       }
-    }
-   
-    getUser();
   }, []);
 
   useEffect(() => {
@@ -76,7 +72,7 @@ const App = () => {
   }, [snap.user]);
 
   return (
-    <div data-theme={snap.theme}>
+    <div data-theme={snap.user?.theme || "light"}>
       <SnackbarProvider
         anchorOrigin={{
           vertical: "top",

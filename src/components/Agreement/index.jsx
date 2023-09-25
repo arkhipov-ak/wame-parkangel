@@ -8,7 +8,6 @@ import axios from "axios";
 import { showErrorSnackbar } from "../../utils/showSnackBar";
 import { useSnapshot } from "valtio";
 import { state } from "../../state";
-import Container from "../common/Container";
 
 const Agreement = () => {
   const snap = useSnapshot(state);
@@ -46,7 +45,7 @@ const Agreement = () => {
   }, [snap.user, snap.user.dateAcceptAgreement]);
 
   return (
-    <Container>
+    <div className={styles.container}>
       <div className={styles.wrapper}>
         {!isImageLoaded && (
           <div
@@ -60,7 +59,7 @@ const Agreement = () => {
         )}
         <img
           className={styles.logotype}
-          src={snap.user.theme === "light" ? parkAngel : parkAngelDark}
+          src={snap.user?.theme === "light" ? parkAngel : parkAngelDark}
           onLoad={handleImageLoad}
           style={{ display: isImageLoaded ? "block" : "none" }}
         />
@@ -93,7 +92,7 @@ const Agreement = () => {
               Вернуться
             </Button>
             {date && (
-              <span style={{ marginTop: "20px" }}>Дата принятия соглашения: {date}</span>
+              <span className={styles.date}>Дата принятия соглашения: {date}</span>
             )}
           </>
         ) : (
@@ -102,7 +101,7 @@ const Agreement = () => {
           </Button>
         )}
       </div>
-    </Container>
+    </div>
   );
 };
 

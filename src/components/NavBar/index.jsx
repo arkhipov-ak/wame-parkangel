@@ -40,7 +40,7 @@ const NavBar = () => {
           <AiOutlineLeft className={styles.icon}/>
         </button>
       )}
-      <img className={styles.logo} src={snap.user.theme === "light" ? parkAngel : parkAngelDark} alt="logo"/>
+      <img className={styles.logo} src={snap.user?.theme === "light" ? parkAngel : parkAngelDark} alt="logo"/>
       <button
         type="button"
         className={styles.menu_btn}
@@ -67,7 +67,7 @@ const NavBar = () => {
                 onClick={() => onHandleThemeClick(snap.user.theme === "light" ? "dark" : "light")}
                 className={styles.linkfor}
               >
-                Включить {snap.user.theme === "light" ? "темную" : "светлую"} тему
+                Включить {snap.user?.theme === "light" ? "темную" : "светлую"} тему
               </button>
             </div>
           </div>

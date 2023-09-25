@@ -99,7 +99,7 @@ const ResultSearch = () => {
                 <p className={styles.rent_location}>{item.park.address}</p>
                 <div className={styles.secondRow}>
                   <span className={styles.rent_date}>
-                    <img src={snap.user.theme === "light" ? location : locationLight} /> 37 м
+                    <img src={snap.user?.theme === "light" ? location : locationLight} /> 37 м
                   </span>
                   <span className={styles.rent_time}>{renderTime(item.park)}</span>
                   <span className={styles.rent_status}>{item.park.priceHour} руб/ч</span>
