@@ -6,6 +6,7 @@ export const initialState = proxy({
 	options: null,
 	isSearchPark: null,
 	resultElement: null,
+	theme: "dark"
 });
 
 export const state = proxy(initialState);

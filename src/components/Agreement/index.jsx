@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import styles from "./Agreement.module.css";
-import parkAngel from "/src/assets/ParkAngel.svg";
+import parkAngel from "/src/assets/park-angel.svg";
+import parkAngelDark from "/src/assets/park-angel-dark.svg";
 import { useNavigate } from "react-router-dom";
 import Button from "../common/Button";
 import axios from "axios";
 import { showErrorSnackbar } from "../../utils/showSnackBar";
 import { useSnapshot } from "valtio";
 import { state } from "../../state";
+import Container from "../common/Container";
 
 const Agreement = () => {
   const snap = useSnapshot(state);
@@ -44,7 +46,7 @@ const Agreement = () => {
   }, [snap.user, snap.user.dateAcceptAgreement]);
 
   return (
-    <div className={styles.container}>
+    <Container>
       <div className={styles.wrapper}>
         {!isImageLoaded && (
           <div
@@ -58,7 +60,7 @@ const Agreement = () => {
         )}
         <img
           className={styles.logotype}
-          src={parkAngel}
+          src={snap.theme === "light" ? parkAngel : parkAngelDark}
           onLoad={handleImageLoad}
           style={{ display: isImageLoaded ? "block" : "none" }}
         />
@@ -100,7 +102,7 @@ const Agreement = () => {
           </Button>
         )}
       </div>
-    </div>
+    </Container>
   );
 };
 

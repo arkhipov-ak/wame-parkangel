@@ -5,9 +5,10 @@
   align-items: center;
   height: 100vh;
   text-align: center;
+  background: var(--background);
 }
 .text_main {
-  color: var(--black, #192342);
+  color: var(--text-primary);
   text-align: center;
   font-size: 1.45675rem;
   font-style: normal;
@@ -16,7 +17,7 @@
   margin-bottom: 8px;
 }
 .text_descr {
-  color: var(--black, #192342);
+  color: var(--text-primary);
   font-size: 1.45675rem;
   font-style: normal;
   font-weight: 500;
@@ -30,23 +31,27 @@
 .password_input {
   height: 50px;
   border-radius: 15px;
-  background: #ffffff;
+  background: var(--background-secondary);
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
-  color: #192342;
+  color: var(--text-primary);
   font-size: 16px;
   font-weight: 500;
   padding: 0 15px;
+  text-align: center;
+  border: 1px solid var(--text-primary);
 }
 .password_input::placeholder {
   width: 100%;
   text-align: center;
   margin: 0 auto;
+  color: var(--text-primary);
 }
 .password_input:focus {
   outline: none;
 }
 .text_block {
   font-size: 14px;
+  color: var(--text-primary);
 }
 .link {
   text-decoration-line: none;

@@ -12,7 +12,7 @@
 .modal {
   width: 250px;
   padding: 30px;
-  background: #fff;
+  background: var(--background-secondary);
   position: relative;
   z-index: 20;
   overflow-y: auto;

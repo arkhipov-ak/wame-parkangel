@@ -55,8 +55,6 @@ const PersonalArea = () => {
     if (snap && snap.user) setData(snap.user)
   }, [snap.user]);
 
-  console.log(data);
-
   return (
     <>
       <NavBar />

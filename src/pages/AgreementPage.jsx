@@ -1,4 +1,4 @@
-import Agreement from '../components/Agreement/Agreement'
+import Agreement from '../components/Agreement'
 
 const AgreementPage = () => <Agreement/>
 

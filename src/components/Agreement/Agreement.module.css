@@ -17,12 +17,9 @@
   text-align: center;
   text-align: left;
 }
-.wrapper img {
-  margin-top: 5%;
-}
 .main_text {
   width: 100%;
-  color: var(--black, #192342);
+  color: var(--text-primary);
   font-family: Montserrat;
   font-size: 1.25rem;
   font-style: normal;
@@ -31,7 +28,7 @@
 }
 .descr_text {
   width: 100%;
-  color: var(--black, #192342);
+  color: var(--text-primary);;
   display: flex;
   justify-content: center;
   margin: 10px 0;

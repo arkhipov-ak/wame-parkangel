@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./NavBar.module.css";
-import parkAngel from "/src/assets/ParkAngel.svg";
+import parkAngel from "/src/assets/park-angel.svg";
 import { AiOutlineLeft } from "react-icons/ai";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { useNavigate, useLocation, Link } from "react-router-dom";

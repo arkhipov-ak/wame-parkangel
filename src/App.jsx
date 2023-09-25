@@ -55,7 +55,7 @@ const App = () => {
                   phoneNumber: "",
                   password: "",
                   email: "",
-                  city: "",
+                  city: "moscow",
                 },
               ).then((response) => state.user = response.data.response)
               .catch(() => showErrorSnackbar({ message: "Не удалось записать юзера" }))
@@ -77,55 +77,57 @@ const App = () => {
   }, [snap.user]);
 
   return (
-    <SnackbarProvider
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      maxSnack={2}
-      autoHideDuration={3000}
-    >
-      <Router>
-        <ScrollToTop />
-          <Routes>
-            <Route path="/search-time" element={<SearchTimePage/>}/>
-            <Route path="/" exact element={<HomePage/>} />
-            <Route path="/agreement" element={<AgreementPage/>}/>
-            <Route
-              path="/select-address-location"
-              element={<SelectAddressLocationPage/>}
-            />
-            <Route path="/about-service" element={<AboutServicePage/>}/>
-            <Route path="/faq" element={<FAQPage/>}/>
-            <Route path="/choose-time-today" element={<ChooseTimeTodayPage/>}/>
-            <Route
-              path="/choose-time-tomorrow"
-              element={<ChooseTimeTomorrowPage/>}
-            />
-            <Route
-              path="/choose-another-time"
-              element={<ChooseAnotherTimePage/>}
-            />
-            <Route path="/personal-area" element={<PersonalAreaPage/>}/>
-            <Route path="/result-search/:id" element={<ResultSearchElementPage/>}/>
-            <Route path="/result-search" element={<ResultSearchPage/>}/>
-            <Route path="/extra-options" element={<ExtraOptionsPage/>}/>
-            <Route path="/options" element={<OptionsPage/>}/>
-            <Route path="/show-map-result" element={<ShowMapResultPage/>}/>
-            <Route path="/search-today" element={<SearchTodayPage/>}/>
-            <Route
-              path="/search-another-time"
-              element={<SearchAnotherTimePage/>}
-            />
-            <Route path="/search-tomorrow" element={<SearchTomorrowPage/>}/>
-            <Route path="/SelectInMap" element={<SelectInMapPage/>}/>
-            <Route path="/review" element={<ReviewPage/>}/>
-            <Route path="/Extra" element={<ExtraPage/>}/>
-            <Route path="/Add" element={<AddPage/>}/>
-            <Route path="/map" element={<ChooseMap/>}/>
-          </Routes>
-      </Router>
-    </SnackbarProvider>
+    <div /* data-theme="light" */ data-theme={snap.theme}>
+      <SnackbarProvider
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        maxSnack={2}
+        autoHideDuration={3000}
+      >
+        <Router>
+          <ScrollToTop />
+            <Routes>
+              <Route path="/search-time" element={<SearchTimePage/>}/>
+              <Route path="/" exact element={<HomePage/>} />
+              <Route path="/agreement" element={<AgreementPage/>}/>
+              <Route
+                path="/select-address-location"
+                element={<SelectAddressLocationPage/>}
+              />
+              <Route path="/about-service" element={<AboutServicePage/>}/>
+              <Route path="/faq" element={<FAQPage/>}/>
+              <Route path="/choose-time-today" element={<ChooseTimeTodayPage/>}/>
+              <Route
+                path="/choose-time-tomorrow"
+                element={<ChooseTimeTomorrowPage/>}
+              />
+              <Route
+                path="/choose-another-time"
+                element={<ChooseAnotherTimePage/>}
+              />
+              <Route path="/personal-area" element={<PersonalAreaPage/>}/>
+              <Route path="/result-search/:id" element={<ResultSearchElementPage/>}/>
+              <Route path="/result-search" element={<ResultSearchPage/>}/>
+              <Route path="/extra-options" element={<ExtraOptionsPage/>}/>
+              <Route path="/options" element={<OptionsPage/>}/>
+              <Route path="/show-map-result" element={<ShowMapResultPage/>}/>
+              <Route path="/search-today" element={<SearchTodayPage/>}/>
+              <Route
+                path="/search-another-time"
+                element={<SearchAnotherTimePage/>}
+              />
+              <Route path="/search-tomorrow" element={<SearchTomorrowPage/>}/>
+              <Route path="/SelectInMap" element={<SelectInMapPage/>}/>
+              <Route path="/review" element={<ReviewPage/>}/>
+              <Route path="/Extra" element={<ExtraPage/>}/>
+              <Route path="/Add" element={<AddPage/>}/>
+              <Route path="/map" element={<ChooseMap/>}/>
+            </Routes>
+        </Router>
+      </SnackbarProvider>
+    </div>
   );
 };
 
