@@ -1,6 +1,7 @@
 import NavBar from "../NavBar";
 import styles from "./ResultSearch.module.css";
-import Location from "../../assets/location.svg";
+import location from "../../assets/location.svg";
+import locationLight from "../../assets/location-light.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useSnapshot } from "valtio";
 import { state } from "../../state";
@@ -98,7 +99,7 @@ const ResultSearch = () => {
                 <p className={styles.rent_location}>{item.park.address}</p>
                 <div className={styles.secondRow}>
                   <span className={styles.rent_date}>
-                    <img src={Location} /> 37 м
+                    <img src={snap.user.theme === "light" ? location : locationLight} /> 37 м
                   </span>
                   <span className={styles.rent_time}>{renderTime(item.park)}</span>
                   <span className={styles.rent_status}>{item.park.priceHour} руб/ч</span>

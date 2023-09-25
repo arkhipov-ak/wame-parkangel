@@ -7,6 +7,8 @@ import { BiMenuAltLeft } from "react-icons/bi";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useSnapshot } from "valtio";
 import { state } from "../../state";
+import axios from "axios";
+import { showErrorSnackbar, showSuccessSnackbar } from "../../utils/showSnackBar";
 
 const NavBar = () => {
   const snap = useSnapshot(state);
@@ -19,6 +21,18 @@ const NavBar = () => {
      else navigate(-1);
   };
 
+  const onHandleThemeClick = (theme) => {
+    axios.put("https://parkangel-backend.protomusic.ru/api/users", {...snap.user, theme: theme})
+    .then(() => {
+      showSuccessSnackbar({ message: "Тема обновлена" })
+      axios.get(`https://parkangel-backend.protomusic.ru/api/users/chatId/${snap.user.chatId}`)
+        .then((response) => {
+          if (response.data.response) state.user = response.data.response;
+        }).catch(() => showErrorSnackbar({ message: "Не удалось получить данные юзера" }))
+    })
+    .catch(() => showErrorSnackbar({ message: "Не удалось обновить данные профиля" }))
+  };
+
   return (
     <nav className={styles.wrapper}>
       {location.pathname !== "/search-time" && (
@@ -26,7 +40,7 @@ const NavBar = () => {
           <AiOutlineLeft className={styles.icon}/>
         </button>
       )}
-      <img className={styles.logo} src={snap.theme === "light" ? parkAngel : parkAngelDark} alt="logo"/>
+      <img className={styles.logo} src={snap.user.theme === "light" ? parkAngel : parkAngelDark} alt="logo"/>
       <button
         type="button"
         className={styles.menu_btn}
@@ -50,13 +64,10 @@ const NavBar = () => {
               </Link>
               <button
                 type="button"
-                onClick={() => {
-                  if (snap.theme === "light") state.theme = "dark";
-                  else if (snap.theme === "dark") state.theme = "light";
-                }}
+                onClick={() => onHandleThemeClick(snap.user.theme === "light" ? "dark" : "light")}
                 className={styles.linkfor}
               >
-                Включить {snap.theme === "light" ? "темную" : "светлую"} тему
+                Включить {snap.user.theme === "light" ? "темную" : "светлую"} тему
               </button>
             </div>
           </div>

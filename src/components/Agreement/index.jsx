@@ -60,7 +60,7 @@ const Agreement = () => {
         )}
         <img
           className={styles.logotype}
-          src={snap.theme === "light" ? parkAngel : parkAngelDark}
+          src={snap.user.theme === "light" ? parkAngel : parkAngelDark}
           onLoad={handleImageLoad}
           style={{ display: isImageLoaded ? "block" : "none" }}
         />
