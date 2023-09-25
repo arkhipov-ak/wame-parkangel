@@ -34,6 +34,13 @@ const ChooseMap = () => {
       console.error("Error fetching address:", error);
     }
   };
+
+  const handleSelectClick = () => {
+    if (selectedAddress) {
+      navigate(`/review?address=${encodeURIComponent(selectedAddress)}`); //TODO: fix this function
+    }
+  };
+
   useEffect(() => {
     if (selectedLocation) {
       console.log(selectedLocation);
@@ -43,12 +50,6 @@ const ChooseMap = () => {
       );
     }
   }, [selectedLocation]);
-
-  const handleSelectClick = () => {
-    if (selectedAddress) {
-      navigate(`/review?address=${encodeURIComponent(selectedAddress)}`);
-    }
-  };
 
   return (
     <div>
