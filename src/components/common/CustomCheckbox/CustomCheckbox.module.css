@@ -14,15 +14,15 @@
   transition: all .3s ease-in-out;
 }
 .checked {
-  background: #8A8AA4;
+  background: var(--button-primary);
 }
 .not_checked {
-  background: #ffffff;
+  background: #FFFFFF;
 }
 .label {
   font-weight: 500;
   font-size: 15px;
   line-height: 16px;
-  color: #192342;
+  color: var(--text-primary);
   margin: 0 0 0 10px;
 }

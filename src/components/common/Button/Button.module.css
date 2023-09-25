@@ -5,9 +5,9 @@
     justify-content: center;
     align-items: center;
     border-radius: 0.9375rem;
-    background: #8a8aa4;
+    background: var(--button-primary);
     box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
-    color: white;
+    color: #FFFFFF;
     border: none;
     font-size: 0.999rem;
     font-style: normal;

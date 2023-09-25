@@ -1,9 +1,10 @@
 .close_button {
     margin-left: auto;
-    background: #F6F7F9;
+    background: var(--background-secondary);
     min-width: 36px;
     width: 36px;
     height: 36px;
     border-radius: 50%;
+    border: 1px solid var(--button-primary);
     cursor: pointer;
 }

@@ -4,7 +4,7 @@
   --background: #F1F3F9;
   --text-primary: #192342;
   --background-secondary: #FFFFFF;
-  --background-select: #8A8AA4;
+  --button-primary: #8A8AA4;
   --select-arrow: url("/src/assets/drop-icon.svg");
 }
 
@@ -12,7 +12,7 @@
   --background: linear-gradient(312deg, #47494E 7.62%, #121212 91.89%);
   --text-primary: #FFFFFF;
   --background-secondary: #434343;
-  --background-select: #000000;
+  --button-primary: #000000;
   --select-arrow: url("/src/assets/drop-icon-white.svg");
 }
 

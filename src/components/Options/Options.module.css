@@ -23,13 +23,14 @@ label {
   font-weight: 500;
   font-size: 15px;
   line-height: 16px;
-  color: #192342;
+  color: var(--text-primary);
 }
 .toggleWrapper {
   transform: scale(0.8);
 }
 .main_text {
   font-weight: 500;
+  color: var(--text-primary);
 }
 .title {
   font-size: 18px;
