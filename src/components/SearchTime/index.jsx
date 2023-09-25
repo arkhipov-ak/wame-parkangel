@@ -63,7 +63,7 @@ const SearchTime = () => {
   };
 
   const renderRating = (item) => {
-    if (!item.length) return "Недостаточно оценок";
+    if (!item.length) return "Оценок нет";
     const ratings = item.map((elem) => elem.rating);
     return ratings.reduce((acc, rating) => acc + rating, 0) / ratings.length;
   };
@@ -159,8 +159,8 @@ const SearchTime = () => {
           <div className={styles.wrapper_rent}>
             <h2 className={styles.history}>Мои объявления</h2>
               {myAds.length ? (
-                myAds.map((ad, index) => (
-                  <div key={index} className={styles.wrapper_rentCard}>
+                myAds.map((ad) => (
+                  <div key={ad.id} className={styles.wrapper_rentCard}>
                     <p className={styles.rent_location}>{ad.park.address}</p>
                     <div className={styles.secondRow}>
                       <span className={styles.rent_time}>{renderDate(ad.park)}</span>
