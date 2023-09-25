@@ -22,13 +22,14 @@ const NavBar = () => {
   return (
     <nav className={styles.wrapper}>
       {location.pathname !== "/search-time" && (
-        <button onClick={handleGoBack} className={styles.return__btn}>
+        <button type="button" onClick={handleGoBack} className={styles.menu_btn}>
           <AiOutlineLeft className={styles.icon}/>
         </button>
       )}
-      <img className={styles.logo} src={snap.theme === "light" ? parkAngel : parkAngelDark} />
+      <img className={styles.logo} src={snap.theme === "light" ? parkAngel : parkAngelDark} alt="logo"/>
       <button
-        className={styles.option__btn}
+        type="button"
+        className={styles.menu_btn}
         onClick={() => setMenuOpen(!isMenuOpen)}
       >
         <BiMenuAltLeft className={styles.icon}/>

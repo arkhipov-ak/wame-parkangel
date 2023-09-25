@@ -21,22 +21,20 @@
   width: 60%;
   height: 60%;
 }
-.return__btn {
+.menu_btn {
   width: 3rem;
   height: 3rem;
-  flex-shrink: 0;
   border: none;
   border-radius: 50%;
   cursor: pointer;
 }
-.option__btn {
+.menu_btn {
   width: 3rem;
   height: 3rem;
-  flex-shrink: 0;
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  background: var(--background);
+  background: var(--background-select);
 }
 .container {
   position: relative;
