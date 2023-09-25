@@ -50,6 +50,7 @@
   font-family: Montserrat;
   font-size: 16px;
   margin: 0;
+  color: var(--text-primary);
 }
 .wrapper_zero_data {
   display: flex;

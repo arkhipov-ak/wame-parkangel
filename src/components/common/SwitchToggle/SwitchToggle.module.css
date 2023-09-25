@@ -7,10 +7,10 @@
 	transition: all .3s ease-in-out;
 }
 .not_active_toggle {
-  background: #E2E5EA;
+  background: var(--background-toggle);
 }
 .active_toggle {
-  background: #8A8AA4;
+  background: var(--button-primary);
 }
 .active_round, .not_active_round {
   background: #FFFFFF;

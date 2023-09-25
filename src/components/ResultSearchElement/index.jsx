@@ -24,10 +24,10 @@ const ResultSearchElement = () => {
   const renderParkingType = () => {
     let array = [];
 
-    if (snap.resultElement.park.isUnderground) array.push("Подземная");
-    if (snap.resultElement.park.isOutDoor) array.push("Открытая");
-    if (snap.resultElement.park.isCovered) array.push("Крытая");
-    if (snap.resultElement.park.isGarage) array.push("Гараж");
+    if (snap.resultElement?.park.isUnderground) array.push("Подземная");
+    if (snap.resultElement?.park.isOutDoor) array.push("Открытая");
+    if (snap.resultElement?.park.isCovered) array.push("Крытая");
+    if (snap.resultElement?.park.isGarage) array.push("Гараж");
 
     return array.length ? array.join(", ") : "Не указан";
   };
@@ -35,23 +35,23 @@ const ResultSearchElement = () => {
   const renderElectroType = () => {
     let array = [];
 
-    if (snap.resultElement.park.isVolts) array.push("220V");
-    if (snap.resultElement.park.isElectroMobile) array.push("Электромобиль");
-    if (snap.resultElement.park.isVoltsWithCharger) array.push("220V и зарядка электромобиля");
-    if (snap.resultElement.park.isWithoutPower) array.push("Без электропитания");
+    if (snap.resultElement?.park.isVolts) array.push("220V");
+    if (snap.resultElement?.park.isElectroMobile) array.push("Электромобиль");
+    if (snap.resultElement?.park.isVoltsWithCharger) array.push("220V и зарядка электромобиля");
+    if (snap.resultElement?.park.isWithoutPower) array.push("Без электропитания");
 
     return array.length ? array.join(", ") : "Не указано";
   };
 
   const renderTime = () => {
-    const dateStart = new Date(snap.parkDate.dateStartISO);
+    const dateStart = new Date(snap.parkDate?.dateStartISO);
     const hoursStart = dateStart.getHours();
     const minutesStart = (dateStart.getMinutes() + "").length === 1
       ? `0${dateStart.getMinutes()}`
       : dateStart.getMinutes()
     ;
 
-    const dateEnd = new Date(snap.parkDate.dateEndISO);
+    const dateEnd = new Date(snap.parkDate?.dateEndISO);
     const hoursEnd = dateEnd.getHours();
     const minutesEnd = (dateEnd.getMinutes() + "").length === 1
       ? `0${dateEnd.getMinutes()}`
@@ -62,7 +62,7 @@ const ResultSearchElement = () => {
   };
 
   const renderDate = () => {
-    const dateStart = new Date(snap.parkDate.dateStartISO);
+    const dateStart = new Date(snap.parkDate?.dateStartISO);
     const dayStart = dateStart.getDate();
     const monthStart = (dateStart.getMonth() + 1 + "").length === 1 
       ? `0${dateStart.getMonth() + 1}`
@@ -70,11 +70,11 @@ const ResultSearchElement = () => {
     ;
     const yearStart = dateStart.getFullYear();
 
-    if (snap.parkDate.hoursCountOneDay || snap.parkDate.hoursStartOneDay || snap.parkDate.minutesOneDay) {
+    if (snap.parkDate?.hoursCountOneDay || snap.parkDate?.hoursStartOneDay || snap.parkDate?.minutesOneDay) {
       return `${dayStart}.${monthStart}.${yearStart}`;
     } //если сдаем на один день, то выводим одну дату
 
-    const dateEnd = new Date(snap.parkDate.dateEndISO);
+    const dateEnd = new Date(snap.parkDate?.dateEndISO);
     const dayEnd = dateEnd.getDate();
     const monthEnd = (dateEnd.getMonth() + 1 + "").length === 1 
       ? `0${dateEnd.getMonth() + 1}`
@@ -102,11 +102,11 @@ const ResultSearchElement = () => {
 	}
 
   useEffect(() => {
-    if (!snap.resultElement) {
+    if (snap && (!snap.resultElement || !snap.parkDate)) {
       showErrorSnackbar({ message: "Пожалуйста, повторите попытку" });
       navigate("/search-time");
     }
-  }, [snap, snap.user, snap.resultElement]);
+  }, [snap.resultElement, snap.parkDate]);
 
   return (
     <>
@@ -115,7 +115,7 @@ const ResultSearchElement = () => {
         <h2 className={styles.title}>Выбранная парковка</h2>
         <div style={{ width: "100%" }}>
           <div className={styles.wrapper_div}>
-            <p className={styles.address}>{snap.resultElement.park.address}</p>
+            <p className={styles.address}>{snap.resultElement?.park.address}</p>
             <div className={styles.styles_container}>
               <div className={styles.content_wrapper}>
                 <span className={styles.label}>Тип паркинга</span>
@@ -123,11 +123,11 @@ const ResultSearchElement = () => {
               </div>
               <div className={styles.content_wrapper}>
                 <span className={styles.label}>Охрана</span>
-                <span className={styles.value}>{snap.resultElement.park.isProtected ? "Да" : "Нет"}</span>
+                <span className={styles.value}>{snap.resultElement?.park.isProtected ? "Да" : "Нет"}</span>
               </div>
               <div className={styles.content_wrapper}>
                 <span className={styles.label}>Обогрев</span>
-                <span className={styles.value}>{snap.resultElement.park.isHeated ? "Да" : "Нет"}</span>
+                <span className={styles.value}>{snap.resultElement?.park.isHeated ? "Да" : "Нет"}</span>
               </div>
               <div className={styles.content_wrapper}>
                 <span className={styles.label}>Для электромобилей</span>
@@ -144,34 +144,34 @@ const ResultSearchElement = () => {
               <div className={styles.content_wrapper}>
                 <span className={styles.label}>Стоимость в час</span>
                 <span className={styles.value}>
-                  {snap.resultElement.park.priceHour ? `${snap.resultElement.park.priceHour} руб` : "Не указана"}
+                  {snap.resultElement?.park.priceHour ? `${snap.resultElement?.park.priceHour} руб` : "Не указана"}
                 </span>
               </div>
               <div className={styles.content_wrapper}>
                 <span className={styles.label}>Стоимость в день</span>
                 <span className={styles.value}>
-                  {snap.resultElement.park.priceDay ? `${snap.resultElement.park.priceDay} руб` : "Не указана"}
+                  {snap.resultElement?.park.priceDay ? `${snap.resultElement?.park.priceDay} руб` : "Не указана"}
                 </span>
               </div>
               <div className={styles.content_wrapper}>
                 <span className={styles.label}>Стоимость в неделю</span>
                 <span className={styles.value}>
-                  {snap.resultElement.park.priceWeek ? `${snap.resultElement.park.priceWeek} руб` : "Не указана"}
+                  {snap.resultElement?.park.priceWeek ? `${snap.resultElement?.park.priceWeek} руб` : "Не указана"}
                 </span>
               </div>
               <div className={styles.content_wrapper}>
                 <span className={styles.label}>Стоимость в месяц</span>
                 <span className={styles.value}>
-                  {snap.resultElement.park.priceMonth ? `${snap.resultElement.park.priceMonth} руб` : "Не указана"}
+                  {snap.resultElement?.park.priceMonth ? `${snap.resultElement?.park.priceMonth} руб` : "Не указана"}
                 </span>
               </div>
-              {snap.resultElement.user.isShowName && (
+              {snap.resultElement?.user.isShowName && (
                 <div className={styles.content_wrapper}>
                   <span className={styles.label}>Имя</span>
                   <span className={styles.value}>{snap.user.name}</span>
                 </div>
               )}
-              {snap.resultElement.user.isShowPhoneNumber && (
+              {snap.resultElement?.user.isShowPhoneNumber && (
                 <div className={styles.content_wrapper}>
                   <span className={styles.label}>Номер телефона</span>
                   <span className={styles.value}>{snap.user.phoneNumber}</span>
@@ -179,7 +179,7 @@ const ResultSearchElement = () => {
               )}
               <div className={styles.content_wrapper}>
                 <span className={styles.label}>Telegram</span>
-                <span className={styles.value}>{snap.user.telegram}</span>
+                <span className={styles.value}>{snap.user?.telegram}</span>
               </div>
             </div>
             <YMaps apiKey={API_KEY}>
@@ -199,8 +199,8 @@ const ResultSearchElement = () => {
             </YMaps>
           </div>
           <div className={styles.buttons_wrapper}>
-            <LinkButton href={`https://t.me/${snap.resultElement.user.telegram}`}>Написать в Telegram</LinkButton>
-            {snap.resultElement.user.isShowPhoneNumber && (
+            <LinkButton href={`https://t.me/${snap.resultElement?.user.telegram}`}>Написать в Telegram</LinkButton>
+            {snap.resultElement?.user.isShowPhoneNumber && (
               <LinkButton href={`tel:${snap.resultElement.user.phoneNumber}`}>Позвонить</LinkButton>
             )}
             <button type="button" onClick={() => setOpenModal(true)} className={styles.review_button}>Оставить отзыв</button>
