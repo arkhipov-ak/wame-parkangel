@@ -22,10 +22,10 @@ const NavBar = () => {
   };
 
   const onHandleThemeClick = (theme) => {
-    axios.put("https://parkangel-backend.protomusic.ru/api/users", {...snap.user, theme: theme})
+    axios.put("https://api.parkangel.ru/api/users", {...snap.user, theme: theme})
     .then(() => {
       showSuccessSnackbar({ message: "Тема обновлена" })
-      axios.get(`https://parkangel-backend.protomusic.ru/api/users/chatId/${snap.user.chatId}`)
+      axios.get(`https://api.parkangel.ru/api/users/chatId/${snap.user.chatId}`)
         .then((response) => {
           if (response.data.response) state.user = response.data.response;
         }).catch(() => showErrorSnackbar({ message: "Не удалось получить данные юзера" }))

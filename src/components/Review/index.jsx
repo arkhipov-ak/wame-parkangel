@@ -97,7 +97,7 @@ const Review = () => {
     if (!preparedData.priceWeek) delete preparedData.priceWeek;
     if (!preparedData.priceMonth) delete preparedData.priceMonth;
 
-    axios.post("https://parkangel-backend.protomusic.ru/api/ad", preparedData)
+    axios.post("https://api.parkangel.ru/api/ad", preparedData)
       .then((response) => {
         if (response) {
           showSuccessSnackbar({ message: "Объявление опубликовано" });
@@ -116,7 +116,7 @@ const Review = () => {
   }, [snap.parkDate]);
 
   useEffect(() => {
-    axios.get(`https://parkangel-backend.protomusic.ru/api/park/${snap.parkDate.park_id}`)
+    axios.get(`https://api.parkangel.ru/api/park/${snap.parkDate.park_id}`)
       .then((response) => setData(response.data.response))
       .catch(() => {
         showErrorSnackbar({ message: "Не удалось загрузить данные парковки", tryAgain: true });

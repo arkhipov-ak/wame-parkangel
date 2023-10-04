@@ -41,10 +41,10 @@ const PersonalArea = () => {
       return;
     }
 
-    axios.put("https://parkangel-backend.protomusic.ru/api/users", data)
+    axios.put("https://api.parkangel.ru/api/users", data)
       .then(() => {
         showSuccessSnackbar({ message: "Данные профиля обновлены" })
-        axios.get(`https://parkangel-backend.protomusic.ru/api/users/chatId/${snap.user.chatId}`)
+        axios.get(`https://api.parkangel.ru/api/users/chatId/${snap.user.chatId}`)
           .then(response => {
             if (response.data.response) state.user = response.data.response;
           }).catch(() => showErrorSnackbar({ message: "Не удалось получить данные юзера" }))

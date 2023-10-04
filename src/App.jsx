@@ -40,12 +40,12 @@ const App = () => {
     if (user) {
       const chatId = user.id;
       console.log(chatId);
-      axios.get(`https://parkangel-backend.protomusic.ru/api/users/chatId/${chatId}`)
+      axios.get(`https://api.parkangel.ru/api/users/chatId/${chatId}`)
         .then((response) => {
           if (response.data.response) state.user = response.data.response;
           else {
             axios.post(
-              "https://parkangel-backend.protomusic.ru/api/users",
+              "https://api.parkangel.ru/api/users",
               {
                 chatId: chatId + "",
                 telegram: user.username,
@@ -66,7 +66,7 @@ const App = () => {
 
   useEffect(() => {
     if (snap && snap.user) {
-      axios.get(`https://parkangel-backend.protomusic.ru/api/options/userId/${snap.user.id}`)
+      axios.get(`https://api.parkangel.ru/api/options/userId/${snap.user.id}`)
         .then((response) => state.options = response.data.response)
         .catch(() => showErrorSnackbar({ message: "Не удалось загрузить опции" }))
     }

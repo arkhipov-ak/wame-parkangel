@@ -87,7 +87,7 @@ const ResultSearchElement = () => {
 
   const handleOkBtn = () => {
 		axios.post(
-      "https://parkangel-backend.protomusic.ru/api/review",
+      "https://api.parkangel.ru/api/review",
       { rating, message: comment, ad_id: snap.resultElement.id, user_id: snap.user.id }
     ).then((response) => {
       if (response) {

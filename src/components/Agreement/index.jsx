@@ -21,7 +21,7 @@ const Agreement = () => {
 
   const handleAgreementClick = () => {
     const today = new Date();
-    axios.put("https://parkangel-backend.protomusic.ru/api/users", { 
+    axios.put("https://api.parkangel.ru/api/users", { 
       ...snap.user,
       isAcceptAgreement: true,
       dateAcceptAgreement: today.toISOString(),

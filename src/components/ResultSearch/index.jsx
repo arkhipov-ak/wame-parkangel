@@ -76,7 +76,7 @@ const ResultSearch = () => {
       if (!preparedData.priceMonth) delete preparedData.priceMonth;
 
       axios.post(
-        "https://parkangel-backend.protomusic.ru/api/ad/park", preparedData
+        "https://api.parkangel.ru/api/ad/park", preparedData
       ).then(response => setData(response.data.response))
       .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления"}))
     }

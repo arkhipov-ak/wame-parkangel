@@ -92,7 +92,7 @@ const ExtraOptions = () => {
     delete preparedData.id;
 
     axios.post(
-      "https://parkangel-backend.protomusic.ru/api/park", preparedData
+      "https://api.parkangel.ru/api/park", preparedData
     ).then(response => {
       if (response) {
         state.parkDate = { ...snap.parkDate, isRenewable: isRenewable, park_id: response.data.response.id };
@@ -138,7 +138,7 @@ const ExtraOptions = () => {
 
     if (snap.options[0]) {
       axios.put(
-        "https://parkangel-backend.protomusic.ru/api/options", preparedData
+        "https://api.parkangel.ru/api/options", preparedData
       ).then((response) => {
         if (response) {
           showSuccessSnackbar({ message: "Параметры сохранены" })
@@ -148,7 +148,7 @@ const ExtraOptions = () => {
       .catch(() => showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
     } else {
       axios.post(
-        "https://parkangel-backend.protomusic.ru/api/options", preparedData
+        "https://api.parkangel.ru/api/options", preparedData
       ).then((response) => {
         if (response) {
           showSuccessSnackbar({ message: "Параметры сохранены" })
@@ -162,7 +162,7 @@ const ExtraOptions = () => {
   useEffect(() => {
     if (snap && snap.user) {
       if (snap.isSearchPark === false) return;
-      axios.get(`https://parkangel-backend.protomusic.ru/api/options/userId/${snap.user.id}`)
+      axios.get(`https://api.parkangel.ru/api/options/userId/${snap.user.id}`)
         .then(response => state.options = response.data.response)
         .catch(() => showErrorSnackbar({ message: "Не удалось загрузить опции" }))
     }

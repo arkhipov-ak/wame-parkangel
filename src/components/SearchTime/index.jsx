@@ -73,11 +73,11 @@ const SearchTime = () => {
   };
 
   const onHandleDeleteClick = (ad) => {
-    axios.delete(`https://parkangel-backend.protomusic.ru/api/ad/${ad.id}`)
+    axios.delete(`https://api.parkangel.ru/api/ad/${ad.id}`)
       .then(() => {
         showSuccessSnackbar({ message: "Объявление удалено" });
         setOpenDeleteModal(false);
-        axios.get(`https://parkangel-backend.protomusic.ru/api/ad/userId/${snap.user.id}`)
+        axios.get(`https://api.parkangel.ru/api/ad/userId/${snap.user.id}`)
           .then((response) => setMyAds(response.data.response))
           .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления" }))
       })
@@ -89,7 +89,7 @@ const SearchTime = () => {
 
   useEffect(() => {
     if (snap && snap.user) {
-      axios.get(`https://parkangel-backend.protomusic.ru/api/ad/userId/${snap.user.id}`)
+      axios.get(`https://api.parkangel.ru/api/ad/userId/${snap.user.id}`)
         .then((response) => setMyAds(response.data.response))
         .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления" }))
     }
