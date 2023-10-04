@@ -1,15 +1,19 @@
 name: Main
-
 on:
   push:
     branches:
-      - master
+      - main
 
 env:
+  HOST: ${{ secrets.HOST }}
+  USERNAME: ${{ secrets.USERNAME }}
+  PASSWORD: ${{ secrets.PASSWORD }}
+  NODE_ENV: production
   USER_PATH: "/home/www"
+  NODE_VERSION: 18
   DOMAIN: "app.parkangel.ru"
-  BRANCH: "master"
-  
+  REPO_URL: "git@github.com:MOSTEPP/app.parkangel.ru.git"
+  BRANCH: "main"
 
 jobs:
   deploy:
@@ -17,25 +21,35 @@ jobs:
     steps:
       - name: Set environment variable
         run: |
-          echo "DOMAIN=${{ env.DOMAIN }}" >> $GITHUB_ENV
-          echo "BRANCH=${{ env.BRANCH }}" >> $GITHUB_ENV
-          echo "PROJECT_PATH=${{ env.USER_PATH }}/${{ env.DOMAIN }}" >> $GITHUB_ENV
+          echo "PROJECT_PATH=${USER_PATH}/${DOMAIN}" >> $GITHUB_ENV
+          echo "TEMP_PATH=${USER_PATH}/${DOMAIN}/temp" >> $GITHUB_ENV
+          echo "CURRENT_PATH=${USER_PATH}/${DOMAIN}/current" >> $GITHUB_ENV
 
       - name: Deploy
         run: |
           sshpass -p "${PASSWORD}" ssh -o StrictHostKeyChecking=no "${USERNAME}@${HOST}" "bash -s" << EOF
-          BRANCH=${{ env.BRANCH }}
-          PROJECT_PATH=${{ env.PROJECT_PATH }}
-          
-          cd ${PROJECT_PATH}
-          git restore .
-          git pull origin ${BRANCH}
+          PROJECT_PATH=${{env.PROJECT_PATH}}
+          TEMP_PATH=${{env.TEMP_PATH}}
+          CURRENT_PATH=${{env.CURRENT_PATH}}
+
+          if [ ! -d "${PROJECT_PATH}" ]; then
+            mkdir ${PROJECT_PATH}
+            mkdir ${CURRENT_PATH}
+            mkdir ${TEMP_PATH}
+            cd ${TEMP_PATH}
+            git clone -b ${BRANCH} ${REPO_URL} .
+
+          else
+            cd ${TEMP_PATH}
+            git restore .
+            git pull origin ${BRANCH}
+          fi
+
+          cp ${TEMP_PATH}/.env.prod ${TEMP_PATH}/.env
+          cd ${TEMP_PATH}
           yarn install
           yarn build
+
+          rsync -rvaq --delete ${TEMP_PATH}/. ${CURRENT_PATH}
           
           EOF
-
-        env:
-          HOST: ${{ secrets.HOST }}
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
