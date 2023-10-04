@@ -8,12 +8,14 @@ env:
   HOST: ${{ secrets.HOST }}
   USERNAME: ${{ secrets.USERNAME }}
   PASSWORD: ${{ secrets.PASSWORD }}
+  PORT: 3000
   NODE_ENV: production
   USER_PATH: "/home/www"
   NODE_VERSION: 18
   DOMAIN: "app.parkangel.ru"
   REPO_URL: "git@github.com:MOSTEPP/app.parkangel.ru.git"
-  BRANCH: "main"
+  BRANCH: "master"
+  INSTANCES: 1
 
 jobs:
   deploy:
@@ -24,6 +26,7 @@ jobs:
           echo "PROJECT_PATH=${USER_PATH}/${DOMAIN}" >> $GITHUB_ENV
           echo "TEMP_PATH=${USER_PATH}/${DOMAIN}/temp" >> $GITHUB_ENV
           echo "CURRENT_PATH=${USER_PATH}/${DOMAIN}/current" >> $GITHUB_ENV
+          echo "ECOSYSTEM_FILE=${USER_PATH}/${DOMAIN}/ecosystem.config.js" >> $GITHUB_ENV
 
       - name: Deploy
         run: |
@@ -31,6 +34,7 @@ jobs:
           PROJECT_PATH=${{env.PROJECT_PATH}}
           TEMP_PATH=${{env.TEMP_PATH}}
           CURRENT_PATH=${{env.CURRENT_PATH}}
+          ECOSYSTEM_FILE=${{env.ECOSYSTEM_FILE}}
 
           if [ ! -d "${PROJECT_PATH}" ]; then
             mkdir ${PROJECT_PATH}
@@ -39,17 +43,44 @@ jobs:
             cd ${TEMP_PATH}
             git clone -b ${BRANCH} ${REPO_URL} .
 
+            echo "module.exports = {
+              apps: [
+                {
+                  name: '${DOMAIN}',
+                  mode: 'cluster',
+                  instances: '${INSTANCES}',
+                  watch: ['reload'],
+                  ignore_watch: ['node_modules'],
+                  cwd: '${CURRENT_PATH}',
+                  script: 'node_modules/vite/bin/vite.js',
+                  args: 'start -p ${PORT}',
+                  env: {
+                    PORT: '${PORT}',
+                    NODE_ENV: '${NODE_ENV}'
+                  }
+                }
+              ]
+            }" > ${ECOSYSTEM_FILE}
+
           else
             cd ${TEMP_PATH}
             git restore .
             git pull origin ${BRANCH}
           fi
 
-          cp ${TEMP_PATH}/.env.prod ${TEMP_PATH}/.env
           cd ${TEMP_PATH}
           yarn install
           yarn build
 
           rsync -rvaq --delete ${TEMP_PATH}/. ${CURRENT_PATH}
+
+          if pm2 list | grep -q ${DOMAIN}; then
+            cd ${CURRENT_PATH}
+            pm2 restart ${DOMAIN}
+          else
+            cd ${PROJECT_PATH}
+            pm2 start ecosystem.config.js
+            pm2 save
+          fi
           
           EOF
