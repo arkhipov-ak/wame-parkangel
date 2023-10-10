@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar";
@@ -9,6 +9,7 @@ import axios from "axios";
 import { API_KEY } from "../../utils/constants";
 import { useSnapshot } from "valtio";
 import { state } from "../../state";
+import { showErrorSnackbar } from "../../utils/showSnackBar";
 
 const ChooseMap = () => {
   const snap = useSnapshot(state);
@@ -17,12 +18,11 @@ const ChooseMap = () => {
   const navigate = useNavigate();
 
   const handleMapClick = async (e) => {
-    setSelectedLocation(e.get("coords"));
+    let coords = e.get("coords").reverse();
+
     try {
       const response = await axios.get(
-        `https://geocode-maps.yandex.ru/1.x/?apikey=${API_KEY}&geocode=${e
-          .get("coords")
-          .join(",")}&format=json`
+        `https://geocode-maps.yandex.ru/1.x/?apikey=${API_KEY}&geocode=${coords.join(",")}&format=json`
       );
 
       const address =
@@ -31,7 +31,9 @@ const ChooseMap = () => {
 
       setSelectedAddress(address);
     } catch (error) {
-      console.error("Error fetching address:", error);
+      showErrorSnackbar({ message: "Не удалось получить геоданные" });
+    } finally {
+      setSelectedLocation(coords.reverse());
     }
   };
 
@@ -40,16 +42,6 @@ const ChooseMap = () => {
       navigate(`/review?address=${encodeURIComponent(selectedAddress)}`); //TODO: fix this function
     }
   };
-
-  useEffect(() => {
-    if (selectedLocation) {
-      console.log(selectedLocation);
-      localStorage.setItem(
-        "selectedLocation",
-        JSON.stringify(selectedLocation)
-      );
-    }
-  }, [selectedLocation]);
 
   return (
     <div>
@@ -72,13 +64,12 @@ const ChooseMap = () => {
             </div>
           </div>
         </div>
-
         <YMaps apiKey={API_KEY}>
           <Map
             width="100%"
             height="95vh"
             defaultState={{
-              center: selectedLocation || [55.7558, 37.6173], // Используем выбранные координаты или координаты Москвы по умолчанию
+              center: selectedLocation || [55.7558, 37.6173], // координаты Москвы по умолчанию
               zoom: 16,
               type: "yandex#map",
             }}
