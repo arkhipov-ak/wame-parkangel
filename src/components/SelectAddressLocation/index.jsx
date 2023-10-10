@@ -41,8 +41,8 @@ const SelectAddressLocation = () => {
   };
 
   useEffect(() => {
-    if (snap.selectedAddress) setAddress(snap.selectedAddress);
-  }, [snap.selectedAddress]);
+    if (snap.parkDate) setAddress(snap.parkDate.address);
+  }, [snap.parkDate]);
 
   return (
     <>

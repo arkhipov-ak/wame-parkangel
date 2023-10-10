@@ -38,8 +38,11 @@ const ChooseMap = () => {
   };
 
   const handleSelectClick = () => {
-    if (selectedAddress) {
-      state.selectedAddress = selectedAddress
+    if (snap.parkDate === null) {
+      showErrorSnackbar({ message: "Не удалось загрузить данные", tryAgain: true });
+      navigate("/search-time");
+    } else if (selectedAddress) {
+      state.parkDate.address = selectedAddress
       navigate(-1);
     }
   };
