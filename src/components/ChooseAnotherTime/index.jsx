@@ -30,21 +30,21 @@ const ChooseAnotherTime = () => {
 
   const onHandleRedirect = (link) => {
     if (link === "/extra-options") {
-      if (!selectedDateStart || !selectedDateEnd) {
-        showErrorSnackbar({ message: "Не указана дата", tryAgain: true })
-        return;
-      }
-
-      if (!activeRegion) {
-        showErrorSnackbar({ message: "Не указан регион", tryAgain: true });
-        return;
-      }
-  
       if (!address.trim()) {
         showErrorSnackbar({ message: "Не указан адрес", tryAgain: true });
         return;
       }
-    } //делаем валидацию только по клику на кнопку "Далее"
+    } //делаем валидацию адреса только по клику на кнопку "Далее"
+
+    if (!selectedDateStart || !selectedDateEnd) {
+      showErrorSnackbar({ message: "Не указана дата", tryAgain: true })
+      return;
+    }
+
+    if (!activeRegion) {
+      showErrorSnackbar({ message: "Не указан регион", tryAgain: true });
+      return;
+    }
 
     const dateStart = new Date(selectedDateStart);
     dateStart.setHours(selectedHourStart);
@@ -82,6 +82,10 @@ const ChooseAnotherTime = () => {
       setAddress(snap.parkDate.address || "");
     }
   }, [snap.user, snap.parkDate]);
+
+  useEffect(() => {
+    if (snap.selectedAddress) setAddress(snap.selectedAddress);
+  }, [snap.selectedAddress]);
   
   return (
 		<>

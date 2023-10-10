@@ -8,6 +8,7 @@ import Container from "../common/Container";
 import Button from "../common/Button";
 import { showErrorSnackbar } from "../../utils/showSnackBar";
 import RegionSelect from "../common/RegionSelect";
+import { useEffect } from "react";
 
 const SelectAddressLocation = () => {
   const snap = useSnapshot(state);
@@ -39,9 +40,9 @@ const SelectAddressLocation = () => {
     navigate("/result-search");
   };
 
-  const handleRedirectToMap = () => {
-    navigate("/map");
-  };
+  useEffect(() => {
+    if (snap.selectedAddress) setAddress(snap.selectedAddress);
+  }, [snap.selectedAddress]);
 
   return (
     <>
@@ -57,7 +58,7 @@ const SelectAddressLocation = () => {
           placeholder="Введите адрес"
           type="text"
         />
-        <button type="button" className={styles.btn_style} onClick={handleRedirectToMap}>
+        <button type="button" className={styles.btn_style} onClick={() => navigate("/map")}>
           Указать на карте
         </button>
         <button

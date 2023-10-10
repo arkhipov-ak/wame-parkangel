@@ -39,7 +39,8 @@ const ChooseMap = () => {
 
   const handleSelectClick = () => {
     if (selectedAddress) {
-      navigate(`/review?address=${encodeURIComponent(selectedAddress)}`); //TODO: fix this function
+      state.selectedAddress = selectedAddress
+      navigate(-1);
     }
   };
 

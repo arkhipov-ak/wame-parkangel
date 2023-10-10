@@ -98,6 +98,10 @@ const ChooseTimeToday = ({ day }) => {
     }
   }, [snap.user, snap.parkDate]);
 
+  useEffect(() => {
+    if (snap.selectedAddress) setAddress(snap.selectedAddress);
+  }, [snap.selectedAddress]);
+
   return (
     <>
       <NavBar />
