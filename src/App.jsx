@@ -39,7 +39,6 @@ const App = () => {
     
     if (user) {
       const chatId = user.id;
-      console.log(chatId);
       axios.get(`https://api.parkangel.ru/api/users/chatId/${chatId}`)
         .then((response) => {
           if (response.data.response) state.user = response.data.response;

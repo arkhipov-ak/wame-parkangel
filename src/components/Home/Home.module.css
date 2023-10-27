@@ -6,6 +6,7 @@
   height: 100vh;
   text-align: center;
   background: var(--background);
+  padding: 0 30px;
 }
 .text_main {
   color: var(--text-primary);
@@ -28,7 +29,14 @@
   flex-direction: column;
   gap: 10px;
 }
-.password_input {
+.login_wrapper {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+.home_input {
   height: 50px;
   border-radius: 15px;
   background: var(--background-secondary);
@@ -40,14 +48,22 @@
   text-align: center;
   border: 1px solid var(--text-primary);
 }
-.password_input::placeholder {
-  width: 100%;
+.home_input::placeholder {
   text-align: center;
   margin: 0 auto;
   color: var(--text-primary);
 }
-.password_input:focus {
+.home_input:focus {
   outline: none;
+}
+.login_button {
+  height: 50px;
+  width: 100%;
+  border-radius: 15px;
+  border: 1px solid var(--text-primary);
+  font-size: 16px;
+  font-weight: 500;
+  background: var(--background-secondary);
 }
 .text_block {
   font-size: 14px;

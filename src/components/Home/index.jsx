@@ -14,6 +14,7 @@ const Home = () => {
   const navigate = useNavigate();
   const [openPasswordModal, setOpenPasswordModal] = useState(false);
   const [password, setPassword] = useState("");
+  const [nickname, setNickname] = useState("");
 
   const onHandleSubmit = (e) => {
     e.preventDefault();
@@ -26,9 +27,14 @@ const Home = () => {
     }
   };
 
+  const onHandleLoginClick = () => {
+    console.log('click');
+  };
+
   useEffect(() => {
+    console.log('home page');
     const renderAgreementInfo = () => {
-      if (!snap || !snap.user) return;
+      if (!snap.user) return;
 
       if (snap.user.password) {
         setOpenPasswordModal(true);
@@ -69,28 +75,44 @@ const Home = () => {
       <span className={styles.text_descr}>
         {isImageLoaded ? "от часа до года" : " "}
       </span>
-      {openPasswordModal && (
-        <Modal
-          setOpenModal={setOpenPasswordModal}
-          openModal={openPasswordModal}
-          closeButton={false}
-        >
-          <form onSubmit={onHandleSubmit} className={styles.form}>
-            <input
-              value={password}
-              onChange={(e) => setPassword(e.target.value, "password")}
-              placeholder="Введите пароль"
-              className={styles.password_input}
-              type="text"
-            />
-            <div className={styles.text_block}>
-              <span>Забыли пароль?</span><br/>
-              <a href="https://t.me/OlivsonM" className={styles.link}>Напишите в поддержку.</a>
-            </div>
-            <Button type="submit">Войти</Button>
-          </form>
-        </Modal>
+      {!snap.user && (
+        <div className={styles.login_wrapper}>
+          <input
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value, "nickname")}
+            placeholder="Введите Telegram-никнейм"
+            className={styles.home_input}
+            type="text"
+          />
+          <button
+            type="button"
+            onClick={onHandleLoginClick}
+            className={styles.login_button}
+          >
+            Войти
+          </button>
+        </div>
       )}
+      <Modal
+        setOpenModal={setOpenPasswordModal}
+        openModal={openPasswordModal}
+        closeButton={false}
+      >
+        <form onSubmit={onHandleSubmit} className={styles.form}>
+          <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value, "password")}
+            placeholder="Введите пароль"
+            className={styles.home_input}
+            type="text"
+          />
+          <div className={styles.text_block}>
+            <span>Забыли пароль?</span><br/>
+            <a href="https://t.me/OlivsonM" className={styles.link}>Напишите в поддержку.</a>
+          </div>
+          <Button type="submit">Войти</Button>
+        </form>
+      </Modal>
     </div>
   );
 };
