@@ -31,6 +31,8 @@ const Home = () => {
     console.log('click');
   };
 
+  console.log("snap", snap);
+
   useEffect(() => {
     console.log('home page');
     const renderAgreementInfo = () => {
