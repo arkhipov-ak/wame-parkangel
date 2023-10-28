@@ -145,22 +145,20 @@ const ChooseAnotherTime = () => {
             Далее
           </Button>
         </div>
-				{openStartTimeModal && (
-          <ModalTime
-            setOpenTimeModal={setOpenStartTimeModal}
-            openTimeModal={openStartTimeModal}
-            setSelectedMinute={setSelectedMinuteStart}
-            setSelectedHour={setSelectedHourStart}
-          />
-        )}
-        {openEndTimeModal && (
-          <ModalTime
-            setOpenTimeModal={setOpenEndTimeModal}
-            openTimeModal={openEndTimeModal}
-            setSelectedMinute={setSelectedMinuteEnd}
-            setSelectedHour={setSelectedHourEnd}
-          />
-        )}
+        <ModalTime
+          setOpenTimeModal={setOpenStartTimeModal}
+          openTimeModal={openStartTimeModal}
+          setSelectedMinute={setSelectedMinuteStart}
+          setSelectedHour={setSelectedHourStart}
+          isToday={false}
+        />
+        <ModalTime
+          setOpenTimeModal={setOpenEndTimeModal}
+          openTimeModal={openEndTimeModal}
+          setSelectedMinute={setSelectedMinuteEnd}
+          setSelectedHour={setSelectedHourEnd}
+          isToday={false}
+        />
 			</Container>
 		</>
 	)

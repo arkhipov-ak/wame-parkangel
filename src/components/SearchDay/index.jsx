@@ -91,14 +91,13 @@ const SearchDay = ({ day }) => {
         <HoursCounterBlock hoursCount={hoursCount} setHoursCount={setHoursCount}/>
         <ParametersButton onClick={() => onHandleRedirect("/options")}/>
         <Button onClick={() => onHandleRedirect("/select-address-location")}>Быстрая парковка</Button>
-        {openTimeModal && (
-          <ModalTime
-            setOpenTimeModal={setOpenTimeModal}
-            openTimeModal={openTimeModal}
-            setSelectedMinute={setSelectedMinute}
-            setSelectedHour={setSelectedHour}
-          />
-        )}
+        <ModalTime
+          setOpenTimeModal={setOpenTimeModal}
+          openTimeModal={openTimeModal}
+          setSelectedMinute={setSelectedMinute}
+          setSelectedHour={setSelectedHour}
+          isToday={day === "сегодня"}
+        />
       </Container>
     </>
   );

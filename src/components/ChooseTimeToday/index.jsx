@@ -132,14 +132,13 @@ const ChooseTimeToday = ({ day }) => {
         <Button onClick={() => onHandleRedirect("/extra-options")}>
           Далее
         </Button>
-        {openTimeModal && (
-          <ModalTime
-            setOpenTimeModal={setOpenTimeModal}
-            openTimeModal={openTimeModal}
-            setSelectedMinute={setSelectedMinute}
-            setSelectedHour={setSelectedHour}
-          />
-        )}
+        <ModalTime
+          setOpenTimeModal={setOpenTimeModal}
+          openTimeModal={openTimeModal}
+          setSelectedMinute={setSelectedMinute}
+          setSelectedHour={setSelectedHour}
+          isToday={day === "сегодня"}
+        />
       </Container>
     </>
   );
