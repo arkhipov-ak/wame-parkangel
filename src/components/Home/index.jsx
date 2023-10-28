@@ -15,6 +15,7 @@ const Home = () => {
   const [openPasswordModal, setOpenPasswordModal] = useState(false);
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const onHandleSubmit = (e) => {
     e.preventDefault();
@@ -31,16 +32,15 @@ const Home = () => {
     console.log('click');
   };
 
-  console.log("snap", snap);
-
   useEffect(() => {
-    console.log('home page');
+    setLoading(true)
+    /* console.log('home page'); */
     const renderAgreementInfo = () => {
-      if (!snap.user) return;
+      if (!snap.user) return setLoading(false);
 
       if (snap.user.password) {
         setOpenPasswordModal(true);
-        return;
+        return setLoading(false);
       }
       
       if (snap.user.isAcceptAgreement) navigate("/search-time");
@@ -77,7 +77,7 @@ const Home = () => {
       <span className={styles.text_descr}>
         {isImageLoaded ? "от часа до года" : " "}
       </span>
-      {!snap.user && (
+      {!loading && !snap.user && (
         <div className={styles.login_wrapper}>
           <input
             value={nickname}

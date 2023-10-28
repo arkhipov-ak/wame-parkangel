@@ -6,12 +6,12 @@
   height: 100vh;
   text-align: center;
   background: var(--background);
-  padding: 0 30px;
+  padding: 0 10%;
 }
 .text_main {
   color: var(--text-primary);
   text-align: center;
-  font-size: 1.45675rem;
+  font-size: 24px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -19,7 +19,7 @@
 }
 .text_descr {
   color: var(--text-primary);
-  font-size: 1.45675rem;
+  font-size: 24px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
