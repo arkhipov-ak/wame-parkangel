@@ -7,6 +7,7 @@ import { state } from "../../state";
 import Modal from "../common/Modal";
 import Button from "../common/Button";
 import { showErrorSnackbar } from "../../utils/showSnackBar";
+import ReactCodeInput from "react-code-input";
 
 const Home = () => {
   const snap = useSnapshot(state)
@@ -16,6 +17,9 @@ const Home = () => {
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
   const [loading, setLoading] = useState(false);
+  const [verification, setVerification] = useState(false);
+  const [code, setCode] = useState("");
+  const [isCodeCorrect, setIsCodeCorrect] = useState(true);
 
   const onHandleSubmit = (e) => {
     e.preventDefault();
@@ -29,12 +33,13 @@ const Home = () => {
   };
 
   const onHandleLoginClick = () => {
-    console.log('click');
+    if (!nickname.trim()) return showErrorSnackbar({ message: "Telegram-никнейм не может быть пустым", tryAgain: true })
+    setVerification(true)
   };
 
   useEffect(() => {
-    setLoading(true)
-    /* console.log('home page'); */
+    setLoading(true);
+    
     const renderAgreementInfo = () => {
       if (!snap.user) return setLoading(false);
 
@@ -42,6 +47,8 @@ const Home = () => {
         setOpenPasswordModal(true);
         return setLoading(false);
       }
+
+      setLoading(false);
       
       if (snap.user.isAcceptAgreement) navigate("/search-time");
       else navigate("/agreement");
@@ -54,9 +61,11 @@ const Home = () => {
     };
   }, [navigate, snap, openPasswordModal]);
 
-  const handleImageLoad = () => {
-    setImageLoaded(true);
-  };
+  useEffect(() => {
+		if (code.length === 4) {
+			console.log('verification');
+		}
+	}, [code]);
 
   return (
     <div className={styles.wrapper}>
@@ -70,7 +79,7 @@ const Home = () => {
           }} />
         )
       }
-      <img src={Logotype} alt="Логотип" onLoad={handleImageLoad} style={{ display: isImageLoaded ? "block" : "none" }} />
+      <img src={Logotype} alt="Логотип" onLoad={() => setImageLoaded(true)} style={{ display: isImageLoaded ? "block" : "none" }} />
       <p className={styles.text_main}>
         {isImageLoaded ? "Сервис по поиску  и сдаче машино-мест:" : "Загрузка..."}
       </p>
@@ -78,22 +87,39 @@ const Home = () => {
         {isImageLoaded ? "от часа до года" : " "}
       </span>
       {!loading && !snap.user && (
-        <div className={styles.login_wrapper}>
-          <input
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value, "nickname")}
-            placeholder="Введите Telegram-никнейм"
-            className={styles.home_input}
-            type="text"
-          />
-          <button
-            type="button"
-            onClick={onHandleLoginClick}
-            className={styles.login_button}
-          >
-            Войти
-          </button>
-        </div>
+        <>
+          {verification ? (
+            <div className={styles.login_wrapper}>
+              <span className={styles.verification_text}>Нам нужно верифицировать ваш Telegram, мы выслали вам проверочный код</span>
+              <ReactCodeInput
+                type="number"
+                fields={4}
+                inputMode="numeric"
+                value={code}
+                name="code"
+                onChange={setCode}
+                isValid={isCodeCorrect}
+              />
+            </div>
+          ) : (
+            <div className={styles.login_wrapper}>
+              <input
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value, "nickname")}
+                placeholder="Введите Telegram-никнейм"
+                className={styles.home_input}
+                type="text"
+              />
+              <button
+                type="button"
+                onClick={onHandleLoginClick}
+                className={styles.login_button}
+              >
+                Войти
+              </button>
+            </div>
+          )}
+        </>
       )}
       <Modal
         setOpenModal={setOpenPasswordModal}
