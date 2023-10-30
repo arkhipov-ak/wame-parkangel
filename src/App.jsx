@@ -72,7 +72,7 @@ const App = () => {
   }, [snap.user]);
 
   return (
-    <div data-theme={snap.user?.theme || "light"}>
+    <div data-theme={snap.user?.theme || "light"} style={{ width: "100vw" }}>
       <SnackbarProvider
         anchorOrigin={{
           vertical: "top",
