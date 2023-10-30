@@ -97,8 +97,7 @@ const ResultSearchElement = () => {
         showSuccessSnackbar({ message: "Отзыв оставлен успешно" });
         setOpenModal(false);
       }
-    })
-    .catch(() => showErrorSnackbar({ message: "Не удалось записать отзыв" }))
+    }).catch(() => showErrorSnackbar({ message: "Не удалось записать отзыв" }))
 	}
 
   useEffect(() => {

@@ -39,27 +39,27 @@ const App = () => {
     
     if (user) {
       const chatId = user.id;
-      axios.get(`https://api.parkangel.ru/api/users/chatId/${chatId}`)
-        .then((response) => {
-          if (response.data.response) state.user = response.data.response;
-          else {
-            axios.post(
-              "https://api.parkangel.ru/api/users",
-              {
-                chatId: chatId + "",
-                telegram: user.username,
-                name: user.first_name,
-                phoneNumber: "",
-                password: "",
-                email: "",
-                city: "moscow",
-                theme: "light",
-              },
-            ).then((response) => state.user = response.data.response)
-            .catch(() => showErrorSnackbar({ message: "Не удалось записать юзера" }))
-          }
-        })
-        .catch(() => showErrorSnackbar({ message: "Что-то пошло не так" }))
+      axios.get(
+        `https://api.parkangel.ru/api/users/chatId/${chatId}`
+      ).then((response) => {
+        if (response.data.response) state.user = response.data.response;
+        else {
+          axios.post(
+            "https://api.parkangel.ru/api/users",
+            {
+              chatId: chatId + "",
+              telegram: user.username,
+              name: user.first_name,
+              phoneNumber: "",
+              password: "",
+              email: "",
+              city: "moscow",
+              theme: "light",
+            },
+          ).then((response) => state.user = response.data.response)
+          .catch(() => showErrorSnackbar({ message: "Не удалось записать юзера" }))
+        }
+      }).catch(() => showErrorSnackbar({ message: "Что-то пошло не так" }))
     }
   }, []);
 

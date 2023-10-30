@@ -8,6 +8,7 @@ import Modal from "../common/Modal";
 import Button from "../common/Button";
 import { showErrorSnackbar } from "../../utils/showSnackBar";
 import ReactCodeInput from "react-code-input";
+import axios from "axios";
 
 const Home = () => {
   const snap = useSnapshot(state)
@@ -34,7 +35,12 @@ const Home = () => {
 
   const onHandleLoginClick = () => {
     if (!nickname.trim()) return showErrorSnackbar({ message: "Telegram-никнейм не может быть пустым", tryAgain: true })
-    setVerification(true)
+
+    axios.post(
+      "https://api.parkangel.ru/api/users/registration", { telegram: nickname }
+    ).then((response) => {
+      if (response.data.response === true) setVerification(true)
+    }).catch(() => showErrorSnackbar({ message: "Что-то пошло не так" }))
   };
 
   useEffect(() => {
@@ -62,8 +68,20 @@ const Home = () => {
   }, [navigate, snap, openPasswordModal]);
 
   useEffect(() => {
+    setIsCodeCorrect(true);
 		if (code.length === 4) {
-			console.log('verification');
+			axios.post(
+        "https://api.parkangel.ru/api/users/verify", { telegram: nickname, code }
+      ).then((response) => {
+        console.log(response);
+        if (response.data.response) {
+          console.log('in if');
+          navigate("/agreement");
+        } else {
+          setIsCodeCorrect(false);
+          showErrorSnackbar({ message: "Код введен неверно", tryAgain: true });
+        }
+      }).catch(() => showErrorSnackbar({ message: "Что-то пошло не так" }))
 		}
 	}, [code]);
 
