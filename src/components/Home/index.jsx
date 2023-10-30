@@ -21,6 +21,7 @@ const Home = () => {
   const [verification, setVerification] = useState(false);
   const [code, setCode] = useState("");
   const [isCodeCorrect, setIsCodeCorrect] = useState(true);
+  const [registrationLink, setRegistrationLink] = useState("");
 
   const onHandleSubmit = (e) => {
     e.preventDefault();
@@ -40,6 +41,10 @@ const Home = () => {
       "https://api.parkangel.ru/api/users/registration", { telegram: nickname }
     ).then((response) => {
       if (response.data.response === true) setVerification(true)
+      else {
+        setVerification(true)
+        setRegistrationLink(response.data.response)
+      }
     }).catch(() => showErrorSnackbar({ message: "Что-то пошло не так" }))
   };
 
@@ -108,6 +113,11 @@ const Home = () => {
         <>
           {verification ? (
             <div className={styles.login_wrapper}>
+              {registrationLink && (
+                <span className={styles.verification_text}>Перейдите, пожалуйста, по ссылке
+                  в <a href={registrationLink} className={styles.link}>Telegram</a>
+                </span>
+              )}
               <span className={styles.verification_text}>Нам нужно верифицировать ваш Telegram, мы выслали вам проверочный код</span>
               <ReactCodeInput
                 type="number"
