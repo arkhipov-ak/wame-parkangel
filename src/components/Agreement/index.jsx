@@ -6,9 +6,9 @@ import { useSnapshot } from "valtio";
 import styles from "./Agreement.module.css";
 import parkAngel from "/src/assets/park-angel.svg";
 import parkAngelDark from "/src/assets/park-angel-dark.svg";
-import Button from "../common/Button";
-import { showErrorSnackbar } from "../../utils/showSnackBar";
-import { state } from "../../state";
+import Button from "src/components/common/Button";
+import { showErrorSnackbar } from "src/utils/showSnackBar";
+import { state } from "src/state";
 
 const Agreement = () => {
   const snap = useSnapshot(state);

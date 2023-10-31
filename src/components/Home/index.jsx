@@ -6,10 +6,10 @@ import { useNavigate } from "react-router-dom";
 
 import styles from "./Home.module.css";
 import Logotype from "/src/assets/logo.svg";
-import { state } from "../../state";
-import Modal from "../common/Modal";
-import Button from "../common/Button";
-import { showErrorSnackbar } from "../../utils/showSnackBar";
+import { state } from "src/state";
+import Modal from "src/components/common/Modal";
+import Button from "src/components/common/Button";
+import { showErrorSnackbar } from "src/utils/showSnackBar";
 
 const Home = () => {
   const snap = useSnapshot(state)
@@ -79,7 +79,6 @@ const Home = () => {
 			axios.post(
         "https://api.parkangel.ru/api/users/verify", { telegram: nickname, code }
       ).then((response) => {
-        console.log(response);
         if (response.data.response) {
           state.user = response.data.response;
           if (response.data.response.dateAcceptAgreement) navigate("/search-time");

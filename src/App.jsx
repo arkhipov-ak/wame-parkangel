@@ -1,6 +1,6 @@
 import { BrowserRouter as Router } from "react-router-dom";
 
-import MainAppComponent from "./components/MainAppComponent";
+import MainAppComponent from "src/components/MainAppComponent";
 
 const App = () => {
   return (
