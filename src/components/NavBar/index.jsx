@@ -1,14 +1,15 @@
 import { useState } from "react";
-import styles from "./NavBar.module.css";
-import parkAngel from "/src/assets/park-angel.svg";
-import parkAngelDark from "/src/assets/park-angel-dark.svg";
+import axios from "axios";
 import { AiOutlineLeft } from "react-icons/ai";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useSnapshot } from "valtio";
-import { state } from "../../state";
-import axios from "axios";
-import { showErrorSnackbar, showSuccessSnackbar } from "../../utils/showSnackBar";
+
+import styles from "./NavBar.module.css";
+import parkAngel from "/src/assets/park-angel.svg";
+import parkAngelDark from "/src/assets/park-angel-dark.svg";
+import { state } from "src/state";
+import { showErrorSnackbar, showSuccessSnackbar } from "src/utils/showSnackBar";
 
 const NavBar = () => {
   const snap = useSnapshot(state);

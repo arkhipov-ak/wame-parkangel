@@ -1,39 +1,27 @@
 import { useState, useEffect } from "react";
-import styles from "./FAQ.module.css";
-import NavBar from "../NavBar";
-import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import axios from "axios";
-import Container from "../common/Container";
-import { showErrorSnackbar } from "../../utils/showSnackBar";
-import ZeroData from "../common/ZeroData";
+import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+
+import styles from "./FAQ.module.css";
+import NavBar from "src/components/NavBar";
+import Container from "src/components/common/Container";
+import { showErrorSnackbar } from "src/utils/showSnackBar";
+import ZeroData from "src/components/common/ZeroData";
 
 const Faq = () => {
   const [activeQuestion, setActiveQuestion] = useState(null);
-  const [faqData, setFaqData] = useState([
-    {
-      question: "Вопрос 1",
-      answer: "Ответ 1"
-    },
-    {
-      question: "Вопрос 2",
-      answer: "Ответ 2"
-    },
-    {
-      question: "Вопрос 3",
-      answer: "Ответ 3"
-    },
-  ]);
+  const [faqData, setFaqData] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("https://api.parkangel.ru/api/faq")
-      .then((response) => setFaqData(response.data.response))
-      .catch(() => showErrorSnackbar({ message: "Не удалось получить вопросы" }));
+    axios.get(
+      "https://api.parkangel.ru/api/faq"
+    ).then((response) => setFaqData(response.data.response))
+    .catch(() => showErrorSnackbar({ message: "Не удалось получить вопросы" }));
   }, []);
 
   return (
     <>
-      <NavBar />
+      <NavBar/>
       <Container>
         <h2 className={styles.faq}>Частые вопросы</h2>
         {faqData.length ? (
