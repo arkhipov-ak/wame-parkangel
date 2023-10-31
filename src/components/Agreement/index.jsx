@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useSnapshot } from "valtio";
+
 import styles from "./Agreement.module.css";
 import parkAngel from "/src/assets/park-angel.svg";
 import parkAngelDark from "/src/assets/park-angel-dark.svg";
-import { useNavigate } from "react-router-dom";
 import Button from "../common/Button";
-import axios from "axios";
 import { showErrorSnackbar } from "../../utils/showSnackBar";
-import { useSnapshot } from "valtio";
 import { state } from "../../state";
 
 const Agreement = () => {

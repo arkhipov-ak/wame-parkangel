@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
+import { useSnapshot } from "valtio";
+import ReactCodeInput from "react-code-input";
+import { useNavigate } from "react-router-dom";
+
 import styles from "./Home.module.css";
 import Logotype from "/src/assets/logo.svg";
-import { useNavigate } from "react-router-dom";
-import { useSnapshot } from "valtio";
 import { state } from "../../state";
 import Modal from "../common/Modal";
 import Button from "../common/Button";
 import { showErrorSnackbar } from "../../utils/showSnackBar";
-import ReactCodeInput from "react-code-input";
-import axios from "axios";
 
 const Home = () => {
   const snap = useSnapshot(state)
