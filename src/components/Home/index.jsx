@@ -40,10 +40,10 @@ const Home = () => {
     axios.post(
       "https://api.parkangel.ru/api/users/registration", { telegram: nickname }
     ).then((response) => {
-      if (response.data.response === true) setVerification(true)
+      if (response.data.response === true) setVerification(true);
       else {
-        setVerification(true)
-        setRegistrationLink(response.data.response)
+        setVerification(true);
+        setRegistrationLink(response.data.response);
       }
     }).catch(() => showErrorSnackbar({ message: "Что-то пошло не так" }))
   };
@@ -80,8 +80,9 @@ const Home = () => {
       ).then((response) => {
         console.log(response);
         if (response.data.response) {
-          console.log('in if');
-          navigate("/agreement");
+          state.user = response.data.response;
+          if (response.data.response.dateAcceptAgreement) navigate("/search-time");
+          else navigate("/agreement");
         } else {
           setIsCodeCorrect(false);
           showErrorSnackbar({ message: "Код введен неверно", tryAgain: true });
@@ -113,12 +114,15 @@ const Home = () => {
         <>
           {verification ? (
             <div className={styles.login_wrapper}>
-              {registrationLink && (
-                <span className={styles.verification_text}>Перейдите, пожалуйста, по ссылке
+              {registrationLink ? (
+                <span className={styles.verification_text}>Для регистрации перейдите, пожалуйста, по ссылке
                   в <a href={registrationLink} className={styles.link}>Telegram</a>
                 </span>
+              ) : (
+                <span className={styles.verification_text}>
+                  Нам нужно верифицировать ваш Telegram, мы выслали вам проверочный код
+                </span>
               )}
-              <span className={styles.verification_text}>Нам нужно верифицировать ваш Telegram, мы выслали вам проверочный код</span>
               <ReactCodeInput
                 type="number"
                 fields={4}
