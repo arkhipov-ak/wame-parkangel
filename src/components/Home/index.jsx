@@ -116,7 +116,7 @@ const Home = () => {
             <div className={styles.login_wrapper}>
               {registrationLink ? (
                 <span className={styles.verification_text}>Для регистрации перейдите, пожалуйста, по ссылке
-                  в <a href={registrationLink} className={styles.link}>Telegram</a>
+                  в <a href={registrationLink} className={styles.link}>Telegram</a> и введите проверочный код
                 </span>
               ) : (
                 <span className={styles.verification_text}>
