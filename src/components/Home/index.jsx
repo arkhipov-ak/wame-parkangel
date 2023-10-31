@@ -71,7 +71,7 @@ const Home = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, [navigate, snap, openPasswordModal]);
+  }, [snap.user]);
 
   useEffect(() => {
     setIsCodeCorrect(true);
@@ -81,6 +81,7 @@ const Home = () => {
       ).then((response) => {
         if (response.data.response) {
           state.user = response.data.response;
+          if (response.data.response.password) return setOpenPasswordModal(true);
           if (response.data.response.dateAcceptAgreement) navigate("/search-time");
           else navigate("/agreement");
         } else {
