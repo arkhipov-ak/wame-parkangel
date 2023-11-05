@@ -17,6 +17,10 @@ const SelectAddressLocation = () => {
   const [activeNearMeButton, setActiveNearMeButton] = useState(false);
   const navigate = useNavigate();
 
+  const onHandleKeyDown = (e) => {
+    
+  }
+
   const handleRedirect = () => {
     if (!snap.parkDate) {
       showErrorSnackbar({ message: "Не удалось получить данные", tryAgain: true });
@@ -60,6 +64,7 @@ const SelectAddressLocation = () => {
             onChange={e => setAddress(e.target.value)}
             className={styles.input_style}
             placeholder="Введите адрес"
+            onKeyDown={onHandleKeyDown}
             type="text"
           />
         </div>
