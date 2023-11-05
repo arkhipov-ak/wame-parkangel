@@ -1,16 +1,16 @@
-import { useState } from "react";
-import NavBar from "../NavBar";
-import styles from "./ChooseTimeToday.module.css";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Container from "../common/Container";
 import { useSnapshot } from "valtio";
-import { state } from "../../state";
-import HoursCounterBlock from "../common/HoursCounterBlock";
-import ModalTime from "../common/ModalTime";
-import Button from "../common/Button";
-import { showErrorSnackbar } from "../../utils/showSnackBar";
-import { useEffect } from "react";
-import RegionSelect from "../common/RegionSelect";
+
+import styles from "./ChooseTimeToday.module.css";
+import NavBar from "src/components/NavBar";
+import Container from "src/components/common/Container";
+import { state } from "src/state";
+import HoursCounterBlock from "src/components/common/HoursCounterBlock";
+import ModalTime from "src/components/common/ModalTime";
+import Button from "src/components/common/Button";
+import { showErrorSnackbar } from "src/utils/showSnackBar";
+import RegionSelect from "src/components/common/RegionSelect";
 
 const ChooseTimeToday = ({ day }) => {
   const snap = useSnapshot(state);

@@ -1,16 +1,16 @@
-import NavBar from "../NavBar";
-import styles from "./ResultSearch.module.css";
-import location from "../../assets/location.svg";
-import locationLight from "../../assets/location-light.svg";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSnapshot } from "valtio";
-import { state } from "../../state";
-import { useEffect } from "react";
 import axios from "axios";
-import { showErrorSnackbar } from "../../utils/showSnackBar";
-import Container from "../common/Container";
-import { useState } from "react";
-import ZeroData from "../common/ZeroData";
+import { useSnapshot } from "valtio";
+
+import styles from "./ResultSearch.module.css";
+import NavBar from "src/components/NavBar";
+import location from "src/assets/location.svg";
+import locationLight from "src/assets/location-light.svg";
+import { state } from "src/state";
+import { showErrorSnackbar } from "src/utils/showSnackBar";
+import Container from "src/components/common/Container";
+import ZeroData from "src/components/common/ZeroData";
 
 const ResultSearch = () => {
   const snap = useSnapshot(state);

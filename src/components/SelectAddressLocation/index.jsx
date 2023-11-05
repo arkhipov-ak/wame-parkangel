@@ -18,12 +18,19 @@ const SelectAddressLocation = () => {
   const [activeNearMeButton, setActiveNearMeButton] = useState(false);
   const navigate = useNavigate();
 
-  const handleRedirect = () => {
+  const onHandleRedirect = (link) => {
     if (!snap.parkDate) {
       showErrorSnackbar({ message: "Не удалось получить данные", tryAgain: true });
       navigate("/search-time");
       return;
     }
+
+    if (link === "/result-search") {
+      if (!address.trim()) {
+        showErrorSnackbar({ message: "Не указан адрес", tryAgain: true });
+        return;
+      }
+    } //делаем валидацию адреса только по клику на кнопку "Подобрать парковку"
 
     if (!activeRegion) {
       showErrorSnackbar({ message: "Не указан регион", tryAgain: true });
@@ -36,13 +43,15 @@ const SelectAddressLocation = () => {
       region: activeRegion,
       availabilityDateEnd: snap.parkDate.dateEndISO,
       availabilityDateStart: snap.parkDate.dateStartISO,
-    }
+    };
+
+    state.parkDate = { ...snap.parkDate, region: activeRegion }; //записываем регион в стейт, чтобы отобразить его на карте
     
-    navigate("/result-search");
+    navigate(link);
   };
 
   useEffect(() => {
-    if (snap.parkDate) setAddress(snap.parkDate.address);
+    if (snap.parkDate) setAddress(snap.parkDate.address || "");
   }, [snap.parkDate]);
 
   return (
@@ -60,7 +69,7 @@ const SelectAddressLocation = () => {
           onKeyDown={hideKeyboard}
           type="text"
         />
-        <button type="button" className={styles.btn_style} onClick={() => navigate("/map")}>
+        <button type="button" className={styles.btn_style} onClick={() => onHandleRedirect("/map")}>
           Указать на карте
         </button>
         <button
@@ -71,7 +80,7 @@ const SelectAddressLocation = () => {
         >
           Найти рядом со мной
         </button>
-        <Button onClick={handleRedirect}>
+        <Button onClick={() => onHandleRedirect("/result-search")}>
           Подобрать парковку
         </Button>
       </Container>
