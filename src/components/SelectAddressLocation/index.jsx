@@ -51,13 +51,18 @@ const SelectAddressLocation = () => {
         <span className={styles.label}>Ваш регион</span>
         <RegionSelect activeRegion={activeRegion} setActiveRegion={setActiveRegion}/>
         <span className={styles.label}>Адрес</span>
-        <input
-          value={address}
-          onChange={e => setAddress(e.target.value)}
-          className={styles.input_style}
-          placeholder="Введите адрес"
-          type="text"
-        />
+        <div className={styles.address_input_wrapper}>
+          <div className={styles.adornment}>
+            <button type="button" onClick={() => {}}>Adornment:</button>
+          </div>
+          <input
+            value={address}
+            onChange={e => setAddress(e.target.value)}
+            className={styles.input_style}
+            placeholder="Введите адрес"
+            type="text"
+          />
+        </div>
         <button type="button" className={styles.btn_style} onClick={() => navigate("/map")}>
           Указать на карте
         </button>

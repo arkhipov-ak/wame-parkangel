@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NavBar from "../NavBar";
-import styles from "./ExtraOptions.module.css";
-import Container from "../common/Container";
-import CustomCheckBox from "../common/CustomCheckbox";
-import SwitchToggle from "../common/SwitchToggle";
-import Button from "../common/Button";
-import PriceCounterBlock from "../common/PriceCounterBlock";
-import Modal from "../common/Modal";
 import { useSnapshot } from "valtio";
-import { state } from "../../state";
-import { showErrorSnackbar, showSuccessSnackbar } from "../../utils/showSnackBar";
 import axios from "axios";
-import SizeInput from "../common/SizeInput";
+
+import NavBar from "src/components/NavBar";
+import styles from "./ExtraOptions.module.css";
+import Container from "src/components/common/Container";
+import CustomCheckBox from "src/components/common/CustomCheckbox";
+import SwitchToggle from "src/components/common/SwitchToggle";
+import Button from "src/components/common/Button";
+import PriceCounterBlock from "src/components/common/PriceCounterBlock";
+import Modal from "src/components/common/Modal";
+import { state } from "src/state";
+import { showErrorSnackbar, showSuccessSnackbar } from "src/utils/showSnackBar";
+import SizeInput from "src/components/common/SizeInput";
 
 const ExtraOptions = () => {
   const snap = useSnapshot(state);
