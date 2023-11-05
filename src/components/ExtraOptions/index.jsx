@@ -375,7 +375,7 @@ const ExtraOptions = () => {
           <div className={styles.box_container}>
             {(snap.parkDate?.hoursCountOneDay || snap.parkDate?.hoursStartOneDay || snap.parkDate?.minutesOneDay) ? (
               <>
-                <span className={styles.main_text}>Макс. стоимость в час, руб</span>
+                <span className={styles.main_text}>Стоимость в час, руб</span>
                 <PriceCounterBlock
                   price={data.priceHour ? +data.priceHour : 0}
                   setPrice={(e) => onHandleChange({...data, ["priceHour"]: e})}
