@@ -1,16 +1,15 @@
-import styles from "./ChooseAnotherTime.module.css";
-import NavBar from "../NavBar";
-import Container from "../common/Container";
-import { useSnapshot } from "valtio";
-import { state } from "../../state";
+import { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import Button from "../common/Button";
-import ModalTime from "../common/ModalTime";
-import { showErrorSnackbar } from "../../utils/showSnackBar";
-import { useRef } from "react";
-import { useEffect } from "react";
-import RegionSelect from "../common/RegionSelect";
+import { useSnapshot } from "valtio";
+
+import styles from "./ChooseAnotherTime.module.css";
+import NavBar from "src/components/NavBar";
+import Container from "src/components/common/Container";
+import { state } from "src/state";
+import Button from "src/components/common/Button";
+import ModalTime from "src/components/common/ModalTime";
+import { showErrorSnackbar } from "src/utils/showSnackBar";
+import RegionSelect from "src/components/common/RegionSelect";
 
 const ChooseAnotherTime = () => {
 	const snap = useSnapshot(state);

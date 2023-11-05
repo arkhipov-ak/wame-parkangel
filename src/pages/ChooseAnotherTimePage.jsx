@@ -1,4 +1,4 @@
-import ChooseAnotherTime from "../components/ChooseAnotherTime";
+import ChooseAnotherTime from "src/components/ChooseAnotherTime";
 
 const ChooseAnotherTimePage = () => <ChooseAnotherTime/>
 

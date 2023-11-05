@@ -3,6 +3,5 @@ export function declOfNum({ number, array }) {
 };
 
 export const hideKeyboard = (e) => {
-  console.log(e.key);
   if (e.key === "Enter") e.target.blur();
 };
