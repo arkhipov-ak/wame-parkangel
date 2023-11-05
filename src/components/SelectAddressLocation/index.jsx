@@ -18,7 +18,9 @@ const SelectAddressLocation = () => {
   const navigate = useNavigate();
 
   const onHandleKeyDown = (e) => {
-    
+    if(e.key == 'Enter'){
+      e.target.blur();
+    }
   }
 
   const handleRedirect = () => {
