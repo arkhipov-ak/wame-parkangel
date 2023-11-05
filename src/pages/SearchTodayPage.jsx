@@ -1,5 +1,5 @@
-import SearchDay from "../components/SearchDay";
+import SearchDay from "src/components/SearchDay";
 
-const SearchTodayPage = () => <SearchDay day="сегодня"/>
+const SearchTodayPage = () => <SearchDay day="сегодня"/>;
 
 export default SearchTodayPage;

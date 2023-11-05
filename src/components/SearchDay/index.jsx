@@ -1,16 +1,16 @@
-import { useState } from "react";
-import NavBar from "../NavBar";
-import styles from "./SearchToday.module.css";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Container from "../common/Container";
-import HoursCounterBlock from "../common/HoursCounterBlock";
-import Button from "../common/Button";
-import ParametersButton from "../common/ParametersButton";
-import ModalTime from "../common/ModalTime";
-import { state } from "../../state";
-import { showErrorSnackbar } from "../../utils/showSnackBar";
 import { useSnapshot } from "valtio";
-import { useEffect } from "react";
+
+import styles from "./SearchToday.module.css";
+import NavBar from "src/components/NavBar";
+import Container from "src/components/common/Container";
+import HoursCounterBlock from "src/components/common/HoursCounterBlock";
+import Button from "src/components/common/Button";
+import ParametersButton from "src/components/common/ParametersButton";
+import ModalTime from "src/components/common/ModalTime";
+import { state } from "src/state";
+import { showErrorSnackbar } from "src/utils/showSnackBar";
 
 const SearchDay = ({ day }) => {
   const snap = useSnapshot(state);

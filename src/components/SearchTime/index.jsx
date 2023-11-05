@@ -1,21 +1,22 @@
 import { useState, useEffect, Fragment } from "react";
-import axios from "axios";
-import NavBar from "../NavBar";
-import SelectSearchGive from "../SelectSearchGive";
-import todayImg from "../../assets/today_img.svg";
-import tomorrowImg from "../../assets/tomorrow_image.svg";
-import anotherImg from "../../assets/fouin_img.svg";
-import deleteImg from "../../assets/delete.svg";
-import editImg from "../../assets/edit.svg";
-import styles from "./SearchTime.module.css";
-import { BiChevronRight } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import Container from "../common/Container";
-import { showErrorSnackbar, showSuccessSnackbar } from "../../utils/showSnackBar";
+import { BiChevronRight } from "react-icons/bi";
+import axios from "axios";
 import { useSnapshot } from "valtio";
-import { state } from "../../state";
-import ZeroData from "../common/ZeroData";
-import Modal from "../common/Modal";
+
+import styles from "./SearchTime.module.css";
+import NavBar from "src/components/NavBar";
+import SelectSearchGive from "src/components/SelectSearchGive";
+import todayImg from "src/assets/today_img.svg";
+import tomorrowImg from "src/assets/tomorrow_image.svg";
+import anotherImg from "src/assets/fouin_img.svg";
+import deleteImg from "src/assets/delete.svg";
+import editImg from "src/assets/edit.svg";
+import Container from "src/components/common/Container";
+import { showErrorSnackbar, showSuccessSnackbar } from "src/utils/showSnackBar";
+import { state } from "src/state";
+import ZeroData from "src/components/common/ZeroData";
+import Modal from "src/components/common/Modal";
 
 const SearchTime = () => {
   const snap = useSnapshot(state);
