@@ -1,14 +1,15 @@
-import { useState } from "react";
-import NavBar from "../NavBar";
-import styles from "./SelectAddressLocation.module.css";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSnapshot } from "valtio";
-import { state } from "../../state";
-import Container from "../common/Container";
-import Button from "../common/Button";
-import { showErrorSnackbar } from "../../utils/showSnackBar";
-import RegionSelect from "../common/RegionSelect";
-import { useEffect } from "react";
+
+import NavBar from "src/components/NavBar";
+import styles from "./SelectAddressLocation.module.css";
+import { state } from "src/state";
+import Container from "src/components/common/Container";
+import Button from "src/components/common/Button";
+import { showErrorSnackbar } from "src/utils/showSnackBar";
+import RegionSelect from "src/components/common/RegionSelect";
+import { hideKeyboard } from "src/utils/functions";
 
 const SelectAddressLocation = () => {
   const snap = useSnapshot(state);
@@ -16,12 +17,6 @@ const SelectAddressLocation = () => {
   const [address, setAddress] = useState("");
   const [activeNearMeButton, setActiveNearMeButton] = useState(false);
   const navigate = useNavigate();
-
-  const onHandleKeyDown = (e) => {
-    if(e.key == 'Enter'){
-      e.target.blur();
-    }
-  }
 
   const handleRedirect = () => {
     if (!snap.parkDate) {
@@ -57,19 +52,14 @@ const SelectAddressLocation = () => {
         <span className={styles.label}>Ваш регион</span>
         <RegionSelect activeRegion={activeRegion} setActiveRegion={setActiveRegion}/>
         <span className={styles.label}>Адрес</span>
-        <div className={styles.address_input_wrapper}>
-          <div className={styles.adornment}>
-            <button type="button" onClick={() => {}}>Adornment:</button>
-          </div>
-          <input
-            value={address}
-            onChange={e => setAddress(e.target.value)}
-            className={styles.input_style}
-            placeholder="Введите адрес"
-            onKeyDown={onHandleKeyDown}
-            type="text"
-          />
-        </div>
+        <input
+          value={address}
+          onChange={e => setAddress(e.target.value)}
+          className={styles.input_style}
+          placeholder="Введите адрес"
+          onKeyDown={hideKeyboard}
+          type="text"
+        />
         <button type="button" className={styles.btn_style} onClick={() => navigate("/map")}>
           Указать на карте
         </button>
@@ -77,7 +67,7 @@ const SelectAddressLocation = () => {
           type="button"
           className={`${styles.btn_style} ${activeNearMeButton ? styles.active : ""}`}
           style={{ marginBottom: "15%" }}
-          onClick={() => setActiveNearMeButton(true)}
+          onClick={() => setActiveNearMeButton(!activeNearMeButton)}
         >
           Найти рядом со мной
         </button>
