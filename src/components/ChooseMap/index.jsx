@@ -1,15 +1,16 @@
 import { useState } from "react";
-import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
 import { useNavigate } from "react-router-dom";
-import NavBar from "../NavBar";
-import styles from "./ChooseMap.module.css"
-import navigation from "../../assets/navigation.svg";
-import navigationDark from "../../assets/navigation-black.svg";
-import axios from "axios";
-import { API_KEY } from "../../utils/constants";
 import { useSnapshot } from "valtio";
-import { state } from "../../state";
-import { showErrorSnackbar } from "../../utils/showSnackBar";
+import axios from "axios";
+import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
+
+import styles from "./ChooseMap.module.css"
+import NavBar from "src/components/NavBar";
+import navigation from "src/assets/navigation.svg";
+import navigationDark from "src/assets/navigation-black.svg";
+import { API_KEY } from "src/utils/constants";
+import { state } from "src/state";
+import { showErrorSnackbar } from "src/utils/showSnackBar";
 
 const ChooseMap = () => {
   const snap = useSnapshot(state);
@@ -73,7 +74,7 @@ const ChooseMap = () => {
             width="100%"
             height="95vh"
             defaultState={{
-              center: selectedLocation || [55.7558, 37.6173], // координаты Москвы по умолчанию
+              center: snap.parkDate?.region === "spb" ? [59.938, 30.313] : [55.7558, 37.6173],
               zoom: 16,
               type: "yandex#map",
             }}
