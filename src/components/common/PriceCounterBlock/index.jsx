@@ -1,6 +1,6 @@
 import styles from "./PriceCounterBlock.module.css";
 
-const PriceCounterBlock = ({ price, setPrice, currency = false, step = 10 }) => {
+const PriceCounterBlock = ({ price, setPrice, currency = false, step = 50 }) => {
   const increment = () => {
     setPrice(price + step);
   };
