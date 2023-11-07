@@ -1,6 +1,8 @@
-import CloseButton from "../CloseButton";
-import styles from "./Modal.module.css";
 import { useEffect } from "react";
+
+
+import styles from "./Modal.module.css";
+import CloseButton from "../CloseButton";
 
 const Modal = ({
 	children,
@@ -11,12 +13,13 @@ const Modal = ({
 }) => {
 	
 	useEffect(() => {
-		const handleKeyPress = event => {
-			if (event.key === 'Escape') setOpenModal(false)
+		const handleKeyPress = (e) => {
+			if (e.key === "Escape") setOpenModal(false)
 		};
-		document.addEventListener('keydown', handleKeyPress);
+		document.addEventListener("keydown", handleKeyPress);
+		
 		return () => {
-			document.removeEventListener('keydown', handleKeyPress);
+			document.removeEventListener("keydown", handleKeyPress);
 		};
 	}, [setOpenModal])
 

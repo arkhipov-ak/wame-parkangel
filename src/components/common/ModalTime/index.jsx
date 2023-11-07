@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react";
-import Modal from "../Modal";
+import { useEffect, useRef, useState } from "react";
+
 import styles from "./ModalTime.module.css";
-import { useState } from "react";
+import Modal from "../Modal";
 
 const ModalTime = ({ setOpenTimeModal, openTimeModal, setSelectedMinute, setSelectedHour, isToday }) => {
   const hourRef = useRef(null);

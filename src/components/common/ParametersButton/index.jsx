@@ -1,4 +1,5 @@
 import { BiChevronRight } from "react-icons/bi";
+
 import styles from "./ParametersButton.module.css";
 
 const ParametersButton = ({ onClick }) => {
