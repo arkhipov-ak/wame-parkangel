@@ -128,7 +128,7 @@ const Review = () => {
     <>
       <NavBar />
       <Container>
-          <h2 className={styles.title}>Предпросмотр</h2>
+          <h2 className={styles.title}>Ваше объявление</h2>
           {data && (
             <div style={{ width: "100%" }}>
               <div className={styles.wrapper_div}>
