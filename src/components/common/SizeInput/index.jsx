@@ -1,4 +1,5 @@
 import styles from "./SizeInput.module.css";
+import { hideKeyboard } from "src/utils/functions";
 
 const SizeInput = ({ type = "number", value, onChange, required = false, label }) => {
   return (
@@ -10,6 +11,7 @@ const SizeInput = ({ type = "number", value, onChange, required = false, label }
         onChange={onChange}
         className={styles.parameter}
         required={required}
+        onKeyDown={hideKeyboard}
       />
     </div>
   )

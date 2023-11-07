@@ -18,6 +18,16 @@ const SelectAddressLocation = () => {
   const [activeNearMeButton, setActiveNearMeButton] = useState(false);
   const navigate = useNavigate();
 
+  const onHandleNearMeClick = () => {
+    setActiveNearMeButton(!activeNearMeButton)
+
+   /*  if (activeNearMeButton) {
+      var watchID = navigator.geolocation.watchPosition(function (position) {
+        console.log(position.coords.latitude, position.coords.longitude);
+      });
+    } */
+  }
+
   const onHandleRedirect = (link) => {
     if (!snap.parkDate) {
       showErrorSnackbar({ message: "Не удалось получить данные", tryAgain: true });
@@ -76,7 +86,7 @@ const SelectAddressLocation = () => {
           type="button"
           className={`${styles.btn_style} ${activeNearMeButton ? styles.active : ""}`}
           style={{ marginBottom: "15%" }}
-          onClick={() => setActiveNearMeButton(!activeNearMeButton)}
+          onClick={onHandleNearMeClick}
         >
           Найти рядом со мной
         </button>
