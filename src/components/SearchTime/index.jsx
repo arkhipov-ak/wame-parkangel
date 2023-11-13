@@ -73,6 +73,13 @@ const SearchTime = () => {
     return ratings.reduce((acc, rating) => acc + rating, 0) / ratings.length;
   };
 
+  const renderPrice = (item) => {
+    if (item.priceHour) return `${item.priceHour} руб/ч`;
+    if (item.priceDay) return `${item.priceDay} руб/д`;
+    if (item.priceWeek) return `${item.priceWeek} руб/н`;
+    if (item.priceYear) return `${item.priceYear} руб/г`;
+  };
+
   const onHandleDeleteClick = (ad) => {
     axios.delete(`https://api.parkangel.ru/api/ad/${ad.id}`)
       .then(() => {
@@ -186,7 +193,7 @@ const SearchTime = () => {
                       <div className={styles.secondRow}>
                         <span className={styles.rent_time}>{renderDate(ad.park)}</span>
                         <span className={styles.rent_time}>{renderTime(ad.park)}</span>
-                        <span className={styles.rent_status}>{ad.park.priceHour} руб/ч</span>
+                        <span className={styles.rent_status}>{renderPrice(ad.park)}</span>
                       </div>
                       <p className={styles.rent_location}>Рейтинг: {renderRating(ad.review)}</p>
                       <div className={styles.image_block}>
