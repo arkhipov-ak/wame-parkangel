@@ -68,6 +68,12 @@ const ExtraOptions = () => {
       return;
     }
 
+    if (!snap.parkDate.coords) {
+      showErrorSnackbar({ message: "Координаты не определены", tryAgain: true });
+      navigate("/search-time")
+      return;
+    }
+
     state.parkDate = { ...snap.parkDate, isRenewable: isRenewable };
 
     const preparedData = {
@@ -80,6 +86,7 @@ const ExtraOptions = () => {
       user_id: snap.user.id,
       availabilityDateEnd: snap.parkDate.dateEndISO,
       availabilityDateStart: snap.parkDate.dateStartISO,
+      coordinates: snap.parkDate.coords.join(", "),
     };
 
     if (!preparedData.height) delete preparedData.height;

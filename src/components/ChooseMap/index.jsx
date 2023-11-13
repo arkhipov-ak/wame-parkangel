@@ -44,6 +44,7 @@ const ChooseMap = () => {
       navigate("/search-time");
     } else if (selectedAddress) {
       state.parkDate.address = selectedAddress
+      state.parkDate.coords = selectedLocation
       navigate(-1);
     }
   };
@@ -84,7 +85,7 @@ const ChooseMap = () => {
             }}
             onClick={handleMapClick}
           >
-            {selectedLocation && <Placemark geometry={selectedLocation} />}
+            {selectedLocation && <Placemark geometry={selectedLocation}/>}
           </Map>
         </YMaps>
       </div>

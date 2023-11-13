@@ -41,7 +41,6 @@ const Home = () => {
     axios.post(
       "https://api.parkangel.ru/api/users/registration", { telegram: nickname }
     ).then((response) => {
-      console.log(response);
       if (response.data.response === true) setVerification(true);
       else {
         setVerification(true);

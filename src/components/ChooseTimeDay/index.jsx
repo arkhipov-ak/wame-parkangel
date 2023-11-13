@@ -55,6 +55,7 @@ const ChooseTimeDay = ({ day }) => {
       dateEnd.setMinutes(selectedMinute);
 
       state.parkDate = {
+        ...snap.parkDate,
         dateStartISO: dateStart.toISOString(),
         dateEndISO: dateEnd.toISOString(),
         hoursStartOneDay: selectedHour === "00" ? "00" : +selectedHour,
@@ -92,7 +93,7 @@ const ChooseTimeDay = ({ day }) => {
   };
 
   useEffect(() => {
-    console.log(debounceValue)
+    /* console.log(debounceValue) */
   }, [debounceValue]);
 
   useEffect(() => {
