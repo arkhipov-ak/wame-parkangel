@@ -18,7 +18,7 @@ const ChooseAnotherTime = () => {
   const [openStartTimeModal, setOpenStartTimeModal] = useState(false);
   const [openEndTimeModal, setOpenEndTimeModal] = useState(false);
 	const [activeRegion, setActiveRegion] = useState("moscow");
-  const [coords, setCoords] = useState(null);
+  const [addressCoords, setAddressCoords] = useState(null);
 	const [address, setAddress] = useState("");
   const [debounceAddressValue] = useDebounce(address, 1000);
   const [selectedDateStart, setSelectedDateStart] = useState("");
@@ -38,8 +38,8 @@ const ChooseAnotherTime = () => {
         return;
       }
 
-      if (!coords) {
-        showErrorSnackbar({ message: "Не удалось получить координаты парковки", tryAgain: true });
+      if (!addressCoords) {
+        showErrorSnackbar({ message: "Не удалось получить координаты адреса", tryAgain: true });
         return;
       }
     } //делаем валидацию адреса и координат только по клику на кнопку "Далее"
@@ -73,7 +73,7 @@ const ChooseAnotherTime = () => {
       dateEnd: selectedDateEnd,
       region: activeRegion,
       address: address,
-      coordinates: coords ? coords.join(", ") : null,
+      coordinates: addressCoords ? addressCoords.join(", ") : null,
     };
 
     navigate(link);
@@ -88,14 +88,12 @@ const ChooseAnotherTime = () => {
         const firstGeoObject = response.geoObjects.get(0);
         const cords = firstGeoObject.geometry.getCoordinates();
       
-        setCoords([cords[0], cords[1]]);
-      }).catch(() => showErrorSnackbar({ message: "Не удалось получить координаты" }))
+        setAddressCoords([cords[0], cords[1]]);
+      }).catch(() => showErrorSnackbar({ message: "Не удалось получить координаты адреса" }))
     } else {
-      setCoords(null);
+      setAddressCoords(null);
     }
   }, [debounceAddressValue]);
-
-  console.log(coords);
 
   useEffect(() => {
     if (snap && snap.user && snap.parkDate) {

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSnapshot } from "valtio";
+import { useDebounce } from "use-debounce";
 
 import NavBar from "src/components/NavBar";
 import styles from "./SelectAddressLocation.module.css";
@@ -14,7 +15,9 @@ import { hideKeyboard } from "src/utils/functions";
 const SelectAddressLocation = () => {
   const snap = useSnapshot(state);
   const [activeRegion, setActiveRegion] = useState("moscow");
+  const [addressCoords, setAddressCoords] = useState(null);
   const [address, setAddress] = useState("");
+  const [debounceAddressValue] = useDebounce(address, 1000);
   const [activeNearMeButton, setActiveNearMeButton] = useState(false);
   const [myCoords, setMyCoords] = useState(null);
   const navigate = useNavigate();
@@ -36,6 +39,11 @@ const SelectAddressLocation = () => {
         showErrorSnackbar({ message: "Укажите адрес либо свои координаты" });
         return;
       }
+
+      if (address.trim() && !addressCoords) {
+        showErrorSnackbar({ message: "Не удалось получить координаты адреса", tryAgain: true });
+        return;
+      }
     } //делаем валидацию адреса только по клику на кнопку "Подобрать парковку"
 
     if (!activeRegion) {
@@ -49,7 +57,7 @@ const SelectAddressLocation = () => {
       region: activeRegion,
       availabilityDateEnd: snap.parkDate.dateEndISO,
       availabilityDateStart: snap.parkDate.dateStartISO,
-      coordinates: myCoords ? myCoords.join(", ") : null,
+      coordinates: myCoords ? myCoords.join(", ") : addressCoords ? addressCoords.join(", ") : null,
     };
 
     state.parkDate = { ...snap.parkDate, region: activeRegion }; //записываем регион в стейт, чтобы отобразить его на карте
@@ -82,7 +90,21 @@ const SelectAddressLocation = () => {
     }
   }, [activeNearMeButton]);
 
-  console.log(myCoords);
+  useEffect(() => {
+    if (debounceAddressValue && debounceAddressValue.length > 4) {
+      const ymaps = window.ymaps;
+
+      // Поиск координат
+      ymaps.geocode(debounceAddressValue, { results: 1 }).then((response) => {
+        const firstGeoObject = response.geoObjects.get(0);
+        const cords = firstGeoObject.geometry.getCoordinates();
+      
+        setAddressCoords([cords[0], cords[1]]);
+      }).catch(() => showErrorSnackbar({ message: "Не удалось получить координаты адреса" }))
+    } else {
+      setAddressCoords(null);
+    }
+  }, [debounceAddressValue]);
 
   return (
     <>
@@ -98,6 +120,7 @@ const SelectAddressLocation = () => {
           placeholder="Введите адрес"
           onKeyDown={hideKeyboard}
           type="text"
+          disabled={activeNearMeButton}
         />
         <button type="button" className={styles.btn_style} onClick={() => onHandleRedirect("/map")}>
           Указать на карте

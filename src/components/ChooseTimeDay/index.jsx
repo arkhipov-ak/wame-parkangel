@@ -21,7 +21,7 @@ const ChooseTimeDay = ({ day }) => {
   const [selectedHours, setSelectedHours] = useState("00");
   const [selectedMinutes, setSelectedMinutes] = useState("00");
   const [hoursCount, setHoursCount] = useState(1);
-  const [coords, setCoords] = useState(null);
+  const [addressCoords, setAddressCoords] = useState(null);
   const [address, setAddress] = useState("");
   const [debounceAddressValue] = useDebounce(address, 1000);
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ const ChooseTimeDay = ({ day }) => {
         return;
       }
 
-      if (!coords) {
+      if (!addressCoords) {
         showErrorSnackbar({ message: "Не удалось получить координаты парковки", tryAgain: true });
         return;
       }
@@ -76,7 +76,7 @@ const ChooseTimeDay = ({ day }) => {
         hoursCountOneDay: hoursCount,
         region: activeRegion,
         address: address,
-        coordinates: coords ? coords.join(", ") : null,
+        coordinates: addressCoords ? addressCoords.join(", ") : null,
       };
     }
 
@@ -100,7 +100,7 @@ const ChooseTimeDay = ({ day }) => {
         hoursCountOneDay: hoursCount,
         region: activeRegion,
         address: address,
-        coordinates: coords ? coords.join(", ") : null,
+        coordinates: addressCoords ? addressCoords.join(", ") : null,
       };
     }
 
@@ -116,10 +116,10 @@ const ChooseTimeDay = ({ day }) => {
         const firstGeoObject = response.geoObjects.get(0);
         const cords = firstGeoObject.geometry.getCoordinates();
       
-        setCoords([cords[0], cords[1]]);
+        setAddressCoords([cords[0], cords[1]]);
       }).catch(() => showErrorSnackbar({ message: "Не удалось получить координаты" }))
     } else {
-      setCoords(null);
+      setAddressCoords(null);
     }
   }, [debounceAddressValue]);
 
