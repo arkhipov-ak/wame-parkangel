@@ -1,5 +1,5 @@
-import ChooseTimeTomorrow from "../components/ChooseTimeTomorrow";
+import ChooseTimeDay from "src/components/ChooseTimeDay";
 
-const ChooseTimeTomorrowPage = () => <ChooseTimeTomorrow/>
+const ChooseTimeTomorrow = () => <ChooseTimeDay day="завтра"/>;
 
-export default ChooseTimeTomorrowPage;
+export default ChooseTimeTomorrow;

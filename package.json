@@ -25,6 +25,7 @@
     "react-router-dom": "^6.15.0",
     "react-script": "^2.0.5",
     "react-timeit": "^1.2.12",
+    "use-debounce": "^10.0.0",
     "valtio": "^1.11.2",
     "workbox-background-sync": "^6.6.0",
     "workbox-broadcast-update": "^6.6.0",

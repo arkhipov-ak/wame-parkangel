@@ -90,7 +90,7 @@ const SearchDay = ({ day }) => {
         <span className={styles.label}>На сколько времени</span>
         <HoursCounterBlock hoursCount={hoursCount} setHoursCount={setHoursCount}/>
         <ParametersButton onClick={() => onHandleRedirect("/options")}/>
-        <Button onClick={() => onHandleRedirect("/select-address-location")}>Быстрая парковка</Button>
+        <Button onClick={() => onHandleRedirect("/select-address-location")}>Далее</Button>
         <ModalTime
           setOpenTimeModal={setOpenTimeModal}
           openTimeModal={openTimeModal}

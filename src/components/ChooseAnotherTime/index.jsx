@@ -10,6 +10,7 @@ import Button from "src/components/common/Button";
 import ModalTime from "src/components/common/ModalTime";
 import { showErrorSnackbar } from "src/utils/showSnackBar";
 import RegionSelect from "src/components/common/RegionSelect";
+import { hideKeyboard } from "src/utils/functions";
 
 const ChooseAnotherTime = () => {
 	const snap = useSnapshot(state);
@@ -129,6 +130,7 @@ const ChooseAnotherTime = () => {
               onChange={e => setAddress(e.target.value)}
               className={styles.input_style}
               placeholder="Введите адрес"
+              onKeyDown={hideKeyboard}
               type="text"
             />
             <button

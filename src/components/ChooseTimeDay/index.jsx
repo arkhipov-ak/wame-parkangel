@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSnapshot } from "valtio";
+import { useDebounce } from "use-debounce";
 
 import styles from "./ChooseTimeToday.module.css";
 import NavBar from "src/components/NavBar";
@@ -11,8 +12,9 @@ import ModalTime from "src/components/common/ModalTime";
 import Button from "src/components/common/Button";
 import { showErrorSnackbar } from "src/utils/showSnackBar";
 import RegionSelect from "src/components/common/RegionSelect";
+import { hideKeyboard } from "src/utils/functions";
 
-const ChooseTimeToday = ({ day }) => {
+const ChooseTimeDay = ({ day }) => {
   const snap = useSnapshot(state);
   const [openTimeModal, setOpenTimeModal] = useState(false);
   const [activeRegion, setActiveRegion] = useState("moscow");
@@ -20,6 +22,7 @@ const ChooseTimeToday = ({ day }) => {
   const [selectedMinute, setSelectedMinute] = useState("00");
   const [hoursCount, setHoursCount] = useState(1);
   const [address, setAddress] = useState("");
+  const [debounceValue] = useDebounce(address, 1000);
   const navigate = useNavigate();
 
   const onHandleRedirect = (link) => {
@@ -89,6 +92,10 @@ const ChooseTimeToday = ({ day }) => {
   };
 
   useEffect(() => {
+    console.log(debounceValue)
+  }, [debounceValue]);
+
+  useEffect(() => {
     if (snap && snap.user && snap.parkDate) {
       setSelectedHour(snap.parkDate.hoursStartOneDay || "00");
       setSelectedMinute(snap.parkDate.minutesOneDay  || "00");
@@ -118,6 +125,7 @@ const ChooseTimeToday = ({ day }) => {
             onChange={e => setAddress(e.target.value)}
             className={styles.input_style}
             placeholder="Введите адрес"
+            onKeyDown={hideKeyboard}
             type="text"
           />
           <button
@@ -144,4 +152,4 @@ const ChooseTimeToday = ({ day }) => {
   );
 };
 
-export default ChooseTimeToday;
+export default ChooseTimeDay;
