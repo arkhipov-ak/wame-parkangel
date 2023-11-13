@@ -44,7 +44,6 @@ const ChooseMap = () => {
       navigate("/search-time");
     } else if (selectedAddress) {
       state.parkDate.address = selectedAddress
-      state.parkDate.coords = selectedLocation
       navigate(-1);
     }
   };
@@ -52,7 +51,7 @@ const ChooseMap = () => {
   return (
     <div>
       <div className={styles.mapContainer}>
-        <NavBar />
+        <NavBar/>
         <div className={styles.container}>
           <div className={styles.wrapper_div}>
             {selectedAddress || "Выберите местоположение на карте"}
@@ -75,7 +74,7 @@ const ChooseMap = () => {
             width="100%"
             height="95vh"
             defaultState={{
-              center: snap.parkDate?.region === "spb" ? [59.938, 30.313] : [55.7558, 37.6173],
+              center: snap.parkDate?.region === "spb" ? [59.938784, 30.314997] : [55.755864, 37.617698], //координаты Питера и Москвы
               zoom: 16,
               type: "yandex#map",
             }}

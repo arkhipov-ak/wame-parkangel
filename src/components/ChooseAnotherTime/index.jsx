@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSnapshot } from "valtio";
+import { useDebounce } from "use-debounce";
 
 import styles from "./ChooseAnotherTime.module.css";
 import NavBar from "src/components/NavBar";
@@ -17,7 +18,9 @@ const ChooseAnotherTime = () => {
   const [openStartTimeModal, setOpenStartTimeModal] = useState(false);
   const [openEndTimeModal, setOpenEndTimeModal] = useState(false);
 	const [activeRegion, setActiveRegion] = useState("moscow");
+  const [coords, setCoords] = useState(null);
 	const [address, setAddress] = useState("");
+  const [debounceAddressValue] = useDebounce(address, 1000);
   const [selectedDateStart, setSelectedDateStart] = useState("");
   const [selectedDateEnd, setSelectedDateEnd] = useState("");
   const [selectedHourStart, setSelectedHourStart] = useState("00");
@@ -55,7 +58,6 @@ const ChooseAnotherTime = () => {
     dateEnd.setMinutes(selectedMinuteEnd);
 
     state.parkDate = {
-      ...snap.parkDate,
       dateStartISO: dateStart.toISOString(),
       dateEndISO: dateEnd.toISOString(),
       hoursStart: selectedHourStart === "00" ? "00" : +selectedHourStart,
@@ -66,10 +68,29 @@ const ChooseAnotherTime = () => {
       dateEnd: selectedDateEnd,
       region: activeRegion,
       address: address,
+      coordinates: coords ? coords.join(", ") : null,
     };
 
     navigate(link);
   };
+
+  useEffect(() => {
+    if (debounceAddressValue && debounceAddressValue.length > 4) {
+      const ymaps = window.ymaps;
+
+      // Поиск координат
+      ymaps.geocode(debounceAddressValue, { results: 1 }).then((response) => {
+        const firstGeoObject = response.geoObjects.get(0);
+        const cords = firstGeoObject.geometry.getCoordinates();
+      
+        setCoords([cords[0], cords[1]]);
+      }).catch(() => showErrorSnackbar({ message: "Не удалось получить координаты" }))
+    } else {
+      setCoords(null);
+    }
+  }, [debounceAddressValue]);
+
+  console.log(coords);
 
   useEffect(() => {
     if (snap && snap.user && snap.parkDate) {

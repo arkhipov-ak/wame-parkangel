@@ -45,14 +45,17 @@ const ExtraOptions = () => {
 
   const onHandleChange = (newData) => setData(newData);
 
-  console.log(snap);
-
   const handleRedirect = () => {
     if (snap.parkDate.hoursCountOneDay && snap.parkDate.hoursStartOneDay && snap.parkDate.minutesOneDay) {
       if (!data.priceHour) {
         showErrorSnackbar({ message: "Стоимость в час должна быть больше нуля", tryAgain: true });
         return;
       }
+    } //если сдаем парковку на один день, то обязательно должны указать цену в час
+
+    if (!data.priceHour && !data.priceDay && !data.priceWeek && !data.priceMonth) {
+      showErrorSnackbar({ message: "Цена не указана", tryAgain: true });
+      return;
     }
 
     if (data.height && +data.height <= 0) {
@@ -70,7 +73,7 @@ const ExtraOptions = () => {
       return;
     }
 
-    if (!snap.parkDate.coords) {
+    if (!snap.parkDate.coordinates) {
       showErrorSnackbar({ message: "Координаты не определены", tryAgain: true });
       navigate("/search-time")
       return;
@@ -88,7 +91,7 @@ const ExtraOptions = () => {
       user_id: snap.user.id,
       availabilityDateEnd: snap.parkDate.dateEndISO,
       availabilityDateStart: snap.parkDate.dateStartISO,
-      coordinates: snap.parkDate.coords.join(", "),
+      coordinates: snap.parkDate.coordinates,
     };
 
     if (!preparedData.height) delete preparedData.height;
@@ -103,7 +106,7 @@ const ExtraOptions = () => {
 
     axios.post(
       "https://api.parkangel.ru/api/park", preparedData
-    ).then(response => {
+    ).then((response) => {
       if (response) {
         state.parkDate = { ...snap.parkDate, isRenewable: isRenewable, park_id: response.data.response.id };
         navigate("/review");
@@ -121,12 +124,12 @@ const ExtraOptions = () => {
     }
 
     if (data.length && +data.length <= 0) {
-      showErrorSnackbar({ message: "Длина должна быть больше нуля", tryAgain: true })
+      showErrorSnackbar({ message: "Длина должна быть больше нуля", tryAgain: true });
       return;
     }
 
     if (data.width && +data.width <= 0) {
-      showErrorSnackbar({ message: "Ширина должна быть больше нуля", tryAgain: true })
+      showErrorSnackbar({ message: "Ширина должна быть больше нуля", tryAgain: true });
       return;
     }
 

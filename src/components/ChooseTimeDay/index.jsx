@@ -21,8 +21,9 @@ const ChooseTimeDay = ({ day }) => {
   const [selectedHour, setSelectedHour] = useState("00");
   const [selectedMinute, setSelectedMinute] = useState("00");
   const [hoursCount, setHoursCount] = useState(1);
+  const [coords, setCoords] = useState(null);
   const [address, setAddress] = useState("");
-  const [debounceValue] = useDebounce(address, 1000);
+  const [debounceAddressValue] = useDebounce(address, 1000);
   const navigate = useNavigate();
 
   const onHandleRedirect = (link) => {
@@ -55,7 +56,6 @@ const ChooseTimeDay = ({ day }) => {
       dateEnd.setMinutes(selectedMinute);
 
       state.parkDate = {
-        ...snap.parkDate,
         dateStartISO: dateStart.toISOString(),
         dateEndISO: dateEnd.toISOString(),
         hoursStartOneDay: selectedHour === "00" ? "00" : +selectedHour,
@@ -63,6 +63,7 @@ const ChooseTimeDay = ({ day }) => {
         hoursCountOneDay: hoursCount,
         region: activeRegion,
         address: address,
+        coordinates: coords ? coords.join(", ") : null,
       };
     }
 
@@ -79,7 +80,6 @@ const ChooseTimeDay = ({ day }) => {
       tomorrowEnd.setMinutes(selectedMinute);
 
       state.parkDate = {
-        ...snap.parkDate,
         dateStartISO: tomorrowStart.toISOString(),
         dateEndISO: tomorrowEnd.toISOString(),
         hoursStartOneDay: selectedHour === "00" ? "00" : +selectedHour,
@@ -87,6 +87,7 @@ const ChooseTimeDay = ({ day }) => {
         hoursCountOneDay: hoursCount,
         region: activeRegion,
         address: address,
+        coordinates: coords ? coords.join(", ") : null,
       };
     }
 
@@ -94,8 +95,20 @@ const ChooseTimeDay = ({ day }) => {
   };
 
   useEffect(() => {
-    /* console.log(debounceValue) */
-  }, [debounceValue]);
+    if (debounceAddressValue && debounceAddressValue.length > 4) {
+      const ymaps = window.ymaps;
+
+      // Поиск координат
+      ymaps.geocode(debounceAddressValue, { results: 1 }).then((response) => {
+        const firstGeoObject = response.geoObjects.get(0);
+        const cords = firstGeoObject.geometry.getCoordinates();
+      
+        setCoords([cords[0], cords[1]]);
+      }).catch(() => showErrorSnackbar({ message: "Не удалось получить координаты" }))
+    } else {
+      setCoords(null);
+    }
+  }, [debounceAddressValue]);
 
   useEffect(() => {
     if (snap && snap.user && snap.parkDate) {
