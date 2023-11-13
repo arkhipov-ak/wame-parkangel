@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { AiOutlineLeft } from "react-icons/ai";
-import { BiMenuAltLeft } from "react-icons/bi";
+import { BiMenu } from "react-icons/bi";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useSnapshot } from "valtio";
 
@@ -47,7 +47,7 @@ const NavBar = () => {
         className={styles.menu_btn}
         onClick={() => setMenuOpen(!isMenuOpen)}
       >
-        <BiMenuAltLeft className={styles.icon}/>
+        <BiMenu className={styles.icon}/>
       </button>
 
       {isMenuOpen && (
