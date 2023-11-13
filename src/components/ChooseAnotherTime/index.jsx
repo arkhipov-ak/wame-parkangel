@@ -55,6 +55,7 @@ const ChooseAnotherTime = () => {
     dateEnd.setMinutes(selectedMinuteEnd);
 
     state.parkDate = {
+      ...snap.parkDate,
       dateStartISO: dateStart.toISOString(),
       dateEndISO: dateEnd.toISOString(),
       hoursStart: selectedHourStart === "00" ? "00" : +selectedHourStart,

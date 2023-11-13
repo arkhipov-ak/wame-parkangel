@@ -16,16 +16,12 @@ const SelectAddressLocation = () => {
   const [activeRegion, setActiveRegion] = useState("moscow");
   const [address, setAddress] = useState("");
   const [activeNearMeButton, setActiveNearMeButton] = useState(false);
+  const [myCoords, setMyCoords] = useState(null);
   const navigate = useNavigate();
 
   const onHandleNearMeClick = () => {
-    setActiveNearMeButton(!activeNearMeButton)
-
-   /*  if (activeNearMeButton) {
-      var watchID = navigator.geolocation.watchPosition(function (position) {
-        console.log(position.coords.latitude, position.coords.longitude);
-      });
-    } */
+    setActiveNearMeButton(!activeNearMeButton);
+    setAddress("");
   }
 
   const onHandleRedirect = (link) => {
@@ -36,8 +32,8 @@ const SelectAddressLocation = () => {
     }
 
     if (link === "/result-search") {
-      if (!address.trim()) {
-        showErrorSnackbar({ message: "Не указан адрес", tryAgain: true });
+      if (!address.trim() && !myCoords) {
+        showErrorSnackbar({ message: "Укажите адрес либо свои координаты" });
         return;
       }
     } //делаем валидацию адреса только по клику на кнопку "Подобрать парковку"
@@ -53,6 +49,7 @@ const SelectAddressLocation = () => {
       region: activeRegion,
       availabilityDateEnd: snap.parkDate.dateEndISO,
       availabilityDateStart: snap.parkDate.dateStartISO,
+      coordinates: myCoords ? myCoords.join(", ") : null,
     };
 
     state.parkDate = { ...snap.parkDate, region: activeRegion }; //записываем регион в стейт, чтобы отобразить его на карте
@@ -63,6 +60,29 @@ const SelectAddressLocation = () => {
   useEffect(() => {
     if (snap.parkDate) setAddress(snap.parkDate.address || "");
   }, [snap.parkDate]);
+
+  useEffect(() => {
+    console.log('use effect');
+    if (!activeNearMeButton) {
+      setMyCoords(null);
+      return;
+    }
+
+    console.log('after if');
+    const watchID = navigator.geolocation.watchPosition(function (position) {
+      console.log('in fn');
+      setMyCoords([position.coords.latitude, position.coords.longitude]);
+    });
+
+    console.log('after fn');
+
+    return () => {
+      console.log('in return');
+      navigator.geolocation.clearWatch(watchID);
+    }
+  }, [activeNearMeButton]);
+
+  console.log(myCoords);
 
   return (
     <>

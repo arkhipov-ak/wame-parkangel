@@ -45,6 +45,8 @@ const ExtraOptions = () => {
 
   const onHandleChange = (newData) => setData(newData);
 
+  console.log(snap);
+
   const handleRedirect = () => {
     if (snap.parkDate.hoursCountOneDay && snap.parkDate.hoursStartOneDay && snap.parkDate.minutesOneDay) {
       if (!data.priceHour) {
