@@ -37,7 +37,12 @@ const ChooseAnotherTime = () => {
         showErrorSnackbar({ message: "Не указан адрес", tryAgain: true });
         return;
       }
-    } //делаем валидацию адреса только по клику на кнопку "Далее"
+
+      if (!coords) {
+        showErrorSnackbar({ message: "Не удалось получить координаты парковки", tryAgain: true });
+        return;
+      }
+    } //делаем валидацию адреса и координат только по клику на кнопку "Далее"
 
     if (!selectedDateStart || !selectedDateEnd) {
       showErrorSnackbar({ message: "Не указана дата", tryAgain: true })

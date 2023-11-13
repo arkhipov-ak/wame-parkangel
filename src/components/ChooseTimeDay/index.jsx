@@ -18,8 +18,8 @@ const ChooseTimeDay = ({ day }) => {
   const snap = useSnapshot(state);
   const [openTimeModal, setOpenTimeModal] = useState(false);
   const [activeRegion, setActiveRegion] = useState("moscow");
-  const [selectedHour, setSelectedHour] = useState("00");
-  const [selectedMinute, setSelectedMinute] = useState("00");
+  const [selectedHours, setSelectedHours] = useState("00");
+  const [selectedMinutes, setSelectedMinutes] = useState("00");
   const [hoursCount, setHoursCount] = useState(1);
   const [coords, setCoords] = useState(null);
   const [address, setAddress] = useState("");
@@ -27,16 +27,21 @@ const ChooseTimeDay = ({ day }) => {
   const navigate = useNavigate();
 
   const onHandleRedirect = (link) => {
-    let hoursEndTemp = +selectedHour + +hoursCount;
+    let hoursEndTemp = +selectedHours + +hoursCount;
 
     if (link === "/extra-options") {
       if (!activeRegion) {
         showErrorSnackbar({ message: "Не указан регион", tryAgain: true });
         return;
       }
-  
+
       if (!address.trim()) {
         showErrorSnackbar({ message: "Не указан адрес", tryAgain: true });
+        return;
+      }
+
+      if (!coords) {
+        showErrorSnackbar({ message: "Не удалось получить координаты парковки", tryAgain: true });
         return;
       }
   
@@ -48,18 +53,26 @@ const ChooseTimeDay = ({ day }) => {
 
     if (day === "сегодня") {
       const dateStart = new Date();
-      dateStart.setHours(selectedHour);
-      dateStart.setMinutes(selectedMinute);
+
+      if ((+selectedHours < dateStart.getHours()) ||
+          (+selectedHours === dateStart.getHours() && +selectedMinutes < dateStart.getMinutes())
+        ) {
+        showErrorSnackbar({ message: "Выбранное время уже прошло", tryAgain: true });
+        return;
+      }
+
+      dateStart.setHours(selectedHours);
+      dateStart.setMinutes(selectedMinutes);
 
       const dateEnd = new Date();
       dateEnd.setHours(hoursEndTemp);
-      dateEnd.setMinutes(selectedMinute);
+      dateEnd.setMinutes(selectedMinutes);
 
       state.parkDate = {
         dateStartISO: dateStart.toISOString(),
         dateEndISO: dateEnd.toISOString(),
-        hoursStartOneDay: selectedHour === "00" ? "00" : +selectedHour,
-        minutesOneDay: selectedMinute,
+        hoursStartOneDay: selectedHours === "00" ? "00" : +selectedHours,
+        minutesOneDay: selectedMinutes,
         hoursCountOneDay: hoursCount,
         region: activeRegion,
         address: address,
@@ -71,19 +84,19 @@ const ChooseTimeDay = ({ day }) => {
       const date = new Date();
       const tomorrowStart = new Date(date);
       tomorrowStart.setDate(date.getDate() + 1);
-      tomorrowStart.setHours(selectedHour);
-      tomorrowStart.setMinutes(selectedMinute);
+      tomorrowStart.setHours(selectedHours);
+      tomorrowStart.setMinutes(selectedMinutes);
 
       const tomorrowEnd = new Date(date);
       tomorrowEnd.setDate(date.getDate() + 1);
       tomorrowEnd.setHours(hoursEndTemp);
-      tomorrowEnd.setMinutes(selectedMinute);
+      tomorrowEnd.setMinutes(selectedMinutes);
 
       state.parkDate = {
         dateStartISO: tomorrowStart.toISOString(),
         dateEndISO: tomorrowEnd.toISOString(),
-        hoursStartOneDay: selectedHour === "00" ? "00" : +selectedHour,
-        minutesOneDay: selectedMinute,
+        hoursStartOneDay: selectedHours === "00" ? "00" : +selectedHours,
+        minutesOneDay: selectedMinutes,
         hoursCountOneDay: hoursCount,
         region: activeRegion,
         address: address,
@@ -112,8 +125,8 @@ const ChooseTimeDay = ({ day }) => {
 
   useEffect(() => {
     if (snap && snap.user && snap.parkDate) {
-      setSelectedHour(snap.parkDate.hoursStartOneDay || "00");
-      setSelectedMinute(snap.parkDate.minutesOneDay  || "00");
+      setSelectedHours(snap.parkDate.hoursStartOneDay || "00");
+      setSelectedMinutes(snap.parkDate.minutesOneDay  || "00");
       setHoursCount(snap.parkDate.hoursCountOneDay || 1);
       setActiveRegion(snap.parkDate.region || "moscow");
       setAddress(snap.parkDate.address || "");
@@ -127,7 +140,7 @@ const ChooseTimeDay = ({ day }) => {
         <h2 className={styles.title}>Сдать на {day}</h2>  
         <span className={styles.label}>Время начала</span>
         <div onClick={() => setOpenTimeModal(true)} className={styles.time_present}>
-          {selectedHour}:{selectedMinute}
+          {selectedHours}:{selectedMinutes}
         </div>
         <span className={styles.label}>На сколько времени</span>
         <HoursCounterBlock hoursCount={hoursCount} setHoursCount={setHoursCount}/>
@@ -158,8 +171,8 @@ const ChooseTimeDay = ({ day }) => {
         <ModalTime
           setOpenTimeModal={setOpenTimeModal}
           openTimeModal={openTimeModal}
-          setSelectedMinute={setSelectedMinute}
-          setSelectedHour={setSelectedHour}
+          setSelectedMinute={setSelectedMinutes}
+          setSelectedHour={setSelectedHours}
           isToday={day === "сегодня"}
         />
       </Container>
