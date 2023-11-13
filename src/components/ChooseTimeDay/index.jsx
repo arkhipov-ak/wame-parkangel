@@ -79,6 +79,7 @@ const ChooseTimeDay = ({ day }) => {
       tomorrowEnd.setMinutes(selectedMinute);
 
       state.parkDate = {
+        ...snap.parkDate,
         dateStartISO: tomorrowStart.toISOString(),
         dateEndISO: tomorrowEnd.toISOString(),
         hoursStartOneDay: selectedHour === "00" ? "00" : +selectedHour,
