@@ -26,11 +26,11 @@
 }
 .descr_text {
   width: 100%;
-  color: var(--text-primary);;
+  color: var(--text-primary);
   display: flex;
   justify-content: center;
   margin: 10px 0;
-  font-size: 0.999rem;
+  font-size: 0.8rem;
   font-style: normal;
   font-weight: 450;
   line-height: normal;

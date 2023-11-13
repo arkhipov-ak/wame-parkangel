@@ -16,9 +16,7 @@ const Agreement = () => {
   const [isImageLoaded, setImageLoaded] = useState(false);
   const [date, setDate] = useState(null);
 
-  const handleImageLoad = () => {
-    setImageLoaded(true);
-  };
+  const handleImageLoad = () => setImageLoaded(true);
 
   const handleAgreementClick = () => {
     const today = new Date();
