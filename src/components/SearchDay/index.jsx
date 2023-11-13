@@ -16,12 +16,12 @@ const SearchDay = ({ day }) => {
   const snap = useSnapshot(state);
   const [openTimeModal, setOpenTimeModal] = useState(false);
   const [hoursCount, setHoursCount] = useState(1);
-  const [selectedHour, setSelectedHour] = useState("00");
-  const [selectedMinute, setSelectedMinute] = useState("00");
+  const [selectedHours, setSelectedHours] = useState("00");
+  const [selectedMinutes, setSelectedMinutes] = useState("00");
   const navigate = useNavigate();
 
   const onHandleRedirect = (link) => {
-    let hoursEndTemp = +selectedHour + +hoursCount;
+    let hoursEndTemp = +selectedHours + +hoursCount;
 
     if (hoursEndTemp > 23) {
       showErrorSnackbar({ message: 'Время заходит на следующий день, выберите опцию "На другой срок"' });
@@ -30,18 +30,26 @@ const SearchDay = ({ day }) => {
 
     if (day === "сегодня") {
       const dateStart = new Date();
-      dateStart.setHours(selectedHour);
-      dateStart.setMinutes(selectedMinute);
+
+      if ((+selectedHours < dateStart.getHours()) ||
+          (+selectedHours === dateStart.getHours() && +selectedMinutes < dateStart.getMinutes())
+        ) {
+        showErrorSnackbar({ message: "Выбранное время уже прошло", tryAgain: true });
+        return;
+      }
+      
+      dateStart.setHours(selectedHours);
+      dateStart.setMinutes(selectedMinutes);
 
       const dateEnd = new Date();
       dateEnd.setHours(hoursEndTemp);
-      dateEnd.setMinutes(selectedMinute);
+      dateEnd.setMinutes(selectedMinutes);
 
       state.parkDate = {
         dateStartISO: dateStart.toISOString(),
         dateEndISO: dateEnd.toISOString(),
-        hoursStartOneDay: selectedHour === "00" ? "00" : +selectedHour,
-        minutesOneDay: selectedMinute,
+        hoursStartOneDay: selectedHours === "00" ? "00" : +selectedHours,
+        minutesOneDay: selectedMinutes,
         hoursCountOneDay: hoursCount,
       };
     }
@@ -50,19 +58,19 @@ const SearchDay = ({ day }) => {
       const date = new Date();
       const tomorrowStart = new Date(date);
       tomorrowStart.setDate(date.getDate() + 1);
-      tomorrowStart.setHours(selectedHour);
-      tomorrowStart.setMinutes(selectedMinute);
+      tomorrowStart.setHours(selectedHours);
+      tomorrowStart.setMinutes(selectedMinutes);
 
       const tomorrowEnd = new Date(date);
       tomorrowEnd.setDate(date.getDate() + 1);
       tomorrowEnd.setHours(hoursEndTemp);
-      tomorrowEnd.setMinutes(selectedMinute);
+      tomorrowEnd.setMinutes(selectedMinutes);
 
       state.parkDate = {
         dateStartISO: tomorrowStart.toISOString(),
         dateEndISO: tomorrowEnd.toISOString(),
-        hoursStartOneDay: selectedHour === "00" ? "00" : +selectedHour,
-        minutesOneDay: selectedMinute,
+        hoursStartOneDay: selectedHours === "00" ? "00" : +selectedHours,
+        minutesOneDay: selectedMinutes,
         hoursCountOneDay: hoursCount,
       };
     }
@@ -72,8 +80,8 @@ const SearchDay = ({ day }) => {
 
   useEffect(() => {
     if (snap && snap.user && snap.parkDate) {
-      setSelectedHour(snap.parkDate.hoursStartOneDay || "00");
-      setSelectedMinute(snap.parkDate.minutesOneDay  || "00");
+      setSelectedHours(snap.parkDate.hoursStartOneDay || "00");
+      setSelectedMinutes(snap.parkDate.minutesOneDay  || "00");
       setHoursCount(snap.parkDate.hoursCountOneDay || 1);
     }
   }, [snap.user, snap.parkDate]);
@@ -85,7 +93,7 @@ const SearchDay = ({ day }) => {
         <h2 className={styles.give_today}>Найти на {day}</h2>
         <span className={styles.label}>Время начала</span>
         <div onClick={() => setOpenTimeModal(true)} className={styles.time_present}>
-          {selectedHour}:{selectedMinute}
+          {selectedHours}:{selectedMinutes}
         </div>
         <span className={styles.label}>На сколько времени</span>
         <HoursCounterBlock hoursCount={hoursCount} setHoursCount={setHoursCount}/>
@@ -94,8 +102,8 @@ const SearchDay = ({ day }) => {
         <ModalTime
           setOpenTimeModal={setOpenTimeModal}
           openTimeModal={openTimeModal}
-          setSelectedMinute={setSelectedMinute}
-          setSelectedHour={setSelectedHour}
+          setSelectedMinute={setSelectedMinutes}
+          setSelectedHour={setSelectedHours}
           isToday={day === "сегодня"}
         />
       </Container>
