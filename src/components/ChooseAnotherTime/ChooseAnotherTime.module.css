@@ -111,9 +111,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   font-family: Montserrat;
   font-size: 16px;
   font-weight: 400;
-  justify-content: center;
-  align-items: center;
-  border-radius: 0.9375rem;
+  border-radius: 15px;
   background: var(--background-secondary);
   color: var(--text-primary);
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);

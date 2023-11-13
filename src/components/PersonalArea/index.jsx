@@ -59,7 +59,7 @@ const PersonalArea = () => {
 
   return (
     <>
-      <NavBar />
+      <NavBar/>
       <Container>
         <form onSubmit={handleSubmit} className={styles.form}>
           <h2 className={styles.title}>Личный кабинет</h2>
