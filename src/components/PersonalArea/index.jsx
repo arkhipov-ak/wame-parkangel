@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import NavBar from "../NavBar";
-import styles from "./PersonalArea.module.css";
-import Container from "../common/Container";
-import Button from "../common/Button";
 import { useSnapshot } from "valtio";
-import { state } from "../../state";
-import CustomCheckBox from "../common/CustomCheckbox";
-import { showErrorSnackbar, showSuccessSnackbar } from "../../utils/showSnackBar";
+
+import styles from "./PersonalArea.module.css";
+import NavBar from "src/components/NavBar";
+import Container from "src/components/common/Container";
+import Button from "src/components/common/Button";
+import { state } from "src/state";
+import CustomCheckBox from "src/components/common/CustomCheckbox";
+import { showErrorSnackbar, showSuccessSnackbar } from "src/utils/showSnackBar";
 
 const PersonalArea = () => {
   const snap = useSnapshot(state);
@@ -106,13 +107,13 @@ const PersonalArea = () => {
               type="text"
             />
             <CustomCheckBox checked={data.isShowName} onClick={e => onHandleChange(e, "isShowName")}>
-              Имя
+              * Имя
             </CustomCheckBox>
             <CustomCheckBox checked={data.isShowPhoneNumber} onClick={e => onHandleChange(e, "isShowPhoneNumber")}>
-              Телефон
+              * Телефон
             </CustomCheckBox>
             <p className={styles.paragraph}>
-              *Выбранные вами параметры отразятся в размещенном объявлении и станут видимы для соискателей.
+              * Выбранные вами параметры отразятся в размещенном объявлении и станут видимы для соискателей.
             </p>
           <Button type="submit">Сохранить</Button>
         </form>
