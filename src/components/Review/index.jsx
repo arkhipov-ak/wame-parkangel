@@ -1,15 +1,16 @@
-import NavBar from "../NavBar";
-import { YMaps, Map } from "@pbe/react-yandex-maps";
-import styles from "./Review.module.css";
-import { useNavigate } from "react-router-dom";
-import { useSnapshot } from "valtio";
-import { state } from "../../state";
-import Container from "../common/Container";
-import { showErrorSnackbar, showSuccessSnackbar } from "../../utils/showSnackBar";
 import { useEffect, useState } from "react";
-import Button from "../common/Button";
+import { useNavigate } from "react-router-dom";
+import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
 import axios from "axios";
-import { API_KEY } from "../../utils/constants";
+import { useSnapshot } from "valtio";
+
+import styles from "./Review.module.css";
+import NavBar from "src/components/NavBar";
+import { state } from "src/state";
+import Container from "src/components/common/Container";
+import { showErrorSnackbar, showSuccessSnackbar } from "src/utils/showSnackBar";
+import Button from "src/components/common/Button";
+import { API_KEY } from "src/utils/constants";
 
 const Review = () => {
   const snap = useSnapshot(state);
@@ -103,8 +104,7 @@ const Review = () => {
           showSuccessSnackbar({ message: "Объявление опубликовано" });
           navigate("/search-time");
         }
-      })
-      .catch(() => showErrorSnackbar({ message: "Не удалось опубликовать объявление"})
+      }).catch(() => showErrorSnackbar({ message: "Не удалось опубликовать объявление"})
     );
   };
 
@@ -203,21 +203,25 @@ const Review = () => {
                     <span className={styles.value}>{snap.user.telegram}</span>
                   </div>
                 </div>
-                <YMaps apiKey={API_KEY}>
-                  <Map
-                    width="100%"
-                    height="30vh"
-                    defaultState={{
-                      center: [55.7558, 37.6173], // Координаты Москвы
-                      zoom: 16,
-                      type: "yandex#map",
-                    }}
-                    options={{
-                      suppressMapOpenBlock: true, // Убирает блок "Открыть в Яндекс.Картах"
-                      suppressYandexSearch: true,
-                    }}
-                  ></Map>
-                </YMaps>
+                {snap.parkDate.coordinates && (
+                  <YMaps apiKey={API_KEY}>
+                    <Map
+                      width="100%"
+                      height="30vh"
+                      defaultState={{
+                        center: snap.parkDate.coordinates,
+                        zoom: 16,
+                        type: "yandex#map",
+                      }}
+                      options={{
+                        suppressMapOpenBlock: true, // Убирает блок "Открыть в Яндекс.Картах"
+                        suppressYandexSearch: true,
+                      }}
+                    >
+                      <Placemark geometry={snap.parkDate.coordinates}/>
+                    </Map>
+                  </YMaps>
+                )}
               </div>
               <Button onClick={onHandleClick}>Опубликовать</Button>
             </div>

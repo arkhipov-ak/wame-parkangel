@@ -73,7 +73,7 @@ const ChooseAnotherTime = () => {
       dateEnd: selectedDateEnd,
       region: activeRegion,
       address: address,
-      coordinates: addressCoords ? addressCoords.join(", ") : null,
+      coordinates: addressCoords,
     };
 
     navigate(link);

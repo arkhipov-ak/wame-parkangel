@@ -91,7 +91,7 @@ const ExtraOptions = () => {
       user_id: snap.user.id,
       availabilityDateEnd: snap.parkDate.dateEndISO,
       availabilityDateStart: snap.parkDate.dateStartISO,
-      coordinates: snap.parkDate.coordinates,
+      coordinates: snap.parkDate.coordinates.join(", "),
     };
 
     if (!preparedData.height) delete preparedData.height;
@@ -111,8 +111,7 @@ const ExtraOptions = () => {
         state.parkDate = { ...snap.parkDate, isRenewable: isRenewable, park_id: response.data.response.id };
         navigate("/review");
       }
-    })
-    .catch(() => showErrorSnackbar({ message: "Не удалось создать парковку" }))
+    }).catch(() => showErrorSnackbar({ message: "Не удалось создать парковку" }))
   };
 
   const onHandleSaveOptions = (e) => {

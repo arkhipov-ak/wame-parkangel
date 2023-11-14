@@ -76,7 +76,7 @@ const ChooseTimeDay = ({ day }) => {
         hoursCountOneDay: hoursCount,
         region: activeRegion,
         address: address,
-        coordinates: addressCoords ? addressCoords.join(", ") : null,
+        coordinates: addressCoords,
       };
     }
 
@@ -100,7 +100,7 @@ const ChooseTimeDay = ({ day }) => {
         hoursCountOneDay: hoursCount,
         region: activeRegion,
         address: address,
-        coordinates: addressCoords ? addressCoords.join(", ") : null,
+        coordinates: addressCoords,
       };
     }
 
@@ -117,7 +117,7 @@ const ChooseTimeDay = ({ day }) => {
         const cords = firstGeoObject.geometry.getCoordinates();
       
         setAddressCoords([cords[0], cords[1]]);
-      }).catch(() => showErrorSnackbar({ message: "Не удалось получить координаты" }))
+      }).catch(() => showErrorSnackbar({ message: "Не удалось получить координаты адреса" }))
     } else {
       setAddressCoords(null);
     }
