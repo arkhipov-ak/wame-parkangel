@@ -1,18 +1,19 @@
-import NavBar from "../NavBar";
-import styles from "./ResultSearchElement.module.css";
-import { useSnapshot } from "valtio";
-import { state } from "../../state";
-import Container from "../common/Container";
-import { Map, YMaps } from "@pbe/react-yandex-maps";
 import { useEffect, useState } from "react";
-import { showErrorSnackbar, showSuccessSnackbar } from "../../utils/showSnackBar";
 import { useNavigate } from "react-router-dom";
-import LinkButton from "../common/LinkButton";
-import axios from "axios";
-import Modal from "../common/Modal";
+import { useSnapshot } from "valtio";
 import { Rate } from "antd";
-import Button from "../common/Button";
-import { API_KEY, mainChatID, telegramToken } from "../../utils/constants";
+import axios from "axios";
+import { Map, Placemark, YMaps } from "@pbe/react-yandex-maps";
+
+import styles from "./ResultSearchElement.module.css";
+import NavBar from "src/components/NavBar";
+import { state } from "src/state";
+import Container from "src/components/common/Container";
+import { showErrorSnackbar, showSuccessSnackbar } from "src/utils/showSnackBar";
+import LinkButton from "src/components/common/LinkButton";
+import Modal from "src/components/common/Modal";
+import Button from "src/components/common/Button";
+import { API_KEY, mainChatID, telegramToken } from "src/utils/constants";
 
 const ResultSearchElement = () => {
   const snap = useSnapshot(state);
@@ -181,21 +182,25 @@ const ResultSearchElement = () => {
                 <span className={styles.value}>{snap.user?.telegram}</span>
               </div>
             </div>
-            <YMaps apiKey={API_KEY}>
-              <Map
-                width="100%"
-                height="30vh"
-                defaultState={{
-                  center: [55.7558, 37.6173], // Координаты Москвы
-                  zoom: 16,
-                  type: "yandex#map",
-                }}
-                options={{
-                  suppressMapOpenBlock: true, // Убирает блок "Открыть в Яндекс.Картах"
-                  suppressYandexSearch: true,
-                }}
-              ></Map>
-            </YMaps>
+            {snap.options[0].coordinates && (
+              <YMaps apiKey={API_KEY}>
+                <Map
+                  width="100%"
+                  height="30vh"
+                  defaultState={{
+                    center: snap.options[0].coordinates,
+                    zoom: 16,
+                    type: "yandex#map",
+                  }}
+                  options={{
+                    suppressMapOpenBlock: true, // Убирает блок "Открыть в Яндекс.Картах"
+                    suppressYandexSearch: true,
+                  }}
+                >
+                  <Placemark geometry={snap.options[0].coordinates}/>
+                </Map>
+              </YMaps>
+            )}
           </div>
           <div className={styles.buttons_wrapper}>
             <LinkButton href={`https://t.me/${snap.resultElement?.user.telegram}`}>Написать в Telegram</LinkButton>

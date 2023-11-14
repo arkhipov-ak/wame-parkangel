@@ -1,5 +1,5 @@
-import ResultSearch from "../components/ResultSearch";
+import ResultSearch from "src/components/ResultSearch";
 
-const ResultSearchPage = () => <ResultSearch/>
+const ResultSearchPage = () => <ResultSearch/>;
 
 export default ResultSearchPage;

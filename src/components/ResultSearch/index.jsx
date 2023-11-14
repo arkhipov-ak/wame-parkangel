@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSnapshot } from "valtio";
 
@@ -36,9 +36,9 @@ const ResultSearch = () => {
   };
 
   const renderRating = (item) => {
-    if (item.length === 0) return "Недостаточно оценок";
+    if (!item.length) return "Недостаточно оценок";
     const ratings = item.map((elem) => elem.rating);
-    return ratings.reduce((acc, rating) => acc + rating, 0) / ratings.length;
+    return (ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length).toFixed(1);
   };
 
   const onHandleClick = (item) => {
@@ -54,7 +54,7 @@ const ResultSearch = () => {
         return;
       }
 
-      const preparedData = { ...snap.options[0] };
+      const preparedData = { ...snap.options[0], coordinates: snap.options[0].coordinates.join(", ") };
 
       if (snap.parkDate.hoursCountOneDay || snap.parkDate.hoursStartOneDay || snap.parkDate.minutesOneDay) {
         delete preparedData.priceDay;
@@ -107,9 +107,9 @@ const ResultSearch = () => {
                 <p className={styles.rent_location}>Рейтинг: {renderRating(item.review)}</p>
               </button>
             ))}
-            <Link to="/show-map-result" className={styles.submit}>
+            {/* <Link to="/show-map-result" className={styles.submit}>
               Посмотреть все на карте
-            </Link>
+            </Link> */}
           </div>
         ) : (
             <ZeroData>

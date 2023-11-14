@@ -68,9 +68,9 @@ const SearchTime = () => {
   };
 
   const renderRating = (item) => {
-    if (!item.length) return "Оценок нет";
+    if (!item.length) return "Недостаточно оценок";
     const ratings = item.map((elem) => elem.rating);
-    return ratings.reduce((acc, rating) => acc + rating, 0) / ratings.length;
+    return (ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length).toFixed(1);
   };
 
   const renderPrice = (item) => {

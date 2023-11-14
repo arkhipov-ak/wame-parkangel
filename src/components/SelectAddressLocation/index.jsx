@@ -57,7 +57,7 @@ const SelectAddressLocation = () => {
       region: activeRegion,
       availabilityDateEnd: snap.parkDate.dateEndISO,
       availabilityDateStart: snap.parkDate.dateStartISO,
-      coordinates: myCoords ? myCoords.join(", ") : addressCoords ? addressCoords.join(", ") : null,
+      coordinates: myCoords || addressCoords,
     };
 
     state.parkDate = { ...snap.parkDate, region: activeRegion }; //записываем регион в стейт, чтобы отобразить его на карте
