@@ -13,7 +13,7 @@ import { showErrorSnackbar, showSuccessSnackbar } from "src/utils/showSnackBar";
 import LinkButton from "src/components/common/LinkButton";
 import Modal from "src/components/common/Modal";
 import Button from "src/components/common/Button";
-import { API_KEY, mainChatID, telegramToken } from "src/utils/constants";
+import { API_KEY, telegramToken } from "src/utils/constants";
 
 const ResultSearchElement = () => {
   const snap = useSnapshot(state);
@@ -86,15 +86,16 @@ const ResultSearchElement = () => {
     return `${dayStart}.${monthStart}.${yearStart} - ${dayEnd}.${monthEnd}.${yearEnd}`;
   };
 
-  const handleOkBtn = () => {
+  const handleSendBtn = () => {
 		axios.post(
       "https://api.parkangel.ru/api/review",
       { rating, message: comment, ad_id: snap.resultElement.id, user_id: snap.user.id }
     ).then((response) => {
       if (response) {
         axios.get(
-          `https://api.telegram.org/bot${telegramToken}/sendMessage?chat_id=${mainChatID}&text=${comment}&rating=${rating}`
-        )
+          `https://api.telegram.org/bot${telegramToken}/sendMessage?chat_id=${snap.resultElement.user.chatId}&text=${comment}&rating=${rating}`
+        ).then(() => showSuccessSnackbar({ message: "Ваш отзыв отправлен в Telegram. Спасибо!" })
+        ).catch(() => showErrorSnackbar({ message: "Не удалось отправить ваш отзыв в Telegram" }))
         showSuccessSnackbar({ message: "Отзыв оставлен успешно" });
         setOpenModal(false);
       }
@@ -227,7 +228,7 @@ const ResultSearchElement = () => {
               onChange={e => setComment(e.target.value)}
               rows={5}
             />
-            <Button onClick={handleOkBtn} className={styles.submit}>Отправить</Button>
+            <Button onClick={handleSendBtn} className={styles.submit}>Отправить</Button>
 					</Modal>
         )}
       </Container>

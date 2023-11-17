@@ -70,22 +70,16 @@ const SelectAddressLocation = () => {
   }, [snap.parkDate]);
 
   useEffect(() => {
-    console.log('use effect');
     if (!activeNearMeButton) {
       setMyCoords(null);
       return;
     }
 
-    console.log('after if');
     const watchID = navigator.geolocation.watchPosition(function (position) {
-      console.log('in fn');
       setMyCoords([position.coords.latitude, position.coords.longitude]);
     });
 
-    console.log('after fn');
-
     return () => {
-      console.log('in return');
       navigator.geolocation.clearWatch(watchID);
     }
   }, [activeNearMeButton]);
