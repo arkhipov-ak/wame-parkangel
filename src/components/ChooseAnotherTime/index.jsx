@@ -63,6 +63,7 @@ const ChooseAnotherTime = () => {
     dateEnd.setMinutes(selectedMinuteEnd);
 
     state.parkDate = {
+      ...snap.parkDate,
       dateStartISO: dateStart.toISOString(),
       dateEndISO: dateEnd.toISOString(),
       hoursStart: selectedHourStart === "00" ? "00" : +selectedHourStart,
@@ -103,16 +104,20 @@ const ChooseAnotherTime = () => {
       setSelectedMinuteEnd(snap.parkDate.minutesEnd || "00");
       setSelectedDateStart(snap.parkDate.dateStart || "");
       setSelectedDateEnd(snap.parkDate.dateEnd || "");
-      setActiveRegion(snap.parkDate.region || null);
+      setActiveRegion(snap.parkDate.region || "moscow");
       setAddress(snap.parkDate.address || "");
     }
   }, [snap.user, snap.parkDate]);
+
+  console.log('snap choose', snap);
 
   return (
 		<>
 			<NavBar/>
 			<Container>
-				<h2 className={styles.title}>Сдать на другой срок</h2>
+				<h2 className={styles.title}>
+          {snap.isEditPark ? "Редактирование" : "Сдать на другой срок"}
+        </h2>
         <div style={{ width: "100%" }}>
           <span className={styles.label}>Дата и время начала</span>
           <div className={styles.date_time_container}>

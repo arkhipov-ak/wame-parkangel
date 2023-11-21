@@ -11,11 +11,15 @@ import Container from "src/components/common/Container";
 import { showErrorSnackbar, showSuccessSnackbar } from "src/utils/showSnackBar";
 import Button from "src/components/common/Button";
 import { API_KEY } from "src/utils/constants";
+import { renderMonth, renderDay, renderMinutes } from "src/utils/functions";
 
 const Review = () => {
   const snap = useSnapshot(state);
   const navigate = useNavigate();
   const [data, setData] = useState(null);
+
+  console.log('snap review', snap);
+  console.log('data review', data);
 
   const renderParkingType = () => {
     if (data.isUnderground) return "Подземная";
@@ -36,31 +40,19 @@ const Review = () => {
   const renderTime = () => {
     const dateStart = new Date(snap.parkDate.dateStartISO);
     const hoursStart = dateStart.getHours();
-    const minutesStart = (dateStart.getMinutes() + "").length === 1
-      ? `0${dateStart.getMinutes()}`
-      : dateStart.getMinutes()
-    ;
+    const minutesStart = renderMinutes(dateStart);
 
     const dateEnd = new Date(snap.parkDate.dateEndISO);
     const hoursEnd = dateEnd.getHours();
-    const minutesEnd = (dateEnd.getMinutes() + "").length === 1
-      ? `0${dateEnd.getMinutes()}`
-      : dateEnd.getMinutes()
-    ;
+    const minutesEnd = renderMinutes(dateEnd);
 
     return `${hoursStart}:${minutesStart} - ${hoursEnd}:${minutesEnd}`;
   };
 
   const renderDate = () => {
     const dateStart = new Date(snap.parkDate.dateStartISO);
-    const dayStart = (dateStart.getDate() + ""). length === 1
-      ? `0${dateStart.getDate()}`
-      : dateStart.getDate()
-    ;
-    const monthStart = (dateStart.getMonth() + 1 + "").length === 1 
-      ? `0${dateStart.getMonth() + 1}`
-      : dateStart.getMonth() + 1
-    ;
+    const dayStart = renderDay(dateStart);
+    const monthStart = renderMonth(dateStart);
     const yearStart = dateStart.getFullYear();
 
     if (snap.parkDate.hoursCountOneDay || snap.parkDate.hoursStartOneDay || snap.parkDate.minutesOneDay) {
@@ -69,10 +61,7 @@ const Review = () => {
 
     const dateEnd = new Date(snap.parkDate.dateEndISO);
     const dayEnd = dateEnd.getDate();
-    const monthEnd = (dateEnd.getMonth() + 1 + "").length === 1 
-      ? `0${dateEnd.getMonth() + 1}`
-      : dateEnd.getMonth() + 1
-    ;
+    const monthEnd = renderMonth(dateEnd);
     const yearEnd = dateEnd.getFullYear();
 
     return `${dayStart}.${monthStart}.${yearStart} - ${dayEnd}.${monthEnd}.${yearEnd}`;
@@ -98,6 +87,19 @@ const Review = () => {
     if (!preparedData.priceWeek) delete preparedData.priceWeek;
     if (!preparedData.priceMonth) delete preparedData.priceMonth;
 
+    console.log('preparedData', preparedData);
+
+    if (snap.isEditPark) {
+      return axios.put("https://api.parkangel.ru/api/ad", preparedData)
+        .then((response) => {
+          if (response) {
+            showSuccessSnackbar({ message: "Объявление отредактировано" });
+            navigate("/search-time");
+          }
+        }).catch(() => showErrorSnackbar({ message: "Не удалось отредактировать объявление"})
+      );
+    }
+
     axios.post("https://api.parkangel.ru/api/ad", preparedData)
       .then((response) => {
         if (response) {
@@ -116,13 +118,26 @@ const Review = () => {
   }, [snap.parkDate]);
 
   useEffect(() => {
+    if (snap.isEditPark === null || snap.user === null || snap.parkDate === null) {
+      showErrorSnackbar({ message: "Пожалуйста, повторите попытку" });
+      return navigate("/search-time");
+    }
+
+    if (snap.isEditPark) {
+      return setData({
+        ...snap.parkDate,
+        ...snap.options[0],
+        coordinates: snap.parkDate.coordinates.join(", ")
+      })
+    }
+
     axios.get(`https://api.parkangel.ru/api/park/${snap.parkDate.park_id}`)
       .then((response) => setData(response.data.response))
       .catch(() => {
         showErrorSnackbar({ message: "Не удалось загрузить данные парковки", tryAgain: true });
         navigate("/search-time");
       })
-  }, [navigate, snap.user.id]);
+  }, [snap.parkDate, snap.user, snap.isEditPark]);
 
   return (
     <>
@@ -223,7 +238,9 @@ const Review = () => {
                   </YMaps>
                 )}
               </div>
-              <Button onClick={onHandleClick}>Опубликовать</Button>
+              <Button onClick={onHandleClick}>
+                {snap.isEditPark ? "Редактировать" : "Опубликовать"}
+              </Button>
             </div>
           )}
       </Container>

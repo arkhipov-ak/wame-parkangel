@@ -1,5 +1,5 @@
 import { useState, useEffect, Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BiChevronRight } from "react-icons/bi";
 import axios from "axios";
 import { useSnapshot } from "valtio";
@@ -17,9 +17,11 @@ import { showErrorSnackbar, showSuccessSnackbar } from "src/utils/showSnackBar";
 import { state } from "src/state";
 import ZeroData from "src/components/common/ZeroData";
 import Modal from "src/components/common/Modal";
+import { renderMonth, renderDay, renderMinutes } from "src/utils/functions";
 
 const SearchTime = () => {
   const snap = useSnapshot(state);
+  const navigate = useNavigate();
   const [isImageLoaded, setImageLoaded] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [myAds, setMyAds] = useState([]);
@@ -27,39 +29,24 @@ const SearchTime = () => {
   const renderTime = (item) => {
     const dateStart = new Date(item.availabilityDateStart);
     const hoursStart = dateStart.getHours();
-    const minutesStart = (dateStart.getMinutes() + "").length === 1
-      ? `0${dateStart.getMinutes()}`
-      : dateStart.getMinutes()
-    ;
+    const minutesStart = renderMinutes(dateStart);
 
     const dateEnd = new Date(item.availabilityDateEnd);
     const hoursEnd = dateEnd.getHours();
-    const minutesEnd = (dateEnd.getMinutes() + "").length === 1
-      ? `0${dateEnd.getMinutes()}`
-      : dateEnd.getMinutes()
-    ;
+    const minutesEnd = renderMinutes(dateEnd);
 
     return `${hoursStart}:${minutesStart} - ${hoursEnd}:${minutesEnd}`;
   };
 
   const renderDate = (item) => {
     const dateStart = new Date(item.availabilityDateStart);
-    const dayStart = (dateStart.getDate() + ""). length === 1
-      ? `0${dateStart.getDate()}`
-      : dateStart.getDate()
-    ;
-    const monthStart = (dateStart.getMonth() + 1 + "").length === 1 
-      ? `0${dateStart.getMonth() + 1}`
-      : dateStart.getMonth() + 1
-    ;
+    const dayStart = renderDay(dateStart);
+    const monthStart = renderMonth(dateStart);
     const yearStart = dateStart.getFullYear();
 
     const dateEnd = new Date(item.availabilityDateEnd);
     const dayEnd = dateEnd.getDate();
-    const monthEnd = (dateEnd.getMonth() + 1 + "").length === 1 
-      ? `0${dateEnd.getMonth() + 1}`
-      : dateEnd.getMonth() + 1
-    ;
+    const monthEnd = renderMonth(dateEnd);
     const yearEnd = dateEnd.getFullYear();
 
     if (`${dayStart}.${monthStart}.${yearStart}` === `${dayEnd}.${monthEnd}.${yearEnd}`) return `${dayStart}.${monthStart}.${yearStart}`;
@@ -95,6 +82,61 @@ const SearchTime = () => {
       })
   };
 
+  const onHandleEditClick = (ad) => {
+    const dateStart = new Date(ad.park.availabilityDateStart);
+    const yearStart = dateStart.getFullYear();
+    const monthStart = renderMonth(dateStart);
+    const dayStart = renderDay(dateStart);
+    const hoursStart = dateStart.getHours();
+    const minutesStart = renderMinutes(dateStart);
+
+    const dateEnd = new Date(ad.park.availabilityDateEnd);
+    const yearEnd = dateEnd.getFullYear();
+    const monthEnd = renderMonth(dateEnd);
+    const dayEnd= renderDay(dateEnd);
+    const hoursEnd = dateEnd.getHours();
+    const minutesEnd = renderMinutes(dateEnd);
+
+    /* console.log(ad); */
+
+    state.isSearchPark = false;
+    state.isEditPark = true;
+    state.parkDate = {
+      park_id: ad.park_id,
+      review: ad.review,
+      tenant: ad.tenant,
+      isRenewable: ad.isRenewable,
+      dateStart: `${yearStart}-${monthStart}-${dayStart}`,
+      dateEnd: `${yearEnd}-${monthEnd}-${dayEnd}`,
+      hoursStart,
+      minutesStart,
+      hoursEnd,
+      minutesEnd,
+      region: ad.park.region,
+      address: ad.park.address,
+      coordinates: ad.park.coordinates,
+    };
+    state.options[0] = {
+      priceHour: ad.park.priceHour,
+      priceDay: ad.park.priceDay,
+      priceWeek: ad.park.priceWeek,
+      priceMonth: ad.park.priceMonth,
+      height: ad.park.height || "",
+      width: ad.park.width || "",
+      length: ad.park.length || "",
+      isUnderground: ad.park.isUnderground,
+      isOutDoor: ad.park.isOutDoor,
+      isCovered: ad.park.isCovered,
+      isGarage: ad.park.isGarage,
+      isProtected: ad.park.isProtected,
+      isHeated: ad.park.isHeated,
+      isVolts: ad.park.isVolts,
+      isSpecializedCharger: ad.park.isSpecializedCharger,
+    };
+
+    navigate("/choose-another-time");
+  };
+
   useEffect(() => {
     if (snap && snap.user) {
       axios.get(`https://api.parkangel.ru/api/ad/userId/${snap.user.id}`)
@@ -105,6 +147,8 @@ const SearchTime = () => {
 
   useEffect(() => {
     state.isSearchPark = true;
+    state.isEditPark = false;
+    state.parkDate = null;
   }, []);
 
   return (
@@ -197,7 +241,7 @@ const SearchTime = () => {
                       </div>
                       <p className={styles.rent_location}>Рейтинг: {renderRating(ad.review)}</p>
                       <div className={styles.image_block}>
-                        <img src={editImg} alt="edit"/>
+                        <img src={editImg} alt="edit "onClick={() => onHandleEditClick(ad)}/>
                         <img src={deleteImg} alt="delete" onClick={() => setOpenDeleteModal(true)}/>
                       </div>
                     </div>

@@ -5,3 +5,15 @@ export function declOfNum({ number, array }) {
 export const hideKeyboard = (e) => {
   if (e.key === "Enter") e.target.blur();
 };
+
+export const renderDay = (date) => {
+  return (date.getDate() + ""). length === 1 ? `0${date.getDate()}` : date.getDate();
+};
+
+export const renderMonth = (date) => {
+  return (date.getMonth() + 1 + "").length === 1  ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
+};
+
+export const renderMinutes = (date) => {
+  return (date.getMinutes() + "").length === 1 ? `0${date.getMinutes()}` : date.getMinutes();
+};

@@ -43,6 +43,9 @@ const ExtraOptions = () => {
     region: "",
   });
 
+  console.log('snap extra', snap);
+  console.log('data extra', data);
+
   const onHandleChange = (newData) => setData(newData);
 
   const handleRedirect = () => {
@@ -79,7 +82,12 @@ const ExtraOptions = () => {
       return;
     }
 
-    state.parkDate = { ...snap.parkDate, isRenewable: isRenewable };
+    if (snap.isEditPark) {
+      state.options[0] = data;
+      return navigate("/review");
+    }
+
+    state.parkDate = { ...snap.parkDate, isRenewable };
 
     const preparedData = {
       ...data,
@@ -156,8 +164,7 @@ const ExtraOptions = () => {
           showSuccessSnackbar({ message: "Параметры сохранены" })
           navigate(-1);
         }
-      })
-      .catch(() => showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
+      }).catch(() => showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
     } else {
       axios.post(
         "https://api.parkangel.ru/api/options", preparedData
@@ -166,8 +173,7 @@ const ExtraOptions = () => {
           showSuccessSnackbar({ message: "Параметры сохранены" })
           navigate(-1);
         }
-      })
-      .catch(() => showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
+      }).catch(() => showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
     }
   };
 
@@ -182,19 +188,20 @@ const ExtraOptions = () => {
 
   useEffect(() => {
     if (snap && snap.user && snap.options && snap.options[0]) {
-      if (snap.isSearchPark === false) return;
+      if (snap.isSearchPark === false && snap.isEditPark === false) return;
+      if (snap.isEditPark) setIsRenewable(snap.parkDate.isRenewable);
       setData(snap.options[0]);
     }
-  }, [snap.user, snap.options, snap.isSearchPark]);
+  }, [snap.user, snap.options, snap.isSearchPark, snap.isEditPark]);
 
   useEffect(() => {
     if (snap && snap.user) {
-      if (snap.isSearchPark === null) {
+      if (snap.isSearchPark === null || snap.isEditPark === null) {
         showErrorSnackbar({ message: "Пожалуйста, повторите попытку" });
         navigate("/search-time");
       }
     }
-  }, [snap.user, snap.isSearchPark]);
+  }, [snap.user, snap.isSearchPark, snap.isEditPark]);
 
   return (
 		<>
