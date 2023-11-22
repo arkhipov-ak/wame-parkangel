@@ -59,7 +59,7 @@ const NavBar = () => {
               <Link className={styles.linkfor} to="/personal-area">Личный кабинет</Link>
               <Link className={styles.linkfor} to="/faq">Частые вопросы</Link>
               <Link className={styles.linkfor} to="/about-service">О сервисе</Link>
-              <a className={styles.linkfor} href="https://t.me/OlivsonM">Связь с поддержкой</a>
+              <a className={styles.linkfor} href="https://t.me/ParkAngel_feedback">Связь с поддержкой</a>
               <Link className={styles.linkfor} to="/agreement">
                 Пользовательское <br /> соглашение
               </Link>
