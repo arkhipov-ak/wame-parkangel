@@ -18,9 +18,6 @@ const Review = () => {
   const navigate = useNavigate();
   const [data, setData] = useState(null);
 
-  console.log('snap review', snap);
-  console.log('data review', data);
-
   const renderParkingType = () => {
     if (data.isUnderground) return "Подземная";
     if (data.isOutDoor) return "Открытая";
@@ -67,9 +64,10 @@ const Review = () => {
     return `${dayStart}.${monthStart}.${yearStart} - ${dayEnd}.${monthEnd}.${yearEnd}`;
   };
 
-  const onHandleClick = () => {
+  const onHandleClick = async () => {
     const preparedData = {
       ...data,
+      id: data.ad_id,
       isRenewable: snap.parkDate.isRenewable,
       availabilityDateEnd: snap.parkDate.dateEndISO,
       availabilityDateStart: snap.parkDate.dateStartISO,
@@ -77,8 +75,16 @@ const Review = () => {
       park_id: snap.parkDate.park_id,
     };
 
-    delete preparedData.id;
+    delete preparedData.ad_id;
     delete preparedData.user;
+    delete preparedData.dateEnd;
+    delete preparedData.dateEndISO;
+    delete preparedData.dateStart;
+    delete preparedData.dateStartISO;
+    delete preparedData.hoursStart;
+    delete preparedData.hoursEnd;
+    delete preparedData.minutesStart;
+    delete preparedData.minutesEnd;
     if (!preparedData.height) delete preparedData.height;
     if (!preparedData.width) delete preparedData.width;
     if (!preparedData.length) delete preparedData.length;
@@ -87,20 +93,31 @@ const Review = () => {
     if (!preparedData.priceWeek) delete preparedData.priceWeek;
     if (!preparedData.priceMonth) delete preparedData.priceMonth;
 
-    console.log('preparedData', preparedData);
-
     if (snap.isEditPark) {
-      return axios.put("https://api.parkangel.ru/api/ad", preparedData)
+       await axios.put("https://api.parkangel.ru/api/ad", preparedData)
+        /* .then((response) => {
+          if (response) {
+            showSuccessSnackbar({ message: "Объявление отредактировано" });
+            navigate("/search-time");
+          }
+        }) */.catch(() => showErrorSnackbar({ message: "Не удалось отредактировать объявление"})
+      ); //TODO: переделать бэк, чтобы можно было использовать один запрос
+
+      await axios.put("https://api.parkangel.ru/api/park", preparedData)
         .then((response) => {
           if (response) {
             showSuccessSnackbar({ message: "Объявление отредактировано" });
             navigate("/search-time");
           }
-        }).catch(() => showErrorSnackbar({ message: "Не удалось отредактировать объявление"})
+        }).catch(() => showErrorSnackbar({ message: "Не удалось отредактировать парковку"})
       );
+
+      return; 
     }
 
-    axios.post("https://api.parkangel.ru/api/ad", preparedData)
+    delete preparedData.id;
+
+    await axios.post("https://api.parkangel.ru/api/ad", preparedData)
       .then((response) => {
         if (response) {
           showSuccessSnackbar({ message: "Объявление опубликовано" });

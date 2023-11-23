@@ -109,8 +109,6 @@ const ChooseAnotherTime = () => {
     }
   }, [snap.user, snap.parkDate]);
 
-  console.log('snap choose', snap);
-
   return (
 		<>
 			<NavBar/>

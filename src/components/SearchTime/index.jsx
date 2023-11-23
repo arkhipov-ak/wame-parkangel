@@ -97,12 +97,11 @@ const SearchTime = () => {
     const hoursEnd = dateEnd.getHours();
     const minutesEnd = renderMinutes(dateEnd);
 
-    /* console.log(ad); */
-
     state.isSearchPark = false;
     state.isEditPark = true;
     state.parkDate = {
       park_id: ad.park_id,
+      ad_id: ad.id,
       review: ad.review,
       tenant: ad.tenant,
       isRenewable: ad.isRenewable,

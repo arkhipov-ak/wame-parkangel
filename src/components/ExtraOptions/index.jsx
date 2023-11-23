@@ -43,9 +43,6 @@ const ExtraOptions = () => {
     region: "",
   });
 
-  console.log('snap extra', snap);
-  console.log('data extra', data);
-
   const onHandleChange = (newData) => setData(newData);
 
   const handleRedirect = () => {
@@ -82,12 +79,12 @@ const ExtraOptions = () => {
       return;
     }
 
+    state.parkDate = { ...snap.parkDate, isRenewable };
+
     if (snap.isEditPark) {
       state.options[0] = data;
       return navigate("/review");
     }
-
-    state.parkDate = { ...snap.parkDate, isRenewable };
 
     const preparedData = {
       ...data,
@@ -116,7 +113,7 @@ const ExtraOptions = () => {
       "https://api.parkangel.ru/api/park", preparedData
     ).then((response) => {
       if (response) {
-        state.parkDate = { ...snap.parkDate, isRenewable: isRenewable, park_id: response.data.response.id };
+        state.parkDate = { ...snap.parkDate, park_id: response.data.response.id };
         navigate("/review");
       }
     }).catch(() => showErrorSnackbar({ message: "Не удалось создать парковку" }))
