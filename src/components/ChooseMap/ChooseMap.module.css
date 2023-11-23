@@ -17,11 +17,26 @@
   background: var(--background-secondary);
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
 }
-.address_text {
+.ellipsis {
+  color: var(--text-primary);
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+.animated {
   color: var(--text-primary);
+  animation: animated 5s infinite linear;
+  white-space: nowrap;
+  -webkit-animation: text 10s infinite linear;
+  padding-left: 170%;
+}
+@keyframes text {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-80%, 0);
+  }
 }
 .end_wrapper {
   position: absolute;

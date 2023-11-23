@@ -83,8 +83,8 @@ const ChooseMap = () => {
       if (snap.parkDate.coordinates) return setDefaultCoords(snap.parkDate.coordinates);
 
       switch (snap.parkDate.region) {
-        case "spb": return setDefaultCoords([59.938784, 30.314997])
-        default: return setDefaultCoords([55.755864, 37.617698])
+        case "spb": return setDefaultCoords([59.938784, 30.314997]);
+        default: return setDefaultCoords([55.755864, 37.617698]);
       }
     }
   }, [snap.parkDate]);
@@ -94,7 +94,9 @@ const ChooseMap = () => {
         <NavBar/>
         <div className={styles.address_wrapper}>
           <div className={styles.address}>
-            <span className={styles.address_text}>{selectedAddress || "Выберите местоположение на карте"}</span>
+            <span className={`${selectedAddress.length > 35 ? styles.animated : styles.ellipsis}`}>
+              {selectedAddress || "Выберите местоположение на карте"}
+            </span>
           </div>
         </div>
         <div className={styles.end_wrapper}>
