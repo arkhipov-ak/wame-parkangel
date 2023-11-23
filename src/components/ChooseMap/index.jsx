@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSnapshot } from "valtio";
 import axios from "axios";
@@ -17,6 +17,21 @@ const ChooseMap = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState("");
   const navigate = useNavigate();
+
+  const renderDefaultCoordinates = () => {
+    if (snap.parkDate) {
+      if (snap.parkDate.coordinates) return snap.parkDate.coordinates;
+
+      switch (snap.parkDate.region) {
+        case "spb": return [59.938784, 30.314997]
+        default: return [55.755864, 37.617698] //координаты Москвы
+      }
+    }
+  };
+
+  const handleMyCoordsClick = () => {
+    console.log('click');
+  };
 
   const handleMapClick = async (e) => {
     let coords = e.get("coords").reverse();
@@ -43,38 +58,44 @@ const ChooseMap = () => {
       showErrorSnackbar({ message: "Не удалось загрузить данные", tryAgain: true });
       navigate("/search-time");
     } else if (selectedAddress) {
-      state.parkDate.address = selectedAddress
+      state.parkDate.address = selectedAddress;
       navigate(-1);
     }
   };
 
+  useEffect(() => {
+    if (snap.parkDate) {
+      if (snap.parkDate.coordinates) setSelectedLocation(snap.parkDate.coordinates);
+      if (snap.parkDate.address) setSelectedAddress(snap.parkDate.address);
+    }
+  }, [snap.parkDate]);
+
   return (
-    <div>
-      <div className={styles.mapContainer}>
+    <>
         <NavBar/>
-        <div className={styles.container}>
-          <div className={styles.wrapper_div}>
-            {selectedAddress || "Выберите местоположение на карте"}
+        <div className={styles.address_wrapper}>
+          <div className={styles.address}>
+            <span className={styles.address_text}>{selectedAddress || "Выберите местоположение на карте"}</span>
           </div>
-          <div className={styles.end__wrapper}>
-            <button className={styles.select_btn} onClick={handleSelectClick}>
-              Выбрать
-            </button>
-            <div className={styles.img_wrapper}>
+        </div>
+        <div className={styles.end_wrapper}>
+          <button className={styles.select_btn} onClick={handleSelectClick}>Выбрать</button>
+          {!selectedLocation && (
+            <button type="button" onClick={handleMyCoordsClick} className={styles.my_coords_button}>
               <img
                 className={styles.img}
                 src={snap.user?.theme === "light" ? navigation : navigationDark}
                 alt="Navigation Icon"
               />
-            </div>
-          </div>
+            </button>
+          )}
         </div>
         <YMaps apiKey={API_KEY}>
           <Map
             width="100%"
             height="95vh"
             defaultState={{
-              center: snap.parkDate?.region === "spb" ? [59.938784, 30.314997] : [55.755864, 37.617698], //координаты Питера и Москвы
+              center: renderDefaultCoordinates(),
               zoom: 16,
               type: "yandex#map",
             }}
@@ -87,8 +108,7 @@ const ChooseMap = () => {
             {selectedLocation && <Placemark geometry={selectedLocation}/>}
           </Map>
         </YMaps>
-      </div>
-    </div>
+      </>
   );
 };
 
