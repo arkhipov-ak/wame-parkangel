@@ -120,7 +120,7 @@ const ChooseMap = () => {
           <Map
             width="100%"
             height="95vh"
-            defaultState={{
+            state={{
               center: defaultCoords,
               zoom: 16,
               type: "yandex#map",
