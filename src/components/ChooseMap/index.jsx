@@ -19,9 +19,6 @@ const ChooseMap = () => {
   const [defaultCoords, setDefaultCoords] = useState([55.755864, 37.617698]) //координаты Москвы
   const navigate = useNavigate();
 
-  console.log('defaultCoords', defaultCoords);
-  console.log('selectedAddress', selectedAddress);
-
   const handleMyCoordsClick = () => {
     navigator.geolocation.watchPosition(async function (position) {
       setSelectedLocation([position.coords.latitude, position.coords.longitude]);
@@ -39,7 +36,7 @@ const ChooseMap = () => {
   
         setSelectedAddress(address);
       } catch (error) {
-        showErrorSnackbar({ message: "Не удалось получить геоданные" });
+        showErrorSnackbar({ message: "Не удалось получить ваши геоданные" });
       }
     });
   };
