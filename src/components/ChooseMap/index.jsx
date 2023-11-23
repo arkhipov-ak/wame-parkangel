@@ -16,21 +16,32 @@ const ChooseMap = () => {
   const snap = useSnapshot(state);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState("");
+  const [defaultCoords, setDefaultCoords] = useState([55.755864, 37.617698]) //координаты Москвы
   const navigate = useNavigate();
 
-  const renderDefaultCoordinates = () => {
-    if (snap.parkDate) {
-      if (snap.parkDate.coordinates) return snap.parkDate.coordinates;
-
-      switch (snap.parkDate.region) {
-        case "spb": return [59.938784, 30.314997]
-        default: return [55.755864, 37.617698] //координаты Москвы
-      }
-    }
-  };
+  console.log('defaultCoords', defaultCoords);
+  console.log('selectedAddress', selectedAddress);
 
   const handleMyCoordsClick = () => {
-    console.log('click');
+    navigator.geolocation.watchPosition(async function (position) {
+      setSelectedLocation([position.coords.latitude, position.coords.longitude]);
+      setDefaultCoords([position.coords.latitude, position.coords.longitude]);
+      let coords = [position.coords.longitude, position.coords.latitude];
+
+      try {
+        const response = await axios.get(
+          `https://geocode-maps.yandex.ru/1.x/?apikey=${API_KEY}&geocode=${coords.join(",")}&format=json`
+        );
+  
+        const address =
+          response.data.response.GeoObjectCollection.featureMember[0].GeoObject
+            .metaDataProperty.GeocoderMetaData.text;
+  
+        setSelectedAddress(address);
+      } catch (error) {
+        showErrorSnackbar({ message: "Не удалось получить геоданные" });
+      }
+    });
   };
 
   const handleMapClick = async (e) => {
@@ -70,6 +81,17 @@ const ChooseMap = () => {
     }
   }, [snap.parkDate]);
 
+  useEffect(() => {
+    if (snap.parkDate) {
+      if (snap.parkDate.coordinates) return setDefaultCoords(snap.parkDate.coordinates);
+
+      switch (snap.parkDate.region) {
+        case "spb": return setDefaultCoords([59.938784, 30.314997])
+        default: return setDefaultCoords([55.755864, 37.617698])
+      }
+    }
+  }, [snap.parkDate]);
+
   return (
     <>
         <NavBar/>
@@ -81,7 +103,11 @@ const ChooseMap = () => {
         <div className={styles.end_wrapper}>
           <button className={styles.select_btn} onClick={handleSelectClick}>Выбрать</button>
           {!selectedLocation && (
-            <button type="button" onClick={handleMyCoordsClick} className={styles.my_coords_button}>
+            <button
+              type="button"
+              onClick={handleMyCoordsClick}
+              className={`${styles.my_coords_button}`}
+            >
               <img
                 className={styles.img}
                 src={snap.user?.theme === "light" ? navigation : navigationDark}
@@ -95,7 +121,7 @@ const ChooseMap = () => {
             width="100%"
             height="95vh"
             defaultState={{
-              center: renderDefaultCoordinates(),
+              center: defaultCoords,
               zoom: 16,
               type: "yandex#map",
             }}
