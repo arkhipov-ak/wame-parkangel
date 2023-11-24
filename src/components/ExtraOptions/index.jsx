@@ -79,9 +79,8 @@ const ExtraOptions = () => {
       return;
     }
 
-    state.parkDate = { ...snap.parkDate, isRenewable };
-
     if (snap.isEditPark) {
+      state.parkDate = { ...snap.parkDate, isRenewable };
       state.options[0] = data;
       return navigate("/review");
     }
@@ -113,7 +112,7 @@ const ExtraOptions = () => {
       "https://api.parkangel.ru/api/park", preparedData
     ).then((response) => {
       if (response) {
-        state.parkDate = { ...snap.parkDate, park_id: response.data.response.id };
+        state.parkDate = { ...snap.parkDate, isRenewable, park_id: response.data.response.id };
         navigate("/review");
       }
     }).catch(() => showErrorSnackbar({ message: "Не удалось создать парковку" }))
