@@ -45,7 +45,7 @@ const SearchTime = () => {
     const yearStart = dateStart.getFullYear();
 
     const dateEnd = new Date(item.availabilityDateEnd);
-    const dayEnd = dateEnd.getDate();
+    const dayEnd = renderDay(dateEnd);
     const monthEnd = renderMonth(dateEnd);
     const yearEnd = dateEnd.getFullYear();
 
