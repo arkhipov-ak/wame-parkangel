@@ -16,6 +16,7 @@ const ChooseMap = () => {
   const snap = useSnapshot(state);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState("");
+  const [selectAnotherButton, setSelectAnotherButton] = useState(false)
   const [defaultCoords, setDefaultCoords] = useState([55.755864, 37.617698]) //координаты Москвы
   const navigate = useNavigate();
 
@@ -23,7 +24,8 @@ const ChooseMap = () => {
     console.log('in my coords click');
     navigator.geolocation.watchPosition(async function (position) {
       setSelectedLocation([position.coords.latitude, position.coords.longitude]);
-      setDefaultCoords(null);
+      setDefaultCoords([position.coords.latitude, position.coords.longitude]);
+      setSelectAnotherButton(true)
       let coords = [position.coords.longitude, position.coords.latitude];
 
       try {
@@ -41,6 +43,12 @@ const ChooseMap = () => {
       }
     });
   };
+
+  const handleAnotherAddressClick = () => {
+    setDefaultCoords(null)
+    selectedLocation(null)
+    selectedAddress("")
+  }
 
   const handleMapClick = async (e) => {
     let coords = e.get("coords").reverse();
@@ -105,27 +113,33 @@ const ChooseMap = () => {
           </div>
         </div>
         <div className={styles.end_wrapper}>
-          <button className={styles.select_btn} onClick={handleSelectClick}>Выбрать</button>
-          {!selectedLocation && (
-            <button
-              type="button"
-              onClick={handleMyCoordsClick}
-              className={`${styles.my_coords_button}`}
-            >
-              <img
-                className={styles.img}
-                src={snap.user?.theme === "light" ? navigation : navigationDark}
-                alt="Navigation Icon"
-              />
-            </button>
+          <div className={styles.end_top_wrapper}>
+            <button className={styles.select_btn} onClick={handleSelectClick}>Выбрать</button>
+            {!selectedLocation && (
+              <button
+                type="button"
+                onClick={handleMyCoordsClick}
+                className={`${styles.my_coords_button}`}
+              >
+                <img
+                  className={styles.img}
+                  src={snap.user?.theme === "light" ? navigation : navigationDark}
+                  alt="Navigation Icon"
+                />
+              </button>
+            )}
+          </div>
+          {!selectAnotherButton && (
+            <button className={styles.select_btn} onClick={handleAnotherAddressClick}>Выбрать другой адрес</button>
           )}
         </div>
+        
         <YMaps apiKey={API_KEY}>
           <Map
             width="100%"
             height="95vh"
             state={{
-              center: defaultCoords  || selectedLocation,
+              center: defaultCoords,
               zoom: 16,
               type: "yandex#map",
             }}
