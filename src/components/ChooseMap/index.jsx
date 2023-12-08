@@ -45,6 +45,7 @@ const ChooseMap = () => {
   };
 
   const handleAnotherAddressClick = () => {
+    console.log('click');
     setDefaultCoords(null)
     selectedLocation(null)
     selectedAddress("")
