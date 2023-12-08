@@ -46,8 +46,9 @@ const ChooseMap = () => {
     /* navigator.geolocation.clearWatch(watchID); */
   };
 
-  const handleAnotherAddressClick = () => {
+  const handleAnotherAddressClick = (e) => {
     console.log('click');
+    e.stopPropagation();
     setDefaultCoords(null)
     setSelectedLocation(null)
     setSelectedAddress("")
@@ -135,7 +136,7 @@ const ChooseMap = () => {
             )}
           </div>
           {selectAnotherButton && (
-            <button className={styles.select_btn} onClick={handleAnotherAddressClick}>Выбрать другой адрес</button>
+            <button className={styles.select_btn} onClick={e => handleAnotherAddressClick(e)}>Выбрать другой адрес</button>
           )}
         </div>
         <YMaps apiKey={API_KEY}>
