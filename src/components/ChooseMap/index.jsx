@@ -20,6 +20,7 @@ const ChooseMap = () => {
   const navigate = useNavigate();
 
   const handleMyCoordsClick = () => {
+    console.log('in my coords click');
     /* const watchID =  */navigator.geolocation.watchPosition(async function (position) {
       setSelectedLocation([position.coords.latitude, position.coords.longitude]);
       setDefaultCoords([position.coords.latitude, position.coords.longitude]);
@@ -75,10 +76,11 @@ const ChooseMap = () => {
 
   useEffect(() => {
     if (snap.parkDate) {
+      console.log('in use effect');
       if (snap.parkDate.coordinates) setSelectedLocation(snap.parkDate.coordinates);
       if (snap.parkDate.address) setSelectedAddress(snap.parkDate.address);
     }
-  }, [snap.parkDate]);
+  }, []);
 
   useEffect(() => {
     if (snap.parkDate) {
