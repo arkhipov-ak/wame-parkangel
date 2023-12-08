@@ -20,7 +20,7 @@ const ChooseMap = () => {
   const navigate = useNavigate();
 
   const handleMyCoordsClick = () => {
-    const watchID = navigator.geolocation.watchPosition(async function (position) {
+    /* const watchID =  */navigator.geolocation.watchPosition(async function (position) {
       setSelectedLocation([position.coords.latitude, position.coords.longitude]);
       setDefaultCoords([position.coords.latitude, position.coords.longitude]);
       let coords = [position.coords.longitude, position.coords.latitude];
@@ -40,7 +40,7 @@ const ChooseMap = () => {
       }
     });
 
-    navigator.geolocation.clearWatch(watchID);
+    /* navigator.geolocation.clearWatch(watchID); */
   };
 
   const handleMapClick = async (e) => {
