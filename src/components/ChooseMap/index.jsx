@@ -21,7 +21,7 @@ const ChooseMap = () => {
 
   const handleMyCoordsClick = () => {
     console.log('in my coords click');
-    /* const watchID =  */navigator.geolocation.watchPosition(async function (position) {
+    const watchID = navigator.geolocation.watchPosition(async function (position) {
       setSelectedLocation([position.coords.latitude, position.coords.longitude]);
       setDefaultCoords([position.coords.latitude, position.coords.longitude]);
       let coords = [position.coords.longitude, position.coords.latitude];
@@ -41,7 +41,7 @@ const ChooseMap = () => {
       }
     });
 
-    /* navigator.geolocation.clearWatch(watchID); */
+    navigator.geolocation.clearWatch(watchID);
   };
 
   const handleMapClick = async (e) => {
@@ -61,7 +61,6 @@ const ChooseMap = () => {
       showErrorSnackbar({ message: "Не удалось получить геоданные" });
     } finally {
       setSelectedLocation(coords.reverse());
-      setDefaultCoords(coords);
     }
   };
 
