@@ -53,6 +53,7 @@ const ChooseMap = () => {
   }
 
   const handleMapClick = async (e) => {
+    console.log('map click');
     let coords = e.get("coords").reverse();
 
     try {
@@ -135,7 +136,6 @@ const ChooseMap = () => {
             <button className={styles.select_btn} onClick={handleAnotherAddressClick}>Выбрать другой адрес</button>
           )}
         </div>
-        
         <YMaps apiKey={API_KEY}>
           <Map
             width="100%"
