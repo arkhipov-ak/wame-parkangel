@@ -23,7 +23,7 @@ const ChooseMap = () => {
     console.log('in my coords click');
     navigator.geolocation.watchPosition(async function (position) {
       setSelectedLocation([position.coords.latitude, position.coords.longitude]);
-      setDefaultCoords([position.coords.latitude, position.coords.longitude]);
+      setDefaultCoords(null);
       let coords = [position.coords.longitude, position.coords.latitude];
 
       try {
