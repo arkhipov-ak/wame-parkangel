@@ -20,7 +20,7 @@ const ChooseMap = () => {
   const navigate = useNavigate();
 
   const handleMyCoordsClick = () => {
-    navigator.geolocation.watchPosition(async function (position) {
+    const watchID = navigator.geolocation.watchPosition(async function (position) {
       setSelectedLocation([position.coords.latitude, position.coords.longitude]);
       setDefaultCoords([position.coords.latitude, position.coords.longitude]);
       let coords = [position.coords.longitude, position.coords.latitude];
@@ -39,6 +39,8 @@ const ChooseMap = () => {
         showErrorSnackbar({ message: "Не удалось получить ваши геоданные" });
       }
     });
+
+    navigator.geolocation.clearWatch(watchID);
   };
 
   const handleMapClick = async (e) => {
@@ -119,7 +121,7 @@ const ChooseMap = () => {
           <Map
             width="100%"
             height="95vh"
-            defaultState={{
+            state={{
               center: defaultCoords,
               zoom: 16,
               type: "yandex#map",
