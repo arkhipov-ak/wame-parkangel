@@ -93,6 +93,9 @@ const ChooseMap = () => {
     }
   }, []);
 
+  console.log('def coords', defaultCoords);
+  console.log('sel location', selectedLocation);
+
   return (
     <>
         <NavBar/>
@@ -124,7 +127,7 @@ const ChooseMap = () => {
             width="100%"
             height="95vh"
             state={{
-              center: defaultCoords,
+              center: defaultCoords  || selectedLocation,
               zoom: 16,
               type: "yandex#map",
             }}
