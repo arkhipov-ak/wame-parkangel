@@ -48,7 +48,7 @@ const ChooseMap = () => {
     console.log('click');
     setDefaultCoords(null)
     setSelectedLocation(null)
-    selectedAddress("")
+    setSelectedAddress("")
     setSelectAnotherButton(false)
   }
 
