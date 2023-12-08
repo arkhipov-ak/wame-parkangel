@@ -43,8 +43,6 @@ const ChooseMap = () => {
       }
     });
 
-    watchID()
-
     navigator.geolocation.clearWatch(watchID);
   };
 
