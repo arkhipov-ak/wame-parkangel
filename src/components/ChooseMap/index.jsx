@@ -48,6 +48,7 @@ const ChooseMap = () => {
     setDefaultCoords(null)
     selectedLocation(null)
     selectedAddress("")
+    setSelectAnotherButton(false)
   }
 
   const handleMapClick = async (e) => {
