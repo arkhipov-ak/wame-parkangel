@@ -61,6 +61,7 @@ const ChooseMap = () => {
       showErrorSnackbar({ message: "Не удалось получить геоданные" });
     } finally {
       setSelectedLocation(coords.reverse());
+      setDefaultCoords(coords);
     }
   };
 
