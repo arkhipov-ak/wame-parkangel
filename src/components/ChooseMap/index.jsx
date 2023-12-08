@@ -87,7 +87,7 @@ const ChooseMap = () => {
         default: return setDefaultCoords([55.755864, 37.617698]);
       }
     }
-  }, [snap.parkDate]);
+  }, []);
 
   return (
     <>
