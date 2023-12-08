@@ -136,7 +136,7 @@ const ChooseMap = () => {
               </button>
             )}
           </div>
-          {selectAnotherButton && (
+          {!selectAnotherButton && (
             <button className={styles.select_btn} onClick={handleAnotherAddressClick}>Выбрать другой адрес</button>
           )}
         </div>
