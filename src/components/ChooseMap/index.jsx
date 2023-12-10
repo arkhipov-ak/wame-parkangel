@@ -170,7 +170,18 @@ const ChooseMap = () => {
             )}
           </div>
           {selectAnotherButton && (
-            <button className={styles.select_btn} onClick={() => setWatchMe(false)}>Выбрать другой адрес</button>
+            <button
+              className={styles.select_btn}
+              onClick={() => {
+                  setWatchMe(false)
+                  setDefaultCoords(null)
+                  setSelectedLocation(null)
+                  setSelectedAddress("")
+                  setSelectAnotherButton(false)
+              }}
+            >
+              Выбрать другой адрес
+            </button>
           )}
         </div>
         <YMaps apiKey={API_KEY}>
