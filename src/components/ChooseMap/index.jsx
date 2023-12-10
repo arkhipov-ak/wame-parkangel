@@ -17,10 +17,11 @@ const ChooseMap = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState("");
   const [selectAnotherButton, setSelectAnotherButton] = useState(false)
+  const [watchMe, setWatchMe] = useState(false)
   const [defaultCoords, setDefaultCoords] = useState([55.755864, 37.617698]) //координаты Москвы
   const navigate = useNavigate();
 
-  const handleMyCoordsClick = () => {
+  /* const handleMyCoordsClick = () => {
     console.log('in my coords click');
     navigator.geolocation.watchPosition(async function (position) {
       setSelectedLocation([position.coords.latitude, position.coords.longitude]);
@@ -43,17 +44,17 @@ const ChooseMap = () => {
       }
     });
 
-    /* navigator.geolocation.clearWatch(watchID); */
-  };
+    navigator.geolocation.clearWatch(watchID);
+  }; */
 
-  const handleAnotherAddressClick = (e) => {
+  /* const handleAnotherAddressClick = (e) => {
     console.log('click');
     e.stopPropagation();
     setDefaultCoords(null)
     setSelectedLocation(null)
     setSelectedAddress("")
     setSelectAnotherButton(false)
-  }
+  } */
 
   const handleMapClick = async (e) => {
     console.log('map click');
@@ -105,6 +106,39 @@ const ChooseMap = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (watchMe) {
+      const watchID = navigator.geolocation.watchPosition(async function (position) {
+        console.log('in navigator');
+        setSelectedLocation([position.coords.latitude, position.coords.longitude]);
+        setDefaultCoords([position.coords.latitude, position.coords.longitude]);
+        setSelectAnotherButton(true)
+        let coords = [position.coords.longitude, position.coords.latitude];
+  
+        try {
+          const response = await axios.get(
+            `https://geocode-maps.yandex.ru/1.x/?apikey=${API_KEY}&geocode=${coords.join(",")}&format=json`
+          );
+
+          console.log('response', response);
+    
+          const address =
+            response.data.response.GeoObjectCollection.featureMember[0].GeoObject
+              .metaDataProperty.GeocoderMetaData.text;
+    
+          setSelectedAddress(address);
+        } catch (error) {
+          showErrorSnackbar({ message: "Не удалось получить ваши геоданные" });
+        }
+      });
+
+      return () => {
+        console.log('in return use effect');
+        navigator.geolocation.clearWatch(watchID);
+      }
+    }
+  }, [watchMe])
+
   console.log('def coords', defaultCoords);
   console.log('sel location', selectedLocation);
 
@@ -124,7 +158,7 @@ const ChooseMap = () => {
             {!selectedLocation && (
               <button
                 type="button"
-                onClick={handleMyCoordsClick}
+                onClick={() => setWatchMe(true)}
                 className={`${styles.my_coords_button}`}
               >
                 <img
@@ -136,7 +170,7 @@ const ChooseMap = () => {
             )}
           </div>
           {selectAnotherButton && (
-            <button className={styles.select_btn} onClick={e => handleAnotherAddressClick(e)}>Выбрать другой адрес</button>
+            <button className={styles.select_btn} onClick={() => setWatchMe(false)}>Выбрать другой адрес</button>
           )}
         </div>
         <YMaps apiKey={API_KEY}>
