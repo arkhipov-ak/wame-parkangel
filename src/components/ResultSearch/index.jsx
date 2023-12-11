@@ -67,6 +67,7 @@ const ResultSearch = () => {
       delete preparedData.id;
       delete preparedData.createdAt;
       delete preparedData.updatedAt;
+      delete preparedData.address;
       if (!preparedData.height) delete preparedData.height;
       if (!preparedData.width) delete preparedData.width;
       if (!preparedData.length) delete preparedData.length;

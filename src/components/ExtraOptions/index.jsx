@@ -144,19 +144,22 @@ const ExtraOptions = () => {
       user_id: snap.user.id,
     };
 
-    if (!preparedData.height) delete preparedData.height;
-    if (!preparedData.width) delete preparedData.width;
-    if (!preparedData.length) delete preparedData.length;
-    if (!preparedData.priceHour) delete preparedData.priceHour;
-    if (!preparedData.priceDay) delete preparedData.priceDay;
-    if (!preparedData.priceWeek) delete preparedData.priceWeek;
-    if (!preparedData.priceMonth) delete preparedData.priceMonth;
+    if (!snap.options[0]) {
+      if (!preparedData.height) delete preparedData.height;
+      if (!preparedData.width) delete preparedData.width;
+      if (!preparedData.length) delete preparedData.length;
+      if (!preparedData.priceHour) delete preparedData.priceHour;
+      if (!preparedData.priceDay) delete preparedData.priceDay;
+      if (!preparedData.priceWeek) delete preparedData.priceWeek;
+      if (!preparedData.priceMonth) delete preparedData.priceMonth;
+    }
 
     if (snap.options[0]) {
       axios.put(
         "https://api.parkangel.ru/api/options", preparedData
       ).then((response) => {
         if (response) {
+          state.options[0] = preparedData;
           showSuccessSnackbar({ message: "Параметры сохранены" })
           navigate(-1);
         }
@@ -166,6 +169,7 @@ const ExtraOptions = () => {
         "https://api.parkangel.ru/api/options", preparedData
       ).then((response) => {
         if (response) {
+          state.options[0] = preparedData;
           showSuccessSnackbar({ message: "Параметры сохранены" })
           navigate(-1);
         }
