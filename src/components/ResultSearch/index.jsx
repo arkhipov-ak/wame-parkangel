@@ -92,19 +92,19 @@ const ResultSearch = () => {
             {data.map((item, index) => (
               <button
                 type="button"
-                onClick={() => onHandleClick(item)}
+                onClick={() => onHandleClick(item.ad)}
                 key={index}
                 className={styles.wrapper_rentCard}
               >
-                <p className={styles.rent_location}>{item.park.address}</p>
+                <p className={styles.rent_location}>{item.ad.park.address}</p>
                 <div className={styles.secondRow}>
                   <span className={styles.rent_date}>
-                    <img src={snap.user?.theme === "light" ? location : locationLight} /> 37 м
+                    <img src={snap.user?.theme === "light" ? location : locationLight} /> {item.distance} м
                   </span>
-                  <span className={styles.rent_time}>{renderTime(item.park)}</span>
-                  <span className={styles.rent_status}>{item.park.priceHour} руб/ч</span>
+                  <span className={styles.rent_time}>{renderTime(item.ad.park)}</span>
+                  <span className={styles.rent_status}>{item.ad.park.priceHour} руб/ч</span>
                 </div>
-                <p className={styles.rent_location}>Рейтинг: {renderRating(item.review)}</p>
+                <p className={styles.rent_location}>Рейтинг: {renderRating(item.ad.review)}</p>
               </button>
             ))}
             {/* <Link to="/show-map-result" className={styles.submit}>
