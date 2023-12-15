@@ -41,6 +41,7 @@ const Home = () => {
     axios.post(
       "https://api.parkangel.ru/api/users/registration", { telegram: nickname }
     ).then((response) => {
+      console.log(response);
       if (response.data.response === true) setVerification(true);
       else {
         setVerification(true);
@@ -53,6 +54,7 @@ const Home = () => {
     setLoading(true);
     
     const renderAgreementInfo = () => {
+      console.log(snap);
       if (!snap.user) return setLoading(false);
 
       if (snap.user.password) {
@@ -117,7 +119,7 @@ const Home = () => {
             <div className={styles.login_wrapper}>
               {registrationLink ? (
                 <span className={styles.verification_text}>Для регистрации перейдите, пожалуйста, по ссылке
-                  в <a href={registrationLink} className={styles.link}>Telegram</a> и введите проверочный код
+                  в <a href={registrationLink} target="_blank" rel="noopener noreferrer" className={styles.link}>Telegram</a> и введите проверочный код
                 </span>
               ) : (
                 <span className={styles.verification_text}>
@@ -125,9 +127,8 @@ const Home = () => {
                 </span>
               )}
               <ReactCodeInput
-                type="number"
+                type="text"
                 fields={4}
-                inputMode="numeric"
                 value={code}
                 name="code"
                 onChange={setCode}
