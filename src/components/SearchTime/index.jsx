@@ -16,8 +16,8 @@ import Container from "src/components/common/Container";
 import { showErrorSnackbar, showSuccessSnackbar } from "src/utils/showSnackBar";
 import { state } from "src/state";
 import ZeroData from "src/components/common/ZeroData";
-import Modal from "src/components/common/Modal";
 import { renderMonth, renderDay, renderMinutes } from "src/utils/functions";
+import ModalDeleteAd from "src/components/common/ModalDeleteAd";
 
 const SearchTime = () => {
   const snap = useSnapshot(state);
@@ -245,20 +245,12 @@ const SearchTime = () => {
                       </div>
                     </div>
                     {openDeleteModal && (
-                      <Modal
-                        setOpenModal={setOpenDeleteModal}
-                        openModal={openDeleteModal}
-                        title="Удалить объявление?"
-                      >
-                        <div className={styles.btnWrapper}>
-                          <button type="button" className={styles.modal_button} onClick={() => setOpenDeleteModal(false)}>
-                            Нет
-                          </button>
-                          <button type="button" onClick={() => onHandleDeleteClick(ad)} className={styles.modal_button}>
-                            Да
-                          </button>
-                        </div>
-                      </Modal>
+                      <ModalDeleteAd
+                        ad={ad}
+                        onHandleDeleteClick={onHandleDeleteClick}
+                        openDeleteModal={openDeleteModal}
+                        setOpenDeleteModal={setOpenDeleteModal}
+                      />
                     )}
                   </Fragment>
                 ))

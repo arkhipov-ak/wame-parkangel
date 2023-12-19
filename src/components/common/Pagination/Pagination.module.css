@@ -1,0 +1,73 @@
+.pagination {
+  display: flex;
+	justify-content: center;
+	align-items: center;
+  :global(.rc-pagination) {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    list-style-type: none;
+    padding: 0;
+  }
+  :global(.rc-pagination-item) {
+    margin: 0 4px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 6px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 0;
+    cursor: pointer;
+  }
+  :global(.rc-pagination-item-active) {
+    cursor: default;
+    background: #253237;
+    color: #fff;
+  }
+  :global(.rc-pagination-next) {
+    width: auto;
+  }
+  :global(.rc-pagination-prev) {
+    width: auto;
+  }
+  :global(.next) {
+    width: auto;
+    margin-left: 10px;
+    border: none;
+  }
+  :global(.prev) {
+    width: auto;
+    margin-right: 10px;
+    border: none;
+  }
+  :global(.next:disabled) {
+    cursor: default;
+	  opacity: .2;
+  }
+  :global(.prev:disabled) {
+    cursor: default;
+	  opacity: .2;
+  }
+  :global(.rc-pagination-disabled) {
+    cursor: default;
+  }
+  :global(.rc-pagination-options) {
+    display: none;
+  }
+  :global(.rc-pagination-jump-prev, .rc-pagination-jump-next) {
+    cursor: default;
+  }
+  :global(.rc-pagination-jump-prev:before) {
+    content: "...";
+  }
+  :global(.rc-pagination-jump-next:before) {
+    content: "...";
+  }
+  :global(.rc-pagination-item-link) {
+    display: none;
+  }
+}

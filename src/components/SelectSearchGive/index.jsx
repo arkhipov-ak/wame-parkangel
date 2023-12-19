@@ -1,6 +1,7 @@
-import styles from "./SelectSearchGive.module.css";
-import { state } from "../../state";
 import { useSnapshot } from "valtio";
+
+import styles from "./SelectSearchGive.module.css";
+import { state } from "src/state";
 
 const SelectSearchGive = () => {
   const snap = useSnapshot(state);

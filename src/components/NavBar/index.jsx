@@ -36,20 +36,21 @@ const NavBar = () => {
 
   return (
     <nav className={styles.wrapper}>
-      {location.pathname !== "/search-time" && (
+      {location.pathname !== "/search-time" && location.pathname !== "/admin" && (
         <button type="button" onClick={handleGoBack} className={styles.menu_btn}>
           <AiOutlineLeft className={styles.icon}/>
         </button>
       )}
       <img className={styles.logo} src={snap.user?.theme === "light" ? parkAngel : parkAngelDark} alt="logo"/>
-      <button
-        type="button"
-        className={styles.menu_btn}
-        onClick={() => setMenuOpen(!isMenuOpen)}
-      >
-        <BiMenu className={styles.icon}/>
-      </button>
-
+      {location.pathname !== "/admin" && (
+        <button
+          type="button"
+          className={styles.menu_btn}
+          onClick={() => setMenuOpen(!isMenuOpen)}
+        >
+          <BiMenu className={styles.icon}/>
+        </button>
+      )}
       {isMenuOpen && (
         <>
           <div className={styles.overlay} onClick={() => setMenuOpen(false)}/>
