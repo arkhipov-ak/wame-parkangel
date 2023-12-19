@@ -71,7 +71,6 @@ const MainAppComponent = () => {
 
   useEffect(() => {
     if (snap && snap.user) {
-      console.log('use effect options');
       axios.get(`https://api.parkangel.ru/api/options/userId/${snap.user.id}`)
         .then((response) => state.options = response.data.response)
         .catch(() => showErrorSnackbar({ message: "Не удалось загрузить опции" }))
