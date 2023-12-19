@@ -20,17 +20,17 @@ const Agreement = () => {
 
   const handleAgreementClick = () => {
     const today = new Date();
+    
     axios.put("https://api.parkangel.ru/api/users", { 
       ...snap.user,
       isAcceptAgreement: true,
       dateAcceptAgreement: today.toISOString(),
-    })
-      .then((response) => {
-        if (response.data.response) {
-          state.user = { ...snap.user, isAcceptAgreement: true, dateAcceptAgreement: today.toISOString() };
-          navigate("/search-time");
-        }
-      }).catch(() => showErrorSnackbar({ message: "Не удалось записать согласие" }))
+    }).then((response) => {
+      if (response.data.response) {
+        state.user = { ...snap.user, isAcceptAgreement: true, dateAcceptAgreement: today.toISOString() };
+        navigate("/search-time");
+      }
+    }).catch(() => showErrorSnackbar({ message: "Не удалось записать согласие" }))
   };
 
   useEffect(() => {
