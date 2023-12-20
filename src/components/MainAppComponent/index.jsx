@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import { useSnapshot } from "valtio";
@@ -33,11 +33,8 @@ import AdminPage from "src/pages/AdminPage";
 const MainAppComponent = () => {
   const snap = useSnapshot(state);
   const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname === "/admin") return;
-
     window.Telegram.WebApp.ready();
     const tg = window?.Telegram?.WebApp;
     tg.expand();
