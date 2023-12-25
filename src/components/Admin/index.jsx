@@ -86,6 +86,9 @@ const Admin = () => {
                 onChange={setCode}
                 isValid={isCodeCorrect}
               />
+              <button type="button" onClick={onHandleLoginAdminClick} className={styles.try_again_button}>
+                <span className={styles.try_again_button_text}>Не пришел код? Отправить повторно!</span>
+              </button>
             </div>
           ) : (
             <div className={styles.login_wrapper}>

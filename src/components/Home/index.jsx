@@ -133,6 +133,9 @@ const Home = () => {
                 onChange={setCode}
                 isValid={isCodeCorrect}
               />
+              <button type="button" onClick={onHandleLoginClick} className={styles.try_again_button}>
+                <span className={styles.try_again_button_text}>Не пришел код? Отправить повторно!</span>
+              </button>
             </div>
           ) : (
             <div className={styles.login_wrapper}>
@@ -143,11 +146,7 @@ const Home = () => {
                 className={styles.home_input}
                 type="text"
               />
-              <button
-                type="button"
-                onClick={onHandleLoginClick}
-                className={styles.login_button}
-              >
+              <button type="button" onClick={onHandleLoginClick} className={styles.login_button}>
                 Войти
               </button>
             </div>

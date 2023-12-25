@@ -60,3 +60,12 @@
   font-weight: 500;
   background: var(--background-secondary);
 }
+.try_again_button {
+  background: transparent;
+  border: none;
+}
+.try_again_button_text {
+  font-size: 14px;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--text-primary);
+}
