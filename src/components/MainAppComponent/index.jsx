@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import { useSnapshot } from "valtio";
@@ -29,12 +29,16 @@ import ReviewPage from "src/pages/ReviewPage";
 import ScrollToTop from "src/components/ScrollToTop";
 import ChooseMap from "src/components/ChooseMap";
 import AdminPage from "src/pages/AdminPage";
+import AdminInfoPage from "src/pages/AdminInfoPage";
 
 const MainAppComponent = () => {
   const snap = useSnapshot(state);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
+    if (location.pathname === "/admin") return;
+
     window.Telegram.WebApp.ready();
     const tg = window?.Telegram?.WebApp;
     tg.expand();
@@ -120,6 +124,7 @@ const MainAppComponent = () => {
               <Route path="/review" element={<ReviewPage/>}/>
               <Route path="/map" element={<ChooseMap/>}/>
               <Route path="/admin" element={<AdminPage/>}/>
+              <Route path="/admin/info" element={<AdminInfoPage/>}/>
             </Routes>
       </SnackbarProvider>
     </div>

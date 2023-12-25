@@ -1,249 +1,113 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import { useSnapshot } from "valtio";
+import ReactCodeInput from "react-code-input";
+import { useNavigate } from "react-router-dom";
 
 import styles from "./Admin.module.css";
-import NavBar from "src/components/NavBar";
-import Container from "src/components/common/Container";
-import Pagination from "src/components/common/Pagination";
-import ZeroData from "src/components/common/ZeroData";
-import { showErrorSnackbar, showSuccessSnackbar } from "src/utils/showSnackBar";
-import deleteImg from "src/assets/delete.svg";
-import { renderMonth, renderDay, renderMinutes } from "src/utils/functions";
-import ModalDeleteAd from "src/components/common/ModalDeleteAd";
+import Logotype from "/src/assets/logo.svg";
+import { state } from "src/state";
+import { showErrorSnackbar } from "src/utils/showSnackBar";
 
 const Admin = () => {
-  const [searchParams] = useSearchParams();
-  const location = useLocation();
+  const snap = useSnapshot(state)
+  const [isImageLoaded, setImageLoaded] = useState(false);
   const navigate = useNavigate();
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const [isUsersListAdmin, setUsersListAdmin] = useState(true);
-  const [usersArray, setUsersArray] = useState([]);
-  const [adsArray, setAdsArray] = useState([]);
-  const [totalPages, setTotalPages] = useState(1);
-  const [page, setPage] = useState(Number(searchParams.get("page")) || 1);
-  const perPage = 5;
+  const [nickname, setNickname] = useState("");
+  const [verification, setVerification] = useState(false);
+  const [code, setCode] = useState("");
+  const [isCodeCorrect, setIsCodeCorrect] = useState(true);
 
-  const renderCity = (city) => {
-    switch (city) {
-      case "moscow": return "Москва"
-      case "spb": return "Санкт-Петербург"
-      default: return "-"
-    }
+  const onHandleLoginAdminClick = () => {
+    if (!nickname.trim()) return showErrorSnackbar({ message: "Telegram-никнейм не может быть пустым", tryAgain: true })
+
+    axios.post(
+      "https://api.parkangel.ru/api/users/registration", { telegram: nickname.trim() }
+    ).then((response) => {
+      if (response.data.response === true) setVerification(true);
+      else {
+        navigate("/");
+        showErrorSnackbar({ message: "Вы не зарегистрированы" })
+      }
+    }).catch(() => showErrorSnackbar({ message: "Что-то пошло не так" }))
   };
 
-  const renderTime = (item) => {
-    const dateStart = new Date(item.availabilityDateStart);
-    const hoursStart = dateStart.getHours();
-    const minutesStart = renderMinutes(dateStart);
-
-    const dateEnd = new Date(item.availabilityDateEnd);
-    const hoursEnd = dateEnd.getHours();
-    const minutesEnd = renderMinutes(dateEnd);
-
-    return `${hoursStart}:${minutesStart} - ${hoursEnd}:${minutesEnd}`;
-  };
-
-  const renderDate = (item) => {
-    const dateStart = new Date(item.availabilityDateStart);
-    const dayStart = renderDay(dateStart);
-    const monthStart = renderMonth(dateStart);
-    const yearStart = dateStart.getFullYear();
-
-    const dateEnd = new Date(item.availabilityDateEnd);
-    const dayEnd = renderDay(dateEnd);
-    const monthEnd = renderMonth(dateEnd);
-    const yearEnd = dateEnd.getFullYear();
-
-    if (`${dayStart}.${monthStart}.${yearStart}` === `${dayEnd}.${monthEnd}.${yearEnd}`) return `${dayStart}.${monthStart}.${yearStart}`;
-
-    return `${dayStart}.${monthStart}.${yearStart} - ${dayEnd}.${monthEnd}.${yearEnd}`;
-  };
-
-  const renderRating = (item) => {
-    if (!item.length) return "Недостаточно оценок";
-    const ratings = item.map((elem) => elem.rating);
-    return (ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length).toFixed(1);
-  };
-
-  const renderPrice = (item) => {
-    if (item.priceHour) return `${item.priceHour} руб/ч`;
-    if (item.priceDay) return `${item.priceDay} руб/д`;
-    if (item.priceWeek) return `${item.priceWeek} руб/н`;
-    if (item.priceYear) return `${item.priceYear} руб/г`;
-  };
-
-  const onHandleDeleteClick = (ad) => {
-    axios.delete(`https://api.parkangel.ru/api/ad/${ad.id}`)
-      .then(() => {
-        showSuccessSnackbar({ message: "Объявление удалено" });
-        setOpenDeleteModal(false);
-        axios.get("https://api.parkangel.ru/api/ad" , {
-          params: { page, perPage },
-        }).then((response) => {
-          if (response.data.response) {
-            setAdsArray(response.data.response.ads);
-            setTotalPages(response.data.response.total);
+  useEffect(() => {
+    setIsCodeCorrect(true);
+		if (code.length === 4) {
+        axios.post(
+          "https://api.parkangel.ru/api/users/verify-admin", { telegram: nickname.trim(), code }
+        ).then((response) => {
+          if (response.data.response?.message === "User not valid") {
+            navigate("/");
+            showErrorSnackbar({ message: "У вас нет прав администратора" });
+            return;
           }
-        }).catch(() => showErrorSnackbar({ message: "Не удалось получить список объявлений" }))
-      }).catch(() => {
-        showErrorSnackbar({ message: "Не удалось удалить объявление" });
-        setOpenDeleteModal(false);
-      })
-  };
-
-  useEffect(() => {
-    if (isUsersListAdmin) {
-      setAdsArray([]);
-      axios.get("https://api.parkangel.ru/api/users" , {
-        params: { page, perPage },
-      }).then((response) => {
-        if (response.data.response) {
-          setUsersArray(response.data.response.users);
-          setTotalPages(response.data.response.total);
-        }
-      }).catch(() => showErrorSnackbar({ message: "Не удалось получить список пользователей" }))
-    } else {
-      setUsersArray([]);
-      axios.get("https://api.parkangel.ru/api/ad" , {
-        params: { page, perPage },
-      }).then((response) => {
-        if (response.data.response) {
-          setAdsArray(response.data.response.ads);
-          setTotalPages(response.data.response.total);
-        }
-      }).catch(() => showErrorSnackbar({ message: "Не удалось получить список объявлений" }))
-    }
-  }, [isUsersListAdmin, page]);
-
-  useEffect(() => {
-    setPage(Number(searchParams.get("page")) || 1);
-  }, [location.search]);
+          if (response.data.response) {
+            state.user = response.data.response;
+            navigate("/admin/info");
+          } else {
+            setIsCodeCorrect(false);
+            showErrorSnackbar({ message: "Код введен неверно", tryAgain: true });
+          }
+        }).catch(() => showErrorSnackbar({ message: "Что-то пошло не так" }))
+      }
+	}, [code]);
 
   return (
-    <>
-      <NavBar/>
-      <Container>
-        <div className={styles.wrapper}>
-          <button
-            className={isUsersListAdmin ? styles.active_btn : styles.not_active_btn}
-            onClick={() => {
-              setUsersListAdmin(true);
-              navigate("/admin");
-            }}
-          >
-            Пользователи
-          </button>
-          <button
-            className={!isUsersListAdmin ? styles.active_btn : styles.not_active_btn}
-            onClick={() => {
-              setUsersListAdmin(false);
-              navigate("/admin");
-            }}
-          >
-            Объявления
-          </button>
-        </div>
-        {isUsersListAdmin ? (
-          <>
-            {usersArray.length ? (
-              <>
-                <ul className={styles.list}>
-                  {usersArray.map((user) => (
-                    <li key={user.id} className={styles.list_item}>
-                      <div className={styles.info_wrapper}>
-                        <span>Имя</span>
-                        <span>{user.name || "-"}</span>
-                      </div>
-                      <div className={styles.info_wrapper}>
-                        <span>Telegram</span>
-                        <a
-                          href={`https://t.me/${user.telegram}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={styles.link}
-                        >
-                            @{user.telegram}
-                        </a>
-                      </div>
-                      <div className={styles.info_wrapper}>
-                        <span>Email</span>
-                        {user.email ? (
-                          <a
-                            href={`mailto:${user.email}`}
-                            className={styles.link}
-                          >
-                            {user.email}
-                          </a>
-                        ) : (
-                          <span>-</span>
-                        )}
-                      </div>
-                      <div className={styles.info_wrapper}>
-                        <span>Город</span>
-                        <span>{renderCity(user.city)}</span>
-                      </div>
-                      <div className={styles.info_wrapper}>
-                        <span>Телефон</span>
-                        {user.phoneNumber ? (
-                          <a
-                            href={`tel:${user.phoneNumber}`}
-                            className={styles.link}
-                          >
-                            {user.phoneNumber}
-                          </a>
-                        ) : (
-                          <span>-</span>
-                        )}
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-                <Pagination total={totalPages} page={page} slug="/admin"/>
-              </>
-            ) : (
-              <ZeroData>Пользователей нет</ZeroData>
-            )}
-          </>
-        ) : (
-          <>
-            {adsArray.length ? (
-              <>
-                <ul className={styles.list}>
-                  {adsArray.map((ad) => (
-                    <li key={ad.id}>
-                      <div className={styles.wrapper_rentCard}>
-                        <p className={styles.rent_location}>{ad.park.address}</p>
-                        <div className={styles.secondRow}>
-                          <span className={styles.rent_time}>{renderDate(ad.park)}</span>
-                          <span className={styles.rent_time}>{renderTime(ad.park)}</span>
-                          <span className={styles.rent_status}>{renderPrice(ad.park)}</span>
-                        </div>
-                        <p className={styles.rent_location}>Рейтинг: {renderRating(ad.review)}</p>
-                        <div className={styles.image_block}>
-                          <img src={deleteImg} alt="delete" onClick={() => setOpenDeleteModal(true)}/>
-                        </div>
-                      </div>
-                      {openDeleteModal && (
-                        <ModalDeleteAd
-                          ad={ad}
-                          onHandleDeleteClick={onHandleDeleteClick}
-                          openDeleteModal={openDeleteModal}
-                          setOpenDeleteModal={setOpenDeleteModal}
-                        />
-                      )}
-                    </li>
-                  ))}
-                </ul>
-                <Pagination total={totalPages} page={page} slug="/admin"/>
-              </>
-            ) : (
-              <ZeroData>Объявлений нет</ZeroData>
-            )}
-          </>
-        )}
-      </Container>
-    </>
+    <div className={styles.wrapper}>
+      {
+        !isImageLoaded && (
+          <div style={{
+            width: "9.3125rem",
+            height: "9.3125rem",
+            borderRadius: "1.9375rem",
+            background: "#353536",
+          }} />
+        )
+      }
+      <img src={Logotype} alt="Логотип" onLoad={() => setImageLoaded(true)} style={{ display: isImageLoaded ? "block" : "none" }} />
+      <p className={styles.text_main}>
+        {isImageLoaded ? "Сервис по поиску  и сдаче машино-мест:" : "Загрузка..."}
+      </p>
+      <span className={styles.text_descr}>
+        {isImageLoaded ? "от часа до года" : " "}
+      </span>
+      {!snap.user && (
+        <>
+          {verification ? (
+            <div className={styles.login_wrapper}>
+              <ReactCodeInput
+                type="number"
+                inputMode="numeric"
+                fields={4}
+                value={code}
+                name="code"
+                onChange={setCode}
+                isValid={isCodeCorrect}
+              />
+            </div>
+          ) : (
+            <div className={styles.login_wrapper}>
+              <input
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value, "nickname")}
+                placeholder="Введите Telegram-никнейм"
+                className={styles.home_input}
+                type="text"
+              />
+              <button
+                type="button"
+                onClick={onHandleLoginAdminClick}
+                className={styles.login_button}
+              >
+                Войти в админ-панель
+              </button>
+            </div>
+          )}
+        </>
+      )}
+    </div>
   );
 };
 

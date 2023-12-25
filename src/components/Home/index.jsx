@@ -23,7 +23,6 @@ const Home = () => {
   const [code, setCode] = useState("");
   const [isCodeCorrect, setIsCodeCorrect] = useState(true);
   const [registrationLink, setRegistrationLink] = useState("");
-  const [isAdminLogin, setIsAdminLogin] = useState(false);
 
   const onHandleSubmit = (e) => {
     e.preventDefault();
@@ -36,20 +35,7 @@ const Home = () => {
     }
   };
 
-  const onHandleLoginAdminClick = () => {
-    setIsAdminLogin(true);
-    if (!nickname.trim()) return showErrorSnackbar({ message: "Telegram-никнейм не может быть пустым", tryAgain: true })
-
-    axios.post(
-      "https://api.parkangel.ru/api/users/registration", { telegram: nickname.trim() }
-    ).then((response) => {
-      if (response.data.response === true) setVerification(true);
-      else showErrorSnackbar({ message: "Вы не зарегистрированы" })
-    }).catch(() => showErrorSnackbar({ message: "Что-то пошло не так" }))
-  };
-
   const onHandleLoginClick = () => {
-    setIsAdminLogin(false);
     if (!nickname.trim()) return showErrorSnackbar({ message: "Telegram-никнейм не может быть пустым", tryAgain: true })
 
     axios.post(
@@ -90,37 +76,19 @@ const Home = () => {
   useEffect(() => {
     setIsCodeCorrect(true);
 		if (code.length === 4) {
-      if (isAdminLogin) {
-        axios.post(
-          "https://api.parkangel.ru/api/users/verify-admin", { telegram: nickname.trim(), code }
-        ).then((response) => {
-          if (response.data.response?.message === "User not valid") {
-            showErrorSnackbar({ message: "У вас нет прав администратора" });
-            return;
-          }
-          if (response.data.response) {
-            state.user = response.data.response;
-            navigate("/admin");
-          } else {
-            setIsCodeCorrect(false);
-            showErrorSnackbar({ message: "Код введен неверно", tryAgain: true });
-          }
-        }).catch(() => showErrorSnackbar({ message: "Что-то пошло не так" }))
-      } else {
-        axios.post(
-          "https://api.parkangel.ru/api/users/verify", { telegram: nickname.trim(), code }
-        ).then((response) => {
-          if (response.data.response) {
-            state.user = response.data.response;
-            if (response.data.response.password) return setOpenPasswordModal(true);
-            if (response.data.response.dateAcceptAgreement) navigate("/search-time");
-            else navigate("/agreement");
-          } else {
-            setIsCodeCorrect(false);
-            showErrorSnackbar({ message: "Код введен неверно", tryAgain: true });
-          }
-        }).catch(() => showErrorSnackbar({ message: "Что-то пошло не так" }))
-      }
+      axios.post(
+        "https://api.parkangel.ru/api/users/verify", { telegram: nickname.trim(), code }
+      ).then((response) => {
+        if (response.data.response) {
+          state.user = response.data.response;
+          if (response.data.response.password) return setOpenPasswordModal(true);
+          if (response.data.response.dateAcceptAgreement) navigate("/search-time");
+          else navigate("/agreement");
+        } else {
+          setIsCodeCorrect(false);
+          showErrorSnackbar({ message: "Код введен неверно", tryAgain: true });
+        }
+      }).catch(() => showErrorSnackbar({ message: "Что-то пошло не так" }))
 		}
 	}, [code]);
 
@@ -157,7 +125,8 @@ const Home = () => {
                 </span>
               )}
               <ReactCodeInput
-                type="text"
+                type="number"
+                inputMode="numeric"
                 fields={4}
                 value={code}
                 name="code"
@@ -180,13 +149,6 @@ const Home = () => {
                 className={styles.login_button}
               >
                 Войти
-              </button>
-              <button
-                type="button"
-                onClick={onHandleLoginAdminClick}
-                className={styles.login_button}
-              >
-                Войти в админ-панель
               </button>
             </div>
           )}
