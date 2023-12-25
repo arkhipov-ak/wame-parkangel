@@ -77,6 +77,8 @@ const Review = () => {
 
     delete preparedData.ad_id;
     delete preparedData.user;
+    delete preparedData.review;
+    delete preparedData.tenant;
     delete preparedData.dateEnd;
     delete preparedData.dateEndISO;
     delete preparedData.dateStart;
@@ -95,21 +97,12 @@ const Review = () => {
 
     if (snap.isEditPark) {
        await axios.put("https://api.parkangel.ru/api/ad", preparedData)
-        /* .then((response) => {
-          if (response) {
-            showSuccessSnackbar({ message: "Объявление отредактировано" });
-            navigate("/search-time");
-          }
-        }) */.catch(() => showErrorSnackbar({ message: "Не удалось отредактировать объявление"})
-      ); //TODO: переделать бэк, чтобы можно было использовать один запрос
-
-      await axios.put("https://api.parkangel.ru/api/park", preparedData)
         .then((response) => {
           if (response) {
             showSuccessSnackbar({ message: "Объявление отредактировано" });
             navigate("/search-time");
           }
-        }).catch(() => showErrorSnackbar({ message: "Не удалось отредактировать парковку"})
+        }).catch(() => showErrorSnackbar({ message: "Не удалось отредактировать объявление"})
       );
 
       return; 
