@@ -36,13 +36,13 @@ const NavBar = () => {
 
   return (
     <nav className={styles.wrapper}>
-      {location.pathname !== "/search-time" && location.pathname !== "/admin" && (
+      {location.pathname !== "/search-time" && location.pathname !== "/admin/info" && (
         <button type="button" onClick={handleGoBack} className={styles.menu_btn}>
           <AiOutlineLeft className={styles.icon}/>
         </button>
       )}
       <img className={styles.logo} src={snap.user?.theme === "light" ? parkAngel : parkAngelDark} alt="logo"/>
-      {location.pathname !== "/admin" && (
+      {location.pathname !== "/admin/info" && (
         <button
           type="button"
           className={styles.menu_btn}

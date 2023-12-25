@@ -38,11 +38,13 @@
     width: auto;
     margin-left: 10px;
     border: none;
+    background: transparent;
   }
   :global(.prev) {
     width: auto;
     margin-right: 10px;
     border: none;
+    background: transparent;
   }
   :global(.next:disabled) {
     cursor: default;

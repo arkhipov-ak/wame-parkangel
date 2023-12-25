@@ -152,11 +152,11 @@ const AdminInfo = () => {
                   {usersArray.map((user) => (
                     <li key={user.id} className={styles.list_item}>
                       <div className={styles.info_wrapper}>
-                        <span>Имя</span>
-                        <span>{user.name || "-"}</span>
+                        <span className={styles.info_text}>Имя</span>
+                        <span className={styles.info_text}>{user.name || "-"}</span>
                       </div>
                       <div className={styles.info_wrapper}>
-                        <span>Telegram</span>
+                        <span className={styles.info_text}>Telegram</span>
                         <a
                           href={`https://t.me/${user.telegram}`}
                           target="_blank"
@@ -167,7 +167,7 @@ const AdminInfo = () => {
                         </a>
                       </div>
                       <div className={styles.info_wrapper}>
-                        <span>Email</span>
+                        <span className={styles.info_text}>Email</span>
                         {user.email ? (
                           <a
                             href={`mailto:${user.email}`}
@@ -176,15 +176,15 @@ const AdminInfo = () => {
                             {user.email}
                           </a>
                         ) : (
-                          <span>-</span>
+                          <span className={styles.info_text}>-</span>
                         )}
                       </div>
                       <div className={styles.info_wrapper}>
-                        <span>Город</span>
-                        <span>{renderCity(user.city)}</span>
+                        <span className={styles.info_text}>Город</span>
+                        <span className={styles.info_text}>{renderCity(user.city)}</span>
                       </div>
                       <div className={styles.info_wrapper}>
-                        <span>Телефон</span>
+                        <span className={styles.info_text}>Телефон</span>
                         {user.phoneNumber ? (
                           <a
                             href={`tel:${user.phoneNumber}`}
@@ -193,7 +193,7 @@ const AdminInfo = () => {
                             {user.phoneNumber}
                           </a>
                         ) : (
-                          <span>-</span>
+                          <span className={styles.info_text}>-</span>
                         )}
                       </div>
                     </li>

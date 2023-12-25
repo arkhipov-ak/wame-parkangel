@@ -53,6 +53,9 @@
     display: flex;
     justify-content: space-between;
   }
+  .info_text {
+    color: var(--text-primary);
+  }
   .link {
     text-decoration-line: none;
     color: #168acd;
