@@ -7,4 +7,8 @@
     border-radius: 50%;
     border: 1px solid var(--button-primary);
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
 }
