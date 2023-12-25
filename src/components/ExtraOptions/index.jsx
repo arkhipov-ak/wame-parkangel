@@ -113,6 +113,7 @@ const ExtraOptions = () => {
     ).then((response) => {
       if (response) {
         state.parkDate = { ...snap.parkDate, isRenewable, park_id: response.data.response.id };
+        state.options[0] = data;
         navigate("/review");
       }
     }).catch(() => showErrorSnackbar({ message: "Не удалось создать парковку" }))
@@ -188,8 +189,8 @@ const ExtraOptions = () => {
 
   useEffect(() => {
     if (snap && snap.user && snap.options && snap.options[0]) {
-      if (snap.isSearchPark === false && snap.isEditPark === false) return;
-      if (snap.isEditPark) setIsRenewable(snap.parkDate.isRenewable);
+      /* if (snap.isSearchPark === false && snap.isEditPark === false) return; */
+      /* if (snap.isEditPark) */ setIsRenewable(snap.parkDate.isRenewable);
       setData(snap.options[0]);
     }
   }, [snap.user, snap.options, snap.isSearchPark, snap.isEditPark]);
