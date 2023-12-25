@@ -72,10 +72,7 @@ const Options = () => {
       width: data.width ? data.width : null,
       user_id: snap.user.id,
     }
-
-    if (!preparedData.height) delete preparedData.height;
-    if (!preparedData.width) delete preparedData.width;
-    if (!preparedData.length) delete preparedData.length;
+  
     if (!preparedData.priceHour) delete preparedData.priceHour;
     if (!preparedData.priceDay) delete preparedData.priceDay;
     if (!preparedData.priceWeek) delete preparedData.priceWeek;
