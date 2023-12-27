@@ -63,7 +63,7 @@ const AdminInfo = () => {
   const renderRating = (item) => {
     if (!item.length) return "Недостаточно оценок";
     const ratings = item.map((elem) => elem.rating);
-    return (ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length).toFixed(1);
+    return `${(ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length).toFixed(1)} / 5`;
   };
 
   const renderPrice = (item) => {
