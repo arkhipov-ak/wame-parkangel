@@ -190,7 +190,7 @@ const ExtraOptions = () => {
   useEffect(() => {
     if (snap && snap.user && snap.options && snap.options[0]) {
       /* if (snap.isSearchPark === false && snap.isEditPark === false) return; */
-      /* if (snap.isEditPark) */ setIsRenewable(snap.parkDate.isRenewable);
+      /* if (snap.isEditPark) */ setIsRenewable(!!snap.parkDate.isRenewable);
       setData(snap.options[0]);
     }
   }, [snap.user, snap.options, snap.isSearchPark, snap.isEditPark]);
