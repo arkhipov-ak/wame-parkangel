@@ -22,10 +22,7 @@ const ResultSearchElement = () => {
   const [rating, setRating] = useState(2.5);
 	const [comment, setComment] = useState("");
 
-  const onHandlePhoneButtonClick = event => {
-    event.stopPropagation()
-    window.open(`tel:${snap.resultElement.user.phoneNumber}`)
-  }
+  const onHandlePhoneButtonClick = () => window.open(`tel:${snap.resultElement.user.phoneNumber}`);
 
   const renderParkingType = () => {
       let array = [];
