@@ -22,8 +22,12 @@ const ResultSearchElement = () => {
   const [rating, setRating] = useState(2.5);
 	const [comment, setComment] = useState("");
 
+  const onHandlePhoneButtonClick = event => {
+    event.stopPropagation()
+    window.open(`tel:${snap.resultElement.user.phoneNumber}`)
+  }
+
   const renderParkingType = () => {
-    if (snap.resultElement) {
       let array = [];
 
       if (snap.resultElement.park.isUnderground) array.push("Подземная");
@@ -32,11 +36,9 @@ const ResultSearchElement = () => {
       if (snap.resultElement.park.isGarage) array.push("Гараж");
   
       return array.length ? array.join(", ") : "Не указан";
-    }
   };
 
   const renderElectroType = () => {
-    if (snap.resultElement) {
       let array = [];
 
       if (snap.resultElement.park.isVolts) array.push("220V");
@@ -45,11 +47,9 @@ const ResultSearchElement = () => {
       if (snap.resultElement.park.isWithoutPower) array.push("Без электропитания");
   
       return array.length ? array.join(", ") : "Не указано";
-    }
   };
 
   const renderTime = () => {
-    if (snap.resultElement) {
       const dateStart = new Date(snap.resultElement.park.availabilityDateStart);
       const hoursStart = dateStart.getHours();
       const minutesStart = (dateStart.getMinutes() + "").length === 1
@@ -65,11 +65,9 @@ const ResultSearchElement = () => {
       ;
   
       return `${hoursStart}:${minutesStart} - ${hoursEnd}:${minutesEnd}`;
-    }
   };
 
   const renderDate = () => {
-    if (snap.resultElement) {
       const dateStart = new Date(snap.resultElement.park.availabilityDateStart);
       const dayStart = (dateStart.getDate() + "").length === 1
         ? `0${dateStart.getDate()}`
@@ -94,7 +92,6 @@ const ResultSearchElement = () => {
       const yearEnd = dateEnd.getFullYear();
   
       return `${dayStart}.${monthStart}.${yearStart} - ${dayEnd}.${monthEnd}.${yearEnd}`;
-    }
   };
 
   const handleSendBtn = () => {
@@ -114,11 +111,11 @@ const ResultSearchElement = () => {
 	}
 
   useEffect(() => {
-    if (snap && (!snap.resultElement || !snap.parkDate)) {
+    if (!snap.resultElement) {
       showErrorSnackbar({ message: "Пожалуйста, повторите попытку" });
       navigate("/search-time");
     }
-  }, [snap.resultElement, snap.parkDate]);
+  }, [snap.resultElement]);
 
   return (
     <>
@@ -219,7 +216,7 @@ const ResultSearchElement = () => {
               <div className={styles.buttons_wrapper}>
                 <LinkButton href={`https://t.me/${snap.resultElement.user.telegram}`}>Написать в Telegram</LinkButton>
                 {snap.resultElement.user.isShowPhoneNumber && (
-                  <LinkButton href={`tel:${snap.resultElement.user.phoneNumber}`}>Позвонить</LinkButton>
+                  <Button onClick={onHandlePhoneButtonClick}>Позвонить</Button>
                 )}
                 <button type="button" onClick={() => setOpenModal(true)} className={styles.review_button}>Оставить отзыв</button>
               </div>
