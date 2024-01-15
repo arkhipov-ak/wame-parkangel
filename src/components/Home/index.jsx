@@ -10,6 +10,7 @@ import { state } from "src/state";
 import Modal from "src/components/common/Modal";
 import Button from "src/components/common/Button";
 import { showErrorSnackbar } from "src/utils/showSnackBar";
+import { supportLink } from "src/utils/constants";
 
 const Home = () => {
   const snap = useSnapshot(state)
@@ -168,7 +169,7 @@ const Home = () => {
           />
           <div className={styles.text_block}>
             <span>Забыли пароль?</span><br/>
-            <a href="https://t.me/OlivsonM" className={styles.link}>Напишите в поддержку.</a>
+            <a href={supportLink} className={styles.link}>Напишите в поддержку.</a>
           </div>
           <Button type="submit">Войти</Button>
         </form>
