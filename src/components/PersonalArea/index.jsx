@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSnapshot } from "valtio";
+import ReactInputMask from "react-input-mask";
 
 import styles from "./PersonalArea.module.css";
 import NavBar from "src/components/NavBar";
@@ -72,14 +73,13 @@ const PersonalArea = () => {
             type="text"
           />
             <span className={styles.label}>Ваш номер телефона</span>
-            <input
+            <ReactInputMask
+              mask="+9 (999) 999-99-99"
+              maskChar="_"
               value={data.phoneNumber}
               onChange={(e) => onHandleChange(e.target.value, "phoneNumber")}
               placeholder="Введите номер"
               className={styles.question_input}
-              inputMode="numeric"
-              pattern="[+0-9]*"
-              type="tel"
             />
             <span className={styles.label}>Ваша почта</span>
             <input
