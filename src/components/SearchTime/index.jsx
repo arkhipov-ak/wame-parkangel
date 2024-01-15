@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { BiChevronRight } from "react-icons/bi";
 import axios from "axios";
 import { useSnapshot } from "valtio";
+import { Rate } from "antd";
 
 import styles from "./SearchTime.module.css";
 import NavBar from "src/components/NavBar";
@@ -55,9 +56,8 @@ const SearchTime = () => {
   };
 
   const renderRating = (item) => {
-    if (!item.length) return "Недостаточно оценок";
     const ratings = item.map((elem) => elem.rating);
-    return `${(ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length).toFixed(1)} / 5`;
+    return (ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length);
   };
 
   const renderPrice = (item) => {
@@ -238,7 +238,14 @@ const SearchTime = () => {
                         <span className={styles.rent_time}>{renderTime(ad.park)}</span>
                         <span className={styles.rent_status}>{renderPrice(ad.park)}</span>
                       </div>
-                      <p className={styles.rent_location}>Рейтинг: {renderRating(ad.review)}</p>
+                      {!!ad.review.length && (
+                        <Rate
+                          allowHalf
+                          disabled
+                          value={renderRating(ad.review)}
+                          style={{ fontSize: "30px" }}
+                        />
+                      )}
                       <div className={styles.image_block}>
                         <img src={editImg} alt="edit "onClick={() => onHandleEditClick(ad)}/>
                         <img src={deleteImg} alt="delete" onClick={() => setOpenDeleteModal(true)}/>

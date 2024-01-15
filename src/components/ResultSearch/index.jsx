@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSnapshot } from "valtio";
+import { Rate } from "antd";
 
 import styles from "./ResultSearch.module.css";
 import NavBar from "src/components/NavBar";
@@ -36,9 +37,8 @@ const ResultSearch = () => {
   };
 
   const renderRating = (item) => {
-    if (!item.length) return "Недостаточно оценок";
     const ratings = item.map((elem) => elem.rating);
-    return `${(ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length).toFixed(1)} / 5`;
+    return (ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length);
   };
 
   const onHandleClick = (item) => {
@@ -105,7 +105,14 @@ const ResultSearch = () => {
                   <span className={styles.rent_time}>{renderTime(item.ad.park)}</span>
                   <span className={styles.rent_status}>{item.ad.park.priceHour} руб/ч</span>
                 </div>
-                <p className={styles.rent_location}>Рейтинг: {renderRating(item.ad.review)}</p>
+                {!!item.ad.review.length && (
+                  <Rate
+                    allowHalf
+                    disabled
+                    value={renderRating(item.ad.review)}
+                    style={{ fontSize: "30px" }}
+                  />
+                )}
               </button>
             ))}
             {/* <Link to="/show-map-result" className={styles.submit}>

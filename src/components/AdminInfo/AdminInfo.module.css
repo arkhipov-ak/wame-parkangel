@@ -68,6 +68,7 @@
     color: var(--text-primary);
     flex-wrap: wrap;
     display: flex;
+    flex-direction: column;
     padding: 5%;
     gap: 10px;
   }
