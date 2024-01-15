@@ -227,6 +227,9 @@ const AdminInfo = () => {
                             style={{ fontSize: "30px" }}
                           />
                         )}
+                        {!!ad.comment && (
+                        <p className={styles.rent_location}>{ad.comment}</p>
+                      )}
                         <div className={styles.image_block}>
                           <img src={deleteImg} alt="delete" onClick={() => setOpenDeleteModal(true)}/>
                         </div>

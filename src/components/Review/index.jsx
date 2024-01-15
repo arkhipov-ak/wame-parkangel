@@ -17,6 +17,7 @@ const Review = () => {
   const snap = useSnapshot(state);
   const navigate = useNavigate();
   const [zoom, setZoom] = useState(16);
+  const [comment, setComment] = useState("");
   const [data, setData] = useState(null);
 
   const renderParkingType = () => {
@@ -78,6 +79,7 @@ const Review = () => {
       availabilityDateStart: snap.parkDate.dateStartISO,
       user_id: snap.user.id,
       park_id: snap.parkDate.park_id,
+      comment,
     };
 
     delete preparedData.ad_id;
@@ -139,6 +141,7 @@ const Review = () => {
     }
 
     if (snap.isEditPark) {
+      if (snap.parkDate.comment) setComment(snap.parkDate.comment)
       return setData({
         ...snap.parkDate,
         ...snap.options[0],
@@ -232,6 +235,14 @@ const Review = () => {
                     <span className={styles.label}>Telegram</span>
                     <span className={styles.value}>{snap.user.telegram}</span>
                   </div>
+                  <textarea
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                    placeholder="Оставьте комментарий"
+                    rows={3}
+                    maxLength={200}
+                    className={styles.comment}
+                  />
                 </div>
                 {snap.parkDate.coordinates && (
                   <div style={{ position: "relative", width:"100%", height:"30vh" }}>

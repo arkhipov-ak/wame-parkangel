@@ -113,6 +113,9 @@ const ResultSearch = () => {
                     style={{ fontSize: "30px" }}
                   />
                 )}
+                {!!item.ad.comment && (
+                  <p className={styles.rent_location}>{item.ad.comment}</p>
+                )}
               </button>
             ))}
             {/* <Link to="/show-map-result" className={styles.submit}>

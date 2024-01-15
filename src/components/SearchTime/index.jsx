@@ -114,6 +114,7 @@ const SearchTime = () => {
       region: ad.park.region,
       address: ad.park.address,
       coordinates: ad.park.coordinates,
+      comment: ad.comment,
     };
     state.options[0] = {
       priceHour: ad.park.priceHour,
@@ -245,6 +246,9 @@ const SearchTime = () => {
                           value={renderRating(ad.review)}
                           style={{ fontSize: "30px" }}
                         />
+                      )}
+                      {!!ad.comment && (
+                        <p className={styles.rent_location}>{ad.comment}</p>
                       )}
                       <div className={styles.image_block}>
                         <img src={editImg} alt="edit "onClick={() => onHandleEditClick(ad)}/>

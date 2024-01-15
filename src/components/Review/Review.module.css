@@ -47,6 +47,9 @@
   text-align: right;
   color: var(--text-primary);
 }
+.comment {
+  padding: 3%;
+}
 .plus_button {
   position: absolute;
   right: 5%;
