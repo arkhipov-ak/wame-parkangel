@@ -47,3 +47,27 @@
   text-align: right;
   color: var(--text-primary);
 }
+.plus_button {
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  z-index: 100;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #000;
+  font-size: 26px;
+  background: #fff;
+}
+.minus_button {
+  position: absolute;
+  left: 5%;
+  top: 50%;
+  z-index: 100;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #000;
+  font-size: 26px;
+  background: #fff;
+}
