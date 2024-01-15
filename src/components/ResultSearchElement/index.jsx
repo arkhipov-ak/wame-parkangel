@@ -196,41 +196,42 @@ const ResultSearchElement = () => {
                   </div>
                 </div>
                 {snap.options[0].coordinates && (
-                    <YMaps apiKey={API_KEY}>
-                      <Map
-                        width="100%"
-                        height="30vh"
-                        instanceRef={ref => { ref && ref.behaviors.disable("drag") }}
-                        state={{
-                          center: snap.options[0].coordinates,
-                          zoom: zoom,
-                          type: "yandex#map",
-                        }}
-                        options={{
-                          suppressMapOpenBlock: true,
-                          suppressYandexSearch: true,
-                        }}
-                        style={{ position: "relative" }}
-                      >
-                        <Placemark geometry={snap.options[0].coordinates}/>
-                        <button
-                          type="button"
-                          onClick={onHandlePlusClick}
-                          disabled={zoom >= 20}
-                          className={styles.plus_button}
+                    <div style={{ position: "relative", width:"100%", height:"30vh" }}>
+                      <YMaps apiKey={API_KEY}>
+                        <Map
+                          width="100%"
+                          height="30vh"
+                          instanceRef={ref => { ref && ref.behaviors.disable("drag") }}
+                          defaultState={{
+                            center: snap.options[0].coordinates,
+                            zoom: zoom,
+                            type: "yandex#map",
+                          }}
+                          options={{
+                            suppressMapOpenBlock: true,
+                            suppressYandexSearch: true,
+                          }}
                         >
-                          +
-                        </button>
-                        <button
-                          type="button"
-                          onClick={onHandleMinusClick}
-                          disabled={zoom <= 8}
-                          className={styles.minus_button}
-                        >
-                          -
-                        </button>
-                      </Map>
-                    </YMaps>
+                          <Placemark geometry={snap.options[0].coordinates}/>
+                          <button
+                            type="button"
+                            onClick={onHandlePlusClick}
+                            disabled={zoom >= 20}
+                            className={styles.plus_button}
+                          >
+                            +
+                          </button>
+                          <button
+                            type="button"
+                            onClick={onHandleMinusClick}
+                            disabled={zoom <= 8}
+                            className={styles.minus_button}
+                          >
+                            -
+                          </button>
+                        </Map>
+                      </YMaps>
+                    </div>
                 )}
               </div>
               <div className={styles.buttons_wrapper}>

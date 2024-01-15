@@ -234,41 +234,42 @@ const Review = () => {
                   </div>
                 </div>
                 {snap.parkDate.coordinates && (
-                  <YMaps apiKey={API_KEY}>
-                    <Map
-                      width="100%"
-                      height="30vh"
-                      instanceRef={ref => { ref && ref.behaviors.disable("drag") }}
-                      state={{
-                        center: snap.parkDate.coordinates,
-                        zoom: zoom,
-                        type: "yandex#map",
-                      }}
-                      options={{
-                        suppressMapOpenBlock: true, // Убирает блок "Открыть в Яндекс.Картах"
-                        suppressYandexSearch: true,
-                      }}
-                      style={{ position: "relative" }}
-                    >
-                      <Placemark geometry={snap.parkDate.coordinates}/>
-                      <button
-                          type="button"
-                          onClick={onHandlePlusClick}
-                          disabled={zoom >= 20}
-                          className={styles.plus_button}
-                        >
-                          +
-                        </button>
+                  <div style={{ position: "relative", width:"100%", height:"30vh" }}>
+                    <YMaps apiKey={API_KEY}>
+                      <Map
+                        width="100%"
+                        height="30vh"
+                        instanceRef={ref => { ref && ref.behaviors.disable("drag") }}
+                        state={{
+                          center: snap.parkDate.coordinates,
+                          zoom: zoom,
+                          type: "yandex#map",
+                        }}
+                        options={{
+                          suppressMapOpenBlock: true,
+                          suppressYandexSearch: true,
+                        }}
+                      >
+                        <Placemark geometry={snap.parkDate.coordinates}/>
                         <button
-                          type="button"
-                          onClick={onHandleMinusClick}
-                          disabled={zoom <= 8}
-                          className={styles.minus_button}
-                        >
-                          -
-                        </button>
-                    </Map>
-                  </YMaps>
+                            type="button"
+                            onClick={onHandlePlusClick}
+                            disabled={zoom >= 20}
+                            className={styles.plus_button}
+                          >
+                            +
+                          </button>
+                          <button
+                            type="button"
+                            onClick={onHandleMinusClick}
+                            disabled={zoom <= 8}
+                            className={styles.minus_button}
+                          >
+                            -
+                          </button>
+                      </Map>
+                    </YMaps>
+                  </div>
                 )}
               </div>
               <Button onClick={onHandleClick}>
