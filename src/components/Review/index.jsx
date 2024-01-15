@@ -65,9 +65,9 @@ const Review = () => {
     return `${dayStart}.${monthStart}.${yearStart} - ${dayEnd}.${monthEnd}.${yearEnd}`;
   };
 
-  const onHandlePlusClick = () => setZoom(prevState => prevState + 4);
+  const onHandlePlusClick = () => setZoom(prevState => prevState + 1);
 
-  const onHandleMinusClick = () => setZoom(prevState => prevState - 4);
+  const onHandleMinusClick = () => setZoom(prevState => prevState - 1);
 
   const onHandleClick = async () => {
     const preparedData = {
