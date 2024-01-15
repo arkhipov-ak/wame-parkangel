@@ -202,7 +202,7 @@ const ResultSearchElement = () => {
                           width="100%"
                           height="30vh"
                           instanceRef={ref => { ref && ref.behaviors.disable("drag") }}
-                          defaultState={{
+                          state={{
                             center: snap.options[0].coordinates,
                             zoom: zoom,
                             type: "yandex#map",
