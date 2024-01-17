@@ -6,6 +6,7 @@ import axios from "axios";
 import Autosuggest from "react-autosuggest";
 
 import styles from "./ChooseTimeToday.module.css";
+import theme from 'src/utils/suggestsTheme.module.css'
 import NavBar from "src/components/NavBar";
 import Container from "src/components/common/Container";
 import { state } from "src/state";
@@ -16,60 +17,6 @@ import { showErrorSnackbar } from "src/utils/showSnackBar";
 import RegionSelect from "src/components/common/RegionSelect";
 import { hideKeyboard } from "src/utils/functions";
 import { GEO_SUGGEST_API_KEY } from "src/utils/constants";
-
-const theme = {
-  container: {
-    position: "relative"
-  },
-  input: {
-    height: "50px",
-    width: "100%",
-    textAlign: "center",
-    fontFamily: "Montserrat",
-    fontSize: "16px",
-    fontWeight: 400,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: "15px",
-    /* background: var(--background-secondary), */
-    /* color: var(--text-primary), */
-    boxShadow: "0px 3px 10px 0px rgba(0, 0, 0, 0.05)",
-    border: "none",
-    margin: "2.5% 0 5% 0",
-  },
-  inputFocused: {
-    outline: "none"
-  },
-  suggestionsContainer: {
-    display: "none"
-  },
-  suggestionsContainerOpen: {
-    display: "block",
-    position: "absolute",
-    top: 61,
-    width: "100%",
-    border: "1px solid #aaa",
-    backgroundColor: "#fff",
-    fontFamily: "Helvetica, sans-serif",
-    fontWeight: 300,
-    fontSize: "16px",
-    borderRadius: "15px",
-    zIndex: 2
-  },
-  suggestionsList: {
-    margin: 0,
-    padding: 0,
-    listStyleType: "none"
-  },
-  suggestion: {
-    cursor: "pointer",
-    padding: "10px 20px"
-  },
-  suggestionHighlighted: {
-    backgroundColor: "#ddd",
-    borderRadius: "15px",
-  }
-};
 
 const ChooseTimeDay = ({ day }) => {
   const snap = useSnapshot(state);
@@ -240,17 +187,8 @@ const ChooseTimeDay = ({ day }) => {
             getSuggestionValue={getSuggestionValue}
             renderSuggestion={renderSuggestion}
             inputProps={inputProps}
-            className={styles.input_style}
             theme={theme}
           />
-          {/* <input
-            value={address}
-            onChange={e => setAddress(e.target.value)}
-            className={styles.input_style}
-            placeholder="Введите адрес"
-            onKeyDown={hideKeyboard}
-            type="text"
-          /> */}
           <button
             type="button"
             className={styles.btn_style}
