@@ -2,25 +2,58 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSnapshot } from "valtio";
 import { useDebounce } from "use-debounce";
+import axios from "axios";
+import Autosuggest from "react-autosuggest";
 
 import NavBar from "src/components/NavBar";
 import styles from "./SelectAddressLocation.module.css";
+import theme from "src/utils/suggestsTheme.module.css";
 import { state } from "src/state";
 import Container from "src/components/common/Container";
 import Button from "src/components/common/Button";
 import { showErrorSnackbar } from "src/utils/showSnackBar";
 import RegionSelect from "src/components/common/RegionSelect";
 import { hideKeyboard } from "src/utils/functions";
+import { GEO_SUGGEST_API_KEY } from "src/utils/constants";
 
 const SelectAddressLocation = () => {
   const snap = useSnapshot(state);
   const [activeRegion, setActiveRegion] = useState("moscow");
   const [addressCoords, setAddressCoords] = useState(null);
   const [address, setAddress] = useState("");
-  const [debounceAddressValue] = useDebounce(address, 1000);
+  const [debounceAddressValue] = useDebounce(address, 500);
+  const [suggestions, setSuggestions] = useState([]);
   const [activeNearMeButton, setActiveNearMeButton] = useState(false);
   const [myCoords, setMyCoords] = useState(null);
   const navigate = useNavigate();
+
+  const onChange = (event, { newValue }) => setAddress(newValue);
+
+  const inputProps = {
+    placeholder: "Введите адрес",
+    value: address,
+    onChange,
+    onKeyDown: hideKeyboard,
+    disabled: activeNearMeButton,
+  };
+
+  const onSuggestionsFetchRequested = ({ value }) => {
+    axios.get(
+      `https://suggest-maps.yandex.ru/v1/suggest?apikey=${GEO_SUGGEST_API_KEY}&text=${value}`
+    ).then(r => {
+      if (r.data.results) setSuggestions(r.data.results.map(item => item.title.text));
+      else {
+        setSuggestions([])
+        showErrorSnackbar({ message: "Что-то пошло не так" })
+      }
+    }).catch(() => showErrorSnackbar({ message: "Не удалось получить список подсказок" }))
+  };
+
+  const onSuggestionsClearRequested = () => setSuggestions([]);
+
+  const getSuggestionValue = suggestion => suggestion;
+
+  const renderSuggestion = suggestion => <div>{suggestion}</div>;
 
   const onHandleNearMeClick = () => {
     setActiveNearMeButton(!activeNearMeButton);
@@ -104,29 +137,31 @@ const SelectAddressLocation = () => {
     <>
       <NavBar/>
       <Container>
-        <span className={styles.label}>Ваш регион</span>
-        <RegionSelect activeRegion={activeRegion} setActiveRegion={setActiveRegion}/>
-        <span className={styles.label}>Адрес</span>
-        <input
-          value={address}
-          onChange={e => setAddress(e.target.value)}
-          className={styles.input_style}
-          placeholder="Введите адрес"
-          onKeyDown={hideKeyboard}
-          type="text"
-          disabled={activeNearMeButton}
-        />
-        <button type="button" className={styles.btn_style} onClick={() => onHandleRedirect("/map")}>
-          Указать на карте
-        </button>
-        <button
-          type="button"
-          className={`${styles.btn_style} ${activeNearMeButton ? styles.active : ""}`}
-          style={{ marginBottom: "15%" }}
-          onClick={onHandleNearMeClick}
-        >
-          Найти рядом со мной
-        </button>
+        <div className={styles.block_wrapper}>
+          <span className={styles.label}>Ваш регион</span>
+          <RegionSelect activeRegion={activeRegion} setActiveRegion={setActiveRegion}/>
+          <span className={styles.label}>Адрес</span>
+          <Autosuggest
+            suggestions={suggestions}
+            onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+            onSuggestionsClearRequested={onSuggestionsClearRequested}
+            getSuggestionValue={getSuggestionValue}
+            renderSuggestion={renderSuggestion}
+            inputProps={inputProps}
+            theme={theme}
+          />
+          <button type="button" className={styles.btn_style} onClick={() => onHandleRedirect("/map")}>
+            Указать на карте
+          </button>
+          <button
+            type="button"
+            className={`${styles.btn_style} ${activeNearMeButton ? styles.active : ""}`}
+            style={{ marginBottom: "15%" }}
+            onClick={onHandleNearMeClick}
+          >
+            Найти рядом со мной
+          </button>
+        </div>
         <Button onClick={() => onHandleRedirect("/result-search")}>
           Подобрать парковку
         </Button>

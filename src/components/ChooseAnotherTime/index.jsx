@@ -2,8 +2,11 @@ import { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSnapshot } from "valtio";
 import { useDebounce } from "use-debounce";
+import axios from "axios";
+import Autosuggest from "react-autosuggest";
 
 import styles from "./ChooseAnotherTime.module.css";
+import theme from "src/utils/suggestsTheme.module.css";
 import NavBar from "src/components/NavBar";
 import Container from "src/components/common/Container";
 import { state } from "src/state";
@@ -12,6 +15,7 @@ import ModalTime from "src/components/common/ModalTime";
 import { showErrorSnackbar } from "src/utils/showSnackBar";
 import RegionSelect from "src/components/common/RegionSelect";
 import { hideKeyboard } from "src/utils/functions";
+import { GEO_SUGGEST_API_KEY } from "src/utils/constants";
 
 const ChooseAnotherTime = () => {
 	const snap = useSnapshot(state);
@@ -20,7 +24,8 @@ const ChooseAnotherTime = () => {
 	const [activeRegion, setActiveRegion] = useState("moscow");
   const [addressCoords, setAddressCoords] = useState(null);
 	const [address, setAddress] = useState("");
-  const [debounceAddressValue] = useDebounce(address, 1000);
+  const [debounceAddressValue] = useDebounce(address, 500);
+  const [suggestions, setSuggestions] = useState([]);
   const [selectedDateStart, setSelectedDateStart] = useState("");
   const [selectedDateEnd, setSelectedDateEnd] = useState("");
   const [selectedHourStart, setSelectedHourStart] = useState("00");
@@ -30,6 +35,33 @@ const ChooseAnotherTime = () => {
   const dateRef = useRef(null);
   const currentDate = new Date().toISOString().split("T")[0];
 	const navigate = useNavigate();
+
+  const onChange = (event, { newValue }) => setAddress(newValue);
+
+  const inputProps = {
+    placeholder: "Введите адрес",
+    value: address,
+    onChange,
+    onKeyDown: hideKeyboard,
+  };
+
+  const onSuggestionsFetchRequested = ({ value }) => {
+    axios.get(
+      `https://suggest-maps.yandex.ru/v1/suggest?apikey=${GEO_SUGGEST_API_KEY}&text=${value}`
+    ).then(r => {
+      if (r.data.results) setSuggestions(r.data.results.map(item => item.title.text));
+      else {
+        setSuggestions([])
+        showErrorSnackbar({ message: "Что-то пошло не так" })
+      }
+    }).catch(() => showErrorSnackbar({ message: "Не удалось получить список подсказок" }))
+  };
+
+  const onSuggestionsClearRequested = () => setSuggestions([]);
+
+  const getSuggestionValue = suggestion => suggestion;
+
+  const renderSuggestion = suggestion => <div>{suggestion}</div>;
 
   const onHandleRedirect = (link) => {
     if (link === "/extra-options") {
@@ -153,13 +185,14 @@ const ChooseAnotherTime = () => {
             <span className={styles.label}>Ваш регион</span>
             <RegionSelect activeRegion={activeRegion} setActiveRegion={setActiveRegion}/>
             <span className={styles.label}>Адрес</span>
-            <input
-              value={address}
-              onChange={e => setAddress(e.target.value)}
-              className={styles.input_style}
-              placeholder="Введите адрес"
-              onKeyDown={hideKeyboard}
-              type="text"
+            <Autosuggest
+              suggestions={suggestions}
+              onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+              onSuggestionsClearRequested={onSuggestionsClearRequested}
+              getSuggestionValue={getSuggestionValue}
+              renderSuggestion={renderSuggestion}
+              inputProps={inputProps}
+              theme={theme}
             />
             <button
               type="button"
