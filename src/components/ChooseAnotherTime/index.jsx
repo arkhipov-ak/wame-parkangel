@@ -48,8 +48,8 @@ const ChooseAnotherTime = () => {
   const onSuggestionsFetchRequested = ({ value }) => {
     axios.get(
       `https://suggest-maps.yandex.ru/v1/suggest?apikey=${GEO_SUGGEST_API_KEY}&text=${value}`
-    ).then(r => {
-      if (r.data.results) setSuggestions(r.data.results.map(item => item.title.text));
+    ).then((response) => {
+      if (response.data.results) setSuggestions(response.data.results.map(item => item.title.text));
       else {
         setSuggestions([])
         showErrorSnackbar({ message: "Что-то пошло не так" })
@@ -59,9 +59,9 @@ const ChooseAnotherTime = () => {
 
   const onSuggestionsClearRequested = () => setSuggestions([]);
 
-  const getSuggestionValue = suggestion => suggestion;
+  const getSuggestionValue = (suggestion) => suggestion;
 
-  const renderSuggestion = suggestion => <div>{suggestion}</div>;
+  const renderSuggestion = (suggestion) => <div>{suggestion}</div>;
 
   const onHandleRedirect = (link) => {
     if (link === "/extra-options") {
