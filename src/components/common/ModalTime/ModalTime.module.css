@@ -22,7 +22,7 @@
 }
 .hour::-webkit-scrollbar,
 .minute::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
+  display: none;
 }
 .time {
   height: 40px;
@@ -35,6 +35,8 @@
 .time.selected {
   opacity: 1;
   color: var(--text-primary);
+  border: 1px solid var(--text-primary);
+  padding: 0 5%;
 }
 .btnWrapper {
   display: flex;
