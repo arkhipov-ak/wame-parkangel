@@ -15,6 +15,26 @@ import { state } from "src/state";
 import { showErrorSnackbar, showSuccessSnackbar } from "src/utils/showSnackBar";
 import SizeInput from "src/components/common/SizeInput";
 
+const defaultData = {
+  priceHour: null,
+  priceDay: null,
+  priceWeek: null,
+  priceMonth: null,
+  height: "",
+  width: "",
+  length: "",
+  isUnderground: false,
+  isOutDoor: false,
+  isCovered: false,
+  isGarage : false,
+  isProtected: false,
+  isHeated: false,
+  isVolts: false,
+  isSpecializedCharger: false,
+  address: "",
+  region: "",
+};
+
 const ExtraOptions = () => {
   const snap = useSnapshot(state);
   const [hourModalOpen, setHourModalOpen] = useState(false);
@@ -23,25 +43,7 @@ const ExtraOptions = () => {
   const [monthModalOpen, setMonthModalOpen] = useState(false);
   const [isRenewable, setIsRenewable] = useState(false);
   const navigate = useNavigate();
-  const [data, setData] = useState({
-    priceHour: null,
-    priceDay: null,
-    priceWeek: null,
-    priceMonth: null,
-    height: "",
-    width: "",
-    length: "",
-    isUnderground: false,
-    isOutDoor: false,
-    isCovered: false,
-    isGarage : false,
-    isProtected: false,
-    isHeated: false,
-    isVolts: false,
-    isSpecializedCharger: false,
-    address: "",
-    region: "",
-  });
+  const [data, setData] = useState(defaultData);
 
   const onHandleChange = (newData) => setData(newData);
 
@@ -87,9 +89,13 @@ const ExtraOptions = () => {
 
     const preparedData = {
       ...data,
-      length: data.length ? data.length : null,
-      height: data.height ? data.height : null,
-      width: data.width ? data.width : null,
+      length: data.length ? +data.length : null,
+      height: data.height ? +data.height : null,
+      width: data.width ? +data.width : null,
+      priceHour: data.priceHour ?? null,
+      priceDay: data.priceDay ?? null,
+      priceWeek: data.priceWeek ?? null,
+      priceMonth: data.priceMonth ?? null,
       address: snap.parkDate.address,
       region: snap.parkDate.region,
       user_id: snap.user.id,
@@ -98,13 +104,6 @@ const ExtraOptions = () => {
       coordinates: snap.parkDate.coordinates.join(", "),
     };
 
-    if (!preparedData.height) delete preparedData.height;
-    if (!preparedData.width) delete preparedData.width;
-    if (!preparedData.length) delete preparedData.length;
-    if (!preparedData.priceHour) delete preparedData.priceHour;
-    if (!preparedData.priceDay) delete preparedData.priceDay;
-    if (!preparedData.priceWeek) delete preparedData.priceWeek;
-    if (!preparedData.priceMonth) delete preparedData.priceMonth;
     delete preparedData.user;
     delete preparedData.id;
 
@@ -118,6 +117,8 @@ const ExtraOptions = () => {
       }
     }).catch(() => showErrorSnackbar({ message: "Не удалось создать парковку" }))
   };
+
+  const onHandleResetOptions = () => setData(defaultData);
 
   const onHandleSaveOptions = (e) => {
     e.preventDefault();
@@ -137,23 +138,22 @@ const ExtraOptions = () => {
       return;
     }
 
+    if (!data.priceHour && !data.priceDay && !data.priceWeek && !data.priceMonth) {
+      showErrorSnackbar({ message: "Цена не указана", tryAgain: true });
+      return;
+    }
+
     const preparedData = {
       ...data,
       length: data.length ? +data.length : null,
       height: data.height ? +data.height : null,
       width: data.width ? +data.width : null,
+      priceHour: data.priceHour ?? null,
+      priceDay: data.priceDay ?? null,
+      priceWeek: data.priceWeek ?? null,
+      priceMonth: data.priceMonth ?? null,
       user_id: snap.user.id,
     };
-
-    if (!snap.options[0]) {
-      if (!preparedData.height) delete preparedData.height;
-      if (!preparedData.width) delete preparedData.width;
-      if (!preparedData.length) delete preparedData.length;
-      if (!preparedData.priceHour) delete preparedData.priceHour;
-      if (!preparedData.priceDay) delete preparedData.priceDay;
-      if (!preparedData.priceWeek) delete preparedData.priceWeek;
-      if (!preparedData.priceMonth) delete preparedData.priceMonth;
-    }
 
     if (snap.options[0]) {
       axios.put(
@@ -208,7 +208,7 @@ const ExtraOptions = () => {
 		<>
 			<NavBar/>
 			<Container>
-        <form onSubmit={onHandleSaveOptions}>
+        <form onSubmit={onHandleSaveOptions} className={styles.form}>
           <div className={styles.container}>
             <div className={styles.box_container}>
               <span className={styles.main_text}>Тип парковки</span>
@@ -448,6 +448,7 @@ const ExtraOptions = () => {
             <Button onClick={handleRedirect}>Далее</Button>
           )}
         </form>
+        <Button onClick={onHandleResetOptions}>Сбросить параметры</Button>
         {hourModalOpen && (
           <Modal 
             setOpenModal={setHourModalOpen}

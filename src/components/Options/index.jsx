@@ -1,46 +1,50 @@
-import { useEffect } from "react";
-import NavBar from "../NavBar";
-import styles from "./Options.module.css";
-import Container from "../common/Container";
-import CustomCheckBox from "../common/CustomCheckbox";
-import SwitchToggle from "../common/SwitchToggle";
-import SizeInput from "../common/SizeInput";
-import PriceCounterBlock from "../common/PriceCounterBlock";
-import Button from "../common/Button";
-import { state } from "../../state";
-import { useState } from "react";
-import { useSnapshot } from "valtio";
-import { showErrorSnackbar, showSuccessSnackbar } from "../../utils/showSnackBar";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSnapshot } from "valtio";
 import axios from "axios";
+
+import styles from "./Options.module.css";
+import NavBar from "src/components/NavBar";
+import { state } from "src/state";
+import Container from "src/components/common/Container";
+import CustomCheckBox from "src/components/common/CustomCheckbox";
+import SwitchToggle from "src/components/common/SwitchToggle";
+import SizeInput from "src/components/common/SizeInput";
+import PriceCounterBlock from "src/components/common/PriceCounterBlock";
+import Button from "src/components/common/Button";
+import { showErrorSnackbar, showSuccessSnackbar } from "src/utils/showSnackBar";
+
+const defaultData = {
+  priceHour: null,
+  priceDay: null,
+  priceWeek: null,
+  priceMonth: null,
+  height: "",
+  width: "",
+  length: "",
+  isUnderground: false,
+  isOutDoor: false,
+  isCovered: false,
+  isGarage : false,
+  isProtected: false,
+  isHeated: false,
+  isVolts: false,
+  isSpecializedCharger: false,
+  address: "",
+  region: "",
+};
 
 const Options = () => {
   const snap = useSnapshot(state);
   const navigate = useNavigate();
-  const [data, setData] = useState({
-    priceHour: null,
-    priceDay: null,
-    priceWeek: null,
-    priceMonth: null,
-    height: "",
-    width: "",
-    length: "",
-    isUnderground: false,
-    isOutDoor: false,
-    isCovered: false,
-    isGarage : false,
-    isProtected: false,
-    isHeated: false,
-    isVolts: false,
-    isSpecializedCharger: false,
-    address: "",
-    region: "",
-  });
+  const [data, setData] = useState(defaultData);
 
   const onHandleChange = (value, key) => {
     let newObject = { ...data, ...{ [key]: value } };
     setData(newObject);
 	};
+
+  const onHandleResetOptions = () => setData(defaultData);
 
   const onHandleSaveOptions = (e) => {
     e.preventDefault();
@@ -60,23 +64,22 @@ const Options = () => {
       return;
     }
 
-    if (data.priceHour === 0) {
+    if (!data.priceHour) {
       showErrorSnackbar({ message: "Стоимость в час должна быть больше нуля", tryAgain: true });
       return;
     }
 
     const preparedData = {
       ...data,
-      length: data.length ? data.length : null,
-      height: data.height ? data.height : null,
-      width: data.width ? data.width : null,
+      length: data.length ? +data.length : null,
+      height: data.height ? +data.height : null,
+      width: data.width ? +data.width : null,
+      priceHour: data.priceHour ?? null,
+      priceDay: data.priceDay ?? null,
+      priceWeek: data.priceWeek ?? null,
+      priceMonth: data.priceMonth ?? null,
       user_id: snap.user.id,
-    }
-  
-    if (!preparedData.priceHour) delete preparedData.priceHour;
-    if (!preparedData.priceDay) delete preparedData.priceDay;
-    if (!preparedData.priceWeek) delete preparedData.priceWeek;
-    if (!preparedData.priceMonth) delete preparedData.priceMonth;
+    };
 
     if (snap.options[0]) {
       axios.put(
@@ -86,8 +89,7 @@ const Options = () => {
           showSuccessSnackbar({ message: "Параметры сохранены" })
           navigate(-1);
         }
-      })
-      .catch(() => showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
+      }).catch(() => showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
     } else {
       axios.post(
         "https://api.parkangel.ru/api/options", preparedData
@@ -96,8 +98,7 @@ const Options = () => {
           showSuccessSnackbar({ message: "Параметры сохранены" })
           navigate(-1);
         }
-      })
-      .catch(() => showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
+      }).catch(() => showErrorSnackbar({ message: "Не удалось сохранить параметры" }))
     }
   };
 
@@ -121,7 +122,7 @@ const Options = () => {
         <div>
           <NavBar/>
           <Container>
-            <form onSubmit={onHandleSaveOptions}>
+            <form onSubmit={onHandleSaveOptions} className={styles.form}>
               <div className={styles.container}>
                 <div className={styles.box_container}>
                   <span className={styles.main_text}>Тип парковки</span>
@@ -173,6 +174,7 @@ const Options = () => {
               </div>
               <Button type="submit">Сохранить параметры</Button>
             </form>
+            <Button onClick={onHandleResetOptions}>Сбросить параметры</Button>
           </Container>
         </div>
       ) : <p>Загрузка...</p>}
