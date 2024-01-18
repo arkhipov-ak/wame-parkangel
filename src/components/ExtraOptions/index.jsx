@@ -118,7 +118,7 @@ const ExtraOptions = () => {
     }).catch(() => showErrorSnackbar({ message: "Не удалось создать парковку" }))
   };
 
-  const onHandleResetOptions = () => setData(defaultData);
+  const onHandleResetOptions = () => setData({ ...defaultData, id: snap.options[0].id });
 
   const onHandleSaveOptions = (e) => {
     e.preventDefault();

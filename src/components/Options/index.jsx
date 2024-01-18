@@ -44,7 +44,7 @@ const Options = () => {
     setData(newObject);
 	};
 
-  const onHandleResetOptions = () => setData(defaultData);
+  const onHandleResetOptions = () => setData({ ...defaultData, id: snap.options[0].id });
 
   const onHandleSaveOptions = (e) => {
     e.preventDefault();
@@ -80,6 +80,8 @@ const Options = () => {
       priceMonth: data.priceMonth ?? null,
       user_id: snap.user.id,
     };
+
+    delete preparedData.user;
 
     if (snap.options[0]) {
       axios.put(
