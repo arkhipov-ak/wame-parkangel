@@ -201,7 +201,13 @@ const ResultSearchElement = () => {
                         <Map
                           width="100%"
                           height="30vh"
-                          instanceRef={ref => { ref && ref.behaviors.disable("drag") }}
+                          instanceRef={ref => {
+                            ref &&
+                            ref.behaviors.disable("drag") &&
+                            ref.behaviors.disable("scrollZoom") &&
+                            ref.behaviors.disable("dblClickZoom") &&
+                            ref.behaviors.disable("multiTouch")
+                          }}
                           state={{
                             center: snap.options[0].coordinates,
                             zoom: zoom,
