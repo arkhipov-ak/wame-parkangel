@@ -1,14 +1,10 @@
 import styles from "./PriceCounterBlock.module.css";
 
 const PriceCounterBlock = ({ price, setPrice, currency = false, step = 50 }) => {
-  const increment = () => {
-    setPrice(price + step);
-  };
+  const increment = () => setPrice(price + step);
 
   const decrement = () => {
-    if (price > 0) {
-      setPrice(price - step);
-    }
+    if (price > 0) setPrice(price - step);
   };
 
   return (
