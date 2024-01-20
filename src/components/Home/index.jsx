@@ -11,6 +11,7 @@ import Modal from "src/components/common/Modal";
 import Button from "src/components/common/Button";
 import { showErrorSnackbar } from "src/utils/showSnackBar";
 import { supportLink } from "src/utils/constants";
+import { hideKeyboard } from "src/utils/functions";
 
 const Home = () => {
   const snap = useSnapshot(state)
@@ -146,6 +147,7 @@ const Home = () => {
                 placeholder="Введите Telegram-никнейм"
                 className={styles.home_input}
                 type="text"
+                onKeyDown={hideKeyboard}
               />
               <button type="button" onClick={onHandleLoginClick} className={styles.login_button}>
                 Войти
