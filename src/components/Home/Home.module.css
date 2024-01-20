@@ -3,10 +3,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100lvh;
+  height: 100svh;
   text-align: center;
   background: var(--background);
   padding: 0 10%;
+  position: fixed;
 }
 .text_main {
   color: var(--text-primary);

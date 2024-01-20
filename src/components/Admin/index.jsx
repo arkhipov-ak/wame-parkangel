@@ -8,6 +8,7 @@ import styles from "./Admin.module.css";
 import Logotype from "/src/assets/logo.svg";
 import { state } from "src/state";
 import { showErrorSnackbar } from "src/utils/showSnackBar";
+import { hideKeyboard } from "src/utils/functions";
 
 const Admin = () => {
   const snap = useSnapshot(state)
@@ -98,6 +99,7 @@ const Admin = () => {
                 placeholder="Введите Telegram-никнейм"
                 className={styles.home_input}
                 type="text"
+                onKeyDown={hideKeyboard}
               />
               <button
                 type="button"
