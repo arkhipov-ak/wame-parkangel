@@ -25,11 +25,13 @@ body {
   margin: 0;
   font-family: Montserrat;
   scroll-behavior: smooth;
-  min-height: 100vh;
+  height: 100vh;
+  height: -webkit-fill-available;
 }
 
 html {
   scroll-behavior: smooth;
+  height: -webkit-fill-available;
 }
 .container {
   overflow-x: hidden;
