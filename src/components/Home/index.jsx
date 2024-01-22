@@ -3,6 +3,7 @@ import axios from "axios";
 import { useSnapshot } from "valtio";
 import ReactCodeInput from "react-code-input";
 import { useNavigate } from "react-router-dom";
+import { Popover } from "antd";
 
 import styles from "./Home.module.css";
 import Logotype from "/src/assets/logo.svg";
@@ -135,12 +136,31 @@ const Home = () => {
                 onChange={setCode}
                 isValid={isCodeCorrect}
               />
-              <button type="button" onClick={onHandleLoginClick} className={styles.try_again_button}>
-                <span className={styles.try_again_button_text}>Не пришел код? Отправить повторно!</span>
+              <button type="button" onClick={onHandleLoginClick} className={styles.link_button}>
+                <span className={styles.link_button_text}>Не пришел код? Отправить повторно!</span>
               </button>
             </div>
           ) : (
             <div className={styles.login_wrapper}>
+              <Popover
+                title="💡"
+                content={
+                  <>
+                    <p>
+                      - В десктопной версии telegram нажмите на три горизонтальные полоски в левом верхнем углу<br/>
+                      - Затем нажмите на «настройки»<br/>
+                      - В открывшемся окошке, справа от аватарки будет ваш ник. Он начинается с @<br/>
+                      - Введите его без @
+                    </p>
+                  </>
+                }
+                trigger="click"
+                overlayStyle={{maxWidth: "310px"}}
+              >
+                <button className={styles.link_button}>
+                  <span className={styles.link_button_text}>Где посмотреть Telegram-никнейм?</span>
+                </button>
+              </Popover>
               <input
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value, "nickname")}
