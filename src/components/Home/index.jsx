@@ -155,7 +155,7 @@ const Home = () => {
                   </>
                 }
                 trigger="click"
-                overlayStyle={{maxWidth: "310px"}}
+                overlayStyle={{maxWidth: "320px"}}
               >
                 <button className={styles.link_button}>
                   <span className={styles.link_button_text}>Где посмотреть Telegram-никнейм?</span>
