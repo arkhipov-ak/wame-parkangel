@@ -81,7 +81,9 @@ const ResultSearch = () => {
       ).then(response => setData(response.data.response))
       .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления"}))
     }
-  }, [snap.user, snap.options, navigate]);
+  }, []);
+  
+  console.log('snap', snap);
 
   return (
     <>

@@ -76,7 +76,7 @@ const MainAppComponent = () => {
         .then((response) => state.options = response.data.response)
         .catch(() => showErrorSnackbar({ message: "Не удалось загрузить опции" }))
     }
-  }, [snap.user]);
+  }, []);
 
   return (
     <div data-theme={snap.user?.theme || "light"} style={{ width: "100vw" }}>
