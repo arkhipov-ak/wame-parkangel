@@ -58,7 +58,7 @@ const SelectAddressLocation = () => {
   const onHandleNearMeClick = () => {
     setActiveNearMeButton(!activeNearMeButton);
     setAddress("");
-  }
+  };
 
   const onHandleRedirect = (link) => {
     if (!snap.parkDate) {
@@ -132,6 +132,14 @@ const SelectAddressLocation = () => {
       setAddressCoords(null);
     }
   }, [debounceAddressValue]);
+
+  useEffect(() => {
+    if (!snap.options) {
+      axios.get(`https://api.parkangel.ru/api/options/userId/${snap.user.id}`)
+        .then((response) => state.options = response.data.response)
+        .catch(() => showErrorSnackbar({ message: "Не удалось загрузить опции" }))
+    }
+  }, []);
 
   return (
     <>
