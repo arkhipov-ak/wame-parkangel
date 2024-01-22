@@ -228,9 +228,7 @@ const ExtraOptions = () => {
                     ["isUnderground"]: true,
                     ["isOutDoor"]: false,
                     ["isCovered"]: false,
-                    ["isGarage"]: false,
-                    ["isVolts"]: false,
-                    ["isSpecializedCharger"]: false,
+                    ["isGarage"]: false
                   });
                 }}
               >
@@ -252,9 +250,7 @@ const ExtraOptions = () => {
                     ["isOutDoor"]: true,
                     ["isUnderground"]: false,
                     ["isCovered"]: false,
-                    ["isGarage"]: false,
-                    ["isVolts"]: false,
-                    ["isSpecializedCharger"]: false,
+                    ["isGarage"]: false
                   });
                 }}
               >
@@ -276,9 +272,7 @@ const ExtraOptions = () => {
                     ["isCovered"]: true,
                     ["isOutDoor"]: false,
                     ["isUnderground"]: false,
-                    ["isGarage"]: false,
-                    ["isVolts"]: false,
-                    ["isSpecializedCharger"]: false,
+                    ["isGarage"]: false
                   });
                 }}
               >
@@ -300,9 +294,7 @@ const ExtraOptions = () => {
                     ["isGarage"]: true,
                     ["isOutDoor"]: false,
                     ["isCovered"]: false,
-                    ["isUnderground"]: false,
-                    ["isVolts"]: false,
-                    ["isSpecializedCharger"]: false,
+                    ["isUnderground"]: false
                   });
                 }}
               >
@@ -337,11 +329,7 @@ const ExtraOptions = () => {
                 onHandleChange({
                   ...data,
                   ["isVolts"]: true,
-                  ["isOutDoor"]: false,
-                  ["isCovered"]: false,
-                  ["isGarage"]: false,
-                  ["isUnderground"]: false,
-                  ["isSpecializedCharger"]: false,
+                  ["isSpecializedCharger"]: false
                 });
               }}
             >
@@ -361,11 +349,7 @@ const ExtraOptions = () => {
                 onHandleChange({
                   ...data,
                   ["isSpecializedCharger"]: true,
-                  ["isOutDoor"]: false,
-                  ["isCovered"]: false,
-                  ["isGarage"]: false,
-                  ["isUnderground"]: false,
-                  ["isVolts"]: false,
+                  ["isVolts"]: false
                 });
               }}
             >
