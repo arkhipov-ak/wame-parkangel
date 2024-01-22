@@ -19,12 +19,14 @@ import { state } from "src/state";
 import ZeroData from "src/components/common/ZeroData";
 import { renderMonth, renderDay, renderMinutes } from "src/utils/functions";
 import ModalDeleteAd from "src/components/common/ModalDeleteAd";
+import ModalReviews from "src/components/common/ModalReviews";
 
 const SearchTime = () => {
   const snap = useSnapshot(state);
   const navigate = useNavigate();
   const [isImageLoaded, setImageLoaded] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openReviewsModal, setOpenReviewsModal] = useState(false);
   const [myAds, setMyAds] = useState([]);
 
   const renderTime = (item) => {
@@ -57,7 +59,7 @@ const SearchTime = () => {
 
   const renderRating = (item) => {
     const ratings = item.map((elem) => elem.rating);
-    return (ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length);
+    return (ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length).toFixed(2);
   };
 
   const renderPrice = (item) => {
@@ -240,12 +242,17 @@ const SearchTime = () => {
                         <span className={styles.rent_status}>{renderPrice(ad.park)}</span>
                       </div>
                       {!!ad.review.length && (
-                        <Rate
-                          allowHalf
-                          disabled
-                          value={renderRating(ad.review)}
-                          style={{ fontSize: "30px" }}
-                        />
+                         <>
+                            <Rate
+                              allowHalf
+                              disabled
+                              value={renderRating(ad.review)}
+                              style={{ fontSize: "30px" }}
+                            />
+                            <button type="button" onClick={() => setOpenReviewsModal(true)} className={styles.reviews_button}>
+                              <span className={styles.reviews_button_text}>Посмотреть отзывы</span>
+                            </button>
+                         </>
                       )}
                       {!!ad.comment && (
                         <p className={styles.rent_location}>{ad.comment}</p>
@@ -261,6 +268,14 @@ const SearchTime = () => {
                         onHandleDeleteClick={onHandleDeleteClick}
                         openDeleteModal={openDeleteModal}
                         setOpenDeleteModal={setOpenDeleteModal}
+                      />
+                    )}
+                    {openReviewsModal && (
+                      <ModalReviews
+                        reviews={ad.review}
+                        totalRating={renderRating(ad.review)}
+                        openReviewsModal={openReviewsModal}
+                        setOpenReviewsModal={setOpenReviewsModal}
                       />
                     )}
                   </Fragment>

@@ -1,0 +1,23 @@
+.total_rating {
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--text-primary);
+  padding-bottom: 20px;
+}
+.reviews_list {
+  width: 100%;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.reviews_list_item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.info_text {
+  font-family: Montserrat;
+  color: var(--text-primary);
+}

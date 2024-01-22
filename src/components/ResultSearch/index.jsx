@@ -12,11 +12,13 @@ import { state } from "src/state";
 import { showErrorSnackbar } from "src/utils/showSnackBar";
 import Container from "src/components/common/Container";
 import ZeroData from "src/components/common/ZeroData";
+import ModalReviews from "src/components/common/ModalReviews";
 
 const ResultSearch = () => {
   const snap = useSnapshot(state);
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [openReviewsModal, setOpenReviewsModal] = useState(false);
 
   const renderTime = (item) => {
     const dateStart = new Date(item.availabilityDateStart);
@@ -38,13 +40,15 @@ const ResultSearch = () => {
 
   const renderRating = (item) => {
     const ratings = item.map((elem) => elem.rating);
-    return (ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length);
+    return (ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length).toFixed(2);
   };
 
   const onHandleClick = (item) => {
-    state.resultElement = { ...item };
-    navigate(`/result-search/${item.id}`);
-  }
+    if (!openReviewsModal) {
+      state.resultElement = { ...item };
+      navigate(`/result-search/${item.id}`);
+    }
+  };
 
   useEffect(() => {
     if (snap && snap.user && snap.options && snap.options[0]) {
@@ -82,8 +86,6 @@ const ResultSearch = () => {
       .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления"}))
     }
   }, []);
-  
-  console.log('snap', snap);
 
   return (
     <>
@@ -108,21 +110,38 @@ const ResultSearch = () => {
                   <span className={styles.rent_status}>{item.ad.park.priceHour} руб/ч</span>
                 </div>
                 {!!item.ad.review.length && (
-                  <Rate
-                    allowHalf
-                    disabled
-                    value={renderRating(item.ad.review)}
-                    style={{ fontSize: "30px" }}
-                  />
+                  <>
+                    <Rate
+                      allowHalf
+                      disabled
+                      value={renderRating(item.ad.review)}
+                      style={{ fontSize: "30px" }}
+                    />
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setOpenReviewsModal(true);
+                      }}
+                      className={styles.reviews_button}
+                    >
+                      <span className={styles.reviews_button_text}>Посмотреть отзывы</span>
+                    </button>
+                  </>
                 )}
                 {!!item.ad.comment && (
                   <p className={styles.rent_location}>{item.ad.comment}</p>
                 )}
+                {openReviewsModal && (
+                  <ModalReviews
+                    reviews={item.ad.review}
+                    totalRating={renderRating(item.ad.review)}
+                    openReviewsModal={openReviewsModal}
+                    setOpenReviewsModal={setOpenReviewsModal}
+                  />
+                )}
               </button>
             ))}
-            {/* <Link to="/show-map-result" className={styles.submit}>
-              Посмотреть все на карте
-            </Link> */}
           </div>
         ) : (
             <ZeroData>
