@@ -110,9 +110,6 @@ const ExtraOptions = () => {
     axios.post(
       "https://api.parkangel.ru/api/park", preparedData
     ).then((response) => {
-      console.log('response', response);
-      console.log('data', data);
-      console.log('snap', snap);
       if (response) {
         state.parkDate = { ...snap.parkDate, isRenewable, park_id: response.data.response.id };
         state.options[0] = data;
@@ -192,8 +189,7 @@ const ExtraOptions = () => {
 
   useEffect(() => {
     if (snap && snap.user && snap.options && snap.options[0]) {
-      /* if (snap.isSearchPark === false && snap.isEditPark === false) return; */
-      /* if (snap.isEditPark) */ setIsRenewable(!!snap.parkDate.isRenewable);
+      setIsRenewable(!!snap.parkDate.isRenewable);
       setData(snap.options[0]);
     }
   }, [snap.user, snap.options, snap.isSearchPark, snap.isEditPark]);
@@ -206,6 +202,14 @@ const ExtraOptions = () => {
       }
     }
   }, [snap.user, snap.isSearchPark, snap.isEditPark]);
+
+  useEffect(() => {
+    if (!snap.options) {
+      axios.get(`https://api.parkangel.ru/api/options/userId/${snap.user.id}`)
+        .then((response) => state.options = response.data.response)
+        .catch(() => showErrorSnackbar({ message: "Не удалось загрузить опции" }))
+    }
+  }, []);
 
   return (
 		<>
