@@ -111,6 +111,8 @@ const ExtraOptions = () => {
       "https://api.parkangel.ru/api/park", preparedData
     ).then((response) => {
       console.log('response', response);
+      console.log('data', data);
+      console.log('snap', snap);
       if (response) {
         state.parkDate = { ...snap.parkDate, isRenewable, park_id: response.data.response.id };
         state.options[0] = data;
