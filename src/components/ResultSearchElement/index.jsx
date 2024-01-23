@@ -94,9 +94,7 @@ const ResultSearchElement = () => {
 
   const onHandlePlusClick = () => setZoom(prevState => prevState + 1);
 
-  const onHandleMinusClick = () => setZoom(prevState => prevState - 1);
-
-  console.log(snap);
+  const onHandleMinusClick = () => setZoom(prevState => prevState - 1);   
 
   const handleSendBtn = () => {
 		axios.post(

@@ -25,9 +25,11 @@ const SearchTime = () => {
   const snap = useSnapshot(state);
   const navigate = useNavigate();
   const [isImageLoaded, setImageLoaded] = useState(false);
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const [openReviewsModal, setOpenReviewsModal] = useState(false);
   const [myAds, setMyAds] = useState([]);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [deleteAd, setDeleteAd] = useState(null);
+  const [openReviewsModal, setOpenReviewsModal] = useState(false);
+  const [reviews, setReviews] = useState(null);
 
   const renderTime = (item) => {
     const dateStart = new Date(item.availabilityDateStart);
@@ -249,7 +251,14 @@ const SearchTime = () => {
                               value={renderRating(ad.review)}
                               style={{ fontSize: "30px" }}
                             />
-                            <button type="button" onClick={() => setOpenReviewsModal(true)} className={styles.reviews_button}>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setReviews(ad.review);
+                                setOpenReviewsModal(true);
+                              }}
+                              className={styles.reviews_button}
+                            >
                               <span className={styles.reviews_button_text}>Посмотреть отзывы</span>
                             </button>
                          </>
@@ -259,31 +268,38 @@ const SearchTime = () => {
                       )}
                       <div className={styles.image_block}>
                         <img src={editImg} alt="edit "onClick={() => onHandleEditClick(ad)}/>
-                        <img src={deleteImg} alt="delete" onClick={() => setOpenDeleteModal(true)}/>
+                        <img
+                          src={deleteImg}
+                          alt="delete"
+                          onClick={() => {
+                            setDeleteAd(ad);
+                            setOpenDeleteModal(true);
+                          }}
+                        />
                       </div>
                     </div>
-                    {openDeleteModal && (
-                      <ModalDeleteAd
-                        ad={ad}
-                        onHandleDeleteClick={onHandleDeleteClick}
-                        openDeleteModal={openDeleteModal}
-                        setOpenDeleteModal={setOpenDeleteModal}
-                      />
-                    )}
-                    {openReviewsModal && (
-                      <ModalReviews
-                        reviews={ad.review}
-                        totalRating={renderRating(ad.review)}
-                        openReviewsModal={openReviewsModal}
-                        setOpenReviewsModal={setOpenReviewsModal}
-                      />
-                    )}
                   </Fragment>
                 ))
               ) : (
                 <ZeroData>Объявлений нет</ZeroData>
               )}
             </div>
+            {openDeleteModal && (
+              <ModalDeleteAd
+                ad={deleteAd}
+                onHandleDeleteClick={onHandleDeleteClick}
+                openDeleteModal={openDeleteModal}
+                setOpenDeleteModal={setOpenDeleteModal}
+              />
+            )}
+            {openReviewsModal && (
+              <ModalReviews
+                reviews={reviews}
+                totalRating={renderRating(reviews)}
+                openReviewsModal={openReviewsModal}
+                setOpenReviewsModal={setOpenReviewsModal}
+              />
+            )}
         </div>
       </Container>
     </>

@@ -12,15 +12,19 @@ import { showErrorSnackbar, showSuccessSnackbar } from "src/utils/showSnackBar";
 import deleteImg from "src/assets/delete.svg";
 import { renderMonth, renderDay, renderMinutes } from "src/utils/functions";
 import ModalDeleteAd from "src/components/common/ModalDeleteAd";
+import ModalReviews from "src/components/common/ModalReviews";
 
 const AdminInfo = () => {
   const [searchParams] = useSearchParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const [isUsersListAdmin, setUsersListAdmin] = useState(true);
   const [usersArray, setUsersArray] = useState([]);
   const [adsArray, setAdsArray] = useState([]);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [deleteAd, setDeleteAd] = useState(null);
+  const [openReviewsModal, setOpenReviewsModal] = useState(false);
+  const [reviews, setReviews] = useState(null);
+  const [isUsersListAdmin, setUsersListAdmin] = useState(true);
   const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(Number(searchParams.get("page")) || 1);
   const perPage = 5;
@@ -63,7 +67,7 @@ const AdminInfo = () => {
 
   const renderRating = (item) => {
     const ratings = item.map((elem) => elem.rating);
-    return (ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length);
+    return (ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length).toFixed(2);
   };
 
   const renderPrice = (item) => {
@@ -220,32 +224,59 @@ const AdminInfo = () => {
                           <span className={styles.rent_status}>{renderPrice(ad.park)}</span>
                         </div>
                         {!!ad.review.length && (
-                          <Rate
-                            allowHalf
-                            disabled
-                            value={renderRating(ad.review)}
-                            style={{ fontSize: "30px" }}
-                          />
+                          <>
+                            <Rate
+                              allowHalf
+                              disabled
+                              value={renderRating(ad.review)}
+                              style={{ fontSize: "30px" }}
+                            />
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setReviews(ad.review);
+                                setOpenReviewsModal(true);
+                              }}
+                              className={styles.reviews_button}
+                            >
+                              <span className={styles.reviews_button_text}>Посмотреть отзывы</span>
+                            </button>
+                          </>
+                          
                         )}
                         {!!ad.comment && (
                         <p className={styles.rent_location}>{ad.comment}</p>
                       )}
                         <div className={styles.image_block}>
-                          <img src={deleteImg} alt="delete" onClick={() => setOpenDeleteModal(true)}/>
+                          <img
+                            src={deleteImg}
+                            alt="delete"
+                            onClick={() => {
+                              setDeleteAd(ad);
+                              setOpenDeleteModal(true);
+                            }}/>
                         </div>
                       </div>
-                      {openDeleteModal && (
-                        <ModalDeleteAd
-                          ad={ad}
-                          onHandleDeleteClick={onHandleDeleteClick}
-                          openDeleteModal={openDeleteModal}
-                          setOpenDeleteModal={setOpenDeleteModal}
-                        />
-                      )}
                     </li>
                   ))}
                 </ul>
                 <Pagination total={totalPages} page={page} slug="/admin/info"/>
+                {openDeleteModal && (
+                  <ModalDeleteAd
+                    ad={deleteAd}
+                    onHandleDeleteClick={onHandleDeleteClick}
+                    openDeleteModal={openDeleteModal}
+                    setOpenDeleteModal={setOpenDeleteModal}
+                  />
+                )}
+                {openReviewsModal && (
+                  <ModalReviews
+                    reviews={reviews}
+                    totalRating={renderRating(reviews)}
+                    openReviewsModal={openReviewsModal}
+                    setOpenReviewsModal={setOpenReviewsModal}
+                  />
+                )}
               </>
             ) : (
               <ZeroData>Объявлений нет</ZeroData>

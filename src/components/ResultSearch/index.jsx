@@ -19,6 +19,7 @@ const ResultSearch = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [openReviewsModal, setOpenReviewsModal] = useState(false);
+  const [reviews, setReviews] = useState(null);
 
   const renderTime = (item) => {
     const dateStart = new Date(item.availabilityDateStart);
@@ -121,6 +122,7 @@ const ResultSearch = () => {
                       type="button"
                       onClick={(e) => {
                         e.stopPropagation();
+                        setReviews(item.ad.review);
                         setOpenReviewsModal(true);
                       }}
                       className={styles.reviews_button}
@@ -132,14 +134,6 @@ const ResultSearch = () => {
                 {!!item.ad.comment && (
                   <p className={styles.rent_location}>{item.ad.comment}</p>
                 )}
-                {openReviewsModal && (
-                  <ModalReviews
-                    reviews={item.ad.review}
-                    totalRating={renderRating(item.ad.review)}
-                    openReviewsModal={openReviewsModal}
-                    setOpenReviewsModal={setOpenReviewsModal}
-                  />
-                )}
               </button>
             ))}
           </div>
@@ -147,6 +141,14 @@ const ResultSearch = () => {
             <ZeroData>
               Подходящие объявления не найдены. Попробуйте изменить параметры поиска и убедитесь, что вы правильно указали адрес, где вам нужно припарковаться.
             </ZeroData>
+        )}
+        {openReviewsModal && (
+          <ModalReviews
+            reviews={reviews}
+            totalRating={renderRating(reviews)}
+            openReviewsModal={openReviewsModal}
+            setOpenReviewsModal={setOpenReviewsModal}
+          />
         )}
       </Container>
     </>
