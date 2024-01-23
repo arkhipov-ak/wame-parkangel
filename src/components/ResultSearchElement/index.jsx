@@ -96,6 +96,8 @@ const ResultSearchElement = () => {
 
   const onHandleMinusClick = () => setZoom(prevState => prevState - 1);
 
+  console.log(snap);
+
   const handleSendBtn = () => {
 		axios.post(
       "https://api.parkangel.ru/api/review",
