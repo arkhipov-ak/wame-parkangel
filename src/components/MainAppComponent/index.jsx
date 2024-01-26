@@ -71,12 +71,12 @@ const MainAppComponent = () => {
   }, []);
 
   useEffect(() => {
-    if (snap && snap.user) {
+    if (snap.user) {
       axios.get(`https://api.parkangel.ru/api/options/userId/${snap.user.id}`)
         .then((response) => state.options = response.data.response)
         .catch(() => showErrorSnackbar({ message: "Не удалось загрузить опции" }))
     }
-  }, []);
+  }, [snap.user?.id]);
 
   return (
     <div data-theme={snap.user?.theme || "light"} style={{ width: "100vw" }}>

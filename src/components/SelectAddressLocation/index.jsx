@@ -133,14 +133,6 @@ const SelectAddressLocation = () => {
     }
   }, [debounceAddressValue]);
 
-  useEffect(() => {
-    if (!snap.options) {
-      axios.get(`https://api.parkangel.ru/api/options/userId/${snap.user.id}`)
-        .then((response) => state.options = response.data.response)
-        .catch(() => showErrorSnackbar({ message: "Не удалось загрузить опции" }))
-    }
-  }, []);
-
   return (
     <>
       <NavBar/>
