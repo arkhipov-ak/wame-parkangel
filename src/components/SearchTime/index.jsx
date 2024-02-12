@@ -239,6 +239,12 @@ const SearchTime = () => {
           >
             {snap.isSearchPark === true ? "Как снять парковку?" : "Как сдать парковку?"}
           </a>
+          <iframe
+            src="https://disk.yandex.ru/d/MAcAxBeYA2VJaA/%D1%81%D0%BD%D1%8F%D1%82%D1%8C%201.mp4"
+            width="400"
+            height="480"
+            allow="autoplay">
+          </iframe>
           <div className={styles.wrapper_rent}>
             <h2 className={styles.history}>Мои объявления</h2>
               {myAds.length ? (
