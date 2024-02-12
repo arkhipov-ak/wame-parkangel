@@ -19,12 +19,25 @@ const AboutService = () => {
           <br /> 🅿️ Автобусы, катера, прицепы - сдавайте и снимайте парковки
           любых габаритов.
         </p>
-        <p className={styles.text}>
-          Видеоинструкции:<br/>
-          <span className={styles.instruction_descr}>Как разместить свое объявление<br/> 
+        <span className={styles.text}>Видеоинструкции:</span>
+        <div className={styles.links_wrapper}>
+          <a
+            href="https://disk.yandex.ru/d/MAcAxBeYA2VJaA/%D1%81%D0%B4%D0%B0%D1%82%D1%8C%201.mp4"
+            target="_blank"
+            rel="noreferrer"
+            className={styles.link}
+          >
+              Как разместить свое объявление
+          </a>
+          <a
+            href="https://disk.yandex.ru/d/MAcAxBeYA2VJaA/%D1%81%D0%BD%D1%8F%D1%82%D1%8C%201.mp4"
+            target="_blank"
+            rel="noreferrer"
+            className={styles.link}
+          >
             Как найти парковку
-          </span>
-        </p>
+          </a>
+        </div>
       </Container>
     </>
   );

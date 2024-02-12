@@ -228,7 +228,15 @@ const SearchTime = () => {
             <p className={styles.text_today}>На другой срок</p>
             <BiChevronRight className={styles.last_icon}/>
           </Link>
-          <a href="#" className={styles.title}>
+          <a
+            href={snap.isSearchPark === true
+              ? "https://disk.yandex.ru/d/MAcAxBeYA2VJaA/%D1%81%D0%BD%D1%8F%D1%82%D1%8C%201.mp4"
+              : "https://disk.yandex.ru/d/MAcAxBeYA2VJaA/%D1%81%D0%B4%D0%B0%D1%82%D1%8C%201.mp4"
+            }
+            target="_blank"
+            rel="noreferrer"
+            className={styles.title}
+          >
             {snap.isSearchPark === true ? "Как снять парковку?" : "Как сдать парковку?"}
           </a>
           <div className={styles.wrapper_rent}>

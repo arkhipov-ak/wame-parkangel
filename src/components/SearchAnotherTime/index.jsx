@@ -1,14 +1,15 @@
 import { useState, useRef, useEffect } from "react";
-import NavBar from "../NavBar";
-import styles from "./SearchAnotherTime.module.css";
 import { useNavigate } from "react-router-dom";
-import ParametersButton from "../common/ParametersButton";
-import Container from "../common/Container";
-import Button from "../common/Button";
-import ModalTime from "../common/ModalTime";
 import { useSnapshot } from "valtio";
-import { state } from "../../state";
-import { showErrorSnackbar } from "../../utils/showSnackBar";
+
+import NavBar from "src/components/NavBar";
+import styles from "./SearchAnotherTime.module.css";
+import ParametersButton from "src/components/common/ParametersButton";
+import Container from "src/components/common/Container";
+import Button from "src/components/common/Button";
+import ModalTime from "src/components/common/ModalTime";
+import { state } from "src/state";
+import { showErrorSnackbar } from "src/utils/showSnackBar";
 
 const SearchAnotherTime = () => {
   const snap = useSnapshot(state);
