@@ -4,7 +4,6 @@ import { BiChevronRight } from "react-icons/bi";
 import axios from "axios";
 import { useSnapshot } from "valtio";
 import { Rate } from "antd";
-import ReactPlayer from "react-player";
 
 import styles from "./SearchTime.module.css";
 import NavBar from "src/components/NavBar";
@@ -21,6 +20,7 @@ import ZeroData from "src/components/common/ZeroData";
 import { renderMonth, renderDay, renderMinutes } from "src/utils/functions";
 import ModalDeleteAd from "src/components/common/ModalDeleteAd";
 import ModalReviews from "src/components/common/ModalReviews";
+import ModalVideo from "src/components/common/ModalVideo";
 
 const SearchTime = () => {
   const snap = useSnapshot(state);
@@ -31,6 +31,9 @@ const SearchTime = () => {
   const [deleteAd, setDeleteAd] = useState(null);
   const [openReviewsModal, setOpenReviewsModal] = useState(false);
   const [reviews, setReviews] = useState(null);
+  const [openVideoModal, setOpenVideoModal] = useState(false);
+
+  console.log(openVideoModal);
 
   const renderTime = (item) => {
     const dateStart = new Date(item.availabilityDateStart);
@@ -229,23 +232,9 @@ const SearchTime = () => {
             <p className={styles.text_today}>На другой срок</p>
             <BiChevronRight className={styles.last_icon}/>
           </Link>
-          <a
-            href={snap.isSearchPark === true
-              ? "https://disk.yandex.ru/d/MAcAxBeYA2VJaA/%D1%81%D0%BD%D1%8F%D1%82%D1%8C%201.mp4"
-              : "https://disk.yandex.ru/d/MAcAxBeYA2VJaA/%D1%81%D0%B4%D0%B0%D1%82%D1%8C%201.mp4"
-            }
-            target="_blank"
-            rel="noreferrer"
-            className={styles.title}
-          >
+          <button onClick={() => setOpenVideoModal(true)} className={styles.video_button}>
             {snap.isSearchPark === true ? "Как снять парковку?" : "Как сдать парковку?"}
-          </a>
-          {/* <ReactPlayer
-            controls
-            playing
-            url="videos/rent.mp4"
-            width={300}
-          /> */}
+          </button>
           <div className={styles.wrapper_rent}>
             <h2 className={styles.history}>Мои объявления</h2>
               {myAds.length ? (
@@ -313,6 +302,14 @@ const SearchTime = () => {
                 totalRating={renderRating(reviews)}
                 openReviewsModal={openReviewsModal}
                 setOpenReviewsModal={setOpenReviewsModal}
+              />
+            )}
+            {openVideoModal && (
+              <ModalVideo
+                title={snap.isSearchPark === true ? "Как снять парковку?" : "Как сдать парковку?"}
+                videoUrl={snap.isSearchPark === true ? "videos/rent-off.mp4" : "videos/rent.mp4"}
+                openVideoModal={openVideoModal}
+                setOpenVideoModal={setOpenVideoModal}
               />
             )}
         </div>

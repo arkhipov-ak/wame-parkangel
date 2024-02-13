@@ -21,8 +21,9 @@
   width: 25px;
   height: 25px;
 }
-.title {
+.video_button {
   color: var(--text-primary);
+  background-color: transparent;
   font-family: Montserrat;
   font-size: 0.9375rem;
   font-style: normal;
@@ -30,6 +31,10 @@
   line-height: normal;
   text-decoration-line: none;
   border-bottom: 1px solid var(--text-primary);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  padding: 0;
 }
 .history {
   color: var(--text-primary);
