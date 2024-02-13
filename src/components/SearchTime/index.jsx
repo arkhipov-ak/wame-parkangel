@@ -21,6 +21,7 @@ import { renderMonth, renderDay, renderMinutes } from "src/utils/functions";
 import ModalDeleteAd from "src/components/common/ModalDeleteAd";
 import ModalReviews from "src/components/common/ModalReviews";
 import ModalVideo from "src/components/common/ModalVideo";
+import VideoButton from "src/components/common/VideoButton";
 
 const SearchTime = () => {
   const snap = useSnapshot(state);
@@ -32,8 +33,6 @@ const SearchTime = () => {
   const [openReviewsModal, setOpenReviewsModal] = useState(false);
   const [reviews, setReviews] = useState(null);
   const [openVideoModal, setOpenVideoModal] = useState(false);
-
-  console.log(openVideoModal);
 
   const renderTime = (item) => {
     const dateStart = new Date(item.availabilityDateStart);
@@ -232,9 +231,9 @@ const SearchTime = () => {
             <p className={styles.text_today}>На другой срок</p>
             <BiChevronRight className={styles.last_icon}/>
           </Link>
-          <button onClick={() => setOpenVideoModal(true)} className={styles.video_button}>
+          <VideoButton onClick={() => setOpenVideoModal(true)}>
             {snap.isSearchPark === true ? "Как снять парковку?" : "Как сдать парковку?"}
-          </button>
+          </VideoButton>
           <div className={styles.wrapper_rent}>
             <h2 className={styles.history}>Мои объявления</h2>
               {myAds.length ? (
@@ -307,7 +306,7 @@ const SearchTime = () => {
             {openVideoModal && (
               <ModalVideo
                 title={snap.isSearchPark === true ? "Как снять парковку?" : "Как сдать парковку?"}
-                videoUrl={snap.isSearchPark === true ? "videos/rent-off.mp4" : "videos/rent.mp4"}
+                videoUrl={snap.isSearchPark === true ? "videos/rent.mp4" : "videos/rent-off.mp4"}
                 openVideoModal={openVideoModal}
                 setOpenVideoModal={setOpenVideoModal}
               />

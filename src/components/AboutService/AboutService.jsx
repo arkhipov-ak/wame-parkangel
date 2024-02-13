@@ -1,8 +1,15 @@
+import { useState } from "react";
+
 import styles from "./AboutService.module.css";
-import NavBar from "../NavBar";
-import Container from "../common/Container";
+import NavBar from "src/components/NavBar";
+import Container from "src/components/common/Container";
+import ModalVideo from "src/components/common/ModalVideo";
+import VideoButton from "src/components/common/VideoButton";
 
 const AboutService = () => {
+  const [openRentModal, setOpenRentModal] = useState(false);
+  const [openRentOffModal, setOpenRentOffModal] = useState(false);
+
   return (
     <>
       <NavBar />
@@ -21,23 +28,29 @@ const AboutService = () => {
         </p>
         <span className={styles.text}>Видеоинструкции:</span>
         <div className={styles.links_wrapper}>
-          <a
-            href="https://disk.yandex.ru/d/MAcAxBeYA2VJaA/%D1%81%D0%B4%D0%B0%D1%82%D1%8C%201.mp4"
-            target="_blank"
-            rel="noreferrer"
-            className={styles.link}
-          >
+          <VideoButton onClick={() => setOpenRentModal(true)}>
               Как разместить свое объявление
-          </a>
-          <a
-            href="https://disk.yandex.ru/d/MAcAxBeYA2VJaA/%D1%81%D0%BD%D1%8F%D1%82%D1%8C%201.mp4"
-            target="_blank"
-            rel="noreferrer"
-            className={styles.link}
-          >
+          </VideoButton>
+          <VideoButton onClick={() => setOpenRentOffModal(true)}>
             Как найти парковку
-          </a>
+          </VideoButton>
         </div>
+        {openRentModal && (
+          <ModalVideo
+            title="Как сдать парковку?"
+            videoUrl={"videos/rent-off.mp4"}
+            openVideoModal={openRentModal}
+            setOpenVideoModal={setOpenRentModal}
+          />
+        )}
+        {openRentOffModal && (
+          <ModalVideo
+            title="Как снять парковку?"
+            videoUrl={"videos/rent.mp4"}
+            openVideoModal={openRentOffModal}
+            setOpenVideoModal={setOpenRentOffModal}
+          />
+        )}
       </Container>
     </>
   );

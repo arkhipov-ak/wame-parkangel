@@ -9,6 +9,7 @@ const ModalVideo = ({ videoUrl, title, openVideoModal, setOpenVideoModal }) => {
       setOpenModal={setOpenVideoModal}
       openModal={openVideoModal}
       title={title}
+      marginTop={0}
     >
       <div className={styles.player_wrapper}>
         <ReactPlayer
