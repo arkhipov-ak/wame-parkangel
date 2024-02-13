@@ -1,5 +1,3 @@
-import React from "react";
-
 import styles from "./VideoButton.module.css";
 
 const VideoButton = ({ onClick, children }) => {
