@@ -25,6 +25,7 @@
     "react-icons": "^4.10.1",
     "react-input-mask": "^2.0.4",
     "react-loading-skeleton": "^3.3.1",
+    "react-player": "^2.14.1",
     "react-router-dom": "^6.15.0",
     "react-script": "^2.0.5",
     "react-timeit": "^1.2.12",

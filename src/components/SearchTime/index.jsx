@@ -4,6 +4,7 @@ import { BiChevronRight } from "react-icons/bi";
 import axios from "axios";
 import { useSnapshot } from "valtio";
 import { Rate } from "antd";
+import ReactPlayer from "react-player";
 
 import styles from "./SearchTime.module.css";
 import NavBar from "src/components/NavBar";
@@ -245,6 +246,10 @@ const SearchTime = () => {
             height="480"
             allow="autoplay">
           </iframe> */}
+          <ReactPlayer
+            playing
+            url='src/assets/videos/rent.mp4'
+          />
           <div className={styles.wrapper_rent}>
             <h2 className={styles.history}>Мои объявления</h2>
               {myAds.length ? (
