@@ -246,10 +246,10 @@ const SearchTime = () => {
             height="480"
             allow="autoplay">
           </iframe> */}
-          <ReactPlayer
+          {/* <ReactPlayer
             playing
             url='src/assets/videos/rent.mp4'
-          />
+          /> */}
           <div className={styles.wrapper_rent}>
             <h2 className={styles.history}>Мои объявления</h2>
               {myAds.length ? (
