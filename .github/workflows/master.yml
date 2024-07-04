@@ -45,8 +45,8 @@ jobs:
           fi
 
           cd ${TEMP_PATH}
-          yarn install
-          yarn build
+          npm i
+          npm run build
 
           rsync -rvaq --delete ${TEMP_PATH}/. ${CURRENT_PATH}
 
