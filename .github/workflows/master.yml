@@ -27,6 +27,7 @@ jobs:
       - name: Deploy
         run: |
           sshpass -p "${PASSWORD}" ssh -o StrictHostKeyChecking=no "${USERNAME}@${HOST}" "bash -s" << EOF
+          source ~/.nvm/nvm.sh
           PROJECT_PATH=${{env.PROJECT_PATH}}
           TEMP_PATH=${{env.TEMP_PATH}}
           CURRENT_PATH=${{env.CURRENT_PATH}}
