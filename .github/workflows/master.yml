@@ -9,7 +9,7 @@ env:
   USERNAME: ${{ secrets.USERNAME }}
   PASSWORD: ${{ secrets.PASSWORD }}
   USER_PATH: "/home/www"
-  NODE_VERSION: 20
+  NODE_VERSION: 18
   DOMAIN: "app.parkangel.ru"
   REPO_URL: "git@github.com:MOSTEPP/app.parkangel.ru.git"
   BRANCH: "master"
@@ -27,7 +27,6 @@ jobs:
       - name: Deploy
         run: |
           sshpass -p "${PASSWORD}" ssh -o StrictHostKeyChecking=no "${USERNAME}@${HOST}" "bash -s" << EOF
-          source ~/.nvm/nvm.sh
           PROJECT_PATH=${{env.PROJECT_PATH}}
           TEMP_PATH=${{env.TEMP_PATH}}
           CURRENT_PATH=${{env.CURRENT_PATH}}
