@@ -1,16 +1,16 @@
-import { useState } from "react";
-import axios from "axios";
-import { AiOutlineLeft } from "react-icons/ai";
-import { BiMenu } from "react-icons/bi";
-import { useNavigate, useLocation, Link } from "react-router-dom";
-import { useSnapshot } from "valtio";
+import parkAngelDark from '/src/assets/park-angel-dark.svg'
+import parkAngel from '/src/assets/park-angel.svg'
+import axios from 'axios'
+import { useState } from 'react'
+import { AiOutlineLeft } from 'react-icons/ai'
+import { BiMenu } from 'react-icons/bi'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { state } from 'src/state'
+import { supportLink } from 'src/utils/constants'
+import { showErrorSnackbar, showSuccessSnackbar } from 'src/utils/showSnackBar'
+import { useSnapshot } from 'valtio'
 
-import styles from "./NavBar.module.css";
-import parkAngel from "/src/assets/park-angel.svg";
-import parkAngelDark from "/src/assets/park-angel-dark.svg";
-import { state } from "src/state";
-import { showErrorSnackbar, showSuccessSnackbar } from "src/utils/showSnackBar";
-import { supportLink } from "src/utils/constants";
+import styles from './NavBar.module.css'
 
 const NavBar = () => {
   const snap = useSnapshot(state);
@@ -27,10 +27,7 @@ const NavBar = () => {
     axios.put("https://api.parkangel.ru/api/users", {...snap.user, theme: theme})
     .then(() => {
       showSuccessSnackbar({ message: "Тема обновлена" })
-      axios.get(`https://api.parkangel.ru/api/users/chatId/${snap.user.chatId}`)
-        .then((response) => {
-          if (response.data.response) state.user = response.data.response;
-        }).catch(() => showErrorSnackbar({ message: "Не удалось получить данные юзера" }))
+      state.user = {...snap.user, theme: theme}
     })
     .catch(() => showErrorSnackbar({ message: "Не удалось обновить данные профиля" }))
   };

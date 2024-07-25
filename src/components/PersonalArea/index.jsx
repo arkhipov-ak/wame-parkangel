@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { useSnapshot } from "valtio";
-import ReactInputMask from "react-input-mask";
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import ReactInputMask from 'react-input-mask'
+import Button from 'src/components/common/Button'
+import Container from 'src/components/common/Container'
+import CustomCheckBox from 'src/components/common/CustomCheckbox'
+import NavBar from 'src/components/NavBar'
+import { state } from 'src/state'
+import { showErrorSnackbar, showSuccessSnackbar } from 'src/utils/showSnackBar'
+import { useSnapshot } from 'valtio'
 
-import styles from "./PersonalArea.module.css";
-import NavBar from "src/components/NavBar";
-import Container from "src/components/common/Container";
-import Button from "src/components/common/Button";
-import { state } from "src/state";
-import CustomCheckBox from "src/components/common/CustomCheckbox";
-import { showErrorSnackbar, showSuccessSnackbar } from "src/utils/showSnackBar";
+import styles from './PersonalArea.module.css'
 
 const PersonalArea = () => {
   const snap = useSnapshot(state);
@@ -24,7 +24,6 @@ const PersonalArea = () => {
     isShowTelegram: true,
     theme: "light",
   });
-
   const onHandleChange = (value, key) => {
     let newObject = { ...data, ...{ [key]: value } };
     setData(newObject);
@@ -47,16 +46,19 @@ const PersonalArea = () => {
       .then(() => {
         showSuccessSnackbar({ message: "Данные профиля обновлены" })
         axios.get(`https://api.parkangel.ru/api/users/chatId/${snap.user.chatId}`)
-          .then(response => {
-            if (response.data.response) state.user = response.data.response;
-          }).catch(() => showErrorSnackbar({ message: "Не удалось получить данные юзера" }))
+          .then(() => {
+            state.user = data;
+          })
       })
       .catch(() => showErrorSnackbar({ message: "Не удалось обновить данные профиля" }))
   };
 
   useEffect(() => {
-    if (snap && snap.user) setData(snap.user);
+    if (snap && snap.user) {
+      setData(snap.user)
+    }
   }, [snap.user]);
+  
 
   return (
     <>

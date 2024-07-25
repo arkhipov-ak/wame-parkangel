@@ -1,21 +1,21 @@
-import { useRef, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSnapshot } from "valtio";
-import { useDebounce } from "use-debounce";
-import axios from "axios";
-import Autosuggest from "react-autosuggest";
+import axios from 'axios'
+import { useEffect, useRef, useState } from 'react'
+import Autosuggest from 'react-autosuggest'
+import { useNavigate } from 'react-router-dom'
+import Button from 'src/components/common/Button'
+import Container from 'src/components/common/Container'
+import ModalTime from 'src/components/common/ModalTime'
+import RegionSelect from 'src/components/common/RegionSelect'
+import NavBar from 'src/components/NavBar'
+import { state } from 'src/state'
+import { GEO_SUGGEST_API_KEY } from 'src/utils/constants'
+import { hideKeyboard } from 'src/utils/functions'
+import { showErrorSnackbar } from 'src/utils/showSnackBar'
+import theme from 'src/utils/suggestsTheme.module.css'
+import { useDebounce } from 'use-debounce'
+import { useSnapshot } from 'valtio'
 
-import styles from "./ChooseAnotherTime.module.css";
-import theme from "src/utils/suggestsTheme.module.css";
-import NavBar from "src/components/NavBar";
-import Container from "src/components/common/Container";
-import { state } from "src/state";
-import Button from "src/components/common/Button";
-import ModalTime from "src/components/common/ModalTime";
-import { showErrorSnackbar } from "src/utils/showSnackBar";
-import RegionSelect from "src/components/common/RegionSelect";
-import { hideKeyboard } from "src/utils/functions";
-import { GEO_SUGGEST_API_KEY } from "src/utils/constants";
+import styles from './ChooseAnotherTime.module.css'
 
 const ChooseAnotherTime = () => {
 	const snap = useSnapshot(state);
@@ -129,6 +129,9 @@ const ChooseAnotherTime = () => {
   }, [debounceAddressValue]);
 
   useEffect(() => {
+    if(snap.user.city) {
+      setActiveRegion(snap.user.city || "moscow");
+    }
     if (snap && snap.user && snap.parkDate) {
       setSelectedHourStart(snap.parkDate.hoursStart || "00");
       setSelectedMinuteStart(snap.parkDate.minutesStart || "00");

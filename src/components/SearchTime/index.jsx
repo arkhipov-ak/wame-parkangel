@@ -1,27 +1,27 @@
-import { useState, useEffect, Fragment } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { BiChevronRight } from "react-icons/bi";
-import axios from "axios";
-import { useSnapshot } from "valtio";
-import { Rate } from "antd";
+import { Rate } from 'antd'
+import axios from 'axios'
+import { Fragment, useEffect, useState } from 'react'
+import { BiChevronRight } from 'react-icons/bi'
+import { Link, useNavigate } from 'react-router-dom'
+import deleteImg from 'src/assets/delete.svg'
+import editImg from 'src/assets/edit.svg'
+import anotherImg from 'src/assets/fouin_img.svg'
+import todayImg from 'src/assets/today_img.svg'
+import tomorrowImg from 'src/assets/tomorrow_image.svg'
+import Container from 'src/components/common/Container'
+import ModalDeleteAd from 'src/components/common/ModalDeleteAd'
+import ModalReviews from 'src/components/common/ModalReviews'
+import ModalVideo from 'src/components/common/ModalVideo'
+import VideoButton from 'src/components/common/VideoButton'
+import ZeroData from 'src/components/common/ZeroData'
+import NavBar from 'src/components/NavBar'
+import SelectSearchGive from 'src/components/SelectSearchGive'
+import { state } from 'src/state'
+import { renderDay, renderMinutes, renderMonth } from 'src/utils/functions'
+import { showErrorSnackbar, showSuccessSnackbar } from 'src/utils/showSnackBar'
+import { useSnapshot } from 'valtio'
 
-import styles from "./SearchTime.module.css";
-import NavBar from "src/components/NavBar";
-import SelectSearchGive from "src/components/SelectSearchGive";
-import todayImg from "src/assets/today_img.svg";
-import tomorrowImg from "src/assets/tomorrow_image.svg";
-import anotherImg from "src/assets/fouin_img.svg";
-import deleteImg from "src/assets/delete.svg";
-import editImg from "src/assets/edit.svg";
-import Container from "src/components/common/Container";
-import { showErrorSnackbar, showSuccessSnackbar } from "src/utils/showSnackBar";
-import { state } from "src/state";
-import ZeroData from "src/components/common/ZeroData";
-import { renderMonth, renderDay, renderMinutes } from "src/utils/functions";
-import ModalDeleteAd from "src/components/common/ModalDeleteAd";
-import ModalReviews from "src/components/common/ModalReviews";
-import ModalVideo from "src/components/common/ModalVideo";
-import VideoButton from "src/components/common/VideoButton";
+import styles from './SearchTime.module.css'
 
 const SearchTime = () => {
   const snap = useSnapshot(state);
@@ -79,9 +79,7 @@ const SearchTime = () => {
       .then(() => {
         showSuccessSnackbar({ message: "Объявление удалено" });
         setOpenDeleteModal(false);
-        axios.get(`https://api.parkangel.ru/api/ad/userId/${snap.user.id}`)
-          .then((response) => setMyAds(response.data.response))
-          .catch(() => showErrorSnackbar({ message: "Не удалось получить объявления" }))
+        setMyAds(myAds.filter((item) => item.id !== ad.id));
       })
       .catch(() => {
         showErrorSnackbar({ message: "Не удалось удалить объявление" });
@@ -270,7 +268,7 @@ const SearchTime = () => {
                         <p className={styles.rent_location}>{ad.comment}</p>
                       )}
                       <div className={styles.image_block}>
-                        <img src={editImg} alt="edit "onClick={() => onHandleEditClick(ad)}/>
+                        <img src={editImg} alt="edit" onClick={() => onHandleEditClick(ad)}/>
                         <img
                           src={deleteImg}
                           alt="delete"

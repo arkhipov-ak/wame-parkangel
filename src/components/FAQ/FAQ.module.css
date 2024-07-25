@@ -40,11 +40,10 @@
   color: var(--text-primary);
 }
 .open {
-  max-height: 200px; /* Вы можете установить большее значение, если ваши ответы длинные */
+  max-height: 300px;
 }
 .text_with_icon {
   display: flex;
-  justify-content: center;
   justify-content: space-between;
   align-items: center;
   width: 100%;

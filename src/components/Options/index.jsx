@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSnapshot } from "valtio";
-import axios from "axios";
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import Button from 'src/components/common/Button'
+import Container from 'src/components/common/Container'
+import CustomCheckBox from 'src/components/common/CustomCheckbox'
+import PriceCounterBlock from 'src/components/common/PriceCounterBlock'
+import SizeInput from 'src/components/common/SizeInput'
+import SwitchToggle from 'src/components/common/SwitchToggle'
+import NavBar from 'src/components/NavBar'
+import { state } from 'src/state'
+import { showErrorSnackbar, showSuccessSnackbar } from 'src/utils/showSnackBar'
+import { useSnapshot } from 'valtio'
 
-import styles from "./Options.module.css";
-import NavBar from "src/components/NavBar";
-import { state } from "src/state";
-import Container from "src/components/common/Container";
-import CustomCheckBox from "src/components/common/CustomCheckbox";
-import SwitchToggle from "src/components/common/SwitchToggle";
-import SizeInput from "src/components/common/SizeInput";
-import PriceCounterBlock from "src/components/common/PriceCounterBlock";
-import Button from "src/components/common/Button";
-import { showErrorSnackbar, showSuccessSnackbar } from "src/utils/showSnackBar";
+import styles from './Options.module.css'
 
 const defaultData = {
   priceHour: null,
@@ -68,6 +68,13 @@ const Options = () => {
       showErrorSnackbar({ message: "Стоимость в час должна быть больше нуля", tryAgain: true });
       return;
     }
+    
+    
+    if (data.priceHour > 1000000) {
+      showErrorSnackbar({ message: "Стоимость в час не должна превышать 1.000.000₽", tryAgain: true });
+      return;
+    }
+
 
     const preparedData = {
       ...data,
