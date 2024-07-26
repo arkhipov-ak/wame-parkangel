@@ -1,7 +1,7 @@
-import axios from 'axios'
 import { useEffect, useRef, useState } from 'react'
 import Autosuggest from 'react-autosuggest'
 import { useNavigate } from 'react-router-dom'
+import axios from 'src/api/interceptors'
 import Button from 'src/components/common/Button'
 import Container from 'src/components/common/Container'
 import ModalTime from 'src/components/common/ModalTime'
@@ -64,6 +64,7 @@ const ChooseAnotherTime = () => {
   const renderSuggestion = (suggestion) => <div>{suggestion}</div>;
 
   const onHandleRedirect = (link) => {
+    console.log(selectedDateEnd, selectedDateStart)
     if (link === "/extra-options") {
       if (!address.trim()) {
         showErrorSnackbar({ message: "Не указан адрес", tryAgain: true });
@@ -93,6 +94,11 @@ const ChooseAnotherTime = () => {
     const dateEnd = new Date(selectedDateEnd);
     dateEnd.setHours(selectedHourEnd);
     dateEnd.setMinutes(selectedMinuteEnd);
+    
+    if (dateStart >= dateEnd) {
+      showErrorSnackbar({ message: "Время начала не может быть больше или равно времени окончания" });
+      return;
+   }
 
     state.parkDate = {
       ...snap.parkDate,

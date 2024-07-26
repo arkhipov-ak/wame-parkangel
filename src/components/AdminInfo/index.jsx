@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import axios from "axios";
-import { Rate } from "antd";
+import { Rate } from 'antd'
+import { useEffect, useState } from 'react'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import axios from 'src/api/interceptors'
+import deleteImg from 'src/assets/delete.svg'
+import Container from 'src/components/common/Container'
+import ModalDeleteAd from 'src/components/common/ModalDeleteAd'
+import ModalReviews from 'src/components/common/ModalReviews'
+import Pagination from 'src/components/common/Pagination'
+import ZeroData from 'src/components/common/ZeroData'
+import NavBar from 'src/components/NavBar'
+import { renderDay, renderMinutes, renderMonth } from 'src/utils/functions'
+import { showErrorSnackbar, showSuccessSnackbar } from 'src/utils/showSnackBar'
 
-import styles from "./AdminInfo.module.css";
-import NavBar from "src/components/NavBar";
-import Container from "src/components/common/Container";
-import Pagination from "src/components/common/Pagination";
-import ZeroData from "src/components/common/ZeroData";
-import { showErrorSnackbar, showSuccessSnackbar } from "src/utils/showSnackBar";
-import deleteImg from "src/assets/delete.svg";
-import { renderMonth, renderDay, renderMinutes } from "src/utils/functions";
-import ModalDeleteAd from "src/components/common/ModalDeleteAd";
-import ModalReviews from "src/components/common/ModalReviews";
+import styles from './AdminInfo.module.css'
 
 const AdminInfo = () => {
   const [searchParams] = useSearchParams();

@@ -1,19 +1,19 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSnapshot } from "valtio";
-import axios from "axios";
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'src/api/interceptors'
+import Button from 'src/components/common/Button'
+import Container from 'src/components/common/Container'
+import CustomCheckBox from 'src/components/common/CustomCheckbox'
+import Modal from 'src/components/common/Modal'
+import PriceCounterBlock from 'src/components/common/PriceCounterBlock'
+import SizeInput from 'src/components/common/SizeInput'
+import SwitchToggle from 'src/components/common/SwitchToggle'
 
-import NavBar from "src/components/NavBar";
-import styles from "./ExtraOptions.module.css";
-import Container from "src/components/common/Container";
-import CustomCheckBox from "src/components/common/CustomCheckbox";
-import SwitchToggle from "src/components/common/SwitchToggle";
-import Button from "src/components/common/Button";
-import PriceCounterBlock from "src/components/common/PriceCounterBlock";
-import Modal from "src/components/common/Modal";
-import { state } from "src/state";
-import { showErrorSnackbar, showSuccessSnackbar } from "src/utils/showSnackBar";
-import SizeInput from "src/components/common/SizeInput";
+import NavBar from 'src/components/NavBar'
+import { state } from 'src/state'
+import { showErrorSnackbar, showSuccessSnackbar } from 'src/utils/showSnackBar'
+import { useSnapshot } from 'valtio'
+import styles from './ExtraOptions.module.css'
 
 const defaultData = {
   priceHour: null,

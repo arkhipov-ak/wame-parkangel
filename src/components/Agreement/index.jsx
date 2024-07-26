@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useSnapshot } from "valtio";
+import parkAngelDark from '/src/assets/park-angel-dark.svg'
+import parkAngel from '/src/assets/park-angel.svg'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'src/api/interceptors'
+import Button from 'src/components/common/Button'
+import { state } from 'src/state'
+import { showErrorSnackbar } from 'src/utils/showSnackBar'
+import { useSnapshot } from 'valtio'
 
-import styles from "./Agreement.module.css";
-import parkAngel from "/src/assets/park-angel.svg";
-import parkAngelDark from "/src/assets/park-angel-dark.svg";
-import Button from "src/components/common/Button";
-import { showErrorSnackbar } from "src/utils/showSnackBar";
-import { state } from "src/state";
+import styles from './Agreement.module.css'
 
 const Agreement = () => {
   const snap = useSnapshot(state);

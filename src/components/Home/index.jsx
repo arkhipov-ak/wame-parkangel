@@ -1,18 +1,18 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { useSnapshot } from "valtio";
-import ReactCodeInput from "react-code-input";
-import { useNavigate } from "react-router-dom";
-import { Popover } from "antd";
+import Logotype from '/src/assets/logo.svg'
+import { Popover } from 'antd'
+import { useEffect, useState } from 'react'
+import ReactCodeInput from 'react-code-input'
+import { useNavigate } from 'react-router-dom'
+import axios from 'src/api/interceptors'
+import Button from 'src/components/common/Button'
+import Modal from 'src/components/common/Modal'
+import { state } from 'src/state'
+import { supportLink } from 'src/utils/constants'
+import { hideKeyboard } from 'src/utils/functions'
+import { showErrorSnackbar } from 'src/utils/showSnackBar'
+import { useSnapshot } from 'valtio'
 
-import styles from "./Home.module.css";
-import Logotype from "/src/assets/logo.svg";
-import { state } from "src/state";
-import Modal from "src/components/common/Modal";
-import Button from "src/components/common/Button";
-import { showErrorSnackbar } from "src/utils/showSnackBar";
-import { supportLink } from "src/utils/constants";
-import { hideKeyboard } from "src/utils/functions";
+import styles from './Home.module.css'
 
 const Home = () => {
   const snap = useSnapshot(state)

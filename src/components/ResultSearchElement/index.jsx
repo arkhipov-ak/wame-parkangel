@@ -1,19 +1,19 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSnapshot } from "valtio";
-import { Rate } from "antd";
-import axios from "axios";
-import { Map, Placemark, YMaps } from "@pbe/react-yandex-maps";
+import { Map, Placemark, YMaps } from '@pbe/react-yandex-maps'
+import { Rate } from 'antd'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'src/api/interceptors'
+import Button from 'src/components/common/Button'
+import Container from 'src/components/common/Container'
+import LinkButton from 'src/components/common/LinkButton'
+import Modal from 'src/components/common/Modal'
+import NavBar from 'src/components/NavBar'
+import { state } from 'src/state'
+import { API_KEY, telegramToken } from 'src/utils/constants'
+import { showErrorSnackbar, showSuccessSnackbar } from 'src/utils/showSnackBar'
+import { useSnapshot } from 'valtio'
 
-import styles from "./ResultSearchElement.module.css";
-import NavBar from "src/components/NavBar";
-import { state } from "src/state";
-import Container from "src/components/common/Container";
-import { showErrorSnackbar, showSuccessSnackbar } from "src/utils/showSnackBar";
-import LinkButton from "src/components/common/LinkButton";
-import Modal from "src/components/common/Modal";
-import Button from "src/components/common/Button";
-import { API_KEY, telegramToken } from "src/utils/constants";
+import styles from './ResultSearchElement.module.css'
 
 const ResultSearchElement = () => {
   const snap = useSnapshot(state);
@@ -118,7 +118,6 @@ const ResultSearchElement = () => {
       navigate("/search-time");
     }
   }, [snap.resultElement]);
-
   return (
     <>
       <NavBar />
@@ -245,7 +244,7 @@ const ResultSearchElement = () => {
                 {snap.resultElement.user.isShowPhoneNumber && (
                   <Button onClick={onHandlePhoneButtonClick}>Позвонить</Button>
                 )}
-                <button type="button" onClick={() => setOpenModal(true)} className={styles.review_button}>Оставить отзыв</button>
+                {snap.resultElement.user.telegram !== snap.user.telegram && <button type="button" onClick={() => setOpenModal(true)} className={styles.review_button}>Оставить отзыв</button> }
               </div>
             </div>
             {openModal && (

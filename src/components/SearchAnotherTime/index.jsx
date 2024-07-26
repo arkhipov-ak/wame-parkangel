@@ -1,15 +1,15 @@
-import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSnapshot } from "valtio";
+import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import Button from 'src/components/common/Button'
+import Container from 'src/components/common/Container'
+import ModalTime from 'src/components/common/ModalTime'
+import ParametersButton from 'src/components/common/ParametersButton'
 
-import NavBar from "src/components/NavBar";
-import styles from "./SearchAnotherTime.module.css";
-import ParametersButton from "src/components/common/ParametersButton";
-import Container from "src/components/common/Container";
-import Button from "src/components/common/Button";
-import ModalTime from "src/components/common/ModalTime";
-import { state } from "src/state";
-import { showErrorSnackbar } from "src/utils/showSnackBar";
+import NavBar from 'src/components/NavBar'
+import { state } from 'src/state'
+import { showErrorSnackbar } from 'src/utils/showSnackBar'
+import { useSnapshot } from 'valtio'
+import styles from './SearchAnotherTime.module.css'
 
 const SearchAnotherTime = () => {
   const snap = useSnapshot(state);
@@ -38,6 +38,11 @@ const SearchAnotherTime = () => {
     const dateEnd = new Date(selectedDateEnd);
     dateEnd.setHours(selectedHourEnd);
     dateEnd.setMinutes(selectedMinuteEnd);
+    
+    if (dateStart >= dateEnd) {
+      showErrorSnackbar({ message: "Время начала не может быть больше или равно времени окончания" });
+      return;
+   }
 
     state.parkDate = {
       dateStartISO: dateStart.toISOString(),

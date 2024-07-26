@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
-import axios from "axios";
-import { useSnapshot } from "valtio";
+import { Map, Placemark, YMaps } from '@pbe/react-yandex-maps'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'src/api/interceptors'
+import Button from 'src/components/common/Button'
+import Container from 'src/components/common/Container'
+import NavBar from 'src/components/NavBar'
+import { state } from 'src/state'
+import { API_KEY } from 'src/utils/constants'
+import { renderDay, renderMinutes, renderMonth } from 'src/utils/functions'
+import { showErrorSnackbar, showSuccessSnackbar } from 'src/utils/showSnackBar'
+import { useSnapshot } from 'valtio'
 
-import styles from "./Review.module.css";
-import NavBar from "src/components/NavBar";
-import { state } from "src/state";
-import Container from "src/components/common/Container";
-import { showErrorSnackbar, showSuccessSnackbar } from "src/utils/showSnackBar";
-import Button from "src/components/common/Button";
-import { API_KEY } from "src/utils/constants";
-import { renderMonth, renderDay, renderMinutes } from "src/utils/functions";
+import styles from './Review.module.css'
 
 const Review = () => {
   const snap = useSnapshot(state);

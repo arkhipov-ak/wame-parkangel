@@ -1,35 +1,35 @@
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import axios from "axios";
-import { useSnapshot } from "valtio";
-import { SnackbarProvider } from "notistack";
+import { SnackbarProvider } from 'notistack'
+import { useEffect } from 'react'
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import axios from 'src/api/interceptors'
+import ChooseMap from 'src/components/ChooseMap'
+import ScrollToTop from 'src/components/ScrollToTop'
+import AboutServicePage from 'src/pages/AboutServicePage'
+import AdminInfoPage from 'src/pages/AdminInfoPage'
+import AdminPage from 'src/pages/AdminPage'
+import AgreementPage from 'src/pages/AgreementPage'
+import ChooseAnotherTimePage from 'src/pages/ChooseAnotherTimePage'
+import ChooseTimeTodayPage from 'src/pages/ChooseTimeTodayPage'
+import ChooseTimeTomorrowPage from 'src/pages/ChooseTimeTomorrowPage'
+import ExtraOptionsPage from 'src/pages/ExtraOptionsPage'
+import FAQPage from 'src/pages/FAQPage'
+import HomePage from 'src/pages/HomePage'
+import OptionsPage from 'src/pages/OptionsPage'
+import PersonalAreaPage from 'src/pages/PersonalAreaPage'
+import ResultSearchElementPage from 'src/pages/ResultSearchElementPage'
+import ResultSearchPage from 'src/pages/ResultSearchPage'
+import ReviewPage from 'src/pages/ReviewPage'
+import SearchAnotherTimePage from 'src/pages/SearchAnotherTimePage'
+import SearchTimePage from 'src/pages/SearchTimePage'
+import SearchTodayPage from 'src/pages/SearchTodayPage'
+import SearchTomorrowPage from 'src/pages/SearchTomorrowPage'
+import SelectAddressLocationPage from 'src/pages/SelectAddressLocationPage'
+import SelectInMapPage from 'src/pages/SelectInMapPage'
+import ShowMapResultPage from 'src/pages/ShowMapResultPage'
+import { state } from 'src/state'
 
-import { showErrorSnackbar } from "src/utils/showSnackBar";
-import { state } from "src/state";
-import HomePage from "src/pages/HomePage";
-import AgreementPage from "src/pages/AgreementPage";
-import SelectAddressLocationPage from "src/pages/SelectAddressLocationPage";
-import AboutServicePage from "src/pages/AboutServicePage";
-import FAQPage from "src/pages/FAQPage";
-import SearchTimePage from "src/pages/SearchTimePage";
-import ChooseTimeTodayPage from "src/pages/ChooseTimeTodayPage";
-import ChooseTimeTomorrowPage from "src/pages/ChooseTimeTomorrowPage";
-import ChooseAnotherTimePage from "src/pages/ChooseAnotherTimePage";
-import PersonalAreaPage from "src/pages/PersonalAreaPage";
-import ResultSearchPage from "src/pages/ResultSearchPage";
-import ResultSearchElementPage from "src/pages/ResultSearchElementPage";
-import ExtraOptionsPage from "src/pages/ExtraOptionsPage";
-import OptionsPage from "src/pages/OptionsPage";
-import ShowMapResultPage from "src/pages/ShowMapResultPage";
-import SearchTodayPage from "src/pages/SearchTodayPage";
-import SearchAnotherTimePage from "src/pages/SearchAnotherTimePage";
-import SearchTomorrowPage from "src/pages/SearchTomorrowPage";
-import SelectInMapPage from "src/pages/SelectInMapPage";
-import ReviewPage from "src/pages/ReviewPage";
-import ScrollToTop from "src/components/ScrollToTop";
-import ChooseMap from "src/components/ChooseMap";
-import AdminPage from "src/pages/AdminPage";
-import AdminInfoPage from "src/pages/AdminInfoPage";
+import { showErrorSnackbar } from 'src/utils/showSnackBar'
+import { useSnapshot } from 'valtio'
 
 const MainAppComponent = () => {
   const snap = useSnapshot(state);

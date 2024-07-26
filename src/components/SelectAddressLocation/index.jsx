@@ -1,7 +1,7 @@
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import Autosuggest from 'react-autosuggest'
 import { useNavigate } from 'react-router-dom'
+import axios from 'src/api/interceptors'
 import Button from 'src/components/common/Button'
 import Container from 'src/components/common/Container'
 import RegionSelect from 'src/components/common/RegionSelect'
@@ -26,6 +26,7 @@ const SelectAddressLocation = () => {
   const [activeNearMeButton, setActiveNearMeButton] = useState(false);
   const [myCoords, setMyCoords] = useState(null);
   const navigate = useNavigate();
+  console.log(snap.parkDate.region)
 
   const onChange = (event, { newValue }) => setAddress(newValue);
 
@@ -134,7 +135,10 @@ const SelectAddressLocation = () => {
   }, [debounceAddressValue]);
   
   useEffect(() => {
-     if(snap.user.city) {
+    if(snap.parkDate.region) {
+      setActiveRegion(snap.parkDate.region || "moscow");
+    }
+     else if(snap.user.city) {
       setActiveRegion(snap.user.city || "moscow");
     }
   }, [])

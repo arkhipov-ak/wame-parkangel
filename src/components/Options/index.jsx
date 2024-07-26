@@ -1,6 +1,6 @@
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import axios from 'src/api/interceptors'
 import Button from 'src/components/common/Button'
 import Container from 'src/components/common/Container'
 import CustomCheckBox from 'src/components/common/CustomCheckbox'

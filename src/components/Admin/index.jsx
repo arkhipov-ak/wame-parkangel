@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { useSnapshot } from "valtio";
-import ReactCodeInput from "react-code-input";
-import { useNavigate } from "react-router-dom";
-import { Popover } from "antd";
+import Logotype from '/src/assets/logo.svg'
+import { Popover } from 'antd'
+import { useEffect, useState } from 'react'
+import ReactCodeInput from 'react-code-input'
+import { useNavigate } from 'react-router-dom'
+import axios from 'src/api/interceptors'
+import { state } from 'src/state'
+import { hideKeyboard } from 'src/utils/functions'
+import { showErrorSnackbar } from 'src/utils/showSnackBar'
+import { useSnapshot } from 'valtio'
 
-import styles from "./Admin.module.css";
-import Logotype from "/src/assets/logo.svg";
-import { state } from "src/state";
-import { showErrorSnackbar } from "src/utils/showSnackBar";
-import { hideKeyboard } from "src/utils/functions";
+import styles from './Admin.module.css'
 
 const Admin = () => {
   const snap = useSnapshot(state)

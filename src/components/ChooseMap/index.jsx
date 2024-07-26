@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSnapshot } from "valtio";
-import axios from "axios";
-import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
+import { Map, Placemark, YMaps } from '@pbe/react-yandex-maps'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'src/api/interceptors'
+import navigationDark from 'src/assets/navigation-black.svg'
+import navigation from 'src/assets/navigation.svg'
+import NavBar from 'src/components/NavBar'
+import { state } from 'src/state'
+import { API_KEY } from 'src/utils/constants'
+import { showErrorSnackbar } from 'src/utils/showSnackBar'
+import { useSnapshot } from 'valtio'
 
-import styles from "./ChooseMap.module.css"
-import NavBar from "src/components/NavBar";
-import navigation from "src/assets/navigation.svg";
-import navigationDark from "src/assets/navigation-black.svg";
-import { API_KEY } from "src/utils/constants";
-import { state } from "src/state";
-import { showErrorSnackbar } from "src/utils/showSnackBar";
+import styles from './ChooseMap.module.css'
 
 const ChooseMap = () => {
   const snap = useSnapshot(state);
@@ -20,7 +20,7 @@ const ChooseMap = () => {
   const [watchMe, setWatchMe] = useState(false)
   const [defaultCoords, setDefaultCoords] = useState([55.755864, 37.617698]) //координаты Москвы
   const navigate = useNavigate();
-
+  
   const handleAnotherAddressClick = () => {
     setWatchMe(false);
     setDefaultCoords(null);
@@ -65,7 +65,6 @@ const ChooseMap = () => {
       if (snap.parkDate.address) setSelectedAddress(snap.parkDate.address);
     }
   }, []);
-
   useEffect(() => {
     if (snap.parkDate) {
       if (snap.parkDate.coordinates) return setDefaultCoords(snap.parkDate.coordinates);

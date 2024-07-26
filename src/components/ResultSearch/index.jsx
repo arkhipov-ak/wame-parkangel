@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { useSnapshot } from "valtio";
-import { Rate } from "antd";
+import { Rate } from 'antd'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'src/api/interceptors'
+import locationLight from 'src/assets/location-light.svg'
+import location from 'src/assets/location.svg'
+import Container from 'src/components/common/Container'
+import ModalReviews from 'src/components/common/ModalReviews'
+import ZeroData from 'src/components/common/ZeroData'
+import NavBar from 'src/components/NavBar'
+import { state } from 'src/state'
+import { showErrorSnackbar } from 'src/utils/showSnackBar'
+import { useSnapshot } from 'valtio'
 
-import styles from "./ResultSearch.module.css";
-import NavBar from "src/components/NavBar";
-import location from "src/assets/location.svg";
-import locationLight from "src/assets/location-light.svg";
-import { state } from "src/state";
-import { showErrorSnackbar } from "src/utils/showSnackBar";
-import Container from "src/components/common/Container";
-import ZeroData from "src/components/common/ZeroData";
-import ModalReviews from "src/components/common/ModalReviews";
+import styles from './ResultSearch.module.css'
 
 const ResultSearch = () => {
   const snap = useSnapshot(state);
