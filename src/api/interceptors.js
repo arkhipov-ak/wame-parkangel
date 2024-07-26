@@ -1,15 +1,15 @@
 import axios from 'axios'
 
-const instance = axios.create({
-  params: {
-    t: new Date().getTime()
-  }
-})
+const axiosInstance = axios.create({})
 
-instance.defaults.headers = {
-  'Cache-Control': 'no-cache',
-  'Pragma': 'no-cache',
-  'Expires': '0',
-};
+axiosInstance.interceptors.request.use(
+    function (config) {
+      config.params = { ...config.params, timestamp: Date.now() };
+      return config;
+    },
+    function (error) {
+      return Promise.reject(error);
+    }
+  );
 
-export default instance
+export default axiosInstance
