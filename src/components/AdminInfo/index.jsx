@@ -1,4 +1,4 @@
-import { Rate } from 'antd'
+import { Button, Rate } from 'antd'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import axios from 'src/api/interceptors'
@@ -123,6 +123,27 @@ const AdminInfo = () => {
   useEffect(() => {
     setPage(Number(searchParams.get("page")) || 1);
   }, [location.search]);
+  
+  const handleResetPassword = (user) => {
+    axios.put(`https://api.parkangel.ru/api/users`, {
+      ...user,
+      password: ''
+    })
+      .then(() => {
+        showSuccessSnackbar({ message: "Пароль успешно сброшен" });
+        axios.get("https://api.parkangel.ru/api/users" , {
+          params: { page, perPage },
+        }).then((response) => {
+          if (response.data.response) {
+            setUsersArray(response.data.response.users);
+            setTotalPages(response.data.response.total);
+          }
+        }).catch(() => showErrorSnackbar({ message: "Не удалось получить список пользователей" }))
+      }).catch(() => {
+        showErrorSnackbar({ message: "Не удалось сбросить пароль" });
+        setOpenDeleteModal(false);
+    })
+  }
 
   return (
     <>
@@ -200,6 +221,7 @@ const AdminInfo = () => {
                           <span className={styles.info_text}>-</span>
                         )}
                       </div>
+                      {user.password && <Button onClick={() => handleResetPassword(user)}>Сбросить пароль</Button>}
                     </li>
                   ))}
                 </ul>
