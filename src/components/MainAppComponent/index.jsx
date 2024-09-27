@@ -26,6 +26,7 @@ import SearchTomorrowPage from 'src/pages/SearchTomorrowPage'
 import SelectAddressLocationPage from 'src/pages/SelectAddressLocationPage'
 import SelectInMapPage from 'src/pages/SelectInMapPage'
 import ShowMapResultPage from 'src/pages/ShowMapResultPage'
+import AdminInfoUserPage from 'src/pages/AdminInfoUserPage.jsx'
 import { state } from 'src/state'
 
 import { showErrorSnackbar } from 'src/utils/showSnackBar'
@@ -125,6 +126,8 @@ const MainAppComponent = () => {
               <Route path="/map" element={<ChooseMap/>}/>
               <Route path="/admin" element={<AdminPage/>}/>
               <Route path="/admin/info" element={<AdminInfoPage/>}/>
+              <Route path="/admin/user/:id" element={<AdminInfoUserPage/>}/>
+              
             </Routes>
       </SnackbarProvider>
     </div>

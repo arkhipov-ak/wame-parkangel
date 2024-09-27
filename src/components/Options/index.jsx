@@ -172,9 +172,18 @@ const Options = () => {
               <div className={styles.sizes_wrapper}>
                 <span className={styles.main_text}>Нестандартные размеры авто, м</span>
                 <div className={styles.parent_container}>
-                  <SizeInput value={data.height || ""} onChange={e => onHandleChange(e.target.value, "height")} label="Высота"/>
-                  <SizeInput value={data.length || ""} onChange={e => onHandleChange(e.target.value, "length")} label="Длина"/>
-                  <SizeInput value={data.width || ""} onChange={e => onHandleChange(e.target.value, "width")} label="Ширина"/>
+                  <SizeInput value={data.height || ""} onChange={e => {
+                    const newValue = e.target.value > 10 ? 10 : e.target.value;
+                    onHandleChange(newValue, 'height')
+                  }}  label="Высота" max={10}/>
+                  <SizeInput value={data.length || ""} onChange={e => {
+                    const newValue = e.target.value > 20 ? 20 : e.target.value;
+                    onHandleChange(newValue, 'length')
+                  }}  label="Длина" max={20}/>
+                  <SizeInput value={data.width || ""} onChange={e => {
+                    const newValue = e.target.value > 10 ? 10 : e.target.value;
+                    onHandleChange(newValue, 'width')
+                  }} label="Ширина"max={10}/>
                 </div>
               </div>
               <div className={styles.price_counter_wrapper}>

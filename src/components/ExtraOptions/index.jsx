@@ -358,21 +358,33 @@ const ExtraOptions = () => {
           <div className={styles.box_container}>
             <span className={styles.main_text}>Нестандартные размеры авто, м</span>
             <div className={styles.parent_container}>
-              <SizeInput
-                value={data.height || ""}
-                onChange={(e) => onHandleChange({...data, ["height"]: e.target.value})}
-                label="Высота"
-              />
-              <SizeInput
-                value={data.length || ""}
-                onChange={(e) => onHandleChange({...data, ["length"]: e.target.value})}
-                label="Длина"
-              />
-              <SizeInput
-                value={data.width || ""}
-                onChange={e => onHandleChange({...data, ["width"]: e.target.value})}
-                label="Ширина"
-              />
+            <SizeInput
+              value={data.height || ""}
+              onChange={(e) => {
+                const newValue = e.target.value > 10 ? 10 : e.target.value;
+                onHandleChange({ ...data, ["height"]: newValue });
+              }}
+              label="Высота"
+              max={10}
+            />
+            <SizeInput
+              value={data.length || ""}
+              onChange={(e) => {
+                const newValue = e.target.value > 20 ? 20 : e.target.value;
+                onHandleChange({ ...data, ["length"]: newValue });
+              }}
+              label="Длина"
+              max={20}
+            />
+            <SizeInput
+              value={data.width || ""}
+              onChange={(e) => {
+                const newValue = e.target.value > 10 ? 10 : e.target.value;
+                onHandleChange({ ...data, ["width"]: newValue });
+              }}
+              label="Ширина"
+              max={10}
+            />
             </div>
           </div>
           <div className={styles.box_container}>

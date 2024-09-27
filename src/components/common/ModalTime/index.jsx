@@ -46,7 +46,7 @@ const ModalTime = ({ setOpenTimeModal, openTimeModal, setSelectedMinute, setSele
                 key={index}
                 onClick={() => {
                   setTempHour(hour);
-                  setTempMinute("00"); // Сбросьте минуты при смене часа
+                  setTempMinute(getFilteredMinutesArray(hour)[0]);
                 }}
                 className={`${styles.time} ${tempHour === hour && styles.selected}`}
               >

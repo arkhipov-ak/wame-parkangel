@@ -56,7 +56,9 @@
   top: 50%;
   z-index: 100;
   width: 40px;
+  min-width: 40px;
   height: 40px;
+  min-height: 40px;
   border-radius: 50%;
   border: 2px solid #000;
   font-size: 26px;
@@ -68,7 +70,9 @@
   top: 50%;
   z-index: 100;
   width: 40px;
+  min-width: 40px;
   height: 40px;
+  min-height: 40px;
   border-radius: 50%;
   border: 2px solid #000;
   font-size: 26px;

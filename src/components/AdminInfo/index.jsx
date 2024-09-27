@@ -222,6 +222,7 @@ const AdminInfo = () => {
                         )}
                       </div>
                       {user.password && <Button onClick={() => handleResetPassword(user)}>Сбросить пароль</Button>}
+                      <Button onClick={() => navigate(`/admin/user/${user.id}`)}>Подробнее</Button>
                     </li>
                   ))}
                 </ul>
@@ -264,7 +265,6 @@ const AdminInfo = () => {
                               <span className={styles.reviews_button_text}>Посмотреть отзывы</span>
                             </button>
                           </>
-                          
                         )}
                         {!!ad.comment && (
                         <p className={styles.rent_location}>{ad.comment}</p>
