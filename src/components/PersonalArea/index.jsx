@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 import ReactInputMask from 'react-input-mask'
 import axios from 'src/api/interceptors'
@@ -48,6 +49,7 @@ const PersonalArea = () => {
         axios.get(`https://api.parkangel.ru/api/users/chatId/${snap.user.chatId}`)
           .then(() => {
             state.user = data;
+            Cookies.set('user', JSON.stringify(data), { expires: 7 });
           })
       })
       .catch(() => showErrorSnackbar({ message: "Не удалось обновить данные профиля" }))

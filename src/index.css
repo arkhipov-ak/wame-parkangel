@@ -25,6 +25,7 @@ body {
   margin: 0;
   font-family: Montserrat;
   scroll-behavior: smooth;
+  background:linear-gradient(312deg, #47494E 7.62%, #121212 91.89%);
   height: 100vh;
   height: -webkit-fill-available;
 }
@@ -32,6 +33,9 @@ body {
 html {
   scroll-behavior: smooth;
   height: -webkit-fill-available;
+    background:linear-gradient(312deg, #47494E 7.62%, #121212 91.89%);
+
+  
 }
 .container {
   overflow-x: hidden;

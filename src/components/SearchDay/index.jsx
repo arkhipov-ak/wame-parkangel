@@ -78,13 +78,35 @@ const SearchDay = ({ day }) => {
     navigate(link);
   };
 
-  useEffect(() => {
-    if (snap && snap.user && snap.parkDate) {
-      setSelectedHours(snap.parkDate.hoursStartOneDay || "00");
-      setSelectedMinutes(snap.parkDate.minutesOneDay  || "00");
-      setHoursCount(snap.parkDate.hoursCountOneDay || 1);
+useEffect(() => {
+  if (day === "сегодня") {
+    const now = new Date();
+    let nearestHour = now.getHours();
+    let nearestMinutes = now.getMinutes();
+
+    if (nearestMinutes > 45) {
+      nearestHour += 1;
+      nearestMinutes = 0;
+    } else {
+      nearestMinutes = Math.ceil(nearestMinutes / 15) * 15;
     }
-  }, [snap.user, snap.parkDate]);
+
+    if (nearestHour > 23) {
+      showErrorSnackbar({ message: "Сегодня парковка уже недоступна, выберите другой день" });
+      return;
+    }
+
+    setSelectedHours(nearestHour < 10 ? `0${nearestHour}` : `${nearestHour}`);
+    setSelectedMinutes(nearestMinutes < 10 ? `0${nearestMinutes}` : `${nearestMinutes}`);
+  }
+
+  if (snap && snap.user && snap.parkDate) {
+    setSelectedHours(snap.parkDate.hoursStartOneDay || "00");
+    setSelectedMinutes(snap.parkDate.minutesOneDay  || "00");
+    setHoursCount(snap.parkDate.hoursCountOneDay || 1);
+  }
+}, [snap.user, snap.parkDate, day]);
+
 
   return (
     <>

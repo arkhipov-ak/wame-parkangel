@@ -25,6 +25,7 @@ const SelectAddressLocation = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [activeNearMeButton, setActiveNearMeButton] = useState(false);
   const [myCoords, setMyCoords] = useState(null);
+  const [isButtonActive, setIsButtonActive] = useState(false);
   const navigate = useNavigate();
   console.log(snap.parkDate.region)
 
@@ -135,13 +136,26 @@ const SelectAddressLocation = () => {
   }, [debounceAddressValue]);
   
   useEffect(() => {
-    if(snap.parkDate.region) {
+    if(snap.parkDate?.region) {
       setActiveRegion(snap.parkDate.region || "moscow");
     }
      else if(snap.user.city) {
       setActiveRegion(snap.user.city || "moscow");
     }
   }, [])
+  
+  useEffect(() => {
+    if (
+      activeRegion &&
+      (address.trim() || myCoords) &&
+      addressCoords
+    ) {
+      setIsButtonActive(true);
+    } else {
+      setIsButtonActive(false);
+    }
+}, [activeRegion, address, myCoords, addressCoords]);
+  console.log(isButtonActive)
 
   return (
     <>
@@ -172,9 +186,13 @@ const SelectAddressLocation = () => {
             Найти рядом со мной
           </button>
         </div>
-        <Button onClick={() => onHandleRedirect("/result-search")}>
-          Подобрать парковку
-        </Button>
+       <Button
+        onClick={() => onHandleRedirect("/result-search")}
+        className={`${isButtonActive ? styles.activeButton : styles.inactiveButton}`}
+        disabled={!isButtonActive}
+      >
+        Подобрать парковку
+      </Button>
       </Container>
     </>
   );

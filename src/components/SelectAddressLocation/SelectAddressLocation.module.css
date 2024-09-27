@@ -36,3 +36,13 @@
 .block_wrapper {
   width: 100%;
 }
+
+.activeButton {
+  background-color: blue;
+  color: white;
+}
+.inactiveButton {
+  background-color: gray;
+  color: #fff;
+  cursor: not-allowed;
+}

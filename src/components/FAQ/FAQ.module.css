@@ -38,6 +38,9 @@
   transition: max-height 0.4s ease-in-out; 
   padding: 0 10px 0 10px;
   color: var(--text-primary);
+  a {
+    color:  #0000EE;
+  }
 }
 .open {
   max-height: 300px;

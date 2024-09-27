@@ -11,6 +11,7 @@ import { supportLink } from 'src/utils/constants'
 import { hideKeyboard } from 'src/utils/functions'
 import { showErrorSnackbar } from 'src/utils/showSnackBar'
 import { useSnapshot } from 'valtio'
+import Cookies from 'js-cookie';
 
 import styles from './Home.module.css'
 
@@ -53,37 +54,65 @@ const Home = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
-    
-    const renderAgreementInfo = () => {
-      if (!snap.user) return setLoading(false);
+  const savedUser = Cookies.get('user');
 
+  if (savedUser) {
+    const user = JSON.parse(savedUser);
+
+    // Проверяем, действительно ли нужно обновлять state.user
+    if (!snap.user || JSON.stringify(snap.user) !== JSON.stringify(user)) {
+      state.user = user;
+
+      // Далее выполняем проверку, как обычно
+      if (user.password) {
+        setOpenPasswordModal(true);
+      } else if (user.dateAcceptAgreement) {
+        navigate("/search-time");
+      } else {
+        navigate("/agreement");
+      }
+    }
+  } else {
+    setLoading(true);
+
+    const renderAgreementInfo = () => {
+      if (!snap.user) {
+        setLoading(false);
+        return;
+      }
       if (snap.user.password) {
         setOpenPasswordModal(true);
-        return setLoading(false);
+        setLoading(false);
+        return;
       }
 
       setLoading(false);
-      
-      if (snap.user.isAcceptAgreement) navigate("/search-time");
-      else navigate("/agreement");
+
+      if (snap.user.isAcceptAgreement) {
+        navigate("/search-time");
+      } else {
+        navigate("/agreement");
+      }
     };
-   
+
     const timer = setTimeout(() => renderAgreementInfo(), 2500);
 
     return () => {
       clearTimeout(timer);
     };
-  }, [snap.user]);
+  }
+}, [snap.user, navigate]);
 
   useEffect(() => {
     setIsCodeCorrect(true);
 		if (code.length === 4) {
-      axios.post(
-        "https://api.parkangel.ru/api/users/verify", { telegram: nickname.trim(), code }
-      ).then((response) => {
+      axios.post("https://api.parkangel.ru/api/users/verify", { telegram: nickname.trim(), code })
+      .then((response) => {
         if (response.data.response) {
           state.user = response.data.response;
+          
+          Cookies.set('user', JSON.stringify(response.data.response), { expires: 7 });
+    
           if (response.data.response.password) return setOpenPasswordModal(true);
           if (response.data.response.dateAcceptAgreement) navigate("/search-time");
           else navigate("/agreement");
@@ -147,9 +176,7 @@ const Home = () => {
                 content={
                   <>
                     <p>
-                      - В десктопной версии telegram нажмите на три горизонтальные полоски в левом верхнем углу<br/>
-                      - Затем нажмите на «настройки»<br/>
-                      - В открывшемся окошке, справа от аватарки будет ваш ник. Он начинается с @<br/>
+                      - В мобильной версии telegram нажмите «настройки». Ваш ник будет под аватаркой. Он начинается с @<br/>
                       - Введите его без @
                     </p>
                   </>
@@ -164,7 +191,7 @@ const Home = () => {
               <input
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value, "nickname")}
-                placeholder="Введите Telegram-никнейм"
+                placeholder="Введите Telegram-никнейм(@park_angel_bot)"
                 className={styles.home_input}
                 type="text"
                 onKeyDown={hideKeyboard}

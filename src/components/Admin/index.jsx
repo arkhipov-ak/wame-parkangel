@@ -99,9 +99,7 @@ const Admin = () => {
                 content={
                   <>
                     <p>
-                      - В десктопной версии telegram нажмите на три горизонтальные полоски в левом верхнем углу<br/>
-                      - Затем нажмите на «настройки»<br/>
-                      - В открывшемся окошке, справа от аватарки будет ваш ник. Он начинается с @<br/>
+                      - В мобильной версии telegram нажмите «настройки». Ваш ник будет под аватаркой. Он начинается с @<br/>
                       - Введите его без @
                     </p>
                   </>
@@ -116,7 +114,7 @@ const Admin = () => {
               <input
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value, "nickname")}
-                placeholder="Введите Telegram-никнейм"
+                placeholder="Введите Telegram-никнейм(@park_angel_bot)"
                 className={styles.home_input}
                 type="text"
                 onKeyDown={hideKeyboard}

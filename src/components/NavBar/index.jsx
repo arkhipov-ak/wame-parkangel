@@ -54,11 +54,11 @@ const NavBar = () => {
           <div className={styles.overlay} onClick={() => setMenuOpen(false)}/>
           <div className={`${styles.sideMenu} ${isMenuOpen ? styles.open : ""}`}>
             <div className={styles.wrapper_text}>
-              <Link className={styles.linkfor} to="/search-time">На главную</Link>
-              <Link className={styles.linkfor} to="/personal-area">Личный кабинет</Link>
-              <Link className={styles.linkfor} to="/faq">Частые вопросы</Link>
-              <Link className={styles.linkfor} to="/about-service">О сервисе</Link>
-              <a className={styles.linkfor} href={supportLink}>Связь с поддержкой</a>
+              <Link className={styles.linkfor} to="/search-time" onClick={() => setMenuOpen(false)}>На главную</Link>
+              <Link className={styles.linkfor} to="/personal-area"onClick={() => setMenuOpen(false)}>Личный кабинет</Link>
+              <Link className={styles.linkfor} to="/faq"onClick={() => setMenuOpen(false)}>Частые вопросы</Link>
+              <Link className={styles.linkfor} to="/about-service"onClick={() => setMenuOpen(false)}>О сервисе</Link>
+              <a className={styles.linkfor} href={supportLink}onClick={() => setMenuOpen(false)}>Связь с поддержкой</a>
               <Link className={styles.linkfor} to="/agreement">
                 Пользовательское <br /> соглашение
               </Link>

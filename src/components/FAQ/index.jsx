@@ -5,7 +5,6 @@ import NavBar from 'src/components/NavBar'
 import Container from 'src/components/common/Container'
 import ZeroData from 'src/components/common/ZeroData'
 import styles from './FAQ.module.css'
-
 const Faq = () => {
 	const [activeQuestion, setActiveQuestion] = useState(null)
 	const [faqData] = useState([
@@ -13,7 +12,7 @@ const Faq = () => {
 			question:
 				'Можно ли пользоваться сервисом с компьютера, без использования telegram?',
 			answer:
-				'Конечно! Заходи по адресу app.parkangel.ru. Понадобится telegram ник. Подсказка где его найти – на первой страничке сайта. Интерфейс такой же что и в telegram.',
+				'Конечно! Заходи по адресу <a href="https://app.parkangel.ru" target="_blank">app.parkangel.ru</a>. Понадобится telegram ник. Подсказка где его найти – на первой страничке сайта. Интерфейс такой же что и в telegram.',
 		},
 		{
 			question: 'Вы гарантируете порядочность арендодателя или арендатора?',
@@ -33,7 +32,7 @@ const Faq = () => {
 		{
 			question: 'Как можно рассказать о сервисе друзьям?',
 			answer:
-				'Можно отправить ссылку на наш сайт parkangel.ru или на tg бот @park_angel_bot или на веб версию app.parkangel.ru',
+				'Можно отправить ссылку на наш сайт parkangel.ru или на tg бот @park_angel_bot или на веб версию <a href="https://app.parkangel.ru" target="_blank">app.parkangel.ru</a>',
 		},
 		{
 			question: 'В каких городах работает сервис?',
@@ -41,13 +40,6 @@ const Faq = () => {
 				'Сейчас в Москве, Питере и пригородах. Постепенно добавим другие крупные города.',
 		},
 	])
-
-	// useEffect(() => {
-	//   axios.get(
-	//     "https://api.parkangel.ru/api/faq"
-	//   ).then((response) => setFaqData(response.data.response))
-	//   .catch(() => showErrorSnackbar({ message: "Не удалось получить вопросы" }));
-	// }, []);
 
 	return (
 		<>
@@ -76,9 +68,8 @@ const Faq = () => {
 									className={`${styles.answer} ${
 										activeQuestion === index ? styles.open : ''
 									}`}
-								>
-									{item.answer}
-								</div>
+									dangerouslySetInnerHTML={{ __html: item.answer }} // Добавлено для рендеринга HTML
+								></div>
 							</div>
 						))}
 					</>
