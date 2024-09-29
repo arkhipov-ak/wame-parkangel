@@ -14,6 +14,7 @@ import { showErrorSnackbar } from 'src/utils/showSnackBar'
 import theme from 'src/utils/suggestsTheme.module.css'
 import { useDebounce } from 'use-debounce'
 import { useSnapshot } from 'valtio'
+import PriceCounterBlock from '../common/PriceCounterBlock/index.jsx'
 import styles from './SelectAddressLocation.module.css'
 
 const SelectAddressLocation = () => {
@@ -21,6 +22,7 @@ const SelectAddressLocation = () => {
   const [activeRegion, setActiveRegion] = useState("moscow");
   const [addressCoords, setAddressCoords] = useState(null);
   const [address, setAddress] = useState("");
+  const [range, setRange] = useState(10);
   const [debounceAddressValue] = useDebounce(address, 500);
   const [suggestions, setSuggestions] = useState([]);
   const [activeNearMeButton, setActiveNearMeButton] = useState(false);
@@ -71,7 +73,7 @@ const SelectAddressLocation = () => {
 
     if (link === "/result-search") {
       if (!address.trim() && !myCoords) {
-        showErrorSnackbar({ message: "Укажите адрес либо свои координаты" });
+        showErrorSnackbar({ message: "Укажите адрес, либо свои координаты" });
         return;
       }
 
@@ -89,6 +91,7 @@ const SelectAddressLocation = () => {
     state.options[0] = {
       ...snap.options[0],
       address: address,
+      range: range,
       region: activeRegion,
       availabilityDateEnd: snap.parkDate.dateEndISO,
       availabilityDateStart: snap.parkDate.dateStartISO,
@@ -177,6 +180,18 @@ const SelectAddressLocation = () => {
           <button type="button" className={styles.btn_style} onClick={() => onHandleRedirect("/map")}>
             Указать на карте
           </button>
+          <div className={styles.price_counter_wrapper}>
+            <span className={styles.main_text}>Макс. радиус, км</span>
+            <PriceCounterBlock price={range} setPrice={e => {
+              if(e >= 100){
+                setRange(100)
+              } else if(e <= 5) {
+                setRange(5)
+              }else{
+                setRange(e)
+              }
+            }} step={5} max={100} min={5} />
+          </div>
           <button
             type="button"
             className={`${styles.btn_style} ${activeNearMeButton ? styles.active : ""}`}

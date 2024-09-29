@@ -46,3 +46,19 @@
   color: #fff;
   cursor: not-allowed;
 }
+
+.price_counter_wrapper {
+   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  margin: 0;
+  width: 100%;
+  margin-bottom: 10%;
+  
+}
+
+.main_text {
+  font-weight: 500;
+  color: var(--text-primary);
+}

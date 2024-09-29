@@ -69,22 +69,22 @@ const AdminInfoUser = () => {
   }, [query])
   
   const getUser = () => {
-    axios.get(`https://api.parkangel.ru/api/users/${query.id}}`, {
+    axios.get(`https://api.parkangel.ru/api/users/${query.id}`, {
       params: {
         id: query.id
       }
     })
-      .then((data) => {
-        console.log(data)
-        setAdsArray([])
+      .then(({ data }) => {
+        setAdsArray(data.response.ad)
       }).catch(() => {
     })
   }
-  
+  console.log(adsArray)
   const onHandleDeleteClick = (ad) => {
     axios.delete(`https://api.parkangel.ru/api/ad/${ad.id}`)
       .then(() => {
         showSuccessSnackbar({ message: "Объявление удалено" });
+        getUser()
         setOpenDeleteModal(false);
       }).catch(() => {
         showErrorSnackbar({ message: "Не удалось удалить объявление" });
@@ -97,7 +97,7 @@ const AdminInfoUser = () => {
     <>
       <NavBar/>
       <Container>
-        <Button>Заблокировать</Button>
+        {/*<Button>Заблокировать</Button>*/}
         <>
           {adsArray.length ? (
               <>
@@ -111,26 +111,6 @@ const AdminInfoUser = () => {
                           <span className={styles.rent_time}>{renderTime(ad.park)}</span>
                           <span className={styles.rent_status}>{renderPrice(ad.park)}</span>
                         </div>
-                        {!!ad.review.length && (
-                          <>
-                            <Rate
-                              allowHalf
-                              disabled
-                              value={renderRating(ad.review)}
-                              style={{ fontSize: "30px" }}
-                            />
-                            <button
-                              type="button"
-                              onClick={() => {
-                                setReviews(ad.review);
-                                setOpenReviewsModal(true);
-                              }}
-                              className={styles.reviews_button}
-                            >
-                              <span className={styles.reviews_button_text}>Посмотреть отзывы</span>
-                            </button>
-                          </>
-                        )}
                         {!!ad.comment && (
                         <p className={styles.rent_location}>{ad.comment}</p>
                       )}
