@@ -35,6 +35,13 @@ const ModalTime = ({ setOpenTimeModal, openTimeModal, setSelectedMinute, setSele
         minuteElement.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   }, [openTimeModal, tempHour, tempMinute]);
+  
+  useEffect(() => {
+    setTempHour(filteredHoursArray[0]);
+    setTempMinute(getFilteredMinutesArray(filteredHoursArray[0])[0]);
+    setSelectedHour(filteredHoursArray[0]);
+    setSelectedMinute(getFilteredMinutesArray(filteredHoursArray[0])[0]);
+  }, [])
 
   return (
     <Modal setOpenModal={setOpenTimeModal} openModal={openTimeModal}>
