@@ -1,6 +1,6 @@
 .container {
   margin-top: 20px;
-  background-color: #FFF;
+  background-color: var(--background-secondary);
   padding: 0px 0 28px 0;
   max-width: 2400px;
   width: 100%;
@@ -20,12 +20,13 @@
 
 th, td {
   padding: 12px;
+  color: var(--text-primary);
   text-align: left;
   border-bottom: 2px solid #EAECF1;
 }
 
 th {
-  background-color: #fff;
+  background-color: var(--background-secondary);
   min-width: 120px;
   word-wrap: unset;
   color: #6E7B97;
