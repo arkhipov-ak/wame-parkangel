@@ -1,18 +1,19 @@
-import { Button, Rate } from 'antd'
-import { useEffect, useState } from 'react'
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
-import axios from 'src/api/interceptors'
-import deleteImg from 'src/assets/delete.svg'
-import Container from 'src/components/common/Container'
-import ModalDeleteAd from 'src/components/common/ModalDeleteAd'
-import ModalReviews from 'src/components/common/ModalReviews'
-import Pagination from 'src/components/common/Pagination'
-import ZeroData from 'src/components/common/ZeroData'
-import NavBar from 'src/components/NavBar'
-import { renderDay, renderMinutes, renderMonth } from 'src/utils/functions'
-import { showErrorSnackbar, showSuccessSnackbar } from 'src/utils/showSnackBar'
+import { Button, Rate } from "antd";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import axios from "src/api/interceptors";
+import deleteImg from "src/assets/delete.svg";
+import ContainerStart from "src/components/common/ContainerStart";
+import ModalDeleteAd from "src/components/common/ModalDeleteAd";
+import ModalReviews from "src/components/common/ModalReviews";
+import Pagination from "src/components/common/Pagination";
+import ZeroData from "src/components/common/ZeroData";
+import NavBar from "src/components/NavBar";
+import AnaliticsTable from "src/components/AnaliticsTable";
+import { renderDay, renderMinutes, renderMonth } from "src/utils/functions";
+import { showErrorSnackbar, showSuccessSnackbar } from "src/utils/showSnackBar";
 
-import styles from './AdminInfo.module.css'
+import styles from "./AdminInfo.module.css";
 
 const AdminInfo = () => {
   const [searchParams] = useSearchParams();
@@ -25,15 +26,19 @@ const AdminInfo = () => {
   const [openReviewsModal, setOpenReviewsModal] = useState(false);
   const [reviews, setReviews] = useState(null);
   const [isUsersListAdmin, setUsersListAdmin] = useState(true);
+  const [isAnalitics, setIsAnalitics] = useState(false);
   const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(Number(searchParams.get("page")) || 1);
   const perPage = 5;
 
   const renderCity = (city) => {
     switch (city) {
-      case "moscow": return "Москва"
-      case "spb": return "Санкт-Петербург"
-      default: return "-"
+      case "moscow":
+        return "Москва";
+      case "spb":
+        return "Санкт-Петербург";
+      default:
+        return "-";
     }
   };
 
@@ -60,14 +65,20 @@ const AdminInfo = () => {
     const monthEnd = renderMonth(dateEnd);
     const yearEnd = dateEnd.getFullYear();
 
-    if (`${dayStart}.${monthStart}.${yearStart}` === `${dayEnd}.${monthEnd}.${yearEnd}`) return `${dayStart}.${monthStart}.${yearStart}`;
+    if (
+      `${dayStart}.${monthStart}.${yearStart}` ===
+      `${dayEnd}.${monthEnd}.${yearEnd}`
+    )
+      return `${dayStart}.${monthStart}.${yearStart}`;
 
     return `${dayStart}.${monthStart}.${yearStart} - ${dayEnd}.${monthEnd}.${yearEnd}`;
   };
 
   const renderRating = (item) => {
     const ratings = item.map((elem) => elem.rating);
-    return (ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length).toFixed(2);
+    return (
+      ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length
+    ).toFixed(2);
   };
 
   const renderPrice = (item) => {
@@ -78,98 +89,153 @@ const AdminInfo = () => {
   };
 
   const onHandleDeleteClick = (ad) => {
-    axios.delete(`https://api.parkangel.ru/api/ad/${ad.id}`)
+    axios
+      .delete(`https://api.parkangel.ru/api/ad/${ad.id}`)
       .then(() => {
         showSuccessSnackbar({ message: "Объявление удалено" });
         setOpenDeleteModal(false);
-        axios.get("https://api.parkangel.ru/api/ad" , {
-          params: { page, perPage },
-        }).then((response) => {
-          if (response.data.response) {
-            setAdsArray(response.data.response.ads);
-            setTotalPages(response.data.response.total);
-          }
-        }).catch(() => showErrorSnackbar({ message: "Не удалось получить список объявлений" }))
-      }).catch(() => {
+        axios
+          .get("https://api.parkangel.ru/api/ad", {
+            params: { page, perPage },
+          })
+          .then((response) => {
+            if (response.data.response) {
+              setAdsArray(response.data.response.ads);
+              setTotalPages(response.data.response.total);
+            }
+          })
+          .catch(() =>
+            showErrorSnackbar({
+              message: "Не удалось получить список объявлений",
+            })
+          );
+      })
+      .catch(() => {
         showErrorSnackbar({ message: "Не удалось удалить объявление" });
         setOpenDeleteModal(false);
-      })
+      });
   };
 
   useEffect(() => {
     if (isUsersListAdmin) {
       setAdsArray([]);
-      axios.get("https://api.parkangel.ru/api/users" , {
-        params: { page, perPage },
-      }).then((response) => {
-        if (response.data.response) {
-          setUsersArray(response.data.response.users);
-          setTotalPages(response.data.response.total);
-        }
-      }).catch(() => showErrorSnackbar({ message: "Не удалось получить список пользователей" }))
+      axios
+        .get("https://api.parkangel.ru/api/users", {
+          params: { page, perPage },
+        })
+        .then((response) => {
+          if (response.data.response) {
+            setUsersArray(response.data.response.users);
+            setTotalPages(response.data.response.total);
+          }
+        })
+        .catch(() =>
+          showErrorSnackbar({
+            message: "Не удалось получить список пользователей",
+          })
+        );
     } else {
       setUsersArray([]);
-      axios.get("https://api.parkangel.ru/api/ad" , {
-        params: { page, perPage },
-      }).then((response) => {
-        if (response.data.response) {
-          setAdsArray(response.data.response.ads);
-          setTotalPages(response.data.response.total);
-        }
-      }).catch(() => showErrorSnackbar({ message: "Не удалось получить список объявлений" }))
+      axios
+        .get("https://api.parkangel.ru/api/ad", {
+          params: { page, perPage },
+        })
+        .then((response) => {
+          if (response.data.response) {
+            setAdsArray(response.data.response.ads);
+            setTotalPages(response.data.response.total);
+          }
+        })
+        .catch(() =>
+          showErrorSnackbar({
+            message: "Не удалось получить список объявлений",
+          })
+        );
     }
   }, [isUsersListAdmin, page]);
 
   useEffect(() => {
     setPage(Number(searchParams.get("page")) || 1);
   }, [location.search]);
-  
+
   const handleResetPassword = (user) => {
-    axios.put(`https://api.parkangel.ru/api/users`, {
-      ...user,
-      password: ''
-    })
+    axios
+      .put(`https://api.parkangel.ru/api/users`, {
+        ...user,
+        password: "",
+      })
       .then(() => {
         showSuccessSnackbar({ message: "Пароль успешно сброшен" });
-        axios.get("https://api.parkangel.ru/api/users" , {
-          params: { page, perPage },
-        }).then((response) => {
-          if (response.data.response) {
-            setUsersArray(response.data.response.users);
-            setTotalPages(response.data.response.total);
-          }
-        }).catch(() => showErrorSnackbar({ message: "Не удалось получить список пользователей" }))
-      }).catch(() => {
+        axios
+          .get("https://api.parkangel.ru/api/users", {
+            params: { page, perPage },
+          })
+          .then((response) => {
+            if (response.data.response) {
+              setUsersArray(response.data.response.users);
+              setTotalPages(response.data.response.total);
+            }
+          })
+          .catch(() =>
+            showErrorSnackbar({
+              message: "Не удалось получить список пользователей",
+            })
+          );
+      })
+      .catch(() => {
         showErrorSnackbar({ message: "Не удалось сбросить пароль" });
         setOpenDeleteModal(false);
-    })
-  }
+      });
+  };
 
   return (
     <>
-      <NavBar/>
-      <Container>
+      <NavBar />
+      <ContainerStart>
         <div className={styles.wrapper}>
           <button
-            className={isUsersListAdmin ? styles.active_btn : styles.not_active_btn}
+            className={
+              isUsersListAdmin ? styles.active_btn : styles.not_active_btn
+            }
             onClick={() => {
               setUsersListAdmin(true);
+              setIsAnalitics(false);
               navigate("/admin/info");
             }}
           >
             Пользователи
           </button>
           <button
-            className={!isUsersListAdmin ? styles.active_btn : styles.not_active_btn}
+            className={
+              !isUsersListAdmin && !isAnalitics
+                ? styles.active_btn
+                : styles.not_active_btn
+            }
             onClick={() => {
               setUsersListAdmin(false);
+              setIsAnalitics(false);
               navigate("/admin/info");
             }}
           >
             Объявления
           </button>
+          <button
+            className={
+              isAnalitics && !isUsersListAdmin
+                ? styles.active_btn
+                : styles.not_active_btn
+            }
+            onClick={() => {
+              setUsersListAdmin(false);
+              setIsAnalitics(true);
+              navigate("/admin/info");
+            }}
+          >
+            Аналитика
+          </button>
         </div>
-        {isUsersListAdmin ? (
+        {isAnalitics ? <AnaliticsTable /> : null}
+        {isUsersListAdmin && !isAnalitics ? (
           <>
             {usersArray.length ? (
               <>
@@ -178,7 +244,9 @@ const AdminInfo = () => {
                     <li key={user.id} className={styles.list_item}>
                       <div className={styles.info_wrapper}>
                         <span className={styles.info_text}>Имя</span>
-                        <span className={styles.info_text}>{user.name || "-"}</span>
+                        <span className={styles.info_text}>
+                          {user.name || "-"}
+                        </span>
                       </div>
                       <div className={styles.info_wrapper}>
                         <span className={styles.info_text}>Telegram</span>
@@ -188,7 +256,7 @@ const AdminInfo = () => {
                           rel="noopener noreferrer"
                           className={styles.link}
                         >
-                            @{user.telegram}
+                          @{user.telegram}
                         </a>
                       </div>
                       <div className={styles.info_wrapper}>
@@ -206,7 +274,9 @@ const AdminInfo = () => {
                       </div>
                       <div className={styles.info_wrapper}>
                         <span className={styles.info_text}>Город</span>
-                        <span className={styles.info_text}>{renderCity(user.city)}</span>
+                        <span className={styles.info_text}>
+                          {renderCity(user.city)}
+                        </span>
                       </div>
                       <div className={styles.info_wrapper}>
                         <span className={styles.info_text}>Телефон</span>
@@ -221,91 +291,116 @@ const AdminInfo = () => {
                           <span className={styles.info_text}>-</span>
                         )}
                       </div>
-                      {user.password && <Button onClick={() => handleResetPassword(user)}>Сбросить пароль</Button>}
-                      <Button onClick={() => navigate(`/admin/user/${user.id}`)}>Подробнее</Button>
+                      {user.password && (
+                        <Button onClick={() => handleResetPassword(user)}>
+                          Сбросить пароль
+                        </Button>
+                      )}
+                      <Button
+                        onClick={() => navigate(`/admin/user/${user.id}`)}
+                      >
+                        Подробнее
+                      </Button>
                     </li>
                   ))}
                 </ul>
-                <Pagination total={totalPages} page={page} slug="/admin/info"/>
+                <Pagination total={totalPages} page={page} slug="/admin/info" />
               </>
             ) : (
               <ZeroData>Пользователей нет</ZeroData>
             )}
           </>
         ) : (
-          <>
-            {adsArray.length ? (
-              <>
-                <ul className={styles.list}>
-                  {adsArray.map((ad) => (
-                    <li key={ad.id}>
-                      <div className={styles.wrapper_rentCard}>
-                        <p className={styles.rent_location}>{ad.park.address}</p>
-                        <div className={styles.secondRow}>
-                          <span className={styles.rent_time}>{renderDate(ad.park)}</span>
-                          <span className={styles.rent_time}>{renderTime(ad.park)}</span>
-                          <span className={styles.rent_status}>{renderPrice(ad.park)}</span>
-                        </div>
-                        {!!ad.review.length && (
-                          <>
-                            <Rate
-                              allowHalf
-                              disabled
-                              value={renderRating(ad.review)}
-                              style={{ fontSize: "30px" }}
-                            />
-                            <button
-                              type="button"
+          !isAnalitics && (
+            <>
+              {adsArray.length ? (
+                <>
+                  <ul className={styles.list}>
+                    {adsArray.map((ad) => (
+                      <li key={ad.id}>
+                        <div className={styles.wrapper_rentCard}>
+                          <p className={styles.rent_location}>
+                            {ad.park.address}
+                          </p>
+                          <div className={styles.secondRow}>
+                            <span className={styles.rent_time}>
+                              {renderDate(ad.park)}
+                            </span>
+                            <span className={styles.rent_time}>
+                              {renderTime(ad.park)}
+                            </span>
+                            <span className={styles.rent_status}>
+                              {renderPrice(ad.park)}
+                            </span>
+                          </div>
+                          {!!ad.review.length && (
+                            <>
+                              <Rate
+                                allowHalf
+                                disabled
+                                value={renderRating(ad.review)}
+                                style={{ fontSize: "30px" }}
+                              />
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setReviews(ad.review);
+                                  setOpenReviewsModal(true);
+                                }}
+                                className={styles.reviews_button}
+                              >
+                                <span className={styles.reviews_button_text}>
+                                  Посмотреть отзывы
+                                </span>
+                              </button>
+                            </>
+                          )}
+                          {!!ad.comment && (
+                            <p className={styles.rent_location}>{ad.comment}</p>
+                          )}
+                          <div className={styles.image_block}>
+                            <img
+                              src={deleteImg}
+                              alt="delete"
                               onClick={() => {
-                                setReviews(ad.review);
-                                setOpenReviewsModal(true);
+                                setDeleteAd(ad);
+                                setOpenDeleteModal(true);
                               }}
-                              className={styles.reviews_button}
-                            >
-                              <span className={styles.reviews_button_text}>Посмотреть отзывы</span>
-                            </button>
-                          </>
-                        )}
-                        {!!ad.comment && (
-                        <p className={styles.rent_location}>{ad.comment}</p>
-                      )}
-                        <div className={styles.image_block}>
-                          <img
-                            src={deleteImg}
-                            alt="delete"
-                            onClick={() => {
-                              setDeleteAd(ad);
-                              setOpenDeleteModal(true);
-                            }}/>
+                            />
+                          </div>
                         </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-                <Pagination total={totalPages} page={page} slug="/admin/info"/>
-                {openDeleteModal && (
-                  <ModalDeleteAd
-                    ad={deleteAd}
-                    onHandleDeleteClick={onHandleDeleteClick}
-                    openDeleteModal={openDeleteModal}
-                    setOpenDeleteModal={setOpenDeleteModal}
+                      </li>
+                    ))}
+                  </ul>
+                  <Pagination
+                    total={totalPages}
+                    page={page}
+                    slug="/admin/info"
                   />
-                )}
-                {openReviewsModal && (
-                  <ModalReviews
-                    reviews={reviews}
-                    totalRating={renderRating(reviews)}
-                    openReviewsModal={openReviewsModal}
-                    setOpenReviewsModal={setOpenReviewsModal}
-                  />
-                )}
-              </>
-            ) : (
-              <ZeroData>Объявлений нет</ZeroData>
-            )}
-          </>
+                  {openDeleteModal && (
+                    <ModalDeleteAd
+                      ad={deleteAd}
+                      onHandleDeleteClick={onHandleDeleteClick}
+                      openDeleteModal={openDeleteModal}
+                      setOpenDeleteModal={setOpenDeleteModal}
+                    />
+                  )}
+                  {openReviewsModal && (
+                    <ModalReviews
+                      reviews={reviews}
+                      totalRating={renderRating(reviews)}
+                      openReviewsModal={openReviewsModal}
+                      setOpenReviewsModal={setOpenReviewsModal}
+                    />
+                  )}
+                </>
+              ) : (
+                <ZeroData>Объявлений нет</ZeroData>
+              )}
+            </>
+          )
         )}
-      </Container>
+      </ContainerStart>
     </>
   );
 };

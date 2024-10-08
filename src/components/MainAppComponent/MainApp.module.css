@@ -1,0 +1,16 @@
+.container {
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+.img{
+  display: block; 
+  margin: 0 auto;
+}
+.text{
+  color: #FFFFFF;
+}
