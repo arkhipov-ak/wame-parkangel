@@ -71,7 +71,7 @@ const ChooseAnotherTime = () => {
         return;
       }
 
-      if (!addressCoords) {
+      if (!addressCoords && !snap.isEditPark) {
         showErrorSnackbar({ message: "Не удалось получить координаты адреса", tryAgain: true });
         return;
       }
