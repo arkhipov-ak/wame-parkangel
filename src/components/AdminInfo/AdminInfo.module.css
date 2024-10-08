@@ -22,6 +22,10 @@
   transition: all .1s ease-in-out;
   padding: 0;
   cursor: pointer;
+
+  @media screen and ( max-width: 500px) {
+    font-size: 14px;
+  }
 }
 .not_active_btn {
   background-color: transparent;
@@ -35,6 +39,10 @@
   border: none;
   padding: 0;
   cursor: pointer;
+  
+  @media screen and ( max-width: 500px) {
+    font-size: 14px;
+  }
 }
 .list {
   width: 100%;
