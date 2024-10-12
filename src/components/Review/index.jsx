@@ -273,16 +273,15 @@ const Review = () => {
                             onClick={onHandlePlusClick}
                             disabled={zoom >= 20}
                             className={styles.plus_button}
-                          >
-                            +
-                          </button>
+                          >+
+                        </button>
                           <button
                             type="button"
                             onClick={onHandleMinusClick}
                             disabled={zoom <= 8}
                             className={styles.minus_button}
                           >
-                            -
+                              -
                           </button>
                       </Map>
                     </YMaps>
