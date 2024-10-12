@@ -30,6 +30,7 @@ body {
   background:linear-gradient(312deg, #47494E 7.62%, #121212 91.89%);
   height: 100vh;
   height: -webkit-fill-available;
+  overflow-x: hidden;
 }
 
 html {

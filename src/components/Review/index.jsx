@@ -290,7 +290,7 @@ const Review = () => {
                 )}
               </div>
               <Button onClick={onHandleClick}>
-                {snap.isEditPark ? "Редактировать" : "Опубликовать"}
+                {snap.isEditPark ? "Сохранить изменения" : "Опубликовать"}
               </Button>
             </div>
           )}
