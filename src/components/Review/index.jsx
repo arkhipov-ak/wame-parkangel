@@ -156,6 +156,19 @@ const Review = () => {
         navigate("/search-time");
       })
   }, [snap.parkDate, snap.user, snap.isEditPark]);
+  
+  const removeEmojis = (text) => {
+    // Регулярное выражение для фильтрации эмодзи
+    console.log(text)
+    return text.replace(
+      /[\u{1F600}-\u{1F64F}]/gu, // Эмодзи в блоке "Emoticons"
+      /[\u{1F300}-\u{1F5FF}]/gu, // Эмодзи в блоке "Miscellaneous Symbols and Pictographs"
+      /[\u{1F680}-\u{1F6FF}]/gu, // Эмодзи в блоке "Transport and Map Symbols"
+      /[\u{2600}-\u{26FF}]/gu,   // Символы из блока "Miscellaneous Symbols"
+      /[\u{2700}-\u{27BF}]/gu,   // Символы из блока "Dingbats"
+      ""
+    );
+  };
 
   return (
     <>
@@ -237,7 +250,7 @@ const Review = () => {
                   </div>
                   <textarea
                     value={comment}
-                    onChange={(e) => setComment(e.target.value)}
+                    onChange={(e) => setComment(removeEmojis(e.target.value))}
                     placeholder="Оставьте комментарий"
                     rows={3}
                     maxLength={200}
