@@ -273,7 +273,8 @@ const Review = () => {
                             onClick={onHandlePlusClick}
                             disabled={zoom >= 20}
                             className={styles.plus_button}
-                          >+
+                          >
+                          1
                         </button>
                           <button
                             type="button"
