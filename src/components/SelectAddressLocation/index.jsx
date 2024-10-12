@@ -22,14 +22,13 @@ const SelectAddressLocation = () => {
   const [activeRegion, setActiveRegion] = useState("moscow");
   const [addressCoords, setAddressCoords] = useState(null);
   const [address, setAddress] = useState("");
-  const [range, setRange] = useState(10);
+  const [range, setRange] = useState(50);
   const [debounceAddressValue] = useDebounce(address, 500);
   const [suggestions, setSuggestions] = useState([]);
   const [activeNearMeButton, setActiveNearMeButton] = useState(false);
   const [myCoords, setMyCoords] = useState(null);
   const [isButtonActive, setIsButtonActive] = useState(false);
   const navigate = useNavigate();
-  console.log(snap.parkDate.region)
 
   const onChange = (event, { newValue }) => setAddress(newValue);
 
@@ -76,7 +75,7 @@ const SelectAddressLocation = () => {
         showErrorSnackbar({ message: "Укажите адрес, либо свои координаты" });
         return;
       }
-
+      console.log(address, addressCoords)
       if (address.trim() && !addressCoords) {
         showErrorSnackbar({ message: "Не удалось получить координаты адреса", tryAgain: true });
         return;
@@ -91,7 +90,7 @@ const SelectAddressLocation = () => {
     state.options[0] = {
       ...snap.options[0],
       address: address,
-      range: range,
+      range: range / 1000,
       region: activeRegion,
       availabilityDateEnd: snap.parkDate.dateEndISO,
       availabilityDateStart: snap.parkDate.dateStartISO,
@@ -126,7 +125,6 @@ const SelectAddressLocation = () => {
     if (debounceAddressValue && debounceAddressValue.length > 4) {
       const ymaps = window.ymaps;
 
-      // Поиск координат
       ymaps.geocode(debounceAddressValue, { results: 1 }).then((response) => {
         const firstGeoObject = response.geoObjects.get(0);
         const cords = firstGeoObject.geometry.getCoordinates();
@@ -158,7 +156,6 @@ const SelectAddressLocation = () => {
       setIsButtonActive(false);
     }
 }, [activeRegion, address, myCoords, addressCoords]);
-  console.log(isButtonActive)
 
   return (
     <>
@@ -181,25 +178,25 @@ const SelectAddressLocation = () => {
             Указать на карте
           </button>
           <div className={styles.price_counter_wrapper}>
-            <span className={styles.main_text}>Макс. радиус, км</span>
+            <span className={styles.main_text}>Макс. радиус, м</span>
             <PriceCounterBlock price={range} setPrice={e => {
-              if(e >= 100){
-                setRange(100)
-              } else if(e <= 5) {
-                setRange(5)
+              if(e >= 300){
+                setRange(300)
+              } else if(e <= 50) {
+                setRange(50)
               }else{
                 setRange(e)
               }
-            }} step={5} max={100} min={5} />
+            }} step={50} max={300} min={100} />
           </div>
-          <button
-            type="button"
-            className={`${styles.btn_style} ${activeNearMeButton ? styles.active : ""}`}
-            style={{ marginBottom: "15%" }}
-            onClick={onHandleNearMeClick}
-          >
-            Найти рядом со мной
-          </button>
+          {/*<button*/}
+          {/*  type="button"*/}
+          {/*  className={`${styles.btn_style} ${activeNearMeButton ? styles.active : ""}`}*/}
+          {/*  style={{ marginBottom: "15%" }}*/}
+          {/*  onClick={onHandleNearMeClick}*/}
+          {/*>*/}
+          {/*  Найти рядом со мной*/}
+          {/*</button>*/}
         </div>
        <Button
         onClick={() => onHandleRedirect("/result-search")}
