@@ -103,7 +103,7 @@ const ResultSearchElement = () => {
     ).then((response) => {
       if (response) {
         axios.get(
-          `https://api.telegram.org/bot${telegramToken}/sendMessage?chat_id=${snap.resultElement.user.chatId}&text=${comment}&rating=${rating}`
+          `https://api.telegram.org/bot${telegramToken}/sendMessage?chat_id=${snap.resultElement.user.chatId}&text=${`Новый отзыв ${snap.resultElement.park.address}:` + comment + '.' + ` Рейтинг - ${rating}`}`
         ).then(() => showSuccessSnackbar({ message: "Ваш отзыв отправлен в Telegram. Спасибо!" })
         ).catch(() => showErrorSnackbar({ message: "Не удалось отправить ваш отзыв в Telegram" }))
         showSuccessSnackbar({ message: "Отзыв оставлен успешно" });
