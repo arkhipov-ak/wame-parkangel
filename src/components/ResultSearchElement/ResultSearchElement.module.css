@@ -109,6 +109,12 @@
   font-size: 26px;
   background: #fff;
   text-align: center;
+  @media screen and (max-width: 540px) {
+    font-size: 20px;
+  }
+   @media screen and (max-width: 400px) {
+    font-size: 18px;
+  }
 }
 .minus_button {
   position: absolute;
@@ -117,10 +123,19 @@
   z-index: 100;
   width: 40px;
   min-width: 40px;
+  max-width: 40px;
   height: 40px;
   min-height: 40px;
+  max-height: 40px;
   border-radius: 50%;
   border: 2px solid #000;
   font-size: 26px;
   background: #fff;
+  text-align: center;
+  @media screen and (max-width: 540px) {
+    font-size: 20px;
+  }
+  @media screen and (max-width: 400px) {
+    font-size: 18px;
+  }
 }
