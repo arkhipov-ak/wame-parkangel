@@ -120,7 +120,7 @@ useEffect(() => {
         <span className={styles.label}>На сколько времени</span>
         <HoursCounterBlock hoursCount={hoursCount} setHoursCount={setHoursCount}/>
         <ParametersButton onClick={() => onHandleRedirect("/options")}/>
-        <Button onClick={() => onHandleRedirect("/select-address-location")}>Далее</Button>
+        <Button onClick={() => onHandleRedirect("/select-address-location")} className={(+selectedHours + +hoursCount < 23) ? styles.validButton : ''}>Далее</Button>
         <ModalTime
           setOpenTimeModal={setOpenTimeModal}
           openTimeModal={openTimeModal}

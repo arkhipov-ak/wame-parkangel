@@ -38,6 +38,7 @@ const Options = () => {
   const snap = useSnapshot(state);
   const navigate = useNavigate();
   const [data, setData] = useState(defaultData);
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const onHandleChange = (value, key) => {
     let newObject = { ...data, ...{ [key]: value } };
@@ -125,6 +126,23 @@ const Options = () => {
     }
   }, [snap.user, snap.options]);
 
+  
+  const validateForm = () => {
+    if (
+      data.priceHour > 0 &&
+      data.priceHour <= 1000000
+    ) {
+      setIsFormValid(true);
+    } else {
+      setIsFormValid(false);
+    }
+  };
+  
+  useEffect(() => {
+    validateForm();
+  }, [data]);
+
+  
   return (
     <>
       {data ? (
@@ -190,8 +208,9 @@ const Options = () => {
                 <span className={styles.main_text}>Макс. стоимость в час, руб</span>
                 <PriceCounterBlock price={+data.priceHour} setPrice={e => onHandleChange(e, "priceHour")}/>
               </div>
-              <Button type="submit">Сохранить параметры</Button>
-            </form>
+              <Button type="submit" className={isFormValid ? styles.validButton : ''}>
+                Сохранить параметры
+              </Button>            </form>
             <Button onClick={onHandleResetOptions}>Сбросить параметры</Button>
           </Container>
         </div>

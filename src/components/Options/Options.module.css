@@ -99,3 +99,7 @@ label {
   font-weight: 500;
   line-height: normal;
 }
+.validButton {
+  background-color: blue;
+  color: white;
+}
