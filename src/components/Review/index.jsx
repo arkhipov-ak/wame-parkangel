@@ -274,7 +274,7 @@ const Review = () => {
                             disabled={zoom >= 20}
                             className={styles.plus_button}
                           >
-                          +
+                          <span>+</span>
                         </button>
                           <button
                             type="button"
@@ -282,7 +282,7 @@ const Review = () => {
                             disabled={zoom <= 8}
                             className={styles.minus_button}
                           >
-                              -
+                            <span>-</span>
                           </button>
                       </Map>
                     </YMaps>

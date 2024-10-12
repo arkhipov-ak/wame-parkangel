@@ -112,8 +112,14 @@
   @media screen and (max-width: 540px) {
     font-size: 20px;
   }
-   @media screen and (max-width: 400px) {
+  @media screen and (max-width: 400px) {
     font-size: 18px;
+  }
+   span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+     transform: translate(-50%, -50%);
   }
 }
 .minus_button {
@@ -137,5 +143,11 @@
   }
   @media screen and (max-width: 400px) {
     font-size: 18px;
+  }
+  span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }
