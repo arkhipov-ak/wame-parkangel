@@ -22,7 +22,7 @@ const SelectAddressLocation = () => {
   const [activeRegion, setActiveRegion] = useState("moscow");
   const [addressCoords, setAddressCoords] = useState(null);
   const [address, setAddress] = useState("");
-  const [range, setRange] = useState(50);
+  const [range, setRange] = useState(100);
   const [debounceAddressValue] = useDebounce(address, 500);
   const [suggestions, setSuggestions] = useState([]);
   const [activeNearMeButton, setActiveNearMeButton] = useState(false);

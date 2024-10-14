@@ -31,15 +31,25 @@ const PersonalArea = () => {
     let newObject = { ...data, [key]: value };
     setData(newObject);
   };
+  
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    if (data.email && !validateEmail(data.email)) {
+      showErrorSnackbar({ message: "Введите корректный email" });
+      return;
+    }
 
     if (data.phoneNumber && data.phoneNumber.includes('_')) {
       showErrorSnackbar({ message: "Введите корректный номер телефона" });
       return;
     }
-    console.log(!!data.phoneNumber, data.phoneNumber.length )
+    
     if (data.isShowName && !data.name.trim().length) {
       showErrorSnackbar({ message: "Если поставили галочку, то заполните имя" });
       return;
