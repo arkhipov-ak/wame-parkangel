@@ -20,7 +20,7 @@
   }
   .incrementWithBorderMinus, .incrementWithBorderPlus {
     width: 15%;
-    height: 3.5rem;
+    height: 60px;
     font-size: 36px;
     display: flex;
     align-items: center;

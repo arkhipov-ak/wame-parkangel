@@ -179,15 +179,17 @@ const SelectAddressLocation = () => {
           <span className={styles.label}>Ваш регион</span>
           <RegionSelect activeRegion={activeRegion} setActiveRegion={setActiveRegion}/>
           <span className={styles.label}>Адрес</span>
-          <Autosuggest
-            suggestions={suggestions}
-            onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-            onSuggestionsClearRequested={onSuggestionsClearRequested}
-            getSuggestionValue={getSuggestionValue}
-            renderSuggestion={renderSuggestion}
-            inputProps={inputProps}
-            theme={theme}
-          />
+          <div>
+            <Autosuggest
+              suggestions={suggestions}
+              onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+              onSuggestionsClearRequested={onSuggestionsClearRequested}
+              getSuggestionValue={getSuggestionValue}
+              renderSuggestion={renderSuggestion}
+              inputProps={inputProps}
+              theme={theme}
+            />
+          </div>
           <button type="button" className={styles.btn_style} onClick={() => onHandleRedirect("/map")}>
             Указать на карте
           </button>
