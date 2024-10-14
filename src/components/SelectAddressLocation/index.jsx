@@ -8,7 +8,7 @@ import RegionSelect from 'src/components/common/RegionSelect'
 
 import NavBar from 'src/components/NavBar'
 import { state } from 'src/state'
-import { GEO_SUGGEST_API_KEY } from 'src/utils/constants'
+import { API_KEY, GEO_SUGGEST_API_KEY } from 'src/utils/constants'
 import { hideKeyboard } from 'src/utils/functions'
 import { showErrorSnackbar } from 'src/utils/showSnackBar'
 import theme from 'src/utils/suggestsTheme.module.css'
@@ -107,6 +107,17 @@ const SelectAddressLocation = () => {
   useEffect(() => {
     if (snap.parkDate) setAddress(snap.parkDate.address || "");
   }, [snap.parkDate]);
+  
+  const getAddress = async (coords) => {
+    const response = await  axios.get(
+      `https://geocode-maps.yandex.ru/1.x/?apikey=${API_KEY}&geocode=${coords.join(',')}&format=json`
+    );
+    
+    const address =
+      response.data.response.GeoObjectCollection.featureMember[0].GeoObject
+        .metaDataProperty.GeocoderMetaData.text;
+    setAddress(address)
+  }
 
   useEffect(() => {
     if (!activeNearMeButton) {
@@ -114,10 +125,11 @@ const SelectAddressLocation = () => {
       return;
     }
 
-    const watchID = navigator.geolocation.watchPosition(function (position) {
+    const watchID = navigator.geolocation.watchPosition(async function(position) {
       setMyCoords([position.coords.latitude, position.coords.longitude]);
+      await getAddress([position.coords.latitude, position.coords.longitude])
     });
-
+    
     return () => {
       navigator.geolocation.clearWatch(watchID);
     }
@@ -191,14 +203,14 @@ const SelectAddressLocation = () => {
               }
             }} step={50} max={300} min={100} />
           </div>
-          {/*<button*/}
-          {/*  type="button"*/}
-          {/*  className={`${styles.btn_style} ${activeNearMeButton ? styles.active : ""}`}*/}
-          {/*  style={{ marginBottom: "15%" }}*/}
-          {/*  onClick={onHandleNearMeClick}*/}
-          {/*>*/}
-          {/*  Найти рядом со мной*/}
-          {/*</button>*/}
+          <button
+            type="button"
+            className={`${styles.btn_style} ${activeNearMeButton ? styles.active : ""}`}
+            style={{ marginBottom: "15%" }}
+            onClick={onHandleNearMeClick}
+          >
+            Найти рядом со мной
+          </button>
         </div>
        <Button
         onClick={() => onHandleRedirect("/result-search")}
