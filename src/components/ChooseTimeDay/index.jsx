@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Autosuggest from 'react-autosuggest'
 import { useNavigate } from 'react-router-dom'
-import axios from 'src/api/interceptors'
+import axios from 'axios'
 import Button from 'src/components/common/Button'
 import Container from 'src/components/common/Container'
 import HoursCounterBlock from 'src/components/common/HoursCounterBlock'

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Autosuggest from 'react-autosuggest'
 import { useNavigate } from 'react-router-dom'
-import axios from 'src/api/interceptors'
+import axios from 'axios'
 import Button from 'src/components/common/Button'
 import Container from 'src/components/common/Container'
 import RegionSelect from 'src/components/common/RegionSelect'
@@ -44,13 +44,15 @@ const SelectAddressLocation = () => {
     axios.get(
       `https://suggest-maps.yandex.ru/v1/suggest?apikey=${GEO_SUGGEST_API_KEY}&text=${value}`
     ).then((response) => {
-      if (response.data.results) setSuggestions(response.data.results.map(item => item.title.text));
-      else {
-        setSuggestions([])
-        showErrorSnackbar({ message: "Что-то пошло не так" })
+      if (response.data.results) {
+        setSuggestions(response.data.results.map(item => item.title.text));
+      } else {
+        setSuggestions([]);
+        showErrorSnackbar({ message: "Что-то пошло не так" });
       }
-    }).catch(() => showErrorSnackbar({ message: "Не удалось получить список подсказок" }))
-  };
+    })
+      .catch(() => showErrorSnackbar({ message: "Не удалось получить список подсказок" }));
+};
 
   const onSuggestionsClearRequested = () => setSuggestions([]);
 

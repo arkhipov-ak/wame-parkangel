@@ -1,7 +1,8 @@
 import axios from "axios";
 import { Cookies } from "react-cookie";
 
-const axiosInstance = axios.create({});
+const axiosInstance = axios.create({
+});
 
 axiosInstance.interceptors.request.use(
   function (config) {
