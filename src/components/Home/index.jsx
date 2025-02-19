@@ -1,5 +1,6 @@
 import Logotype from '/src/assets/logo.svg'
 import { Popover } from 'antd'
+import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 import ReactCodeInput from 'react-code-input'
 import { useNavigate } from 'react-router-dom'
@@ -11,7 +12,6 @@ import { supportLink } from 'src/utils/constants'
 import { hideKeyboard } from 'src/utils/functions'
 import { showErrorSnackbar } from 'src/utils/showSnackBar'
 import { useSnapshot } from 'valtio'
-import Cookies from 'js-cookie';
 
 import styles from './Home.module.css'
 
@@ -39,7 +39,7 @@ const Home = () => {
     }
   };
 
-  const onHandleLoginClick = () => {
+  const onHandleLoginClick = async () => {
     if (!nickname.trim()) return showErrorSnackbar({ message: "Telegram-никнейм не может быть пустым", tryAgain: true })
 
     axios.post(
@@ -50,7 +50,7 @@ const Home = () => {
         setVerification(true);
         setRegistrationLink(response.data.response);
       }
-    }).catch(() => showErrorSnackbar({ message: "Что-то пошло не так" }))
+    })
   };
 
   useEffect(() => {
@@ -105,7 +105,7 @@ const Home = () => {
 
   useEffect(() => {
     setIsCodeCorrect(true);
-		if (code.length === 4) {
+		if (code.length === 4 && nickname) {
       axios.post("https://api.parkangel.ru/api/users/verify", { telegram: nickname.trim(), code })
       .then((response) => {
         if (response.data.response) {
@@ -120,7 +120,7 @@ const Home = () => {
           setIsCodeCorrect(false);
           showErrorSnackbar({ message: "Код введен неверно", tryAgain: true });
         }
-      }).catch(() => showErrorSnackbar({ message: "Что-то пошло не так" }))
+      })
 		}
 	}, [code]);
 

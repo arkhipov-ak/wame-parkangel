@@ -1,16 +1,16 @@
-import Logotype from "/src/assets/logo.svg";
-import { Popover } from "antd";
-import { useEffect, useState } from "react";
-import ReactCodeInput from "react-code-input";
-import { useNavigate } from "react-router-dom";
-import axios from "src/api/interceptors";
-import { state } from "src/state";
-import { hideKeyboard } from "src/utils/functions";
-import { showErrorSnackbar } from "src/utils/showSnackBar";
-import { useSnapshot } from "valtio";
-import { useCookies } from "react-cookie";
+import Logotype from '/src/assets/logo.svg'
+import { Popover } from 'antd'
+import { useEffect, useState } from 'react'
+import ReactCodeInput from 'react-code-input'
+import { useCookies } from 'react-cookie'
+import { useNavigate } from 'react-router-dom'
+import axios from 'src/api/interceptors'
+import { state } from 'src/state'
+import { hideKeyboard } from 'src/utils/functions'
+import { showErrorSnackbar } from 'src/utils/showSnackBar'
+import { useSnapshot } from 'valtio'
 
-import styles from "./Admin.module.css";
+import styles from './Admin.module.css'
 
 const Admin = () => {
   const snap = useSnapshot(state);
@@ -22,14 +22,14 @@ const Admin = () => {
   const [isCodeCorrect, setIsCodeCorrect] = useState(true);
   const [cookies, setCookie] = useCookies(["chatId"]);
 
-  const onHandleLoginAdminClick = () => {
+  const onHandleLoginAdminClick = async () => {
     if (!nickname.trim())
       return showErrorSnackbar({
         message: "Telegram-никнейм не может быть пустым",
         tryAgain: true,
       });
 
-    axios
+    await axios
       .post("https://api.parkangel.ru/api/users/registration", {
         telegram: nickname.trim(),
       })
@@ -40,12 +40,11 @@ const Admin = () => {
           showErrorSnackbar({ message: "Вы не зарегистрированы" });
         }
       })
-      .catch(() => showErrorSnackbar({ message: "Что-то пошло не так" }));
   };
 
   useEffect(() => {
     setIsCodeCorrect(true);
-    if (code.length === 4) {
+    if (code.length === 4 && nickname) {
       axios
         .post("https://api.parkangel.ru/api/users/verify-admin", {
           telegram: nickname.trim(),
@@ -70,7 +69,6 @@ const Admin = () => {
             });
           }
         })
-        .catch(() => showErrorSnackbar({ message: "Что-то пошло не так" }));
     }
   }, [code]);
 
